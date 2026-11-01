@@ -1,0 +1,43 @@
+{
+  "id": "p2-v1-7.2m",
+  "game": "forest_shuffle",
+  "code_commit": null,
+  "published": "2026-11-02",
+  "source": "trained in the original forest-shuffle repository; checkpoint copied unchanged (old-trainer checkpoints re-saved without optimizer state; weights identical)",
+  "players": 2,
+  "observation_version": 1,
+  "steps": 7200000,
+  "games": 47000,
+  "hours": 16,
+  "hardware": "CPU, old single-learner trainer",
+  "recipe": [
+    "python -m forest_shuffle.rl.train --players 2 --timesteps 20000000 --envs 8 (old trainer: one seat learns)"
+  ],
+  "logs": [
+    "train_log_0.csv",
+    "train_log.csv"
+  ],
+  "strength": {
+    "finished": false,
+    "legacy": true,
+    "measured": "2026-11-01",
+    "games": [
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 40,
+        "win": 1.0,
+        "required": ">=0.95"
+      },
+      {
+        "opponent": "ppo_1000000",
+        "label": "its 1M checkpoint (40 games, not paired)",
+        "games": 40,
+        "win": 0.775,
+        "required": null
+      }
+    ],
+    "note": "Original AI, kept for the comparison; trained before the recipe existed."
+  },
+  "sha256": "2121261030f9034e191df037191bd4062793f26ad1b5e63c155f9fcea67a8b60"
+}

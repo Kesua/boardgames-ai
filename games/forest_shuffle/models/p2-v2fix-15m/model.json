@@ -1,0 +1,58 @@
+{
+  "id": "p2-v2fix-15m",
+  "game": "forest_shuffle",
+  "code_commit": null,
+  "published": "2026-11-02",
+  "source": "trained in the original forest-shuffle repository; checkpoint copied unchanged (old-trainer checkpoints re-saved without optimizer state; weights identical)",
+  "players": 2,
+  "observation_version": 2,
+  "steps": 15000000,
+  "games": 66000,
+  "hours": 10.7,
+  "hardware": "22-core CPU (16 game workers), RTX 4070 Laptop GPU for the update",
+  "recipe": [
+    "open run: python -m forest_shuffle.rl.train --players 2 --out runs/v2 --timesteps 20000000 (defaults: lr 2.5e-4, 10 epochs, 20 % frozen-opponent games)",
+    "open run drifted after 5-7M steps (77 % against the 7.2M model at best, 51 % by 18M)",
+    "anchored run from the 5M checkpoint: --out runs/v2fix --fixed runs/p2/ppo_7200000.zip greedy --keep-every 2000000 --lr 1e-4 --epochs 4 (5e-5 from 10M) --reference runs/p2/ppo_7200000.zip",
+    "stopped: 17M vs 15M = 53.0 % +- 1.3 (no further gain); best = 15M"
+  ],
+  "logs": [
+    "train_log_1.csv",
+    "train_log_2.csv"
+  ],
+  "strength": {
+    "finished": true,
+    "measured": "2026-11-01",
+    "games": [
+      {
+        "opponent": "p2-v1-7.2m",
+        "label": "previous finished model",
+        "games": 1500,
+        "win": 0.986,
+        "win_se": 0.003,
+        "margin": 142,
+        "required": "beats"
+      },
+      {
+        "opponent": "runs/v2/p2/ppo_6000000.zip",
+        "label": "open-run checkpoint it never trained against",
+        "games": 1500,
+        "win": 0.959,
+        "win_se": 0.005,
+        "margin": 137,
+        "required": "beats"
+      },
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 8,
+        "win": 1.0,
+        "win_se": null,
+        "required": ">=0.95",
+        "note": "training-log evaluation"
+      }
+    ]
+  },
+  "notes": "The recipe this repository's train-model skill uses was derived from this run.",
+  "sha256": "5c51cd473c7f3e853b07c17f0b26e22d7a83ac106b0f0ac2fb702de305791020"
+}

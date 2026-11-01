@@ -1,0 +1,11 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Applies to the project's own outputs in this repository: experiment statistics (games/*/experiments/*/stats.json and
+experiment.json), written notes (games/*/notes.json), rules summaries written in our own words (games/*/rules.md),
+model weights (games/*/models/*/model.zip) and the dashboard texts.
+
+Attribution: "boardgames.ai contributors" with a link to the repository.
+
+It does NOT apply to game names, card names, card data, or anything else owned by the games' publishers (see
+NOTICE.md and games/*/RIGHTS.md); those are not ours to license.

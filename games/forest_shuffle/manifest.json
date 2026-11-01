@@ -1,0 +1,59 @@
+{
+  "slug": "forest_shuffle",
+  "name": "Forest Shuffle",
+  "publisher": "Lookout Games",
+  "designer": "Kosch",
+  "year": 2023,
+  "edition": "Base game + Woodland Edge + Alpine expansions (233 deck cards)",
+  "players": [2, 3, 4, 5],
+  "rights": "RIGHTS.md",
+  "theme": {"accent": "#2f6b3a", "accent_soft": "#e3efe2", "emoji": "🌲"},
+  "intro": {
+    "en": "Players build a forest: trees, with animals, mushrooms and plants attached to their four sides. Most cards score by combinations, so the order and mix of cards decides the game. Three winter cards hidden in the deck end it, so the length varies.",
+    "cs": "Hráči staví les: stromy a k jejich čtyřem stranám zvířata, houby a rostliny. Většina karet boduje za kombinace, takže o hře rozhoduje pořadí a mix karet. Hru ukončí tři zimní karty skryté v balíčku, proto je různě dlouhá."
+  },
+  "terms": {
+    "en": {"item": "card", "items": "cards", "board": "forest", "boards": "forests", "archetype": "forest type",
+           "archetypes": "forest types", "round": "round"},
+    "cs": {"item": "karta", "items": "karty", "board": "les", "boards": "lesy", "archetype": "typ lesa",
+           "archetypes": "typy lesů", "round": "kolo"}
+  },
+  "tags": {"symbol": {"en": "Tree symbol", "cs": "Symbol stromu"}},
+  "archetype": {"tag": "symbol", "min_share": 0.15, "extra_counts": {"SAPLING": "saplings"},
+                "rule": {"en": "A forest's type is its most frequent tree symbol; every sapling counts as one card of type Saplings. Mixed = a tie or no symbol with at least 15 % of the forest.",
+                         "cs": "Typ lesa je jeho nejčastější symbol stromu; každý semenáček se počítá jako jedna karta typu Semenáčky. Smíšený = shoda nebo žádný symbol s aspoň 15 % lesa."}},
+  "score_categories": {
+    "trees": {"en": "Trees and shrubs", "cs": "Stromy a keře"},
+    "dwellers": {"en": "Dwellers", "cs": "Obyvatelé"},
+    "cave": {"en": "Cave", "cs": "Jeskyně"}
+  },
+  "seat_extras": {
+    "plants": {"en": "Trees, shrubs and saplings", "cs": "Stromy, keře a semenáčky"},
+    "saplings": {"en": "Saplings", "cs": "Semenáčky"}
+  },
+  "top_decision": "CHOOSE_ACTION",
+  "actions": {
+    "DRAW_DECK": {"en": "Draw from the deck", "cs": "Dobrat z balíčku"},
+    "DRAW_CLEARING": {"en": "Take from the clearing", "cs": "Vzít z mýtiny"},
+    "PLAY_WOODY": {"en": "Play a tree or shrub", "cs": "Zahrát strom nebo keř"},
+    "PLAY_HALF": {"en": "Play a dweller", "cs": "Zahrát obyvatele"},
+    "PLAY_SAPLING": {"en": "Play a sapling", "cs": "Zahrát semenáček"},
+    "DONE": {"en": "Pass", "cs": "Pas"}
+  },
+  "fate": {"played": ["PLAY_WOODY", "PLAY_HALF"], "as_sapling": ["PLAY_SAPLING"], "paid": ["PAY"]},
+  "fate_labels": {
+    "played": {"en": "Played", "cs": "Zahráno"},
+    "as_sapling": {"en": "Played as sapling", "cs": "Jako semenáček"},
+    "paid": {"en": "Paid away", "cs": "Zaplaceno"},
+    "left_in_hand": {"en": "Left in hand", "cs": "Zbylo v ruce"}
+  },
+  "optional_decisions": {"decision": "USE_OR_SKIP", "use": "USE", "skip": "SKIP",
+                         "group_pattern": "^(effect|bonus|.*trigger)", "group_rename": {"trigger": "trigger"}},
+  "length": {"show": true},
+  "item_attributes": ["kind", "position", "cost", "expansion", "types"],
+  "featured": {
+    "2": {"main": "p2-v2fix-15m-mirror", "compare": "p2-v1-7.2m-mirror", "versus": "p2-v2fix-15m-vs-v1-7.2m"},
+    "4": {"main": "p4-v1-6.8m-mirror"}
+  },
+  "languages": ["en", "cs"]
+}

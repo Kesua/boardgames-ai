@@ -1,0 +1,46 @@
+{
+  "_note": "26 base-game bonus cards as structured conditions (own words). Tiers: [min birds, points]; the highest tier reached scores (rules.md W13). 'per': points per qualifying bird. Values checked against Wingsearch bonus.json and the BoardGameGeek card list; differences resolved in rules.md W15 (D3 Photographer, D4 Backyard Birder, D5 Anatomist).",
+  "cards": [
+    {"id": 0, "name": "Anatomist", "count": {"type": "word", "list": "anatomist"}, "tiers": [[2, 3], [4, 7]], "describe": "Birds with a body part in their name (beak, belly, bill, breast, cap, chin, collar, crest, crown, eye, face, head, neck, rump, shoulder, tail, throat, wing)"},
+    {"id": 1, "name": "Backyard Birder", "count": {"type": "points_below", "value": 4}, "tiers": [[5, 3], [7, 6]], "describe": "Birds worth less than 4 points"},
+    {"id": 2, "name": "Bird Counter", "count": {"type": "flocking"}, "per": 2, "describe": "Birds with the flocking icon"},
+    {"id": 3, "name": "Bird Feeder", "count": {"type": "eats", "food": "seed"}, "tiers": [[5, 3], [8, 7]], "describe": "Birds that eat seed (seed icon in the cost)"},
+    {"id": 4, "name": "Breeding Manager", "count": {"type": "eggs_at_least", "value": 4}, "per": 1, "describe": "Birds with at least 4 eggs on them"},
+    {"id": 5, "name": "Cartographer", "count": {"type": "word", "list": "cartographer"}, "tiers": [[2, 3], [4, 7]], "describe": "Birds with a place name in their name (American, Atlantic, Baltimore, California, Canada, Carolina, Chihuahuan, Eastern, Inca, Mississippi, Mountain, Northern, Prairie, Sandhill, Savannah, Western)"},
+    {"id": 6, "name": "Ecologist", "count": {"type": "fewest_habitat"}, "per": 2, "describe": "Birds in your habitat with the fewest birds"},
+    {"id": 7, "name": "Enclosure Builder", "count": {"type": "nest", "nest": "ground"}, "tiers": [[4, 4], [6, 7]], "describe": "Birds with a ground (or star) nest"},
+    {"id": 8, "name": "Falconer", "count": {"type": "predator"}, "per": 2, "describe": "Birds with the predator icon"},
+    {"id": 9, "name": "Fishery Manager", "count": {"type": "eats", "food": "fish"}, "tiers": [[2, 3], [4, 8]], "describe": "Birds that eat fish"},
+    {"id": 10, "name": "Food Web Expert", "count": {"type": "eats_only", "food": "invertebrate"}, "per": 2, "describe": "Birds that eat only invertebrates"},
+    {"id": 11, "name": "Forester", "count": {"type": "only_habitat", "habitat": "forest"}, "tiers": [[3, 4], [5, 8]], "describe": "Birds that can live only in the forest"},
+    {"id": 12, "name": "Historian", "count": {"type": "word", "list": "historian"}, "per": 2, "describe": "Birds named after a person (a name with 's)"},
+    {"id": 13, "name": "Large Bird Specialist", "count": {"type": "wingspan_above", "value": 65}, "tiers": [[4, 3], [6, 6]], "describe": "Birds with a wingspan over 65 cm"},
+    {"id": 14, "name": "Nest Box Builder", "count": {"type": "nest", "nest": "cavity"}, "tiers": [[4, 4], [6, 7]], "describe": "Birds with a cavity (or star) nest"},
+    {"id": 15, "name": "Omnivore Expert", "count": {"type": "wild_cost"}, "per": 2, "describe": "Birds with a wild food icon in their cost"},
+    {"id": 16, "name": "Oologist", "count": {"type": "eggs_at_least", "value": 1}, "tiers": [[7, 3], [9, 6]], "describe": "Birds with at least 1 egg on them"},
+    {"id": 17, "name": "Passerine Specialist", "count": {"type": "wingspan_at_most", "value": 30}, "tiers": [[4, 3], [6, 6]], "describe": "Birds with a wingspan of 30 cm or less"},
+    {"id": 18, "name": "Photographer", "count": {"type": "word", "list": "photographer"}, "tiers": [[4, 3], [6, 6]], "describe": "Birds with a colour in their name"},
+    {"id": 19, "name": "Platform Builder", "count": {"type": "nest", "nest": "platform"}, "tiers": [[4, 4], [6, 7]], "describe": "Birds with a platform (or star) nest"},
+    {"id": 20, "name": "Prairie Manager", "count": {"type": "only_habitat", "habitat": "grassland"}, "tiers": [[2, 3], [4, 8]], "describe": "Birds that can live only in the grassland"},
+    {"id": 21, "name": "Rodentologist", "count": {"type": "eats", "food": "rodent"}, "per": 2, "describe": "Birds that eat rodents"},
+    {"id": 22, "name": "Visionary Leader", "count": {"type": "hand"}, "tiers": [[5, 4], [8, 7]], "describe": "Bird cards in your hand at the end of the game"},
+    {"id": 23, "name": "Viticulturalist", "count": {"type": "eats", "food": "fruit"}, "tiers": [[2, 3], [4, 7]], "describe": "Birds that eat fruit"},
+    {"id": 24, "name": "Wetland Scientist", "count": {"type": "only_habitat", "habitat": "wetland"}, "tiers": [[3, 3], [5, 7]], "describe": "Birds that can live only in the wetland"},
+    {"id": 25, "name": "Wildlife Gardener", "count": {"type": "nest", "nest": "bowl"}, "tiers": [[4, 4], [6, 7]], "describe": "Birds with a bowl (or star) nest"}
+  ],
+  "goals": {
+    "_note": "8 double-sided tiles (rules.md W1.2). Each goal: what is counted at the end of the round (W12.4). Green side points per round [1st, 2nd, 3rd]; blue side: 1 per item, max 5.",
+    "tiles": [
+      [{"id": "birds_forest", "count": "birds_in", "habitat": "forest"}, {"id": "eggs_forest", "count": "eggs_in", "habitat": "forest"}],
+      [{"id": "birds_grassland", "count": "birds_in", "habitat": "grassland"}, {"id": "eggs_grassland", "count": "eggs_in", "habitat": "grassland"}],
+      [{"id": "birds_wetland", "count": "birds_in", "habitat": "wetland"}, {"id": "eggs_wetland", "count": "eggs_in", "habitat": "wetland"}],
+      [{"id": "bowl_with_egg", "count": "nest_birds_with_egg", "nest": "bowl"}, {"id": "eggs_bowl", "count": "eggs_in_nest", "nest": "bowl"}],
+      [{"id": "cavity_with_egg", "count": "nest_birds_with_egg", "nest": "cavity"}, {"id": "eggs_cavity", "count": "eggs_in_nest", "nest": "cavity"}],
+      [{"id": "ground_with_egg", "count": "nest_birds_with_egg", "nest": "ground"}, {"id": "eggs_ground", "count": "eggs_in_nest", "nest": "ground"}],
+      [{"id": "platform_with_egg", "count": "nest_birds_with_egg", "nest": "platform"}, {"id": "eggs_platform", "count": "eggs_in_nest", "nest": "platform"}],
+      [{"id": "total_birds", "count": "total_birds"}, {"id": "egg_sets", "count": "egg_sets"}]
+    ],
+    "green": [[4, 1, 0], [5, 2, 1], [6, 3, 2], [7, 4, 3]],
+    "blue_max": 5
+  }
+}

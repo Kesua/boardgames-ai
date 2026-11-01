@@ -1,0 +1,5065 @@
+{
+  "meta": {
+    "game": "Forest Shuffle (base + Woodland Edge + Alpine)",
+    "source": "BoardGameArena card sheets (trees.jpg, hCards.jpg, vCards.jpg, woodlands.jpg, mountain.jpg), base reference cards, rulebook PDFs; cross-checked against github.com/soldag/forest-shuffle-scoring",
+    "deck_card_total": 233,
+    "non_deck_components": {
+      "reference_cards": 14,
+      "caves": 5
+    },
+    "tree_symbols": [
+      "LINDEN",
+      "OAK",
+      "SILVER_FIR",
+      "BIRCH",
+      "BEECH",
+      "SYCAMORE",
+      "DOUGLAS_FIR",
+      "HORSE_CHESTNUT",
+      "ALPINE_LARCH",
+      "SWISS_PINE"
+    ],
+    "dweller_types": [
+      "AMPHIBIAN",
+      "BAT",
+      "BIRD",
+      "BUTTERFLY",
+      "CLOVENHOOFED_ANIMAL",
+      "DEER",
+      "INSECT",
+      "MUSHROOM",
+      "PAWED_ANIMAL",
+      "PLANT"
+    ],
+    "marker_types": [
+      "WOODLAND_EDGE",
+      "ALPS"
+    ],
+    "woody_types": [
+      "TREE",
+      "SHRUB"
+    ],
+    "butterfly_table": {
+      "1": 0,
+      "2": 3,
+      "3": 6,
+      "4": 12,
+      "5": 20,
+      "6": 35,
+      "7": 55
+    },
+    "setup_removal": {
+      "base_only": {
+        "2": 30,
+        "3": 20,
+        "4": 10,
+        "5": 0
+      },
+      "one_expansion": {
+        "2": 45,
+        "3": 30,
+        "4": 15,
+        "5": 0
+      },
+      "two_expansions": {
+        "2": 80,
+        "3": 50,
+        "4": 35,
+        "5": 20
+      },
+      "always_removed_first": 10
+    },
+    "notes": [
+      "Each half of a split card has its own tree_symbol; bonuses match on the symbol of the played card (either half for payment cards).",
+      "kinds=['TREE'] in filters means tree cards plus saplings; tree-species conditions exclude saplings; shrubs are neither trees nor mushrooms.",
+      "Set-scored species (Fireflies, Fire Salamander, Horse Chestnut) score the table value once for all copies, not per copy.",
+      "Butterflies score as sets of distinct species; a player can hold several sets and each card belongs to one set (greedy packing).",
+      "Costs verified from the card images. soldag/forest-shuffle-scoring lists Horse Chestnut 2, Crane Fly 2, Gentian 1, Wood Ant 0; the cards show 1, 1, 0, 1."
+    ]
+  },
+  "species": {
+    "LINDEN": {
+      "name": "Linden",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "majority",
+        "filter": {
+          "names": [
+            "LINDEN"
+          ]
+        },
+        "points_if_most": 3,
+        "points_otherwise": 1,
+        "note": "ties count as most; Violet Carpenter Bee adds to the count"
+      }
+    },
+    "OAK": {
+      "name": "Oak",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "extra_turn"
+      },
+      "scoring": {
+        "type": "conditional",
+        "points": 10,
+        "condition": {
+          "type": "all_tree_species",
+          "count": 8,
+          "note": "saplings don't count; still 8 with Alpine"
+        }
+      }
+    },
+    "SILVER_FIR": {
+      "name": "Silver Fir",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "PAWED_ANIMAL"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "per_attached_to_host",
+        "points": 2
+      }
+    },
+    "BIRCH": {
+      "name": "Birch",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 0,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 1
+      }
+    },
+    "BEECH": {
+      "name": "Beech",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_count",
+          "count": 4,
+          "filter": {
+            "names": [
+              "BEECH"
+            ],
+            "note": "Violet Carpenter Bee adds to the count"
+          }
+        }
+      }
+    },
+    "SYCAMORE": {
+      "name": "Sycamore",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "kinds": [
+            "TREE"
+          ],
+          "note": "saplings included"
+        }
+      }
+    },
+    "DOUGLAS_FIR": {
+      "name": "Douglas Fir",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "extra_turn"
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 5
+      }
+    },
+    "HORSE_CHESTNUT": {
+      "name": "Horse Chestnut",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "base",
+      "types": [
+        "TREE"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "set",
+        "table": {
+          "1": 1,
+          "2": 4,
+          "3": 9,
+          "4": 16,
+          "5": 25,
+          "6": 36,
+          "7": 49
+        },
+        "note": "7+ scores 49; Violet Carpenter Bee adds to the count"
+      }
+    },
+    "EUROPEAN_LARCH": {
+      "name": "European Larch",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "alpine",
+      "types": [
+        "TREE",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "ALPS"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 3
+      },
+      "tree_species": "ALPINE_LARCH"
+    },
+    "STONE_PINE": {
+      "name": "Stone Pine",
+      "kind": "TREE",
+      "position": null,
+      "expansion": "alpine",
+      "types": [
+        "TREE",
+        "ALPS"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": {
+        "type": "draw",
+        "count": 1
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "ALPS"
+          ],
+          "note": "includes itself"
+        }
+      },
+      "tree_species": "SWISS_PINE"
+    },
+    "ELDERBERRY": {
+      "name": "Elderberry",
+      "kind": "SHRUB",
+      "position": null,
+      "expansion": "woodland_edge",
+      "types": [
+        "SHRUB",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "types": [
+              "PLANT"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "PLANT"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "COMMON_HAZEL": {
+      "name": "Common Hazel",
+      "kind": "SHRUB",
+      "position": null,
+      "expansion": "woodland_edge",
+      "types": [
+        "SHRUB",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "BLACKTHORN": {
+      "name": "Blackthorn",
+      "kind": "SHRUB",
+      "position": null,
+      "expansion": "woodland_edge",
+      "types": [
+        "SHRUB",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "types": [
+              "BUTTERFLY"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "BUTTERFLY"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "EUROPEAN_HARE": {
+      "name": "European Hare",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "names": [
+            "EUROPEAN_HARE"
+          ],
+          "note": "Mountain Hare counts as European Hare"
+        }
+      },
+      "slot_sharing": {
+        "with_names": [
+          "EUROPEAN_HARE"
+        ],
+        "max": null
+      }
+    },
+    "EUROPEAN_BADGER": {
+      "name": "European Badger",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "PAWED_ANIMAL"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 2
+      }
+    },
+    "GREATER_HORSESHOE_BAT": {
+      "name": "Greater Horseshoe Bat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "BAT"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_distinct",
+          "count": 3,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      }
+    },
+    "RED_FOX": {
+      "name": "Red Fox",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "draw_per",
+        "filter": {
+          "names": [
+            "EUROPEAN_HARE"
+          ]
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "names": [
+            "EUROPEAN_HARE"
+          ]
+        }
+      }
+    },
+    "RACCOON": {
+      "name": "Raccoon",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "hand_to_cave_draw_equal",
+        "count": "any"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "WILD_BOAR": {
+      "name": "Wild Boar",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "CLOVENHOOFED_ANIMAL"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 10,
+        "condition": {
+          "type": "min_count",
+          "count": 1,
+          "filter": {
+            "names": [
+              "SQUEAKER"
+            ]
+          }
+        }
+      }
+    },
+    "BROWN_LONG_EARED_BAT": {
+      "name": "Brown Long-Eared Bat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "BAT"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_distinct",
+          "count": 3,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      }
+    },
+    "ROE_DEER": {
+      "name": "Roe Deer",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "DEER"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "draw",
+        "count": 1
+      },
+      "scoring": {
+        "type": "per_tree_symbol",
+        "points": 3,
+        "symbols": "SELF"
+      }
+    },
+    "BARBASTELLE_BAT": {
+      "name": "Barbastelle Bat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "BAT"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_distinct",
+          "count": 3,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      }
+    },
+    "BROWN_BEAR": {
+      "name": "Brown Bear",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 3,
+      "effect": {
+        "type": "clearing_to_cave",
+        "count": "all"
+      },
+      "bonus": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "draw",
+            "count": 1
+          },
+          {
+            "type": "extra_turn"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "BEECH_MARTEN": {
+      "name": "Beech Marten",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_fully_occupied",
+        "points": 5,
+        "host_kinds": [
+          "TREE"
+        ]
+      }
+    },
+    "RED_DEER": {
+      "name": "Red Deer",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "DEER"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "DEER"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "kinds": [
+            "TREE"
+          ],
+          "types": [
+            "PLANT"
+          ],
+          "match": "any"
+        }
+      }
+    },
+    "LYNX": {
+      "name": "Lynx",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 10,
+        "condition": {
+          "type": "min_count",
+          "count": 1,
+          "filter": {
+            "names": [
+              "ROE_DEER"
+            ]
+          }
+        }
+      }
+    },
+    "GNAT": {
+      "name": "Gnat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "INSECT"
+      ],
+      "cost": 0,
+      "effect": {
+        "type": "place_free",
+        "count": "any",
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      }
+    },
+    "VIOLET_CARPENTER_BEE": {
+      "name": "Violet Carpenter Bee",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "INSECT"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      },
+      "modifiers": {
+        "host_tree_count_bonus": 1,
+        "note": "the tree it occupies counts as one additional tree of its species (Linden, Beech, Horse Chestnut sets; Moss and Woodpecker tree counts). Not for Sycamore/Red Deer per-tree counts."
+      }
+    },
+    "FALLOW_DEER": {
+      "name": "Fallow Deer",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "DEER"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "draw",
+        "count": 2
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 3,
+        "filter": {
+          "types": [
+            "CLOVENHOOFED_ANIMAL"
+          ]
+        }
+      }
+    },
+    "EUROPEAN_FAT_DORMOUSE": {
+      "name": "European Fat Dormouse",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 15,
+        "condition": {
+          "type": "host_has",
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          },
+          "host_kinds": [
+            "TREE"
+          ]
+        }
+      }
+    },
+    "BECHSTEINS_BAT": {
+      "name": "Bechstein's Bat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "BAT"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_distinct",
+          "count": 3,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      }
+    },
+    "WOLF": {
+      "name": "Wolf",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 3,
+      "effect": {
+        "type": "draw_per",
+        "filter": {
+          "types": [
+            "DEER"
+          ]
+        }
+      },
+      "bonus": {
+        "type": "extra_turn"
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 5,
+        "filter": {
+          "types": [
+            "DEER"
+          ]
+        }
+      }
+    },
+    "SQUEAKER": {
+      "name": "Squeaker",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "base",
+      "types": [
+        "CLOVENHOOFED_ANIMAL"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 1
+      }
+    },
+    "GREAT_SPOTTED_WOODPECKER": {
+      "name": "Great Spotted Woodpecker",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "BIRD"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "majority",
+        "filter": {
+          "kinds": [
+            "TREE"
+          ]
+        },
+        "points_if_most": 10,
+        "points_otherwise": 0,
+        "note": "saplings included; ties count; Violet Carpenter Bee adds"
+      }
+    },
+    "CHAFFINCH": {
+      "name": "Chaffinch",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "BIRD"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "host_species",
+          "species": "BEECH"
+        }
+      }
+    },
+    "LARGE_TORTOISESHELL": {
+      "name": "Large Tortoiseshell",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "INSECT",
+        "BUTTERFLY"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "CAMBERWELL_BEAUTY": {
+      "name": "Camberwell Beauty",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "INSECT",
+        "BUTTERFLY"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "PURPLE_EMPEROR": {
+      "name": "Purple Emperor",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "INSECT",
+        "BUTTERFLY"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "SILVER_WASHED_FRITILLARY": {
+      "name": "Silver-Washed Fritillary",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "INSECT",
+        "BUTTERFLY"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "PEACOCK_BUTTERFLY": {
+      "name": "Peacock Butterfly",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "INSECT",
+        "BUTTERFLY"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "RED_SQUIRREL": {
+      "name": "Red Squirrel",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "host_species",
+          "species": "OAK"
+        }
+      }
+    },
+    "BULLFINCH": {
+      "name": "Bullfinch",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "BIRD"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "types": [
+            "INSECT"
+          ]
+        }
+      }
+    },
+    "TAWNY_OWL": {
+      "name": "Tawny Owl",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "BIRD"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": {
+        "type": "draw",
+        "count": 2
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 5
+      }
+    },
+    "EURASIAN_JAY": {
+      "name": "Eurasian Jay",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "BIRD"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "extra_turn"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 3
+      }
+    },
+    "GOSHAWK": {
+      "name": "Goshawk",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "base",
+      "types": [
+        "BIRD"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 3,
+        "filter": {
+          "types": [
+            "BIRD"
+          ]
+        }
+      }
+    },
+    "PENNY_BUN": {
+      "name": "Penny Bun",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "MUSHROOM"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "slot": "TOP",
+            "host_kinds": [
+              "TREE"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "PARASOL_MUSHROOM": {
+      "name": "Parasol Mushroom",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "MUSHROOM"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "slot": "BOTTOM",
+            "host_kinds": [
+              "TREE"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "CHANTERELLE": {
+      "name": "Chanterelle",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "MUSHROOM"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "kinds": [
+              "TREE"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "FLY_AGARIC": {
+      "name": "Fly Agaric",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "MUSHROOM"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "types": [
+              "PAWED_ANIMAL"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "MOLE": {
+      "name": "Mole",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "play_cards",
+        "count": "any",
+        "note": "pay their costs; their effects and bonuses apply"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "BLACKBERRIES": {
+      "name": "Blackberries",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "PLANT"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "types": [
+            "PLANT"
+          ]
+        }
+      }
+    },
+    "WILD_STRAWBERRIES": {
+      "name": "Wild Strawberries",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "PLANT"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 10,
+        "condition": {
+          "type": "all_tree_species",
+          "count": 8
+        }
+      }
+    },
+    "TREE_FERNS": {
+      "name": "Tree Ferns",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "PLANT"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 6,
+        "filter": {
+          "types": [
+            "AMPHIBIAN"
+          ]
+        }
+      }
+    },
+    "COMMON_TOAD": {
+      "name": "Common Toad",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "AMPHIBIAN"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "shares_slot_with",
+          "names": [
+            "COMMON_TOAD"
+          ]
+        }
+      },
+      "slot_sharing": {
+        "with_names": [
+          "COMMON_TOAD"
+        ],
+        "max": 2
+      }
+    },
+    "TREE_FROG": {
+      "name": "Tree Frog",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "AMPHIBIAN"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 5,
+        "filter": {
+          "names": [
+            "GNAT"
+          ]
+        }
+      }
+    },
+    "FIRE_SALAMANDER": {
+      "name": "Fire Salamander",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "AMPHIBIAN"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "PAWED_ANIMAL"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "set",
+        "table": {
+          "1": 5,
+          "2": 15,
+          "3": 25
+        }
+      }
+    },
+    "HEDGEHOG": {
+      "name": "Hedgehog",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "PAWED_ANIMAL"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": {
+        "type": "draw",
+        "count": 1
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "types": [
+            "BUTTERFLY"
+          ]
+        }
+      }
+    },
+    "FIREFLIES": {
+      "name": "Fireflies",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "INSECT"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "set",
+        "table": {
+          "1": 0,
+          "2": 10,
+          "3": 15,
+          "4": 20
+        }
+      }
+    },
+    "MOSS": {
+      "name": "Moss",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "PLANT"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 10,
+        "condition": {
+          "type": "min_trees",
+          "count": 10,
+          "note": "saplings included; Violet Carpenter Bee adds"
+        }
+      }
+    },
+    "WOOD_ANT": {
+      "name": "Wood Ant",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "INSECT"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card_in_slot",
+        "slot": "BOTTOM",
+        "host_kinds": [
+          "TREE"
+        ],
+        "points": 2
+      }
+    },
+    "STAG_BEETLE": {
+      "name": "Stag Beetle",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "INSECT"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "BIRD"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "PAWED_ANIMAL"
+          ]
+        }
+      }
+    },
+    "POND_TURTLE": {
+      "name": "Pond Turtle",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "base",
+      "types": [
+        "AMPHIBIAN"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 5
+      }
+    },
+    "MAP_BUTTERFLY": {
+      "name": "Map Butterfly",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "woodland_edge",
+      "types": [
+        "INSECT",
+        "BUTTERFLY",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "EURASIAN_MAGPIE": {
+      "name": "Eurasian Magpie",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "woodland_edge",
+      "types": [
+        "BIRD",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "take_from_clearing",
+        "count": 1
+      },
+      "bonus": {
+        "type": "clearing_to_cave",
+        "count": 2,
+        "note": "take 1 if only 1 card there"
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 3
+      }
+    },
+    "NIGHTINGALE": {
+      "name": "Nightingale",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "woodland_edge",
+      "types": [
+        "BIRD",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": {
+        "type": "extra_turn"
+      },
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "host_kind",
+          "kind": "SHRUB"
+        }
+      }
+    },
+    "BARN_OWL": {
+      "name": "Barn Owl",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "woodland_edge",
+      "types": [
+        "BIRD",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "extra_turn",
+        "condition": {
+          "type": "min_count",
+          "count": 1,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 3,
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      }
+    },
+    "DIGITALIS": {
+      "name": "Digitalis",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "woodland_edge",
+      "types": [
+        "PLANT",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "table_by_count",
+        "filter": {
+          "types": [
+            "PLANT"
+          ],
+          "distinct": true
+        },
+        "table": {
+          "1": 1,
+          "2": 3,
+          "3": 6,
+          "4": 10,
+          "5": 15
+        },
+        "note": "5+ scores 15"
+      }
+    },
+    "STINGING_NETTLE": {
+      "name": "Stinging Nettle",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "woodland_edge",
+      "types": [
+        "PLANT",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "types": [
+            "BUTTERFLY"
+          ]
+        }
+      },
+      "grants_host_slot_sharing": {
+        "slot": "TOP",
+        "filter": {
+          "types": [
+            "BUTTERFLY"
+          ]
+        },
+        "max": null
+      }
+    },
+    "GREAT_GREEN_BUSH_CRICKET": {
+      "name": "Great Green Bush-Cricket",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "woodland_edge",
+      "types": [
+        "INSECT",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "BIRD"
+          ]
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "INSECT"
+          ]
+        }
+      }
+    },
+    "WATER_VOLE": {
+      "name": "Water Vole",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "woodland_edge",
+      "types": [
+        "PAWED_ANIMAL",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "play_saplings",
+        "count": "any",
+        "note": "reveal a clearing card per sapling as usual"
+      },
+      "bonus": {
+        "type": "extra_turn"
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "FEMALE_WILD_BOAR": {
+      "name": "Female Wild Boar",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "remove_clearing"
+      },
+      "bonus": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "names": [
+            "SQUEAKER"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 10,
+        "filter": {
+          "names": [
+            "SQUEAKER"
+          ]
+        }
+      },
+      "display_name": "Wild Boar (♀)"
+    },
+    "BEE_SWARM": {
+      "name": "Bee Swarm",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "INSECT",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "clearing_to_cave",
+        "count": "all",
+        "filter": {
+          "types": [
+            "PLANT",
+            "SHRUB",
+            "TREE"
+          ]
+        },
+        "note": "perform after paying"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "PLANT"
+          ]
+        }
+      }
+    },
+    "EUROPEAN_BISON": {
+      "name": "European Bison",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 3,
+      "effect": {
+        "type": "extra_turn"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_tree_symbol",
+        "points": 2,
+        "symbols": [
+          "BEECH",
+          "OAK"
+        ]
+      }
+    },
+    "EUROPEAN_WILDCAT": {
+      "name": "European Wildcat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "PAWED_ANIMAL",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "take_from_clearing",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "BIRD"
+          ]
+        }
+      }
+    },
+    "COMMON_PIPISTRELLE": {
+      "name": "Common Pipistrelle",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "BAT",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_distinct",
+          "count": 3,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      }
+    },
+    "CRANE_FLY": {
+      "name": "Crane Fly",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "INSECT",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "place_free",
+        "count": "any",
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      },
+      "bonus": {
+        "type": "take_from_clearing",
+        "count": "all",
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "BAT"
+          ]
+        }
+      }
+    },
+    "EUROPEAN_POLECAT": {
+      "name": "European Polecat",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "types": [
+        "PAWED_ANIMAL",
+        "WOODLAND_EDGE"
+      ],
+      "cost": 2,
+      "effect": null,
+      "bonus": {
+        "type": "extra_turn"
+      },
+      "scoring": {
+        "type": "conditional",
+        "points": 10,
+        "condition": {
+          "type": "alone_on_host"
+        }
+      }
+    },
+    "ALPINE_MARMOT": {
+      "name": "Alpine Marmot",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "types": [
+        "PAWED_ANIMAL",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 3,
+        "filter": {
+          "types": [
+            "PLANT"
+          ],
+          "distinct": true
+        }
+      }
+    },
+    "CHAMOIS": {
+      "name": "Chamois",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_tree_symbol",
+        "points": 3,
+        "symbols": "SELF"
+      }
+    },
+    "CAPERCAILLIE": {
+      "name": "Capercaillie",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "types": [
+        "BIRD",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "PLANT"
+          ]
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "PLANT"
+          ]
+        }
+      }
+    },
+    "MOUNTAIN_HARE": {
+      "name": "Mountain Hare",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "types": [
+        "PAWED_ANIMAL",
+        "ALPS"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "names": [
+            "EUROPEAN_HARE"
+          ]
+        }
+      },
+      "counts_as": "EUROPEAN_HARE",
+      "slot_sharing": null,
+      "note": "counts as European Hare for scoring but never shares a slot"
+    },
+    "STEINBOCK": {
+      "name": "Steinbock",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "types": [
+        "CLOVENHOOFED_ANIMAL",
+        "ALPS"
+      ],
+      "cost": 3,
+      "effect": {
+        "type": "extra_turn"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 10
+      }
+    },
+    "SAVIS_PIPISTRELLE": {
+      "name": "Savi's Pipistrelle",
+      "kind": "DWELLER",
+      "position": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "types": [
+        "BAT",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "conditional",
+        "points": 5,
+        "condition": {
+          "type": "min_distinct",
+          "count": 3,
+          "filter": {
+            "types": [
+              "BAT"
+            ]
+          }
+        }
+      }
+    },
+    "PHOEBUS_APOLLO": {
+      "name": "Phoebus Apollo",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "alpine",
+      "types": [
+        "INSECT",
+        "BUTTERFLY",
+        "ALPS"
+      ],
+      "cost": 0,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "butterfly_set",
+        "table": "BUTTERFLY_TABLE"
+      }
+    },
+    "GOLDEN_EAGLE": {
+      "name": "Golden Eagle",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "alpine",
+      "types": [
+        "BIRD",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 1,
+        "filter": {
+          "types": [
+            "PAWED_ANIMAL",
+            "AMPHIBIAN"
+          ],
+          "match": "any"
+        }
+      }
+    },
+    "BEARDED_VULTURE": {
+      "name": "Bearded Vulture",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "alpine",
+      "types": [
+        "BIRD",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "clearing_to_cave",
+        "count": 2,
+        "note": "after paying"
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_cave_card",
+        "points": 1
+      }
+    },
+    "COMMON_RAVEN": {
+      "name": "Common Raven",
+      "kind": "DWELLER",
+      "position": "TOP",
+      "expansion": "alpine",
+      "types": [
+        "BIRD",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 5
+      }
+    },
+    "BLACK_TRUMPET": {
+      "name": "Black Trumpet",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "alpine",
+      "types": [
+        "MUSHROOM",
+        "ALPS"
+      ],
+      "cost": 2,
+      "effect": {
+        "type": "permanent",
+        "trigger": {
+          "event": "card_played",
+          "filter": {
+            "types": [
+              "ALPS"
+            ]
+          }
+        },
+        "action": {
+          "type": "draw",
+          "count": 1
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "flat",
+        "points": 0
+      }
+    },
+    "EDELWEISS": {
+      "name": "Edelweiss",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "alpine",
+      "types": [
+        "PLANT",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "draw",
+        "count": 1
+      },
+      "bonus": {
+        "type": "draw",
+        "count": 1
+      },
+      "scoring": {
+        "type": "flat",
+        "points": 3
+      }
+    },
+    "BLUEBERRY": {
+      "name": "Blueberry",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "alpine",
+      "types": [
+        "PLANT",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "AMPHIBIAN"
+          ]
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "types": [
+            "BIRD"
+          ],
+          "distinct": true
+        }
+      }
+    },
+    "ALPINE_NEWT": {
+      "name": "Alpine Newt",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "alpine",
+      "types": [
+        "AMPHIBIAN",
+        "ALPS"
+      ],
+      "cost": 1,
+      "effect": null,
+      "bonus": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "place_free",
+            "count": 1,
+            "filter": {
+              "types": [
+                "ALPS"
+              ]
+            }
+          },
+          {
+            "type": "place_free",
+            "count": 1,
+            "filter": {
+              "types": [
+                "INSECT"
+              ]
+            }
+          }
+        ]
+      },
+      "scoring": {
+        "type": "per_card",
+        "points": 2,
+        "filter": {
+          "types": [
+            "INSECT"
+          ]
+        }
+      }
+    },
+    "GENTIAN": {
+      "name": "Gentian",
+      "kind": "DWELLER",
+      "position": "BOTTOM",
+      "expansion": "alpine",
+      "types": [
+        "PLANT",
+        "ALPS"
+      ],
+      "cost": 0,
+      "effect": {
+        "type": "place_free",
+        "count": 1,
+        "filter": {
+          "types": [
+            "BUTTERFLY"
+          ]
+        }
+      },
+      "bonus": null,
+      "scoring": {
+        "type": "per_card",
+        "points": 3,
+        "filter": {
+          "types": [
+            "BUTTERFLY"
+          ]
+        }
+      }
+    }
+  },
+  "cards": [
+    {
+      "id": "BT001",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "LINDEN",
+      "tree_symbol": "LINDEN",
+      "count": 9
+    },
+    {
+      "id": "BT002",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "OAK",
+      "tree_symbol": "OAK",
+      "count": 7
+    },
+    {
+      "id": "BT003",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "SILVER_FIR",
+      "tree_symbol": "SILVER_FIR",
+      "count": 6
+    },
+    {
+      "id": "BT004",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "BIRCH",
+      "tree_symbol": "BIRCH",
+      "count": 10
+    },
+    {
+      "id": "BT005",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "BEECH",
+      "tree_symbol": "BEECH",
+      "count": 10
+    },
+    {
+      "id": "BT006",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "SYCAMORE",
+      "tree_symbol": "SYCAMORE",
+      "count": 6
+    },
+    {
+      "id": "BT007",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "DOUGLAS_FIR",
+      "tree_symbol": "DOUGLAS_FIR",
+      "count": 7
+    },
+    {
+      "id": "BT008",
+      "layout": "WOODY_PLANT",
+      "expansion": "base",
+      "species": "HORSE_CHESTNUT",
+      "tree_symbol": "HORSE_CHESTNUT",
+      "count": 11
+    },
+    {
+      "id": "BV001",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GREAT_SPOTTED_WOODPECKER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "PENNY_BUN",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV002",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CHAFFINCH",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "PARASOL_MUSHROOM",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV003",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "LARGE_TORTOISESHELL",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "MOLE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV004",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CAMBERWELL_BEAUTY",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "CHANTERELLE",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV005",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PURPLE_EMPEROR",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FLY_AGARIC",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV006",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "SILVER_WASHED_FRITILLARY",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLACKBERRIES",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV007",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "RED_SQUIRREL",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WILD_STRAWBERRIES",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV008",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BULLFINCH",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "TREE_FERNS",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV009",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "TAWNY_OWL",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "COMMON_TOAD",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV010",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_JAY",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "TREE_FERNS",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV011",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOSHAWK",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "COMMON_TOAD",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV012",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BULLFINCH",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "PARASOL_MUSHROOM",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV013",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CAMBERWELL_BEAUTY",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "TREE_FROG",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV014",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PEACOCK_BUTTERFLY",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "COMMON_TOAD",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV015",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PURPLE_EMPEROR",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "TREE_FROG",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV016",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "RED_SQUIRREL",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIRE_SALAMANDER",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV017",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "TAWNY_OWL",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "PENNY_BUN",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV018",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_JAY",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FLY_AGARIC",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV019",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GREAT_SPOTTED_WOODPECKER",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WILD_STRAWBERRIES",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV020",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOSHAWK",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "HEDGEHOG",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV021",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "LARGE_TORTOISESHELL",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "MOLE",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV022",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PEACOCK_BUTTERFLY",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIREFLIES",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV023",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PEACOCK_BUTTERFLY",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "CHANTERELLE",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV024",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "SILVER_WASHED_FRITILLARY",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "MOSS",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV025",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_JAY",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIREFLIES",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV026",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CHAFFINCH",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "COMMON_TOAD",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV027",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "RED_SQUIRREL",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIREFLIES",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV028",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "RED_SQUIRREL",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "COMMON_TOAD",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV029",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PEACOCK_BUTTERFLY",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "HEDGEHOG",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV030",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BULLFINCH",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "HEDGEHOG",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV031",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "LARGE_TORTOISESHELL",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLACKBERRIES",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV032",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CAMBERWELL_BEAUTY",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIREFLIES",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV033",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PURPLE_EMPEROR",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "MOSS",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV034",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "SILVER_WASHED_FRITILLARY",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLACKBERRIES",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV035",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "TAWNY_OWL",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WILD_STRAWBERRIES",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV036",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_JAY",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "TREE_FERNS",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV037",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GREAT_SPOTTED_WOODPECKER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "COMMON_TOAD",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV038",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOSHAWK",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WOOD_ANT",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV039",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CHAFFINCH",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "STAG_BEETLE",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV040",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BULLFINCH",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "TREE_FROG",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV041",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "LARGE_TORTOISESHELL",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIRE_SALAMANDER",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV042",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CAMBERWELL_BEAUTY",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "POND_TURTLE",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV043",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PURPLE_EMPEROR",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "POND_TURTLE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV044",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "SILVER_WASHED_FRITILLARY",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "FIRE_SALAMANDER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV045",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "TAWNY_OWL",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "STAG_BEETLE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV046",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "CHAFFINCH",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WOOD_ANT",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV047",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GREAT_SPOTTED_WOODPECKER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WOOD_ANT",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BV048",
+      "layout": "TOP_BOTTOM",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOSHAWK",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "MOSS",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH001",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_BADGER",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH002",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "RIGHT",
+          "species": "GREATER_HORSESHOE_BAT",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH003",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RED_FOX",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH004",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RACCOON",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH005",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "WILD_BOAR",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH006",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BROWN_LONG_EARED_BAT",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH007",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RACCOON",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "ROE_DEER",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH008",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BROWN_LONG_EARED_BAT",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_BADGER",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH009",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BARBASTELLE_BAT",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "RIGHT",
+          "species": "WILD_BOAR",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH010",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BROWN_BEAR",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RACCOON",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH011",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BEECH_MARTEN",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BROWN_BEAR",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH012",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RED_DEER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BROWN_BEAR",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH013",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BARBASTELLE_BAT",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BEECH_MARTEN",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH014",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "LYNX",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH015",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "WILD_BOAR",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BEECH_MARTEN",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH016",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_BADGER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "RIGHT",
+          "species": "GNAT",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH017",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RED_FOX",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "VIOLET_CARPENTER_BEE",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH018",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "WILD_BOAR",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "ROE_DEER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH019",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "FALLOW_DEER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "WILD_BOAR",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH020",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "FALLOW_DEER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "ROE_DEER",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH021",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RED_DEER",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "FALLOW_DEER",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH022",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "VIOLET_CARPENTER_BEE",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "LYNX",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH023",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_FAT_DORMOUSE",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BARBASTELLE_BAT",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH024",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "GREATER_HORSESHOE_BAT",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_FAT_DORMOUSE",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH025",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RED_FOX",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "WOLF",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH026",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_FAT_DORMOUSE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BROWN_LONG_EARED_BAT",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH027",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BECHSTEINS_BAT",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_FAT_DORMOUSE",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH028",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "GNAT",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "VIOLET_CARPENTER_BEE",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH029",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "WOLF",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "GNAT",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH030",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "ROE_DEER",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "SQUEAKER",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH031",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BECHSTEINS_BAT",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "RIGHT",
+          "species": "WOLF",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH032",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "ROE_DEER",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "LYNX",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH033",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BEECH_MARTEN",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BECHSTEINS_BAT",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH034",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RED_DEER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH035",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "WOLF",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "GREATER_HORSESHOE_BAT",
+          "tree_symbol": "LINDEN"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH036",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "SQUEAKER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RED_DEER",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH037",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "RED_FOX",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "SQUEAKER",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH038",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "LYNX",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RACCOON",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH039",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "SQUEAKER",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "RIGHT",
+          "species": "LYNX",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH040",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BEECH_MARTEN",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH041",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "LYNX",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RED_FOX",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH042",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "RED_DEER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH043",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "VIOLET_CARPENTER_BEE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_HARE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BH044",
+      "layout": "LEFT_RIGHT",
+      "expansion": "base",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_BADGER",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "RIGHT",
+          "species": "FALLOW_DEER",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WT001",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "ELDERBERRY",
+      "tree_symbol": "LINDEN",
+      "count": 1
+    },
+    {
+      "id": "WT002",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "ELDERBERRY",
+      "tree_symbol": "SYCAMORE",
+      "count": 1
+    },
+    {
+      "id": "WT003",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "ELDERBERRY",
+      "tree_symbol": "BIRCH",
+      "count": 1
+    },
+    {
+      "id": "WT004",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "ELDERBERRY",
+      "tree_symbol": "OAK",
+      "count": 1
+    },
+    {
+      "id": "WT005",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "COMMON_HAZEL",
+      "tree_symbol": "HORSE_CHESTNUT",
+      "count": 1
+    },
+    {
+      "id": "WT006",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "COMMON_HAZEL",
+      "tree_symbol": "OAK",
+      "count": 1
+    },
+    {
+      "id": "WT007",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "COMMON_HAZEL",
+      "tree_symbol": "BEECH",
+      "count": 1
+    },
+    {
+      "id": "WT008",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "COMMON_HAZEL",
+      "tree_symbol": "BIRCH",
+      "count": 1
+    },
+    {
+      "id": "WT009",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "BLACKTHORN",
+      "tree_symbol": "DOUGLAS_FIR",
+      "count": 1
+    },
+    {
+      "id": "WT010",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "BLACKTHORN",
+      "tree_symbol": "BIRCH",
+      "count": 1
+    },
+    {
+      "id": "WT011",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "BLACKTHORN",
+      "tree_symbol": "SILVER_FIR",
+      "count": 1
+    },
+    {
+      "id": "WT012",
+      "layout": "WOODY_PLANT",
+      "expansion": "woodland_edge",
+      "species": "BLACKTHORN",
+      "tree_symbol": "SYCAMORE",
+      "count": 1
+    },
+    {
+      "id": "WV001",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "MAP_BUTTERFLY",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "DIGITALIS",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV002",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "MAP_BUTTERFLY",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "STINGING_NETTLE",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV003",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "MAP_BUTTERFLY",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "GREAT_GREEN_BUSH_CRICKET",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV004",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "MAP_BUTTERFLY",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WATER_VOLE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV005",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_MAGPIE",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "DIGITALIS",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV006",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_MAGPIE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "STINGING_NETTLE",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV007",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "EURASIAN_MAGPIE",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "GREAT_GREEN_BUSH_CRICKET",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV008",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "NIGHTINGALE",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "DIGITALIS",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV009",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "NIGHTINGALE",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "STINGING_NETTLE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV010",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "NIGHTINGALE",
+          "tree_symbol": "HORSE_CHESTNUT"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "WATER_VOLE",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV011",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BARN_OWL",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "DIGITALIS",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WV012",
+      "layout": "TOP_BOTTOM",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BARN_OWL",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "GREAT_GREEN_BUSH_CRICKET",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH001",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "FEMALE_WILD_BOAR",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BEE_SWARM",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH002",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_BISON",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "RIGHT",
+          "species": "FEMALE_WILD_BOAR",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH003",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "FEMALE_WILD_BOAR",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_WILDCAT",
+          "tree_symbol": "HORSE_CHESTNUT"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH004",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "COMMON_PIPISTRELLE",
+          "tree_symbol": "LINDEN"
+        },
+        {
+          "position": "RIGHT",
+          "species": "SQUEAKER",
+          "tree_symbol": "SILVER_FIR",
+          "extra_types": [
+            "WOODLAND_EDGE"
+          ]
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH005",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "SQUEAKER",
+          "tree_symbol": "HORSE_CHESTNUT",
+          "extra_types": [
+            "WOODLAND_EDGE"
+          ]
+        },
+        {
+          "position": "RIGHT",
+          "species": "CRANE_FLY",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH006",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_POLECAT",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "SQUEAKER",
+          "tree_symbol": "DOUGLAS_FIR",
+          "extra_types": [
+            "WOODLAND_EDGE"
+          ]
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH007",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "BEE_SWARM",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "COMMON_PIPISTRELLE",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH008",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_WILDCAT",
+          "tree_symbol": "OAK"
+        },
+        {
+          "position": "RIGHT",
+          "species": "BEE_SWARM",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH009",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "COMMON_PIPISTRELLE",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_BISON",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH010",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_BISON",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_POLECAT",
+          "tree_symbol": "SYCAMORE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH011",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "CRANE_FLY",
+          "tree_symbol": "BIRCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "EUROPEAN_POLECAT",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "WH012",
+      "layout": "LEFT_RIGHT",
+      "expansion": "woodland_edge",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "EUROPEAN_WILDCAT",
+          "tree_symbol": "SYCAMORE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "CRANE_FLY",
+          "tree_symbol": "OAK"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AT001",
+      "layout": "WOODY_PLANT",
+      "expansion": "alpine",
+      "species": "EUROPEAN_LARCH",
+      "tree_symbol": "ALPINE_LARCH",
+      "count": 7
+    },
+    {
+      "id": "AT002",
+      "layout": "WOODY_PLANT",
+      "expansion": "alpine",
+      "species": "STONE_PINE",
+      "tree_symbol": "SWISS_PINE",
+      "count": 7
+    },
+    {
+      "id": "AV001",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PHOEBUS_APOLLO",
+          "tree_symbol": "SWISS_PINE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLACK_TRUMPET",
+          "tree_symbol": "ALPINE_LARCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV002",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PHOEBUS_APOLLO",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "EDELWEISS",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV003",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PHOEBUS_APOLLO",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLUEBERRY",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV004",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "PHOEBUS_APOLLO",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "ALPINE_NEWT",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV005",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOLDEN_EAGLE",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLACK_TRUMPET",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV006",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BEARDED_VULTURE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "GENTIAN",
+          "tree_symbol": "ALPINE_LARCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV007",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOLDEN_EAGLE",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "ALPINE_NEWT",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV008",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "COMMON_RAVEN",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "GENTIAN",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV009",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "COMMON_RAVEN",
+          "tree_symbol": "DOUGLAS_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "BLUEBERRY",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV010",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BEARDED_VULTURE",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "ALPINE_NEWT",
+          "tree_symbol": "SILVER_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV011",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "BEARDED_VULTURE",
+          "tree_symbol": "SWISS_PINE"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "EDELWEISS",
+          "tree_symbol": "ALPINE_LARCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AV012",
+      "layout": "TOP_BOTTOM",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "TOP",
+          "species": "GOLDEN_EAGLE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "BOTTOM",
+          "species": "GENTIAN",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH001",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "ALPINE_MARMOT",
+          "tree_symbol": "BEECH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "CHAMOIS",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH002",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "ALPINE_MARMOT",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "CAPERCAILLIE",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH003",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "MOUNTAIN_HARE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "ALPINE_MARMOT",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH004",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "STEINBOCK",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "ALPINE_MARMOT",
+          "tree_symbol": "BIRCH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH005",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "CHAMOIS",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "CAPERCAILLIE",
+          "tree_symbol": "BEECH"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH006",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "MOUNTAIN_HARE",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "CHAMOIS",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH007",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "SAVIS_PIPISTRELLE",
+          "tree_symbol": "SILVER_FIR"
+        },
+        {
+          "position": "RIGHT",
+          "species": "STEINBOCK",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH008",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "CAPERCAILLIE",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "SAVIS_PIPISTRELLE",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH009",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "CAPERCAILLIE",
+          "tree_symbol": "SWISS_PINE"
+        },
+        {
+          "position": "RIGHT",
+          "species": "STEINBOCK",
+          "tree_symbol": "DOUGLAS_FIR"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "AH010",
+      "layout": "LEFT_RIGHT",
+      "expansion": "alpine",
+      "halves": [
+        {
+          "position": "LEFT",
+          "species": "SAVIS_PIPISTRELLE",
+          "tree_symbol": "ALPINE_LARCH"
+        },
+        {
+          "position": "RIGHT",
+          "species": "MOUNTAIN_HARE",
+          "tree_symbol": "SWISS_PINE"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "id": "BW001",
+      "layout": "WINTER",
+      "expansion": "base",
+      "count": 3,
+      "text": "If this is the 3rd winter card, the game ends immediately. Otherwise, place it next to the clearing and draw a new card."
+    }
+  ]
+}

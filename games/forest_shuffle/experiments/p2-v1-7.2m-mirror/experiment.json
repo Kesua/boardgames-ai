@@ -1,0 +1,39 @@
+{
+  "id": "p2-v1-7.2m-mirror",
+  "game": "forest_shuffle",
+  "kind": "mirror",
+  "players": 2,
+  "seats": [
+    "p2-v1-7.2m",
+    "p2-v1-7.2m"
+  ],
+  "games": 2000,
+  "seed": 1000,
+  "options": {
+    "expansions": [
+      "base",
+      "woodland_edge",
+      "alpine"
+    ]
+  },
+  "seat_rotation": "seat j of game k is played by seats[(k + j) % players]",
+  "models": {
+    "p2-v1-7.2m": "2121261030f9034e191df037191bd4062793f26ad1b5e63c155f9fcea67a8b60"
+  },
+  "card_data_sha256": {
+    "cards.json": "f99b24e3991e585b6ee42e3cc1fbed7e5ea264639863b5757d3c4ab51b2c3e85"
+  },
+  "code_commit": null,
+  "requirements_lock_sha256": null,
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.10.11",
+    "numpy": "2.2.6",
+    "torch": "2.14.0+cu126"
+  },
+  "command": "python -m bgai.experiment --game forest_shuffle --id p2-v1-7.2m-mirror --players 2 --seats p2-v1-7.2m p2-v1-7.2m --games 2000 --seed 1000",
+  "made_by": "imported from the original record file (p2_ppo_7200000_mirror_2k.jsonl, 2026-10-31T23:06:59, 950.5 s); identical games, verified by replay",
+  "seconds": 950.5,
+  "schema_version": 1,
+  "created": "2026-10-31T23:22:49"
+}

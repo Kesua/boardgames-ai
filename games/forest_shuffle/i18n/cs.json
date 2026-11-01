@@ -1,0 +1,480 @@
+{
+ "items": {
+  "LINDEN": {
+   "name": "Lípa",
+   "scoring": "3 body, pokud nikdo nemá víc lip (shoda stačí), jinak 1 bod. Drvodělka fialová se počítá."
+  },
+  "OAK": {
+   "name": "Dub",
+   "bonus": "Máš tah navíc.",
+   "scoring": "10 bodů, pokud máš 8 různých druhů stromů (semenáčky se nepočítají)."
+  },
+  "SILVER_FIR": {
+   "name": "Jedle bělokorá",
+   "bonus": "Zahraj zdarma 1 tlapkaté zvíře z ruky (bez efektu a bonusu).",
+   "scoring": "2 body za každou kartu přiloženou k tomuto stromu."
+  },
+  "BIRCH": {
+   "name": "Bříza",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "1 bod."
+  },
+  "BEECH": {
+   "name": "Buk",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "5 bodů, pokud máš aspoň 4 buky. Drvodělka fialová se počítá."
+  },
+  "SYCAMORE": {
+   "name": "Javor klen",
+   "scoring": "1 bod za každý strom (i semenáček)."
+  },
+  "DOUGLAS_FIR": {
+   "name": "Douglaska tisolistá",
+   "bonus": "Máš tah navíc.",
+   "scoring": "5 bodů."
+  },
+  "HORSE_CHESTNUT": {
+   "name": "Jírovec maďal",
+   "scoring": "Za všechny jírovce maďaly: 1/2/3/4/5/6/7+ → 1/4/9/16/25/36/49 bodů. Drvodělka fialová se počítá."
+  },
+  "EUROPEAN_LARCH": {
+   "name": "Modřín opadavý",
+   "bonus": "Zahraj zdarma 1 alpskou kartu z ruky (bez efektu a bonusu).",
+   "scoring": "3 body.",
+   "note": "V této verzi: zdarma jen obyvatelé."
+  },
+  "STONE_PINE": {
+   "name": "Borovice limba",
+   "effect": "Lízni 1 kartu.",
+   "bonus": "Lízni 1 kartu.",
+   "scoring": "1 bod za každou alpskou kartu (i tuto)."
+  },
+  "ELDERBERRY": {
+   "name": "Bez černý",
+   "effect": "Trvale: když zahraješ rostlinu, lízni 1 kartu.",
+   "bonus": "Zahraj zdarma 1 rostlinu z ruky (bez efektu a bonusu)."
+  },
+  "COMMON_HAZEL": {
+   "name": "Líska obecná",
+   "effect": "Trvale: když zahraješ netopýra, lízni 1 kartu.",
+   "bonus": "Zahraj zdarma 1 netopýra z ruky (bez efektu a bonusu)."
+  },
+  "BLACKTHORN": {
+   "name": "Trnka obecná",
+   "effect": "Trvale: když zahraješ motýla, lízni 1 kartu.",
+   "bonus": "Zahraj zdarma 1 motýla z ruky (bez efektu a bonusu)."
+  },
+  "EUROPEAN_HARE": {
+   "name": "Zajíc polní",
+   "scoring": "1 bod za každého zajíce polního (i zajíce běláka). Zajíci polní smějí sdílet místo."
+  },
+  "EUROPEAN_BADGER": {
+   "name": "Jezevec lesní",
+   "bonus": "Zahraj zdarma 1 tlapkaté zvíře z ruky (bez efektu a bonusu).",
+   "scoring": "2 body."
+  },
+  "GREATER_HORSESHOE_BAT": {
+   "name": "Vrápenec velký",
+   "scoring": "5 bodů, pokud máš aspoň 3 různé netopýry."
+  },
+  "RED_FOX": {
+   "name": "Liška obecná",
+   "effect": "Lízni 1 kartu za každého zajíce polního ve svém lese.",
+   "scoring": "2 body za každého zajíce polního."
+  },
+  "RACCOON": {
+   "name": "Mýval severní",
+   "effect": "Dej libovolný počet karet z ruky do své jeskyně a lízni stejný počet."
+  },
+  "WILD_BOAR": {
+   "name": "Prase divoké",
+   "scoring": "10 bodů, pokud máš aspoň 1 sele."
+  },
+  "BROWN_LONG_EARED_BAT": {
+   "name": "Netopýr ušatý",
+   "scoring": "5 bodů, pokud máš aspoň 3 různé netopýry."
+  },
+  "ROE_DEER": {
+   "name": "Srnec obecný",
+   "bonus": "Lízni 1 kartu.",
+   "scoring": "3 body za každou kartu se symbolem stromu této karty."
+  },
+  "BARBASTELLE_BAT": {
+   "name": "Netopýr černý",
+   "scoring": "5 bodů, pokud máš aspoň 3 různé netopýry."
+  },
+  "BROWN_BEAR": {
+   "name": "Medvěd hnědý",
+   "effect": "Dej všechny karty z mýtiny do své jeskyně.",
+   "bonus": "Lízni 1 kartu, pak máš tah navíc."
+  },
+  "BEECH_MARTEN": {
+   "name": "Kuna skalní",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "5 bodů za každý plně obsazený strom."
+  },
+  "RED_DEER": {
+   "name": "Jelen lesní",
+   "bonus": "Zahraj zdarma 1 kartu jelenovitých z ruky (bez efektu a bonusu).",
+   "scoring": "1 bod za každý strom a každou rostlinu."
+  },
+  "LYNX": {
+   "name": "Rys ostrovid",
+   "scoring": "10 bodů, pokud máš aspoň 1 srnce obecného."
+  },
+  "GNAT": {
+   "name": "Komár",
+   "effect": "Zahraj zdarma libovolný počet netopýrů z ruky (bez efektu a bonusu).",
+   "scoring": "1 bod za každého netopýra."
+  },
+  "VIOLET_CARPENTER_BEE": {
+   "name": "Drvodělka fialová",
+   "scoring": "Strom, na kterém sedí, se počítá jako 1 další strom svého druhu."
+  },
+  "FALLOW_DEER": {
+   "name": "Daněk evropský",
+   "bonus": "Lízni 2 karty.",
+   "scoring": "3 body za každého sudokopytníka."
+  },
+  "EUROPEAN_FAT_DORMOUSE": {
+   "name": "Plch velký",
+   "scoring": "15 bodů, pokud je na tomto stromu i netopýr."
+  },
+  "BECHSTEINS_BAT": {
+   "name": "Netopýr velkouchý",
+   "scoring": "5 bodů, pokud máš aspoň 3 různé netopýry."
+  },
+  "WOLF": {
+   "name": "Vlk obecný",
+   "effect": "Lízni 1 kartu za každou kartu jelenovitých ve svém lese.",
+   "bonus": "Máš tah navíc.",
+   "scoring": "5 bodů za každou kartu jelenovitých."
+  },
+  "SQUEAKER": {
+   "name": "Sele",
+   "scoring": "1 bod."
+  },
+  "GREAT_SPOTTED_WOODPECKER": {
+   "name": "Strakapoud velký",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "10 bodů, pokud nikdo nemá víc stromů (i semenáčky; shoda stačí). Drvodělka fialová se počítá."
+  },
+  "CHAFFINCH": {
+   "name": "Pěnkava obecná",
+   "scoring": "5 bodů, pokud je na buku."
+  },
+  "LARGE_TORTOISESHELL": {
+   "name": "Babočka jilmová",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "CAMBERWELL_BEAUTY": {
+   "name": "Babočka osiková",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "PURPLE_EMPEROR": {
+   "name": "Batolec duhový",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "SILVER_WASHED_FRITILLARY": {
+   "name": "Perleťovec stříbropásek",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "PEACOCK_BUTTERFLY": {
+   "name": "Babočka paví oko",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "RED_SQUIRREL": {
+   "name": "Veverka obecná",
+   "scoring": "5 bodů, pokud je na dubu."
+  },
+  "BULLFINCH": {
+   "name": "Hýl obecný",
+   "scoring": "2 body za každou kartu hmyzu."
+  },
+  "TAWNY_OWL": {
+   "name": "Puštík obecný",
+   "effect": "Lízni 1 kartu.",
+   "bonus": "Lízni 2 karty.",
+   "scoring": "5 bodů."
+  },
+  "EURASIAN_JAY": {
+   "name": "Sojka obecná",
+   "effect": "Máš tah navíc.",
+   "scoring": "3 body."
+  },
+  "GOSHAWK": {
+   "name": "Jestřáb lesní",
+   "scoring": "3 body za každého ptáka."
+  },
+  "PENNY_BUN": {
+   "name": "Hřib smrkový",
+   "effect": "Trvale: když zahraješ kartu nad strom, lízni 1 kartu."
+  },
+  "PARASOL_MUSHROOM": {
+   "name": "Bedla vysoká",
+   "effect": "Trvale: když zahraješ kartu pod strom, lízni 1 kartu."
+  },
+  "CHANTERELLE": {
+   "name": "Liška (houba)",
+   "effect": "Trvale: když zahraješ strom, lízni 1 kartu."
+  },
+  "FLY_AGARIC": {
+   "name": "Muchomůrka červená",
+   "effect": "Trvale: když zahraješ tlapkaté zvíře, lízni 1 kartu."
+  },
+  "MOLE": {
+   "name": "Krtek obecný",
+   "effect": "Ihned zahraj libovolný počet karet a zaplať jejich cenu."
+  },
+  "BLACKBERRIES": {
+   "name": "Ostružiník",
+   "scoring": "2 body za každou rostlinu."
+  },
+  "WILD_STRAWBERRIES": {
+   "name": "Jahodník obecný",
+   "scoring": "10 bodů, pokud máš 8 různých druhů stromů (semenáčky se nepočítají)."
+  },
+  "TREE_FERNS": {
+   "name": "Kapradiny",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "6 bodů za každého obojživelníka."
+  },
+  "COMMON_TOAD": {
+   "name": "Ropucha obecná",
+   "scoring": "5 bodů, pokud sdílí místo s další ropuchou obecnou (nejvýš 2 na místě)."
+  },
+  "TREE_FROG": {
+   "name": "Rosnička zelená",
+   "scoring": "5 bodů za každého komára."
+  },
+  "FIRE_SALAMANDER": {
+   "name": "Mlok skvrnitý",
+   "bonus": "Zahraj zdarma 1 tlapkaté zvíře z ruky (bez efektu a bonusu).",
+   "scoring": "Za všechny mloky skvrnité: 1/2/3 → 5/15/25 bodů."
+  },
+  "HEDGEHOG": {
+   "name": "Ježek západní",
+   "bonus": "Lízni 1 kartu.",
+   "scoring": "2 body za každého motýla."
+  },
+  "FIREFLIES": {
+   "name": "Světlušky",
+   "scoring": "Za všechny světlušky: 1/2/3/4 → 0/10/15/20 bodů."
+  },
+  "MOSS": {
+   "name": "Mech",
+   "scoring": "10 bodů, pokud máš aspoň 10 stromů (i semenáčky). Drvodělka fialová se počítá."
+  },
+  "WOOD_ANT": {
+   "name": "Mravenec lesní",
+   "scoring": "2 body za každou kartu pod stromem."
+  },
+  "STAG_BEETLE": {
+   "name": "Roháč obecný",
+   "bonus": "Zahraj zdarma 1 ptáka z ruky (bez efektu a bonusu).",
+   "scoring": "1 bod za každé tlapkaté zvíře."
+  },
+  "POND_TURTLE": {
+   "name": "Želva bahenní",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "5 bodů."
+  },
+  "MAP_BUTTERFLY": {
+   "name": "Babočka síťkovaná",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "EURASIAN_MAGPIE": {
+   "name": "Straka obecná",
+   "effect": "Vezmi si 1 kartu z mýtiny do ruky.",
+   "bonus": "Dej 2 karty z mýtiny do své jeskyně.",
+   "scoring": "3 body."
+  },
+  "NIGHTINGALE": {
+   "name": "Slavík obecný",
+   "bonus": "Máš tah navíc.",
+   "scoring": "5 bodů, pokud je na keři."
+  },
+  "BARN_OWL": {
+   "name": "Sova pálená",
+   "effect": "Máš tah navíc, pokud máš v lese aspoň 1 netopýra.",
+   "scoring": "3 body za každého netopýra."
+  },
+  "DIGITALIS": {
+   "name": "Náprstník",
+   "scoring": "Různé rostliny: 1/2/3/4/5+ → 1/3/6/10/15 bodů."
+  },
+  "STINGING_NETTLE": {
+   "name": "Kopřiva dvoudomá",
+   "scoring": "2 body za každého motýla. Nad jejím stromem či keřem smí být libovolný počet motýlů."
+  },
+  "GREAT_GREEN_BUSH_CRICKET": {
+   "name": "Kobylka zelená",
+   "effect": "Zahraj zdarma 1 ptáka z ruky (bez efektu a bonusu).",
+   "scoring": "1 bod za každou kartu hmyzu."
+  },
+  "WATER_VOLE": {
+   "name": "Hryzec vodní",
+   "effect": "Ihned zahraj libovolný počet karet z ruky jako semenáčky.",
+   "bonus": "Máš tah navíc."
+  },
+  "FEMALE_WILD_BOAR": {
+   "name": "Bachyně",
+   "effect": "Odstraň ze hry všechny karty z mýtiny.",
+   "bonus": "Zahraj zdarma 1 sele z ruky (bez efektu a bonusu).",
+   "scoring": "10 bodů za každé sele."
+  },
+  "BEE_SWARM": {
+   "name": "Včelí roj",
+   "effect": "Dej všechny rostliny, keře a stromy z mýtiny do své jeskyně.",
+   "scoring": "1 bod za každou rostlinu."
+  },
+  "EUROPEAN_BISON": {
+   "name": "Zubr evropský",
+   "effect": "Máš tah navíc.",
+   "scoring": "2 body za každou kartu se symbolem buku nebo dubu."
+  },
+  "EUROPEAN_WILDCAT": {
+   "name": "Kočka divoká",
+   "effect": "Vezmi si 1 kartu z mýtiny do ruky.",
+   "scoring": "1 bod za každého ptáka."
+  },
+  "COMMON_PIPISTRELLE": {
+   "name": "Netopýr hvízdavý",
+   "scoring": "5 bodů, pokud máš aspoň 3 různé netopýry."
+  },
+  "CRANE_FLY": {
+   "name": "Tiplice",
+   "effect": "Zahraj zdarma libovolný počet netopýrů z ruky (bez efektu a bonusu).",
+   "bonus": "Vezmi si do ruky všechny netopýry z mýtiny.",
+   "scoring": "1 bod za každého netopýra."
+  },
+  "EUROPEAN_POLECAT": {
+   "name": "Tchoř tmavý",
+   "bonus": "Máš tah navíc.",
+   "scoring": "10 bodů, pokud je na svém stromu či keři jediným obyvatelem."
+  },
+  "ALPINE_MARMOT": {
+   "name": "Svišť horský",
+   "scoring": "3 body za každou různou rostlinu."
+  },
+  "CHAMOIS": {
+   "name": "Kamzík horský",
+   "scoring": "3 body za každou kartu se symbolem stromu této karty."
+  },
+  "CAPERCAILLIE": {
+   "name": "Tetřev hlušec",
+   "effect": "Zahraj zdarma 1 rostlinu z ruky (bez efektu a bonusu).",
+   "scoring": "1 bod za každou rostlinu."
+  },
+  "MOUNTAIN_HARE": {
+   "name": "Zajíc bělák",
+   "scoring": "1 bod za každého zajíce polního. Sám se počítá jako zajíc polní, ale místo nesdílí."
+  },
+  "STEINBOCK": {
+   "name": "Kozorožec horský",
+   "effect": "Máš tah navíc.",
+   "scoring": "10 bodů."
+  },
+  "SAVIS_PIPISTRELLE": {
+   "name": "Netopýr Saviův",
+   "scoring": "5 bodů, pokud máš aspoň 3 různé netopýry."
+  },
+  "PHOEBUS_APOLLO": {
+   "name": "Jasoň phoebus",
+   "scoring": "Sada různých motýlů: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55 bodů."
+  },
+  "GOLDEN_EAGLE": {
+   "name": "Orel skalní",
+   "scoring": "1 bod za každé tlapkaté zvíře a každého obojživelníka."
+  },
+  "BEARDED_VULTURE": {
+   "name": "Orlosup bradatý",
+   "effect": "Dej 2 karty z mýtiny do své jeskyně.",
+   "scoring": "1 bod za každou kartu ve tvé jeskyni."
+  },
+  "COMMON_RAVEN": {
+   "name": "Krkavec velký",
+   "effect": "Lízni 1 kartu.",
+   "scoring": "5 bodů."
+  },
+  "BLACK_TRUMPET": {
+   "name": "Stroček trubkovitý",
+   "effect": "Trvale: když zahraješ alpskou kartu, lízni 1 kartu."
+  },
+  "EDELWEISS": {
+   "name": "Protěž alpská",
+   "effect": "Lízni 1 kartu.",
+   "bonus": "Lízni 1 kartu.",
+   "scoring": "3 body."
+  },
+  "BLUEBERRY": {
+   "name": "Borůvka",
+   "effect": "Zahraj zdarma 1 obojživelníka z ruky (bez efektu a bonusu).",
+   "scoring": "2 body za každého různého ptáka."
+  },
+  "ALPINE_NEWT": {
+   "name": "Čolek horský",
+   "bonus": "Zahraj zdarma 1 alpskou kartu, pak 1 kartu hmyzu z ruky (bez efektu a bonusu).",
+   "scoring": "2 body za každou kartu hmyzu.",
+   "note": "V této verzi: zdarma jen obyvatelé."
+  },
+  "GENTIAN": {
+   "name": "Hořec",
+   "effect": "Zahraj zdarma 1 motýla z ruky (bez efektu a bonusu).",
+   "scoring": "3 body za každého motýla."
+  }
+ },
+ "tags": {
+  "symbol": {
+   "LINDEN": "Lípa",
+   "OAK": "Dub",
+   "SILVER_FIR": "Jedle",
+   "BIRCH": "Bříza",
+   "BEECH": "Buk",
+   "SYCAMORE": "Javor",
+   "DOUGLAS_FIR": "Douglaska",
+   "HORSE_CHESTNUT": "Jírovec",
+   "ALPINE_LARCH": "Modřín",
+   "SWISS_PINE": "Limba"
+  }
+ },
+ "archetypes": {
+  "LINDEN": "Lípa",
+  "OAK": "Dub",
+  "SILVER_FIR": "Jedle",
+  "BIRCH": "Bříza",
+  "BEECH": "Buk",
+  "SYCAMORE": "Javor",
+  "DOUGLAS_FIR": "Douglaska",
+  "HORSE_CHESTNUT": "Jírovec",
+  "ALPINE_LARCH": "Modřín",
+  "SWISS_PINE": "Limba",
+  "SAPLING": "Semenáčky",
+  "MIXED": "Smíšený",
+  "NONE": "Žádný"
+ },
+ "sections": {
+  "clearing_title": "Braní z mýtiny",
+  "clearing_note": "Podíl výher podle toho, kolik dobrání hráče bylo z mýtiny (odkryté karty) místo z balíčku.",
+  "clearing_x": "Podíl dobrání z mýtiny",
+  "clearing_bars": "Hráči",
+  "win_rate": "Podíl výher",
+  "clearing_winners": "Vítězové: podíl z mýtiny",
+  "clearing_losers": "Ostatní: podíl z mýtiny",
+  "wipes_title": "Vyprázdnění mýtiny",
+  "wipes_note": "Když mýtina dosáhne 10 karet, vyprázdní se. Odvozeno z velikosti mýtiny; počítá se i Medvěd hnědý, který mýtinu přesune do jeskyně. Spouštěč je hráč, jehož akce ji naplnila.",
+  "wipes_triggered": "Způsobená vyprázdnění",
+  "players_col": "Hráči",
+  "mean_rank": "Průměrné umístění",
+  "wipes_per_game": "Vyprázdnění za hru",
+  "wipes_winners": "Způsobená vítězi",
+  "wipes_losers": "Způsobená ostatními",
+  "drivers_title": "Co dělá hru dlouhou",
+  "drivers_note": "Málo karet v balíčku na konci = zimy přišly pozdě = dlouhá hra, ať hráči dělají cokoli. Podíl rozdílů v délce hry, který vysvětlí:",
+  "drivers_x": "Karet v balíčku na konci",
+  "rounds_per_player": "Kol na hráče",
+  "r2_deck": "sám balíček (náhoda)",
+  "r2_clearing": "samo braní z mýtiny (hráči)",
+  "r2_both": "obojí"
+ }
+}

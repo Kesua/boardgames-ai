@@ -1,0 +1,6399 @@
+[
+ {
+  "id": 0,
+  "name": "Acorn Woodpecker",
+  "scientific": "Melanerpes formicivorus",
+  "points": 5,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 46,
+  "food": {
+   "seed": 3
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed"
+   ],
+   "may_cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 1,
+  "name": "American Avocet",
+  "scientific": "Recurvirostra americana",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 79,
+  "food": {
+   "invertebrate": 2,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_lay_eggs",
+   "nest": "ground",
+   "other": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 2,
+  "name": "American Bittern",
+  "scientific": "Botaurus lentiginosus",
+  "points": 7,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 107,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "fewest_draw",
+   "habitat": "wetland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 3,
+  "name": "American Coot",
+  "scientific": "Fulica americana",
+  "points": 3,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 5,
+  "wingspan": 61,
+  "food": {
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 4,
+  "name": "American Crow",
+  "scientific": "Corvus brachyrhynchos",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 99,
+  "food": {},
+  "wild": 1,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_wild",
+   "count": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 5,
+  "name": "American Goldfinch",
+  "scientific": "Spinus tristis",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 23,
+  "food": {
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 3,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [
+    "gold"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 6,
+  "name": "American Kestrel",
+  "scientific": "Falco sparverius",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 56,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 7,
+  "name": "American Oystercatcher",
+  "scientific": "Haematopus palliatus",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 81,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "oystercatcher"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 8,
+  "name": "American Redstart",
+  "scientific": "Setophaga ruticilla",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "invertebrate",
+    "seed",
+    "fish",
+    "fruit",
+    "rodent"
+   ],
+   "may_cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 9,
+  "name": "American Robin",
+  "scientific": "Turdus migratorius",
+  "points": 1,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 43,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 10,
+  "name": "American White Pelican",
+  "scientific": "Pelecanus erythrorhynchos",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 1,
+  "wingspan": 274,
+  "food": {
+   "fish": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "food_for_tucks",
+   "food": "fish",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 11,
+  "name": "American Woodcock",
+  "scientific": "Scolopax minor",
+  "points": 9,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 46,
+  "food": {
+   "invertebrate": 2,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "none",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": null,
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "american"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 12,
+  "name": "Anhinga",
+  "scientific": "Anhinga anhinga",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 114,
+  "food": {
+   "fish": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 13,
+  "name": "Anna's Hummingbird",
+  "scientific": "Calypte anna",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 13,
+  "food": {},
+  "wild": 1,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "each_gain_die"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 14,
+  "name": "Ash-Throated Flycatcher",
+  "scientific": "Myiarchus cinerascens",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 2,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_each_nest",
+   "nest": "cavity"
+  },
+  "words": {
+   "anatomist": [
+    "throat"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "ash"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 15,
+  "name": "Atlantic Puffin",
+  "scientific": "Fratercula arctica",
+  "points": 8,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 1,
+  "wingspan": 53,
+  "food": {
+   "fish": 3
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "atlantic"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 16,
+  "name": "Baird's Sparrow",
+  "scientific": "Ammodramus bairdii",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "any"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 17,
+  "name": "Bald Eagle",
+  "scientific": "Haliaeetus leucocephalus",
+  "points": 9,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 1,
+  "wingspan": 203,
+  "food": {
+   "fish": 2,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_all_feeder",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 18,
+  "name": "Baltimore Oriole",
+  "scientific": "Icterus galbula",
+  "points": 9,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_gain_supply",
+   "food": "fruit"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "baltimore"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 19,
+  "name": "Barn Owl",
+  "scientific": "Tyto alba",
+  "points": 5,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 107,
+  "food": {
+   "rodent": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 20,
+  "name": "Barn Swallow",
+  "scientific": "Hirundo rustica",
+  "points": 1,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 3,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 21,
+  "name": "Barred Owl",
+  "scientific": "Strix varia",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 2,
+  "wingspan": 107,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 75
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 22,
+  "name": "Barrow's Goldeneye",
+  "scientific": "Bucephala islandica",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 71,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_lay_eggs",
+   "nest": "cavity",
+   "other": true
+  },
+  "words": {
+   "anatomist": [
+    "eye"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "gold"
+   ],
+   "historian": true
+  }
+ },
+ {
+  "id": 23,
+  "name": "Bell's Vireo",
+  "scientific": "Vireo bellii",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 18,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 24,
+  "name": "Belted Kingfisher",
+  "scientific": "Megaceryle alcyon",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 4,
+  "wingspan": 53,
+  "food": {
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_play",
+   "habitat": "wetland",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "fish"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 25,
+  "name": "Bewick's Wren",
+  "scientific": "Thryomanes bewickii",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 18,
+  "food": {
+   "invertebrate": 2,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 26,
+  "name": "Black Skimmer",
+  "scientific": "Rynchops niger",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 112,
+  "food": {
+   "fish": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 27,
+  "name": "Black Tern",
+  "scientific": "Chlidonias niger",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 61,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 1,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 28,
+  "name": "Black Vulture",
+  "scientific": "Coragyps atratus",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 1,
+  "wingspan": 150,
+  "food": {},
+  "wild": 0,
+  "alternative": false,
+  "food_total": 0,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_predator"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 29,
+  "name": "Black-Bellied Whistling-Duck",
+  "scientific": "Dendrocygna autumnalis",
+  "points": 2,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 5,
+  "wingspan": 76,
+  "food": {
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "food_for_tucks",
+   "food": "seed",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [
+    "belly"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 30,
+  "name": "Black-Billed Magpie",
+  "scientific": "Pica hudsonia",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "star",
+  "egg_limit": 3,
+  "wingspan": 64,
+  "food": {},
+  "wild": 2,
+  "alternative": false,
+  "food_total": 2,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_predator"
+  },
+  "words": {
+   "anatomist": [
+    "bill"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 31,
+  "name": "Black-Chinned Hummingbird",
+  "scientific": "Archilochus alexandri",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 8,
+  "food": {},
+  "wild": 1,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "all_gain_supply",
+   "food": "fruit"
+  },
+  "words": {
+   "anatomist": [
+    "chin"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 32,
+  "name": "Black-Crowned Night-Heron",
+  "scientific": "Nycticorax nycticorax",
+  "points": 9,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 112,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_wild",
+   "count": 1
+  },
+  "words": {
+   "anatomist": [
+    "crown"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 33,
+  "name": "Black-Necked Stilt",
+  "scientific": "Himantopus mexicanus",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 74,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 0
+  },
+  "words": {
+   "anatomist": [
+    "neck"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 34,
+  "name": "Blue Grosbeak",
+  "scientific": "Passerina caerulea",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 28,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [
+    "beak"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "blue"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 35,
+  "name": "Blue Jay",
+  "scientific": "Cyanocitta cristata",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 41,
+  "food": {
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed"
+   ],
+   "may_cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "blue"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 36,
+  "name": "Blue-Gray Gnatcatcher",
+  "scientific": "Polioptila caerulea",
+  "points": 1,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 15,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "invertebrate"
+   ],
+   "count": 1,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "blue",
+    "gray"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 37,
+  "name": "Blue-Winged Warbler",
+  "scientific": "Vermivora cyanoptera",
+  "points": 8,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "none",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": null,
+  "words": {
+   "anatomist": [
+    "wing"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "blue"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 38,
+  "name": "Bobolink",
+  "scientific": "Dolichonyx oryzivorus",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_each_nest",
+   "nest": "ground"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 39,
+  "name": "Brant",
+  "scientific": "Branta bernicla",
+  "points": 3,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 114,
+  "food": {
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "take_tray"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 40,
+  "name": "Brewer's Blackbird",
+  "scientific": "Euphagus cyanocephalus",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 41,
+  "food": {
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "this"
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "black"
+   ],
+   "historian": true
+  }
+ },
+ {
+  "id": 41,
+  "name": "Broad-Winged Hawk",
+  "scientific": "Buteo platypterus",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 85,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [
+    "wing"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 42,
+  "name": "Bronzed Cowbird",
+  "scientific": "Molothrus aeneus",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "none",
+  "egg_limit": 0,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_lay_eggs",
+   "nest": "bowl",
+   "other": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "bronze"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 43,
+  "name": "Brown Pelican",
+  "scientific": "Pelecanus occidentalis",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 201,
+  "food": {
+   "fish": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "fish"
+   ],
+   "count": 3,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "brown"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 44,
+  "name": "Brown-Headed Cowbird",
+  "scientific": "Molothrus ater",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "none",
+  "egg_limit": 0,
+  "wingspan": 30,
+  "food": {
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_lay_eggs",
+   "nest": "bowl",
+   "other": false
+  },
+  "words": {
+   "anatomist": [
+    "head"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "brown"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 45,
+  "name": "Burrowing Owl",
+  "scientific": "Athene cunicularia",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "star",
+  "egg_limit": 4,
+  "wingspan": 53,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 46,
+  "name": "Bushtit",
+  "scientific": "Psaltriparus minimus",
+  "points": 2,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 5,
+  "wingspan": 15,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "this"
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 47,
+  "name": "California Condor",
+  "scientific": "Gymnogyps californianus",
+  "points": 1,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 1,
+  "wingspan": 277,
+  "food": {},
+  "wild": 0,
+  "alternative": false,
+  "food_total": 0,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "california"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 48,
+  "name": "California Quail",
+  "scientific": "Callipepla californica",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 6,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "this"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "california"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 49,
+  "name": "Canada Goose",
+  "scientific": "Branta canadensis",
+  "points": 3,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 132,
+  "food": {
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "food_for_tucks",
+   "food": "seed",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "canada"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 50,
+  "name": "Canvasback",
+  "scientific": "Aythya valisineria",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 4,
+  "wingspan": 82,
+  "food": {
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "all_draw_deck"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 51,
+  "name": "Carolina Chickadee",
+  "scientific": "Poecile carolinensis",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 1,
+   "cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "carolina"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 52,
+  "name": "Carolina Wren",
+  "scientific": "Thryothorus ludovicianus",
+  "points": 1,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 5,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 0
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "carolina"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 53,
+  "name": "Cassin's Finch",
+  "scientific": "Haemorhous cassinii",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 30,
+  "food": {
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 54,
+  "name": "Cassin's Sparrow",
+  "scientific": "Peucaea cassinii",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "any"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 55,
+  "name": "Cedar Waxwing",
+  "scientific": "Bombycilla cedrorum",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 25,
+  "food": {
+   "fruit": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "fruit"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [
+    "wing"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 56,
+  "name": "Cerulean Warbler",
+  "scientific": "Setophaga cerulea",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "cerulean"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 57,
+  "name": "Chestnut-Collared Longspur",
+  "scientific": "Calcarius ornatus",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [
+    "collar"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "chestnut"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 58,
+  "name": "Chihuahuan Raven",
+  "scientific": "Corvus cryptoleucus",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "platform",
+  "egg_limit": 3,
+  "wingspan": 112,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 2,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_wild",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "chihuahuan"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 59,
+  "name": "Chimney Swift",
+  "scientific": "Chaetura pelagica",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 60,
+  "name": "Chipping Sparrow",
+  "scientific": "Spizella passerina",
+  "points": 1,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "any"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 61,
+  "name": "Clark's Grebe",
+  "scientific": "Aechmophorus clarkii",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 61,
+  "food": {
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 1,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 62,
+  "name": "Clark's Nutcracker",
+  "scientific": "Nucifraga columbiana",
+  "points": 5,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 61,
+  "food": {
+   "seed": 2
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed"
+   ],
+   "may_cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 63,
+  "name": "Common Grackle",
+  "scientific": "Quiscalus quiscula",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 43,
+  "food": {
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "this"
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 64,
+  "name": "Common Loon",
+  "scientific": "Gavia immer",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 1,
+  "wingspan": 117,
+  "food": {
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "fewest_draw",
+   "habitat": "wetland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 65,
+  "name": "Common Merganser",
+  "scientific": "Mergus merganser",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 86,
+  "food": {
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 66,
+  "name": "Common Nighthawk",
+  "scientific": "Chordeiles minor",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 56,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 67,
+  "name": "Common Raven",
+  "scientific": "Corvus corax",
+  "points": 5,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 135,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 2,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_wild",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 68,
+  "name": "Common Yellowthroat",
+  "scientific": "Geothlypis trichas",
+  "points": 1,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 18,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [
+    "throat"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "yellow"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 69,
+  "name": "Cooper's Hawk",
+  "scientific": "Accipiter cooperii",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 79,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 75
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 70,
+  "name": "Dark-Eyed Junco",
+  "scientific": "Junco hyemalis",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "seed"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [
+    "eye"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 71,
+  "name": "Dickcissel",
+  "scientific": "Spiza americana",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "this"
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 72,
+  "name": "Double-Crested Cormorant",
+  "scientific": "Phalacrocorax auritus",
+  "points": 3,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 3,
+  "wingspan": 132,
+  "food": {
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "food_for_tucks",
+   "food": "fish",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [
+    "crest"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 73,
+  "name": "Downy Woodpecker",
+  "scientific": "Picoides pubescens",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 2,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "forest"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 74,
+  "name": "Eastern Bluebird",
+  "scientific": "Sialia sialis",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 5,
+  "wingspan": 33,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "grassland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "eastern"
+   ],
+   "photographer": [
+    "blue"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 75,
+  "name": "Eastern Kingbird",
+  "scientific": "Tyrannus tyrannus",
+  "points": 2,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_play",
+   "habitat": "forest",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "invertebrate"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "eastern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 76,
+  "name": "Eastern Phoebe",
+  "scientific": "Sayornis phoebe",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 4,
+  "wingspan": 28,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_gain_supply",
+   "food": "invertebrate"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "eastern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 77,
+  "name": "Eastern Screech-Owl",
+  "scientific": "Megascops asio",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 2,
+  "wingspan": 51,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "eastern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 78,
+  "name": "Ferruginous Hawk",
+  "scientific": "Buteo regalis",
+  "points": 6,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 142,
+  "food": {
+   "rodent": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "ferruginous"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 79,
+  "name": "Fish Crow",
+  "scientific": "Corvus ossifragus",
+  "points": 6,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 91,
+  "food": {
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_wild",
+   "count": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 80,
+  "name": "Forster's Tern",
+  "scientific": "Sterna forsteri",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 79,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 1,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 81,
+  "name": "Franklin's Gull",
+  "scientific": "Leucophaeus pipixcan",
+  "points": 3,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 91,
+  "food": {
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_cards",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 82,
+  "name": "Golden Eagle",
+  "scientific": "Aquila chrysaetos",
+  "points": 8,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 1,
+  "wingspan": 201,
+  "food": {
+   "rodent": 3
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 100
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "gold"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 83,
+  "name": "Grasshopper Sparrow",
+  "scientific": "Ammodramus savannarum",
+  "points": 2,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "any"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 84,
+  "name": "Gray Catbird",
+  "scientific": "Dumetella carolinensis",
+  "points": 5,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 28,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "repeat",
+   "predator_only": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "gray"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 85,
+  "name": "Great Blue Heron",
+  "scientific": "Ardea herodias",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 183,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "wetland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "blue"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 86,
+  "name": "Great Crested Flycatcher",
+  "scientific": "Myiarchus crinitus",
+  "points": 5,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 33,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "invertebrate"
+   ],
+   "may_cache": false
+  },
+  "words": {
+   "anatomist": [
+    "crest"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 87,
+  "name": "Great Egret",
+  "scientific": "Ardea alba",
+  "points": 7,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 3,
+  "wingspan": 130,
+  "food": {
+   "fish": 2,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "wetland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 88,
+  "name": "Great Horned Owl",
+  "scientific": "Bubo virginianus",
+  "points": 8,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 112,
+  "food": {
+   "rodent": 3
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 100
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 89,
+  "name": "Greater Prairie-Chicken",
+  "scientific": "Tympanuchus cupido",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 71,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "prairie"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 90,
+  "name": "Greater Roadrunner",
+  "scientific": "Geococcyx californianus",
+  "points": 7,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 56,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 50
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 91,
+  "name": "Green Heron",
+  "scientific": "Butorides virescens",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 3,
+  "wingspan": 66,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "trade_food"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "green"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 92,
+  "name": "Hermit Thrush",
+  "scientific": "Catharus guttatus",
+  "points": 7,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "fewest_die",
+   "habitat": "forest"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 93,
+  "name": "Hooded Merganser",
+  "scientific": "Lophodytes cucullatus",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 61,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "repeat",
+   "predator_only": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 94,
+  "name": "Hooded Warbler",
+  "scientific": "Setophaga citrina",
+  "points": 7,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 18,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "none",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": null,
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 95,
+  "name": "Horned Lark",
+  "scientific": "Eremophila alpestris",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "pink",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "pink_play",
+   "habitat": "grassland",
+   "then": {
+    "type": "tuck_hand",
+    "then": null
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 96,
+  "name": "House Finch",
+  "scientific": "Haemorhous mexicanus",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 6,
+  "wingspan": 25,
+  "food": {
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 97,
+  "name": "House Wren",
+  "scientific": "Troglodytes aedon",
+  "points": 1,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 5,
+  "wingspan": 15,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "this"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 98,
+  "name": "Inca Dove",
+  "scientific": "Columbina inca",
+  "points": 2,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "platform",
+  "egg_limit": 4,
+  "wingspan": 28,
+  "food": {
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_each_nest",
+   "nest": "platform"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "inca"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 99,
+  "name": "Indigo Bunting",
+  "scientific": "Passerina cyanea",
+  "points": 5,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "invertebrate",
+    "fruit"
+   ],
+   "may_cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "indigo"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 100,
+  "name": "Juniper Titmouse",
+  "scientific": "Baeolophus ridgwayi",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 1,
+   "cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 101,
+  "name": "Killdeer",
+  "scientific": "Charadrius vociferus",
+  "points": 1,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 46,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "egg_for_cards",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 102,
+  "name": "King Rail",
+  "scientific": "Rallus elegans",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 6,
+  "wingspan": 51,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 103,
+  "name": "Lazuli Bunting",
+  "scientific": "Passerina amoena",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_lay_nest",
+   "nest": "bowl"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "lazuli"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 104,
+  "name": "Lincoln's Sparrow",
+  "scientific": "Melospiza lincolnii",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 105,
+  "name": "Loggerhead Shrike",
+  "scientific": "Lanius ludovicianus",
+  "points": 3,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_gain_food_rodent"
+  },
+  "words": {
+   "anatomist": [
+    "head"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 106,
+  "name": "Mallard",
+  "scientific": "Anas platyrhynchos",
+  "points": 0,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 89,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 1,
+   "discard_end": 0
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 107,
+  "name": "Mississippi Kite",
+  "scientific": "Ictinia mississippiensis",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "platform",
+  "egg_limit": 1,
+  "wingspan": 79,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "rodent"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "mississippi"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 108,
+  "name": "Mountain Bluebird",
+  "scientific": "Sialia currucoides",
+  "points": 4,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 5,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "grassland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "mountain"
+   ],
+   "photographer": [
+    "blue"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 109,
+  "name": "Mountain Chickadee",
+  "scientific": "Poecile gambeli",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 1,
+   "cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "mountain"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 110,
+  "name": "Mourning Dove",
+  "scientific": "Zenaida macroura",
+  "points": 0,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 5,
+  "wingspan": 46,
+  "food": {
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "this"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 111,
+  "name": "Northern Bobwhite",
+  "scientific": "Colinus virginianus",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 6,
+  "wingspan": 33,
+  "food": {
+   "seed": 3
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_egg",
+   "target": "this"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "northern"
+   ],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 112,
+  "name": "Northern Cardinal",
+  "scientific": "Cardinalis cardinalis",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 5,
+  "wingspan": 30,
+  "food": {
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "fruit"
+   ],
+   "count": 1,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "northern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 113,
+  "name": "Northern Flicker",
+  "scientific": "Colaptes auratus",
+  "points": 2,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 51,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_all_feeder",
+   "food": "invertebrate"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "northern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 114,
+  "name": "Northern Harrier",
+  "scientific": "Circus hudsonius",
+  "points": 3,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 109,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 75
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "northern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 115,
+  "name": "Northern Mockingbird",
+  "scientific": "Mimus polyglottos",
+  "points": 2,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "repeat",
+   "predator_only": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "northern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 116,
+  "name": "Northern Shoveler",
+  "scientific": "Spatula clypeata",
+  "points": 7,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 76,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_draw_deck"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "northern"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 117,
+  "name": "Osprey",
+  "scientific": "Pandion haliaetus",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 160,
+  "food": {
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_gain_supply",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 118,
+  "name": "Painted Bunting",
+  "scientific": "Passerina ciris",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 119,
+  "name": "Painted Whitestart",
+  "scientific": "Myioborus pictus",
+  "points": 1,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 22,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "invertebrate"
+   ],
+   "count": 1,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 120,
+  "name": "Peregrine Falcon",
+  "scientific": "Falco peregrinus",
+  "points": 5,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 104,
+  "food": {
+   "rodent": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 100
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 121,
+  "name": "Pied-Billed Grebe",
+  "scientific": "Podilymbus podiceps",
+  "points": 0,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 4,
+  "wingspan": 41,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [
+    "bill"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 122,
+  "name": "Pileated Woodpecker",
+  "scientific": "Dryocopus pileatus",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 2,
+  "wingspan": 74,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_lay_nest",
+   "nest": "cavity"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 123,
+  "name": "Pine Siskin",
+  "scientific": "Spinus pinus",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 23,
+  "food": {
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "seed"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 124,
+  "name": "Prothonotary Warbler",
+  "scientific": "Protonotaria citrea",
+  "points": 8,
+  "habitats": [
+   "forest",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 2,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "none",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": null,
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 125,
+  "name": "Purple Gallinule",
+  "scientific": "Porphyrio martinicus",
+  "points": 7,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 4,
+  "wingspan": 56,
+  "food": {
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_draw_deck"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "purple"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 126,
+  "name": "Purple Martin",
+  "scientific": "Progne subis",
+  "points": 2,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 46,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "purple"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 127,
+  "name": "Pygmy Nuthatch",
+  "scientific": "Sitta pygmaea",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "invertebrate",
+     "seed"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 128,
+  "name": "Red Crossbill",
+  "scientific": "Loxia curvirostra",
+  "points": 6,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 28,
+  "food": {
+   "seed": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_gain_supply",
+   "food": "seed"
+  },
+  "words": {
+   "anatomist": [
+    "bill"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 129,
+  "name": "Red-Bellied Woodpecker",
+  "scientific": "Melanerpes carolinus",
+  "points": 1,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 41,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed"
+   ],
+   "may_cache": true
+  },
+  "words": {
+   "anatomist": [
+    "belly"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 130,
+  "name": "Red-Breasted Merganser",
+  "scientific": "Mergus serrator",
+  "points": 3,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 78,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [
+    "breast"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 131,
+  "name": "Red-Breasted Nuthatch",
+  "scientific": "Sitta canadensis",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 1,
+   "cache": true
+  },
+  "words": {
+   "anatomist": [
+    "breast"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 132,
+  "name": "Red-Cockaded Woodpecker",
+  "scientific": "Picoides borealis",
+  "points": 4,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 2,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 133,
+  "name": "Red-Eyed Vireo",
+  "scientific": "Vireo olivaceus",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "star",
+  "egg_limit": 2,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "forest"
+  },
+  "words": {
+   "anatomist": [
+    "eye"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 134,
+  "name": "Red-Headed Woodpecker",
+  "scientific": "Melanerpes erythrocephalus",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 43,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed"
+   ],
+   "may_cache": true
+  },
+  "words": {
+   "anatomist": [
+    "head"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 135,
+  "name": "Red-Shouldered Hawk",
+  "scientific": "Buteo lineatus",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 102,
+  "food": {
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 75
+  },
+  "words": {
+   "anatomist": [
+    "shoulder"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 136,
+  "name": "Red-Tailed Hawk",
+  "scientific": "Buteo jamaicensis",
+  "points": 5,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 124,
+  "food": {
+   "rodent": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 75
+  },
+  "words": {
+   "anatomist": [
+    "tail"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 137,
+  "name": "Red-Winged Blackbird",
+  "scientific": "Agelaius phoeniceus",
+  "points": 2,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 33,
+  "food": {
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "this"
+   }
+  },
+  "words": {
+   "anatomist": [
+    "wing"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black",
+    "red"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 138,
+  "name": "Ring-Billed Gull",
+  "scientific": "Larus delawarensis",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 122,
+  "food": {},
+  "wild": 2,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [
+    "bill"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 139,
+  "name": "Rose-Breasted Grosbeak",
+  "scientific": "Pheucticus ludovicianus",
+  "points": 6,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 33,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed",
+    "fruit"
+   ],
+   "may_cache": false
+  },
+  "words": {
+   "anatomist": [
+    "beak",
+    "breast"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "rose"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 140,
+  "name": "Roseate Spoonbill",
+  "scientific": "Platalea ajaja",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 127,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [
+    "bill"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "roseate"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 141,
+  "name": "Ruby-Crowned Kinglet",
+  "scientific": "Regulus calendula",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "forest"
+  },
+  "words": {
+   "anatomist": [
+    "crown"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "ruby"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 142,
+  "name": "Ruby-Throated Hummingbird",
+  "scientific": "Archilochus colubris",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 10,
+  "food": {},
+  "wild": 1,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "each_gain_die"
+  },
+  "words": {
+   "anatomist": [
+    "throat"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "ruby"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 143,
+  "name": "Ruddy Duck",
+  "scientific": "Oxyura jamaicensis",
+  "points": 0,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 5,
+  "wingspan": 48,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "ruddy"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 144,
+  "name": "Sandhill Crane",
+  "scientific": "Antigone canadensis",
+  "points": 5,
+  "habitats": [
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 1,
+  "wingspan": 196,
+  "food": {
+   "seed": 2
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "food_for_tucks",
+   "food": "seed",
+   "count": 2
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "sandhill"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 145,
+  "name": "Savannah Sparrow",
+  "scientific": "Passerculus sandwichensis",
+  "points": 2,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 18,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "grassland"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "savannah"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 146,
+  "name": "Say's Phoebe",
+  "scientific": "Sayornis saya",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 33,
+  "food": {
+   "invertebrate": 3
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "lay_each_nest",
+   "nest": "bowl"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 147,
+  "name": "Scaled Quail",
+  "scientific": "Callipepla squamata",
+  "points": 0,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 6,
+  "wingspan": 36,
+  "food": {
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": true,
+  "power": {
+   "type": "lay_egg",
+   "target": "this"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 148,
+  "name": "Scissor-Tailed Flycatcher",
+  "scientific": "Tyrannus forficatus",
+  "points": 8,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 2,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_gain_supply",
+   "food": "invertebrate"
+  },
+  "words": {
+   "anatomist": [
+    "tail"
+   ],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 149,
+  "name": "Snowy Egret",
+  "scientific": "Egretta thula",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 104,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "snowy"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 150,
+  "name": "Song Sparrow",
+  "scientific": "Melospiza melodia",
+  "points": 0,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 5,
+  "wingspan": 20,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 151,
+  "name": "Spotted Owl",
+  "scientific": "Strix occidentalis",
+  "points": 5,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 1,
+  "wingspan": 102,
+  "food": {
+   "rodent": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 152,
+  "name": "Spotted Sandpiper",
+  "scientific": "Actitis macularius",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_draw_deck"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 153,
+  "name": "Spotted Towhee",
+  "scientific": "Pipilo maculatus",
+  "points": 0,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 28,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 1,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 154,
+  "name": "Sprague's Pipit",
+  "scientific": "Anthus spragueii",
+  "points": 3,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 3,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 155,
+  "name": "Steller's Jay",
+  "scientific": "Cyanocitta stelleri",
+  "points": 5,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 48,
+  "food": {
+   "seed": 2
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "seed"
+   ],
+   "may_cache": true
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 156,
+  "name": "Swainson's Hawk",
+  "scientific": "Buteo swainsoni",
+  "points": 5,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 130,
+  "food": {
+   "invertebrate": 1,
+   "rodent": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_card",
+   "below": 75
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 157,
+  "name": "Tree Swallow",
+  "scientific": "Tachycineta bicolor",
+  "points": 3,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 158,
+  "name": "Trumpeter Swan",
+  "scientific": "Cygnus buccinator",
+  "points": 9,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 203,
+  "food": {
+   "seed": 2
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "none",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": null,
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 159,
+  "name": "Tufted Titmouse",
+  "scientific": "Baeolophus bicolor",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "play_another",
+   "habitat": "forest"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 160,
+  "name": "Turkey Vulture",
+  "scientific": "Cathartes aura",
+  "points": 1,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 1,
+  "wingspan": 170,
+  "food": {},
+  "wild": 0,
+  "alternative": false,
+  "food_total": 0,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_predator"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 161,
+  "name": "Vaux's Swift",
+  "scientific": "Chaetura vauxi",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 31,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": true,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "gain_supply",
+    "foods": [
+     "invertebrate"
+    ],
+    "count": 1,
+    "cache": false
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 162,
+  "name": "Violet-Green Swallow",
+  "scientific": "Tachycineta thalassina",
+  "points": 3,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 36,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [
+    "green",
+    "violet"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 163,
+  "name": "Western Meadowlark",
+  "scientific": "Sturnella neglecta",
+  "points": 2,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 4,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_lay_nest",
+   "nest": "ground"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "western"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 164,
+  "name": "Western Tanager",
+  "scientific": "Piranga ludoviciana",
+  "points": 6,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 2,
+  "wingspan": 30,
+  "food": {
+   "invertebrate": 2,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_feeder",
+   "foods": [
+    "invertebrate",
+    "fruit"
+   ],
+   "may_cache": false
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [
+    "western"
+   ],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 165,
+  "name": "White-Breasted Nuthatch",
+  "scientific": "Sitta carolinensis",
+  "points": 2,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 28,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "seed"
+   ],
+   "count": 1,
+   "cache": true
+  },
+  "words": {
+   "anatomist": [
+    "breast"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 166,
+  "name": "White-Crowned Sparrow",
+  "scientific": "Zonotrichia leucophrys",
+  "points": 2,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 5,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [
+    "crown"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 167,
+  "name": "White-Faced Ibis",
+  "scientific": "Plegadis chihi",
+  "points": 8,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 91,
+  "food": {
+   "invertebrate": 2,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [
+    "face"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 168,
+  "name": "White-Throated Swift",
+  "scientific": "Aeronautes saxatalis",
+  "points": 2,
+  "habitats": [
+   "grassland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 2,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": true,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "any"
+   }
+  },
+  "words": {
+   "anatomist": [
+    "throat"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "white"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 169,
+  "name": "Whooping Crane",
+  "scientific": "Grus americana",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 1,
+  "wingspan": 221,
+  "food": {},
+  "wild": 3,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 170,
+  "name": "Wild Turkey",
+  "scientific": "Meleagris gallopavo",
+  "points": 8,
+  "habitats": [
+   "forest",
+   "grassland"
+  ],
+  "nest": "ground",
+  "egg_limit": 5,
+  "wingspan": 135,
+  "food": {
+   "seed": 2,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "none",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": null,
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 171,
+  "name": "Willet",
+  "scientific": "Tringa semipalmata",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 66,
+  "food": {
+   "invertebrate": 1,
+   "fish": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": true,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "hunt_dice",
+   "food": "fish"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 172,
+  "name": "Wilson's Snipe",
+  "scientific": "Gallinago delicata",
+  "points": 5,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "ground",
+  "egg_limit": 2,
+  "wingspan": 41,
+  "food": {
+   "invertebrate": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "all_draw_deck"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": true
+  }
+ },
+ {
+  "id": 173,
+  "name": "Wood Duck",
+  "scientific": "Aix sponsa",
+  "points": 4,
+  "habitats": [
+   "forest",
+   "wetland"
+  ],
+  "nest": "cavity",
+  "egg_limit": 4,
+  "wingspan": 76,
+  "food": {
+   "seed": 2,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw",
+   "count": 2,
+   "discard_end": 1
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 174,
+  "name": "Wood Stork",
+  "scientific": "Mycteria americana",
+  "points": 6,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 155,
+  "food": {
+   "fish": 1,
+   "rodent": 1
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "white",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "draw_bonus"
+  },
+  "words": {
+   "anatomist": [],
+   "cartographer": [],
+   "photographer": [],
+   "historian": false
+  }
+ },
+ {
+  "id": 175,
+  "name": "Yellow-Bellied Sapsucker",
+  "scientific": "Sphyrapicus varius",
+  "points": 3,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "cavity",
+  "egg_limit": 3,
+  "wingspan": 41,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "gain_supply",
+   "foods": [
+    "invertebrate"
+   ],
+   "count": 1,
+   "cache": false
+  },
+  "words": {
+   "anatomist": [
+    "belly"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "yellow"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 176,
+  "name": "Yellow-Billed Cuckoo",
+  "scientific": "Coccyzus americanus",
+  "points": 5,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "platform",
+  "egg_limit": 2,
+  "wingspan": 46,
+  "food": {
+   "invertebrate": 2
+  },
+  "wild": 1,
+  "alternative": false,
+  "food_total": 3,
+  "color": "pink",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "pink_lay_eggs",
+   "nest": "bowl",
+   "other": false
+  },
+  "words": {
+   "anatomist": [
+    "bill"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "yellow"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 177,
+  "name": "Yellow-Breasted Chat",
+  "scientific": "Icteria virens",
+  "points": 5,
+  "habitats": [
+   "forest",
+   "grassland",
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 25,
+  "food": {
+   "invertebrate": 1,
+   "fruit": 2
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 3,
+  "color": "brown",
+  "predator": false,
+  "flocking": false,
+  "swift_start": false,
+  "power": {
+   "type": "move"
+  },
+  "words": {
+   "anatomist": [
+    "breast"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "yellow"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 178,
+  "name": "Yellow-Headed Blackbird",
+  "scientific": "Xanthocephalus xanthocephalus",
+  "points": 4,
+  "habitats": [
+   "wetland"
+  ],
+  "nest": "bowl",
+  "egg_limit": 3,
+  "wingspan": 38,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1
+  },
+  "wild": 0,
+  "alternative": false,
+  "food_total": 2,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "lay_egg",
+    "target": "this"
+   }
+  },
+  "words": {
+   "anatomist": [
+    "head"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "black",
+    "yellow"
+   ],
+   "historian": false
+  }
+ },
+ {
+  "id": 179,
+  "name": "Yellow-Rumped Warbler",
+  "scientific": "Setophaga coronata",
+  "points": 1,
+  "habitats": [
+   "forest"
+  ],
+  "nest": "bowl",
+  "egg_limit": 4,
+  "wingspan": 23,
+  "food": {
+   "invertebrate": 1,
+   "seed": 1,
+   "fruit": 1
+  },
+  "wild": 0,
+  "alternative": true,
+  "food_total": 1,
+  "color": "brown",
+  "predator": false,
+  "flocking": true,
+  "swift_start": false,
+  "power": {
+   "type": "tuck_hand",
+   "then": {
+    "type": "draw",
+    "count": 1,
+    "discard_end": 0
+   }
+  },
+  "words": {
+   "anatomist": [
+    "rump"
+   ],
+   "cartographer": [],
+   "photographer": [
+    "yellow"
+   ],
+   "historian": false
+  }
+ }
+]

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>boardgames.ai — what AI learns from board games</title>
+<meta name="description" content="AI agents learn modern board games by playing millions of games against themselves. Their games show which cards and strategies win.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232c6e8f'/%3E%3Ccircle cx='11' cy='12' r='3.2' fill='white'/%3E%3Ccircle cx='21' cy='12' r='3.2' fill='white'/%3E%3Ccircle cx='11' cy='21' r='3.2' fill='white'/%3E%3Ccircle cx='21' cy='21' r='3.2' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="#/" aria-label="boardgames.ai home">
+      <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="7" class="brand-tile"/><circle cx="11" cy="12" r="3.2" fill="#fff"/><circle cx="21" cy="12" r="3.2" fill="#fff"/><circle cx="11" cy="21" r="3.2" fill="#fff"/><circle cx="21" cy="21" r="3.2" fill="#fff"/></svg>
+      <span>boardgames<span class="brand-dot">.ai</span></span>
+    </a>
+    <nav class="game-switch" id="game-switch" aria-label="Games"></nav>
+    <div class="top-tools">
+      <div class="seg" role="group" aria-label="Language" id="lang"></div>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Theme"></button>
+    </div>
+  </div>
+</header>
+<main id="main" tabindex="-1"><div class="loading">Loading…</div></main>
+<footer class="foot" id="foot"></footer>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

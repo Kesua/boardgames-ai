@@ -1,0 +1,480 @@
+{
+ "items": {
+  "LINDEN": {
+   "name": "Linden",
+   "scoring": "3 if no one has more Lindens (ties count), else 1. Violet Carpenter Bee counts."
+  },
+  "OAK": {
+   "name": "Oak",
+   "bonus": "Extra turn.",
+   "scoring": "10 if you have 8 different tree species (saplings don't count)."
+  },
+  "SILVER_FIR": {
+   "name": "Silver Fir",
+   "bonus": "Place 1 pawed animal from hand free (no effect or bonus).",
+   "scoring": "2 per card attached to this tree."
+  },
+  "BIRCH": {
+   "name": "Birch",
+   "effect": "Draw 1 card.",
+   "scoring": "1 point."
+  },
+  "BEECH": {
+   "name": "Beech",
+   "effect": "Draw 1 card.",
+   "scoring": "5 if you have at least 4 Beeches. Violet Carpenter Bee counts."
+  },
+  "SYCAMORE": {
+   "name": "Sycamore",
+   "scoring": "1 per tree (saplings count)."
+  },
+  "DOUGLAS_FIR": {
+   "name": "Douglas Fir",
+   "bonus": "Extra turn.",
+   "scoring": "5 points."
+  },
+  "HORSE_CHESTNUT": {
+   "name": "Horse Chestnut",
+   "scoring": "All Horse Chestnuts: 1/2/3/4/5/6/7+ → 1/4/9/16/25/36/49. Violet Carpenter Bee counts."
+  },
+  "EUROPEAN_LARCH": {
+   "name": "European Larch",
+   "bonus": "Place 1 Alps card from hand free (no effect or bonus).",
+   "scoring": "3 points.",
+   "note": "In this version: dwellers only."
+  },
+  "STONE_PINE": {
+   "name": "Stone Pine",
+   "effect": "Draw 1 card.",
+   "bonus": "Draw 1 card.",
+   "scoring": "1 per Alps card (this one included)."
+  },
+  "ELDERBERRY": {
+   "name": "Elderberry",
+   "effect": "Ongoing: when you play a plant, draw 1 card.",
+   "bonus": "Place 1 plant from hand free (no effect or bonus)."
+  },
+  "COMMON_HAZEL": {
+   "name": "Common Hazel",
+   "effect": "Ongoing: when you play a bat, draw 1 card.",
+   "bonus": "Place 1 bat from hand free (no effect or bonus)."
+  },
+  "BLACKTHORN": {
+   "name": "Blackthorn",
+   "effect": "Ongoing: when you play a butterfly, draw 1 card.",
+   "bonus": "Place 1 butterfly from hand free (no effect or bonus)."
+  },
+  "EUROPEAN_HARE": {
+   "name": "European Hare",
+   "scoring": "1 per European Hare (Mountain Hare counts). Any number may share one slot."
+  },
+  "EUROPEAN_BADGER": {
+   "name": "European Badger",
+   "bonus": "Place 1 pawed animal from hand free (no effect or bonus).",
+   "scoring": "2 points."
+  },
+  "GREATER_HORSESHOE_BAT": {
+   "name": "Greater Horseshoe Bat",
+   "scoring": "5 if you have at least 3 different bats."
+  },
+  "RED_FOX": {
+   "name": "Red Fox",
+   "effect": "Draw 1 card per European Hare in your forest.",
+   "scoring": "2 per European Hare."
+  },
+  "RACCOON": {
+   "name": "Raccoon",
+   "effect": "Put any number of hand cards in your cave, then draw as many."
+  },
+  "WILD_BOAR": {
+   "name": "Wild Boar",
+   "scoring": "10 if you have at least 1 Squeaker."
+  },
+  "BROWN_LONG_EARED_BAT": {
+   "name": "Brown Long-Eared Bat",
+   "scoring": "5 if you have at least 3 different bats."
+  },
+  "ROE_DEER": {
+   "name": "Roe Deer",
+   "bonus": "Draw 1 card.",
+   "scoring": "3 per card with this card's tree symbol."
+  },
+  "BARBASTELLE_BAT": {
+   "name": "Barbastelle Bat",
+   "scoring": "5 if you have at least 3 different bats."
+  },
+  "BROWN_BEAR": {
+   "name": "Brown Bear",
+   "effect": "Put all clearing cards in your cave.",
+   "bonus": "Draw 1 card, then take an extra turn."
+  },
+  "BEECH_MARTEN": {
+   "name": "Beech Marten",
+   "effect": "Draw 1 card.",
+   "scoring": "5 per fully occupied tree."
+  },
+  "RED_DEER": {
+   "name": "Red Deer",
+   "bonus": "Place 1 deer from hand free (no effect or bonus).",
+   "scoring": "1 per tree and per plant."
+  },
+  "LYNX": {
+   "name": "Lynx",
+   "scoring": "10 if you have at least 1 Roe Deer."
+  },
+  "GNAT": {
+   "name": "Gnat",
+   "effect": "Place any number of bats from hand free (no effect or bonus).",
+   "scoring": "1 per bat."
+  },
+  "VIOLET_CARPENTER_BEE": {
+   "name": "Violet Carpenter Bee",
+   "scoring": "The tree it sits on counts as 1 more tree of its species."
+  },
+  "FALLOW_DEER": {
+   "name": "Fallow Deer",
+   "bonus": "Draw 2 cards.",
+   "scoring": "3 per cloven-hoofed animal."
+  },
+  "EUROPEAN_FAT_DORMOUSE": {
+   "name": "European Fat Dormouse",
+   "scoring": "15 if a bat also occupies this tree."
+  },
+  "BECHSTEINS_BAT": {
+   "name": "Bechstein's Bat",
+   "scoring": "5 if you have at least 3 different bats."
+  },
+  "WOLF": {
+   "name": "Wolf",
+   "effect": "Draw 1 card per deer in your forest.",
+   "bonus": "Extra turn.",
+   "scoring": "5 per deer."
+  },
+  "SQUEAKER": {
+   "name": "Squeaker",
+   "scoring": "1 point."
+  },
+  "GREAT_SPOTTED_WOODPECKER": {
+   "name": "Great Spotted Woodpecker",
+   "effect": "Draw 1 card.",
+   "scoring": "10 if no one has more trees (saplings count; ties count). Violet Carpenter Bee counts."
+  },
+  "CHAFFINCH": {
+   "name": "Chaffinch",
+   "scoring": "5 if on a Beech."
+  },
+  "LARGE_TORTOISESHELL": {
+   "name": "Large Tortoiseshell",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "CAMBERWELL_BEAUTY": {
+   "name": "Camberwell Beauty",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "PURPLE_EMPEROR": {
+   "name": "Purple Emperor",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "SILVER_WASHED_FRITILLARY": {
+   "name": "Silver-Washed Fritillary",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "PEACOCK_BUTTERFLY": {
+   "name": "Peacock Butterfly",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "RED_SQUIRREL": {
+   "name": "Red Squirrel",
+   "scoring": "5 if on an Oak."
+  },
+  "BULLFINCH": {
+   "name": "Bullfinch",
+   "scoring": "2 per insect."
+  },
+  "TAWNY_OWL": {
+   "name": "Tawny Owl",
+   "effect": "Draw 1 card.",
+   "bonus": "Draw 2 cards.",
+   "scoring": "5 points."
+  },
+  "EURASIAN_JAY": {
+   "name": "Eurasian Jay",
+   "effect": "Extra turn.",
+   "scoring": "3 points."
+  },
+  "GOSHAWK": {
+   "name": "Goshawk",
+   "scoring": "3 per bird."
+  },
+  "PENNY_BUN": {
+   "name": "Penny Bun",
+   "effect": "Ongoing: when you play a card on top of a tree, draw 1 card."
+  },
+  "PARASOL_MUSHROOM": {
+   "name": "Parasol Mushroom",
+   "effect": "Ongoing: when you play a card below a tree, draw 1 card."
+  },
+  "CHANTERELLE": {
+   "name": "Chanterelle",
+   "effect": "Ongoing: when you play a tree, draw 1 card."
+  },
+  "FLY_AGARIC": {
+   "name": "Fly Agaric",
+   "effect": "Ongoing: when you play a pawed animal, draw 1 card."
+  },
+  "MOLE": {
+   "name": "Mole",
+   "effect": "Now play any number of cards, paying their costs."
+  },
+  "BLACKBERRIES": {
+   "name": "Blackberries",
+   "scoring": "2 per plant."
+  },
+  "WILD_STRAWBERRIES": {
+   "name": "Wild Strawberries",
+   "scoring": "10 if you have 8 different tree species (saplings don't count)."
+  },
+  "TREE_FERNS": {
+   "name": "Tree Ferns",
+   "effect": "Draw 1 card.",
+   "scoring": "6 per amphibian."
+  },
+  "COMMON_TOAD": {
+   "name": "Common Toad",
+   "scoring": "5 if it shares its slot with another Common Toad (max 2 per slot)."
+  },
+  "TREE_FROG": {
+   "name": "Tree Frog",
+   "scoring": "5 per Gnat."
+  },
+  "FIRE_SALAMANDER": {
+   "name": "Fire Salamander",
+   "bonus": "Place 1 pawed animal from hand free (no effect or bonus).",
+   "scoring": "All Fire Salamanders: 1/2/3 → 5/15/25."
+  },
+  "HEDGEHOG": {
+   "name": "Hedgehog",
+   "bonus": "Draw 1 card.",
+   "scoring": "2 per butterfly."
+  },
+  "FIREFLIES": {
+   "name": "Fireflies",
+   "scoring": "All Fireflies: 1/2/3/4 → 0/10/15/20."
+  },
+  "MOSS": {
+   "name": "Moss",
+   "scoring": "10 if you have at least 10 trees (saplings count). Violet Carpenter Bee counts."
+  },
+  "WOOD_ANT": {
+   "name": "Wood Ant",
+   "scoring": "2 per card below a tree."
+  },
+  "STAG_BEETLE": {
+   "name": "Stag Beetle",
+   "bonus": "Place 1 bird from hand free (no effect or bonus).",
+   "scoring": "1 per pawed animal."
+  },
+  "POND_TURTLE": {
+   "name": "Pond Turtle",
+   "effect": "Draw 1 card.",
+   "scoring": "5 points."
+  },
+  "MAP_BUTTERFLY": {
+   "name": "Map Butterfly",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "EURASIAN_MAGPIE": {
+   "name": "Eurasian Magpie",
+   "effect": "Take 1 card from the clearing into your hand.",
+   "bonus": "Put 2 clearing cards in your cave.",
+   "scoring": "3 points."
+  },
+  "NIGHTINGALE": {
+   "name": "Nightingale",
+   "bonus": "Extra turn.",
+   "scoring": "5 if on a shrub."
+  },
+  "BARN_OWL": {
+   "name": "Barn Owl",
+   "effect": "Extra turn if you have at least 1 bat.",
+   "scoring": "3 per bat."
+  },
+  "DIGITALIS": {
+   "name": "Digitalis",
+   "scoring": "Different plants: 1/2/3/4/5+ → 1/3/6/10/15."
+  },
+  "STINGING_NETTLE": {
+   "name": "Stinging Nettle",
+   "scoring": "2 per butterfly. Any number of butterflies may share the top of its tree or shrub."
+  },
+  "GREAT_GREEN_BUSH_CRICKET": {
+   "name": "Great Green Bush-Cricket",
+   "effect": "Place 1 bird from hand free (no effect or bonus).",
+   "scoring": "1 per insect."
+  },
+  "WATER_VOLE": {
+   "name": "Water Vole",
+   "effect": "Now play any number of hand cards as saplings.",
+   "bonus": "Extra turn."
+  },
+  "FEMALE_WILD_BOAR": {
+   "name": "Wild Boar (♀)",
+   "effect": "Remove all clearing cards from the game.",
+   "bonus": "Place 1 Squeaker from hand free (no effect or bonus).",
+   "scoring": "10 per Squeaker."
+  },
+  "BEE_SWARM": {
+   "name": "Bee Swarm",
+   "effect": "Put all plants, shrubs and trees from the clearing in your cave.",
+   "scoring": "1 per plant."
+  },
+  "EUROPEAN_BISON": {
+   "name": "European Bison",
+   "effect": "Extra turn.",
+   "scoring": "2 per card with a Beech or Oak symbol."
+  },
+  "EUROPEAN_WILDCAT": {
+   "name": "European Wildcat",
+   "effect": "Take 1 card from the clearing into your hand.",
+   "scoring": "1 per bird."
+  },
+  "COMMON_PIPISTRELLE": {
+   "name": "Common Pipistrelle",
+   "scoring": "5 if you have at least 3 different bats."
+  },
+  "CRANE_FLY": {
+   "name": "Crane Fly",
+   "effect": "Place any number of bats from hand free (no effect or bonus).",
+   "bonus": "Take all bats from the clearing into your hand.",
+   "scoring": "1 per bat."
+  },
+  "EUROPEAN_POLECAT": {
+   "name": "European Polecat",
+   "bonus": "Extra turn.",
+   "scoring": "10 if it is the only dweller on its tree or shrub."
+  },
+  "ALPINE_MARMOT": {
+   "name": "Alpine Marmot",
+   "scoring": "3 per different plant."
+  },
+  "CHAMOIS": {
+   "name": "Chamois",
+   "scoring": "3 per card with this card's tree symbol."
+  },
+  "CAPERCAILLIE": {
+   "name": "Capercaillie",
+   "effect": "Place 1 plant from hand free (no effect or bonus).",
+   "scoring": "1 per plant."
+  },
+  "MOUNTAIN_HARE": {
+   "name": "Mountain Hare",
+   "scoring": "1 per European Hare. Counts as a European Hare but never shares a slot."
+  },
+  "STEINBOCK": {
+   "name": "Steinbock",
+   "effect": "Extra turn.",
+   "scoring": "10 points."
+  },
+  "SAVIS_PIPISTRELLE": {
+   "name": "Savi's Pipistrelle",
+   "scoring": "5 if you have at least 3 different bats."
+  },
+  "PHOEBUS_APOLLO": {
+   "name": "Phoebus Apollo",
+   "scoring": "Set of different butterflies: 1/2/3/4/5/6/7 → 0/3/6/12/20/35/55."
+  },
+  "GOLDEN_EAGLE": {
+   "name": "Golden Eagle",
+   "scoring": "1 per pawed animal and per amphibian."
+  },
+  "BEARDED_VULTURE": {
+   "name": "Bearded Vulture",
+   "effect": "Put 2 clearing cards in your cave.",
+   "scoring": "1 per card in your cave."
+  },
+  "COMMON_RAVEN": {
+   "name": "Common Raven",
+   "effect": "Draw 1 card.",
+   "scoring": "5 points."
+  },
+  "BLACK_TRUMPET": {
+   "name": "Black Trumpet",
+   "effect": "Ongoing: when you play an Alps card, draw 1 card."
+  },
+  "EDELWEISS": {
+   "name": "Edelweiss",
+   "effect": "Draw 1 card.",
+   "bonus": "Draw 1 card.",
+   "scoring": "3 points."
+  },
+  "BLUEBERRY": {
+   "name": "Blueberry",
+   "effect": "Place 1 amphibian from hand free (no effect or bonus).",
+   "scoring": "2 per different bird."
+  },
+  "ALPINE_NEWT": {
+   "name": "Alpine Newt",
+   "bonus": "Place 1 Alps card, then 1 insect, from hand free (no effect or bonus).",
+   "scoring": "2 per insect.",
+   "note": "In this version: dwellers only."
+  },
+  "GENTIAN": {
+   "name": "Gentian",
+   "effect": "Place 1 butterfly from hand free (no effect or bonus).",
+   "scoring": "3 per butterfly."
+  }
+ },
+ "tags": {
+  "symbol": {
+   "LINDEN": "Linden",
+   "OAK": "Oak",
+   "SILVER_FIR": "Silver Fir",
+   "BIRCH": "Birch",
+   "BEECH": "Beech",
+   "SYCAMORE": "Sycamore",
+   "DOUGLAS_FIR": "Douglas Fir",
+   "HORSE_CHESTNUT": "Horse Chestnut",
+   "ALPINE_LARCH": "Alpine Larch",
+   "SWISS_PINE": "Swiss Pine"
+  }
+ },
+ "archetypes": {
+  "LINDEN": "Linden",
+  "OAK": "Oak",
+  "SILVER_FIR": "Silver Fir",
+  "BIRCH": "Birch",
+  "BEECH": "Beech",
+  "SYCAMORE": "Sycamore",
+  "DOUGLAS_FIR": "Douglas Fir",
+  "HORSE_CHESTNUT": "Horse Chestnut",
+  "ALPINE_LARCH": "Alpine Larch",
+  "SWISS_PINE": "Swiss Pine",
+  "SAPLING": "Saplings",
+  "MIXED": "Mixed",
+  "NONE": "None"
+ },
+ "sections": {
+  "clearing_title": "Drawing from the clearing",
+  "clearing_note": "Win rate by how many of a player's draws came from the clearing (face-up cards) instead of the deck.",
+  "clearing_x": "Share of draws from the clearing",
+  "clearing_bars": "Players",
+  "win_rate": "Win rate",
+  "clearing_winners": "Winners: share from the clearing",
+  "clearing_losers": "Others: share from the clearing",
+  "wipes_title": "Clearing wipes",
+  "wipes_note": "When the clearing reaches 10 cards it is emptied. Inferred from the clearing size; Brown Bear moving the clearing to its cave counts too. The trigger is the player whose action filled it.",
+  "wipes_triggered": "Wipes caused",
+  "players_col": "Players",
+  "mean_rank": "Average place",
+  "wipes_per_game": "Wipes per game",
+  "wipes_winners": "Wipes caused by winners",
+  "wipes_losers": "Wipes caused by others",
+  "drivers_title": "What makes a game long",
+  "drivers_note": "Few deck cards left at the end = the winter cards came late = a long game, whatever the players do. Share of the variation in game length explained:",
+  "drivers_x": "Deck cards left at the end",
+  "rounds_per_player": "Rounds per player",
+  "r2_deck": "by the deck alone (chance)",
+  "r2_clearing": "by clearing draws alone (players)",
+  "r2_both": "by both"
+ }
+}

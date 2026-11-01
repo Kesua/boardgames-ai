@@ -1,0 +1,74 @@
+{
+ "tags": {
+  "habitat": {
+   "forest": "Les",
+   "grassland": "Louka",
+   "wetland": "Mokřad"
+  },
+  "nest": {
+   "bowl": "Miskovité",
+   "cavity": "V dutině",
+   "ground": "Na zemi",
+   "platform": "Plošinové",
+   "star": "Hvězda (libovolné)",
+   "none": "Žádné"
+  },
+  "power": {
+   "brown": "Hnědá (při aktivaci)",
+   "white": "Bílá (při zahrání)",
+   "pink": "Růžová (mezi tahy)",
+   "none": "Bez schopnosti"
+  },
+  "power_color": {
+   "brown": "Hnědá",
+   "white": "Bílá",
+   "pink": "Růžová",
+   "none": "Žádná"
+  },
+  "habitats": {
+   "forest": "Les",
+   "grassland": "Louka",
+   "wetland": "Mokřad"
+  }
+ },
+ "archetypes": {
+  "forest": "Les",
+  "grassland": "Louka",
+  "wetland": "Mokřad",
+  "MIXED": "Smíšené"
+ },
+ "sections": {
+  "score_mix_title": "Jak vítězové bodují",
+  "score_mix_note": "Průměrné body v každé kategorii: vítězové proti ostatním hráčům.",
+  "category": "Kategorie",
+  "winners": "Vítězové",
+  "others": "Ostatní",
+  "bonus_title": "Bonusové karty",
+  "bonus_note": "Přínos k výhře držení každé bonusové karty na konci a body, které přinesla. Další bonusové karty hráči dobírají díky některým ptákům.",
+  "bonus_card": "Bonusová karta",
+  "holders": "Hráčů s ní",
+  "win_lift": "Přínos k výhře",
+  "bonus_points": "Body z bonusů (všech karet)",
+  "bonus_cards_winners": "Bonusových karet u vítězů",
+  "bonus_cards_others": "Bonusových karet u ostatních",
+  "goals_title": "Cíle kol",
+  "goals_note": "Body z cíle na konci každého kola: vítězové proti ostatním (zelená deska: 1./2./3. místo).",
+  "round": "Kolo",
+  "actions_title": "Co hráči dělají v každém kole",
+  "actions_note": "Podíl každé akce v kole, vítězové proti ostatním.",
+  "who": "Kdo",
+  "PLAY_BIRD": "Zahrát ptáka",
+  "GAIN_FOOD": "Získat potravu",
+  "LAY_EGGS": "Klást vejce",
+  "DRAW_CARDS": "Dobrat karty",
+  "birds_title": "Kolik ptáků zahrát",
+  "birds_note": "Podíl výher podle počtu ptáků na desce na konci.",
+  "birds_x": "Ptáků na desce",
+  "players_col": "Hráči",
+  "win_rate": "Podíl výher",
+  "birds_winners": "Ptáků: vítězové",
+  "birds_others": "Ptáků: ostatní",
+  "food_left_winners": "Zbylá potrava: vítězové",
+  "hand_left_winners": "Karet v ruce: vítězové"
+ }
+}

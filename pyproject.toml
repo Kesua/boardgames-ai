@@ -1,0 +1,28 @@
+[project]
+name = "boardgames-ai"
+version = "0.1.0"
+description = "AI agents learn modern board games; their games show what wins."
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "torch>=2.2",
+    "sb3-contrib>=2.3",
+    "gymnasium>=0.29",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "jsonschema>=4"]
+
+[tool.setuptools.packages.find]
+include = ["bgai*", "games*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "games"]
+markers = [
+    "rule(id): the rule ID in games/<slug>/rules.md this test proves",
+    "card(id): the card or item id this test proves",
+    "slow: longer checks (run with -m slow)",
+]
+addopts = "-m 'not slow'"

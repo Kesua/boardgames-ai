@@ -1,0 +1,66 @@
+{
+  "slug": "wingspan",
+  "name": "Wingspan",
+  "publisher": "Stonemaier Games",
+  "designer": "Elizabeth Hargrave",
+  "year": 2019,
+  "edition": "Base game (170 birds + the 10 Swift-Start birds, 26 bonus cards), green goal board",
+  "players": [2, 3, 4, 5],
+  "rights": "RIGHTS.md",
+  "theme": {"accent": "#2c6e8f", "accent_soft": "#e1eef4", "emoji": "🐦"},
+  "intro": {
+    "en": "Players attract birds to three habitats — forest, grassland and wetland. Each bird played makes its row stronger: gaining food, laying eggs or drawing cards gives more as the row fills, and many birds add a power. The game always lasts 4 rounds with fewer turns each round (8, 7, 6, 5), so every action counts.",
+    "cs": "Hráči lákají ptáky do tří prostředí — lesa, louky a mokřadu. Každý zahraný pták posílí svou řadu: získání potravy, kladení vajec i dobírání karet dává víc, čím je řada plnější, a mnoho ptáků přidá schopnost. Hra má vždy 4 kola a v každém o tah méně (8, 7, 6, 5), takže se počítá každá akce."
+  },
+  "terms": {
+    "en": {"item": "bird", "items": "birds", "board": "player mat", "boards": "player mats", "archetype": "main habitat",
+           "archetypes": "main habitats", "round": "round"},
+    "cs": {"item": "pták", "items": "ptáci", "board": "hrací deska", "boards": "hrací desky", "archetype": "hlavní prostředí",
+           "archetypes": "hlavní prostředí", "round": "kolo"}
+  },
+  "tags": {"habitat": {"en": "Habitat", "cs": "Prostředí"}, "nest": {"en": "Nest", "cs": "Hnízdo"},
+           "power": {"en": "Power colour", "cs": "Barva schopnosti"}},
+  "archetype": {"tag": "habitat", "min_share": 0.0,
+                "rule": {"en": "A player's main habitat is the row with the most birds at the end; Mixed = two rows tie.",
+                         "cs": "Hlavní prostředí je řada s nejvíce ptáky na konci hry; Smíšené = dvě řady mají stejně."}},
+  "score_categories": {
+    "birds": {"en": "Bird points", "cs": "Body za ptáky"},
+    "bonus": {"en": "Bonus cards", "cs": "Bonusové karty"},
+    "goals": {"en": "Round goals", "cs": "Cíle kol"},
+    "eggs": {"en": "Eggs", "cs": "Vejce"},
+    "cache": {"en": "Cached food", "cs": "Uložená potrava"},
+    "tucked": {"en": "Tucked cards", "cs": "Zastrčené karty"}
+  },
+  "seat_extras": {
+    "birds": {"en": "Birds on the mat", "cs": "Ptáci na desce"},
+    "forest": {"en": "Forest birds", "cs": "Ptáci v lese"},
+    "grassland": {"en": "Grassland birds", "cs": "Ptáci na louce"},
+    "wetland": {"en": "Wetland birds", "cs": "Ptáci v mokřadu"},
+    "eggs_total": {"en": "Eggs", "cs": "Vejce"},
+    "food_left": {"en": "Food left", "cs": "Zbylá potrava"},
+    "bonus_cards": {"en": "Bonus cards held", "cs": "Držené bonusové karty"},
+    "play_bird": {"en": "Play-a-bird turns", "cs": "Tahy zahrání ptáka"},
+    "gain_food": {"en": "Gain-food turns", "cs": "Tahy získání potravy"},
+    "lay_eggs": {"en": "Lay-eggs turns", "cs": "Tahy kladení vajec"},
+    "draw_cards": {"en": "Draw-cards turns", "cs": "Tahy dobírání karet"}
+  },
+  "top_decision": "CHOOSE_ACTION",
+  "actions": {
+    "PLAY_BIRD": {"en": "Play a bird", "cs": "Zahrát ptáka"},
+    "GAIN_FOOD": {"en": "Gain food (forest)", "cs": "Získat potravu (les)"},
+    "LAY_EGGS": {"en": "Lay eggs (grassland)", "cs": "Klást vejce (louka)"},
+    "DRAW_CARDS": {"en": "Draw cards (wetland)", "cs": "Dobrat karty (mokřad)"}
+  },
+  "fate": {"played": ["PLAY"], "tucked": ["TUCK"], "discarded": ["DISCARD", "SETUP_DISCARD"]},
+  "fate_labels": {
+    "played": {"en": "Played", "cs": "Zahráno"},
+    "tucked": {"en": "Tucked under a bird", "cs": "Zastrčeno pod ptáka"},
+    "discarded": {"en": "Discarded", "cs": "Odhozeno"},
+    "left_in_hand": {"en": "Left in hand", "cs": "Zbylo v ruce"}
+  },
+  "optional_decisions": {"decision": "USE_POWER", "use": "USE", "skip": "SKIP", "group_pattern": "^(.*)$"},
+  "length": {"show": false},
+  "item_attributes": ["points", "habitats", "nest", "egg_limit", "wingspan", "food_total", "power_color", "predator", "flocking"],
+  "featured": {},
+  "languages": ["en", "cs"]
+}
