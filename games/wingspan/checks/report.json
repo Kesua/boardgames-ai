@@ -1,0 +1,21 @@
+{
+  "game": "wingspan",
+  "games_per_player_count": {
+    "2": 2500,
+    "3": 2500,
+    "4": 2500,
+    "5": 2500
+  },
+  "problems": [],
+  "problem_count": 0,
+  "seconds": 181.8,
+  "checks": [
+    "ends",
+    "legal",
+    "seed",
+    "clone",
+    "scores",
+    "records",
+    "invariants"
+  ]
+}

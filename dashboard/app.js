@@ -107,6 +107,7 @@
     try {
       const index = await loadIndex();
       renderHeader(index, r);
+      if (r.game === "how") { renderHow(main); return; }
       if (!r.game) { renderHome(main, index); return; }
       const meta = index.games.find((x) => x.slug === r.game);
       if (!meta) { main.innerHTML = `<p class="empty">${esc(t("not_found"))}</p>`; return; }
@@ -122,13 +123,27 @@
 
   function renderHeader(index, r) {
     const sw = $("#game-switch");
+    const hl = $("#howto-link");
+    hl.textContent = t("how_read");
+    hl.classList.toggle("on", r.game === "how");
     sw.innerHTML = `<a href="#/" class="${r.game ? "" : "on"}">${esc(t("all_games"))}</a>` + index.games.map((g) =>
       `<a href="#/${g.slug}" class="${r.game === g.slug ? "on" : ""}">${esc(g.name)}</a>`).join("");
     if (!r.game) {
       document.documentElement.style.removeProperty("--accent");
     }
-    document.title = (r.game ? (index.games.find((x) => x.slug === r.game) || {}).name + " — " : "") + "boardgames.ai";
+    const gm = index.games.find((x) => x.slug === r.game);
+    document.title = (r.game === "how" ? t("how_title") + " — " : gm ? gm.name + " — " : "") + "boardgames.ai";
     $("#foot").innerHTML = `${esc(t("footer", { date: index.generated }))} <a href="https://github.com/boardgames-ai/boardgames-ai">GitHub</a>`;
+  }
+
+  // ------------------------------------------------------------------ how to read the numbers
+  function renderHow(main) {
+    const terms = ["g_lift", "g_pp", "g_err", "g_edge", "g_presence", "g_points", "g_type", "g_mirror", "g_seed", "g_strength", "g_grey", "g_corr"];
+    main.innerHTML = `<section class="hero"><div class="eyebrow">${esc(t("how_read"))}</div><h1>${esc(t("how_title"))}</h1>
+      <p class="lede">${esc(t("how_lede"))}</p></section>
+      <div class="card"><h2>${esc(t("how_example_h"))}</h2><p class="takeaway">${esc(t("how_example"))}</p></div>
+      <div class="card section"><h2>${esc(t("glossary_h"))}</h2><dl class="gloss">${terms.map((k) => `<dt>${esc(t(k))}</dt><dd>${esc(t(k + "_d"))}</dd>`).join("")}</dl></div>
+      <p class="caveat">${esc(t("caveat"))}</p>`;
   }
 
   // ------------------------------------------------------------------ home
@@ -260,6 +275,7 @@
       <section class="hero" style="padding-top:0">
         <h1>${esc(t("game_q", { game: m.name }))}</h1>
         <p class="lede">${esc(L(m.intro))} ${esc(t("game_lede_tail"))}</p></section>
+      ${oneLine(g, srcs)}
       <div class="tiles">${tiles.map(([lab, vals, f]) => `<div class="tile"><div class="lab">${esc(lab)}</div><div class="vals">${vals.map((v, i) =>
         `<div class="v"><b>${esc(f(v))}</b><span>${esc(srcLabel(g, srcs[i], many))}</span></div>`).join("")}</div></div>`).join("")}</div>
       <section class="section"><h2>${esc(t("how_h"))}</h2>
@@ -272,6 +288,14 @@
           : `<p class="sub" style="margin-top:6px">${esc(t("findings_none"))}</p>`}
         ${autoFindings(g, srcs, exps)}
         <p class="caveat">${esc(notes.written ? t("findings_caveat", { date: notes.written }) : t("caveat"))}</p></section>`;
+  }
+  function oneLine(g, srcs) {
+    const notes = (g.notes && g.notes.experiments) || {};
+    const parts = srcs.map((s) => { const n = notes[s.exp]; const x = n ? n[S.lang] || n.en : null; return x && x.summary ? [s, x.summary] : null; }).filter(Boolean);
+    if (!parts.length) return "";
+    return `<div class="grid ${parts.length > 1 ? "cols-2" : ""}" style="margin-bottom:14px">${parts.map(([s, txt]) => `<div class="card oneline">
+      <div class="who">${esc(t("plan_one_line"))} · ${esc(srcLabel(g, s))}</div><p>${esc(txt)}</p>
+      <a href="${link(g.slug, "strategy", null, { p: String(s.players) })}">${esc(t("read_strategy"))} →</a></div>`).join("")}</div>`;
   }
   function howLearn(g, srcs) {
     const parts = srcs.filter((s) => s.variant === "new").map((s) => {
