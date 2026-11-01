@@ -5,12 +5,12 @@
    "games": 2000,
    "written": "2026-11-01",
    "en": {
-    "summary": "A fast game from the deck: real trees (mainly Swiss Pine) instead of saplings, filled for the Beech Marten, Gentian with butterflies, and a herd of cloven-hoofed animals with a wolf.",
+    "summary": "A fast game from the deck: real trees (mainly Stone Pine) instead of saplings, filled for the Beech Marten, Gentian with butterflies, and a herd of cloven-hoofed animals with a wolf.",
     "works": [
      "Few saplings, fill the trees. The winner has 2.5 saplings and 3.9 woody plants, the loser 2.7 and 4.4; the winner has more dwellers (20.5 vs 19.4). Beech Marten (5 per fully occupied tree) gives the winner 24.5 points (loser 15.5), and the winner has 0.35 more copies of it than the loser, the most of any card.",
      "Gentian and butterflies. Gentian (3 per butterfly) gives the winner 16.3 points (loser 9.1) and has the largest effect on winning of the common cards (+8.6 pp); Phoebus Apollo (+5.0 pp) and Silver-Washed Fritillary (+2.7 pp) help too.",
      "Cloven-hoofed animals and the Wolf. Fallow Deer gives the winner 21.3 points (loser 13.0), European Bison 11.9 (8.8), Wolf 14.8 (10.1); Steinbock +3.4 pp. The winner has 3.2 deer, the loser 2.8.",
-     "Swiss Pine. Stone Pine is in 87 % of forests and the winner has 0.18 more copies; Swiss Pine forests (13 % of all) win 61 % of games, Oak 57 %, Horse Chestnut 56 %."
+     "Stone Pine (Swiss Pine symbol). It is in 87 % of forests and the winner has 0.18 more copies; Swiss Pine forests (13 % of all) win 61 % of games, Oak 57 %, Horse Chestnut 56 %."
     ],
     "avoid": [
      "A sapling forest: the new AI builds one in only 1 % of forests and it wins 37 % of games (original AI: 68 % of forests, 59 % wins).",

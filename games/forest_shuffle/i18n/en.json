@@ -435,7 +435,7 @@
    "DOUGLAS_FIR": "Douglas Fir",
    "HORSE_CHESTNUT": "Horse Chestnut",
    "ALPINE_LARCH": "Alpine Larch",
-   "SWISS_PINE": "Swiss Pine"
+   "SWISS_PINE": "Swiss Pine (Stone Pine)"
   }
  },
  "archetypes": {
@@ -448,7 +448,7 @@
   "DOUGLAS_FIR": "Douglas Fir",
   "HORSE_CHESTNUT": "Horse Chestnut",
   "ALPINE_LARCH": "Alpine Larch",
-  "SWISS_PINE": "Swiss Pine",
+  "SWISS_PINE": "Swiss Pine (Stone Pine)",
   "SAPLING": "Saplings",
   "MIXED": "Mixed",
   "NONE": "None"
