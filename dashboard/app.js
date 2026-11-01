@@ -517,7 +517,7 @@
         <div class="grid cols-2" style="margin-top:10px">
           <div><h3>${esc(t("action_mix"))}</h3><p class="sub">${esc(t("action_mix_expl"))}</p><div id="mix-${i}"></div></div>
           <div><h3>${esc(t("score_split"))}</h3><p class="sub">${esc(t("score_split_expl"))}</p><div id="split-${i}"></div></div>
-          <div><h3>${esc(t("most_played", { items: cap(term(g, "items")) }))}</h3><div id="played-${i}"></div></div>
+          <div><h3>${esc(t("most_played", { items: term(g, "items") }))}</h3><div id="played-${i}"></div></div>
           <div><h3>${esc(t("most_points", { items: cap(term(g, "items")) }))}</h3><div id="points-${i}"></div></div>
           ${exps[i].style.optional_use && exps[i].style.optional_use.length ? `<div><h3>${esc(t("optional_h"))}</h3><p class="sub">${esc(t("optional_expl"))}</p><div id="opt-${i}"></div></div>` : ""}
         </div></section>`;
@@ -528,21 +528,21 @@
       const acts = g.manifest.actions || {};
       const mix = st.action_mix.filter((r) => acts[r.action]);
       C.divergingBars($("#mix-" + i), mix.slice().sort((a, b) => b.share - a.share).map((r) => ({ label: L(acts[r.action]), value: r.share,
-        tip: `<b>${esc(L(acts[r.action]))}</b><br>${pct(r.share, 1)} ${esc(t("of_turns"))}` })), { fmt: (v) => pct(v, 0) });
+        tip: `<b>${esc(L(acts[r.action]))}</b><br>${pct(r.share, 1)} ${esc(t("of_turns"))}` })), { fmt: (v) => pct(v, 0), mag: true });
       const out = st.outcome[0] || {};
       const cats = Object.keys(g.manifest.score_categories || {});
       C.divergingBars($("#split-" + i), cats.map((k) => ({ label: L(g.manifest.score_categories[k]), value: out["b_" + k] || 0,
-        tip: `<b>${esc(L(g.manifest.score_categories[k]))}</b><br>${num(out["b_" + k], 1)} ${esc(t("points"))}` })), { fmt: (v) => num(v, 0) });
+        tip: `<b>${esc(L(g.manifest.score_categories[k]))}</b><br>${num(out["b_" + k], 1)} ${esc(t("points"))}` })), { fmt: (v) => num(v, 0), mag: true });
       const top = (arr, k, n) => arr.slice().sort((a, b) => b[k] - a[k]).slice(0, n);
       C.divergingBars($("#played-" + i), top(st.items_played, "share", 10).map((r) => ({ label: itemName(g, r.item), value: r.share,
-        tip: `<b>${esc(itemName(g, r.item))}</b><br>${pct(r.share, 1)} ${esc(t("of_plays"))}` })), { fmt: (v) => pct(v, 1) });
+        tip: `<b>${esc(itemName(g, r.item))}</b><br>${pct(r.share, 1)} ${esc(t("of_plays"))}` })), { fmt: (v) => pct(v, 1), mag: true });
       C.divergingBars($("#points-" + i), top(st.points_by_item, "points_per_board", 10).map((r) => ({ label: itemName(g, r.item), value: r.points_per_board,
-        tip: `<b>${esc(itemName(g, r.item))}</b><br>${num(r.points_per_board, 1)} ${esc(t("points_per_board", { board: term(g, "board") }))}` })), { fmt: (v) => num(v, 1) });
+        tip: `<b>${esc(itemName(g, r.item))}</b><br>${num(r.points_per_board, 1)} ${esc(t("points_per_board", { board: term(g, "board") }))}` })), { fmt: (v) => num(v, 1), mag: true });
       if ($("#opt-" + i)) {
         const rows = st.optional_use.slice().sort((a, b) => a.use_rate - b.use_rate).slice(0, 12);
         const wname = (w) => (t("w_" + w) !== "w_" + w ? t("w_" + w) : w.replace(/_/g, " "));
         C.divergingBars($("#opt-" + i), rows.map((r) => ({ label: wname(r.what), value: r.use_rate,
-          tip: `<b>${esc(wname(r.what))}</b><br>${esc(t("use_rate"))}: ${pct(r.use_rate, 1)}<br>${int(r.use)} / ${int(r.use + r.skip)}` })), { fmt: (v) => pct(v, 0), minMax: 1 });
+          tip: `<b>${esc(wname(r.what))}</b><br>${esc(t("use_rate"))}: ${pct(r.use_rate, 1)}<br>${int(r.use)} / ${int(r.use + r.skip)}` })), { fmt: (v) => pct(v, 0), minMax: 1, mag: true });
       }
     });
   }
@@ -632,8 +632,8 @@
       html += `<section class="section card"><h2>${esc(t("n_players", { n: p }))}</h2>
         <p class="sub">${esc(modelLabel(g, newM))} ↔ ${esc(modelLabel(g, oldM))}</p>
         ${c.versus ? `<h3 style="margin-top:12px">${esc(t("versus_h"))}</h3><div class="kv" style="margin-top:6px">${c.versus.map((v) => `<div><b>${pct(v.win_rate, 1)}</b><span>${esc(agentName(g, v.agent))} · ${esc(t("mean_score"))} ${num(v.mean_score, 1)}</span></div>`).join("")}</div>` : ""}
-        ${c.deals ? `<h3 style="margin-top:14px">${esc(t("deals_h"))}</h3><p class="sub">${esc(t("deals_expl", { n: int(c.deals.deals), new: num(c.deals.winner_new, 0), old: num(c.deals.winner_old, 0), share: pct(c.deals.new_higher, 0) }))}</p><div id="deals-${p}"></div>` : ""}
-        <h3 style="margin-top:14px">${esc(t("changes_h", { items: term(g, "items") }))}</h3><p class="sub">${esc(t("changes_expl"))}</p><div id="chg-${p}"></div>
+        ${c.deals ? `<h3 style="margin-top:14px">${esc(t("deals_h"))}</h3><p class="sub">${esc(t("deals_expl", { n: int(c.deals.deals), new: num(c.deals.winner_new, 0), old: num(c.deals.winner_old, 0), share: pct(c.deals.new_higher, 0) }))}</p><div id="deals-${p}"></div><p class="sub" style="text-align:center">${esc(t("deals_axis"))}</p>` : ""}
+        <h3 style="margin-top:14px">${esc(t("changes_h", { items: cap(term(g, "items")) }))}</h3><p class="sub">${esc(t("changes_expl"))}</p><div id="chg-${p}"></div>
         <h3 style="margin-top:14px">${esc(t("style_cmp_h"))}</h3><div class="table-wrap" style="margin-top:6px"><table><thead><tr><th></th><th class="num">${esc(t("ai_new"))}</th><th class="num">${esc(t("ai_original"))}</th></tr></thead><tbody>
         ${Object.keys(c.style.new).filter((k) => typeof c.style.new[k] === "number" && k !== "seats").map((k) => `<tr><td>${esc(styleLabel(g, k))}</td><td class="num">${esc(styleVal(k, c.style.new[k]))}</td><td class="num">${esc(styleVal(k, c.style.old[k]))}</td></tr>`).join("")}
         </tbody></table></div></section>`;

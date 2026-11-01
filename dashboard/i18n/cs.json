@@ -156,8 +156,8 @@
  "score_split_expl": "Průměrné body v každé kategorii na hráče.",
  "most_played": "Nejhranější ({items})",
  "most_points": "Co přináší nejvíc bodů ({items})",
- "optional_h": "Nepovinné schopnosti, které nejčastěji vynechává",
- "optional_expl": "Jak často AI použije nepovinnou schopnost, když může.",
+ "optional_h": "Jak často používá nepovinné schopnosti",
+ "optional_expl": "Od nejnižšího. 100 % = AI schopnost použije vždy, když může; méně = často ji raději vynechá.",
  "share": "Podíl",
  "use_rate": "Použito",
  "games": "her",
@@ -171,7 +171,7 @@
  "versus_h": "U jednoho stolu",
  "deals_h": "Stejná rozdání, jiná AI",
  "deals_expl": "Obě AI hrály stejných {n} rozdání. Průměrné skóre vítěze: nová {new}, původní {old}; vítěz nové AI měl víc bodů v {share} rozdání.",
- "changes_h": "Co nová AI vidí jinak ({items})",
+ "changes_h": "{items}: co nová AI vidí jinak",
  "changes_expl": "Změna přínosu k výhře (nová minus původní), jen jasné změny (víc než 2 směrodatné chyby).",
  "style_cmp_h": "Styl hry vedle sebe",
  "deals": "rozdání",
@@ -258,5 +258,6 @@
  "g_grey": "Šedé řádky",
  "g_grey_d": "Karty, které se objevily příliš zřídka, aby se jejich číslům dalo věřit.",
  "g_corr": "Souvislost, ne příčina",
- "g_corr_d": "Web ukazuje, čeho mají vítězové víc. Zda proto vyhráli, je úsudek — sepsané poznámky se ho snaží opatrně udělat."
+ "g_corr_d": "Web ukazuje, čeho mají vítězové víc. Zda proto vyhráli, je úsudek — sepsané poznámky se ho snaží opatrně udělat.",
+ "deals_axis": "Skóre vítěze s novou AI minus skóre vítěze s původní AI, pro každé rozdání (sloupce: počet rozdání)"
 }

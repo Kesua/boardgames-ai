@@ -71,7 +71,7 @@
  "how_learn": "It played against its own copies and kept what won: {list}.",
  "how_learn_one": "{steps} steps with {players}",
  "how_play": "The finished AI then played {games} games against copies of itself; every seat at the table was the same AI.",
- "how_count": "Every piece on every final {boards} was scored. Comparing winners with losers shows which {items}, types and habits go together with winning.",
+ "how_count": "Every piece on every final {board} was scored. Comparing winners with losers shows which {items}, types and habits go together with winning.",
  "findings_h": "Discoveries",
  "findings_none": "The written discoveries for this AI are not ready yet; the numbers below are computed from the data.",
  "findings_caveat": "Discoveries written {date} from runs of 2,000 games. They show what winners have more of, not always why, and how this AI wins against an equally strong copy of itself — not a proven best strategy.",
@@ -155,9 +155,9 @@
  "score_split": "Where the points come from",
  "score_split_expl": "Average points per category and player.",
  "most_played": "Most played {items}",
- "most_points": "{items} that bring most points",
- "optional_h": "Optional powers it skips most",
- "optional_expl": "How often the AI uses an optional power when it may.",
+ "most_points": "{items} that bring the most points",
+ "optional_h": "How often it uses optional powers",
+ "optional_expl": "Lowest first. 100 % = the AI always uses the power when it may; lower = it often prefers to skip it.",
  "share": "Share",
  "use_rate": "Used",
  "games": "games",
@@ -258,5 +258,6 @@
  "g_grey": "Grey rows",
  "g_grey_d": "Cards that appeared too rarely for their numbers to be trusted.",
  "g_corr": "Correlation, not cause",
- "g_corr_d": "The site shows what winners have more of. Whether that is why they won is a judgement — the written notes try to make it, carefully."
+ "g_corr_d": "The site shows what winners have more of. Whether that is why they won is a judgement — the written notes try to make it, carefully.",
+ "deals_axis": "Winner's score with the new AI minus winner's score with the original AI, per deal (bars: number of deals)"
 }

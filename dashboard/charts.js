@@ -54,7 +54,8 @@
   }
   const color = (i) => `var(--s${(i % 8) + 1})`;
 
-  /* Horizontal bars around zero (polarity): rows [{label, value, tip, dim}]. Positive = --pos, negative = --neg. */
+  /* Horizontal bars around zero (polarity): rows [{label, value, tip, dim}]. Positive = --pos, negative = --neg.
+     o.mag: plain magnitudes (shares, points) in one hue. The axis only covers the signs present. */
   function divergingBars(container, rows, o) {
     o = o || {};
     const W = widthOf(container), rowH = 24, top = 6, h = top + rows.length * rowH + 24;
@@ -67,7 +68,7 @@
     const half = anyNeg && anyPos ? plotW / 2 : plotW;
     const clipX = (x) => Math.max(labelW + 4, Math.min(W - 4, x));
     const g = el("g", { class: "grid" }, svg);
-    niceTicks(-max, max, 4).forEach((t) => {
+    niceTicks(anyNeg ? -max : 0, anyPos || !anyNeg ? max : 0, 4).forEach((t) => {
       const x = x0 + (t / max) * half;
       el("line", { x1: x, x2: x, y1: top, y2: h - 22 }, g);
       text(svg, x, h - 6, o.fmt ? o.fmt(t) : t, "lab", "middle");
@@ -78,7 +79,7 @@
       if (r.dim) t.setAttribute("opacity", ".55");
       const v = r.value, x = v >= 0 ? x0 : x0 + (v / max) * half, w = Math.max(1.5, Math.abs(v / max) * half);
       const bar = el("rect", { x, y: y + 5, width: w, height: rowH - 10, rx: 4, class: "mark",
-                               fill: v >= 0 ? "var(--pos)" : "var(--neg)", opacity: r.dim ? .45 : 1 }, svg);
+                               fill: o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", opacity: r.dim ? .45 : 1 }, svg);
       let end = v >= 0 ? x + w : x;
       if (r.err) {
         const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half);
