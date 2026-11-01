@@ -62,7 +62,27 @@ def catalog() -> dict:
     return {"items": items, "cards": cards}
 
 
+def invariants(g) -> list:
+    """Card conservation, unique cards and the hand limit (F3.2), checked by bgai.checks during random games."""
+    s, out = g.state, []
+    uids = [c.uid for c in s.deck] + [c.uid for c in s.clearing] + [c.uid for c in s.removed]
+    for p in s.players:
+        uids += [c.uid for c in p.hand] + [c.uid for c in p.cave]
+        for w in p.forest:
+            uids += ([w.uid] if w.uid is not None else []) + [d.uid for d in w.dwellers()]
+        if len(p.hand) > 10:
+            out.append(f"P{p.seat} has {len(p.hand)} cards in hand (limit 10)")
+    if len(set(uids)) != len(uids):
+        out.append("a card is in two places at once")
+    total = getattr(g, "_card_total", None)
+    if total is None:
+        g._card_total = total = len(uids)
+    if len(uids) != total:
+        out.append(f"card count changed: {len(uids)} instead of {total}")
+    return out
+
+
 SPEC = GameSpec(slug="forest_shuffle", name="Forest Shuffle", players=(2, 3, 4, 5), new_game=new_game,
                 action_count=action_count, encoder=encoder, greedy=greedy,
-                default_options={"expansions": list(ALL_EXPANSIONS)}, summary=summary, catalog=catalog, max_steps=5000,
+                default_options={"expansions": list(ALL_EXPANSIONS)}, summary=summary, catalog=catalog, invariants=invariants, max_steps=5000,
                 encoder_versions=(2, 1))          # version 1 models (trained before observation v2) still play

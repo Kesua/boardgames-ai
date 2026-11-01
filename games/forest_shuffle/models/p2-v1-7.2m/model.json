@@ -39,5 +39,6 @@
     ],
     "note": "Original AI, kept for the comparison; trained before the recipe existed."
   },
-  "sha256": "2121261030f9034e191df037191bd4062793f26ad1b5e63c155f9fcea67a8b60"
+  "sha256": "2121261030f9034e191df037191bd4062793f26ad1b5e63c155f9fcea67a8b60",
+  "legacy": true
 }

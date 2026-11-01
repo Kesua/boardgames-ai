@@ -38,5 +38,6 @@
     ],
     "note": "Legacy, not finished: barely stronger than its 1M snapshot. A 4-player model with the recipe is in training."
   },
-  "sha256": "9c072deb3b60eb39fffb2c23fa31cb09348fed5e77b75b12a56eebda5e34386c"
+  "sha256": "9c072deb3b60eb39fffb2c23fa31cb09348fed5e77b75b12a56eebda5e34386c",
+  "legacy": true
 }

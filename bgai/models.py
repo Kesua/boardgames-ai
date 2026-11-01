@@ -72,7 +72,8 @@ def accept(slug, model_id, opponents, deals, workers, labels=None, required=None
         rows.append(row)
     card = meta.setdefault("strength", {"games": []})
     card["games"] = [r for r in card.get("games", []) if r["opponent"] not in opponents] + rows
-    card["finished"] = all(_passes(r) for r in card["games"] if r.get("required"))
+    # a legacy model (trained before the train-model recipe) never counts as finished, whatever it beats
+    card["finished"] = not meta.get("legacy") and all(_passes(r) for r in card["games"] if r.get("required"))
     card["measured"] = time.strftime("%Y-%m-%d")
     write(slug, model_id, meta)
     return card

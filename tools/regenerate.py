@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 import sys
 from pathlib import Path
 
@@ -34,6 +35,7 @@ def regenerate(slug: str, exp_id: str, workers: int, check_only: bool) -> bool:
     rec2 = json.loads((out / "experiment.json").read_text(encoding="utf-8"))
     rec.update({k: rec2[k] for k in ("code_commit", "requirements_lock_sha256", "environment", "schema_version", "seconds")})
     rec["id"] = exp_id
+    rec["replayed"] = {"games": rec["games"], "date": time.strftime("%Y-%m-%d"), "code_commit": rec2["code_commit"]}
     (d / "experiment.json").write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8")
     import shutil
     shutil.rmtree(out)

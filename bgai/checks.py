@@ -114,7 +114,8 @@ def run(slug: str, games: int, players: list) -> dict:
                 problems += check_clone(spec, p, seed)
             n += 1
         counts[str(p)] = n
-    report = {"game": slug, "games_per_player_count": counts, "problems": problems[:200],
+    from .experiment import code_commit
+    report = {"game": slug, "code_commit": code_commit(), "games_per_player_count": counts, "problems": problems[:200],
               "problem_count": len(problems), "seconds": round(time.time() - t0, 1),
               "checks": ["ends", "legal", "seed", "clone", "scores", "records"]
               + (["invariants"] if getattr(spec, "invariants", None) else [])}
