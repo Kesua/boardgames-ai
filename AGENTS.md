@@ -7,8 +7,8 @@ Read this file fully once; then read only the skill for the step you are doing.
 ## 1. What this repository is for (read this first — every decision follows from it)
 
 **Goal:** show players of modern board games which cards, combinations and habits win — learned by AI agents that
-taught themselves each game by playing millions of games against copies of themselves, and measured over thousands
-of recorded games. The public dashboard (static site built from `games/*/`) is the product. Everything else exists
+taught themselves each game by playing against copies of themselves (millions of moves, tens of thousands of games),
+and measured over thousands of recorded games. The public dashboard (static site built from `games/*/`) is the product. Everything else exists
 to make its numbers **correct, reproducible and honest**:
 
 - **Correct**: an engine bug becomes a false "insight" read by thousands of players. Rules come from at least two
@@ -30,7 +30,9 @@ copied rulebook or card text, no art (rights, see `games/<slug>/RIGHTS.md`).
 | `bgai/kit/` | Shared mechanics: `Deck`, `Rng`, `DecisionStack`, `CodecBuilder`, `winners/ranks`, `TextLog`, encoding helpers. Read `bgai/kit/README.md`. |
 | `bgai/agents.py` | Random and trained (policy) agents, `play_game`. |
 | `bgai/rl/` | Self-play PPO trainer (`train.py`, `selfplay.py`) and paired head-to-head evaluation (`h2h.py`). |
-| `bgai/checks.py` | Automated engine checks (ends, legality, determinism, clone, scores, invariants). |
+| `bgai/checks.py` | Automated engine checks per player count (ends, legality, determinism, clone, scores, records, encoder range, greedy beats random, invariants). |
+| `bgai/show.py` | Prints one game as text (`python -m bgai.show --game <slug>`), for reading a game against the rules. |
+| `bgai/manifest.schema.json` | Every `manifest.json` key explained; `check_repo` validates against it. |
 | `bgai/experiment.py` | Runs an experiment → `experiment.json` + `stats.json` (+ `--verify`). |
 | `bgai/models.py` | Publishes a model and measures its strength card. |
 | `bgai/summary/` | Shared statistics (items, tags, archetypes, length, play style, samples); shapes for game sections in `SHAPES.md`. |
@@ -38,7 +40,7 @@ copied rulebook or card text, no art (rights, see `games/<slug>/RIGHTS.md`).
 | `games/_template/` | A tiny complete game: copy it to start (new-game skill). |
 | `games/wingspan/` | The reference example of a full game done with these skills (rules from 2 sources, 3-source card check, audit). |
 | `dashboard/` | Static pages; `tools/build_site.py` builds `site/` from all games. |
-| `tools/` | `check_repo.py` (CI gate), `sync_skills.py`, `build_site.py`, `regenerate.py`, `import_records.py`. |
+| `tools/` | `check_repo.py` (CI gate), `new_game.py` (scaffold), `review_pr.py` (review helper), `sync_skills.py`, `build_site.py`, `regenerate.py`, `import_records.py`. |
 | `tests/` | Platform tests (kit golden tests, toy-game experiments, site build). |
 
 ## 3. How a game gets in (the pipeline) — one skill per step
@@ -59,10 +61,13 @@ Keeping the repository healthy: `reproduce-experiment`, `add-metric`, `upgrade-p
    runs (`runs/`), or any file over 50 MB. Downloads go to `inbox/` (git-ignored).
 2. **Two independent sources** for rules and for card data; write rules in your own words with IDs (`W4.2`); list
    every disagreement and its resolution in `rules.md` ("Decisions where sources differed").
-3. **Every rule ID and every card has a test.** `tools/check_repo.py` fails on an untested rule ID.
+3. **Every rule ID and every card has a test** (`@pytest.mark.rule("X4.2")`, `@pytest.mark.card("<item id>")`).
+   `tools/check_repo.py` fails on an untested rule ID or catalog item.
 4. **Engines are deterministic**: all randomness from the game's seeded `Rng`; the same seed and answers give the same
    game. Never use `random` module functions directly, time, dict ordering of sets, or hash order.
 5. **The action numbering is frozen** once models exist (it is part of every model); change it = retrain.
+5b. **Scores are higher-is-better.** Winners, ranks and the training reward take the maximum; for a lowest-score-wins
+   game return negated scores (and say so in rules.md and the intro). `bgai.checks` catches an inverted score.
 6. **No statistic without its experiment**: dashboard numbers come only from `stats.json` built by `bgai.experiment`.
 7. **Hidden information stays hidden** in the encoder (other players' hands, secret cards, secret choices).
 8. **Platform code never names a game.** Game-specific needs go into the game folder or the manifest; shared needs
@@ -73,8 +78,10 @@ Keeping the repository healthy: `reproduce-experiment`, `add-metric`, `upgrade-p
 ## 4b. Platform notes that save time
 
 - When a decision has exactly one legal answer the engine should apply it itself and report it through
-  `drain_forced()` so it is still recorded (see `games/wingspan/engine.py::_ask`) — otherwise per-card statistics miss
-  forced plays.
+  `drain_forced()` so it is still recorded (contract in `bgai/game.py`, example `games/wingspan/engine.py::_ask`) —
+  otherwise per-card statistics miss forced plays.
+- The meaning of every recorded field (`card`, `item`, `group`, `slot`, `host`, `points`, `tags`, `extra`) is in the
+  `bgai/game.py` docstring; the manifest keys are explained in `bgai/manifest.schema.json`.
 - Fixed game length (every game the same number of turns)? Set `rounds` in the SPEC to a constant: the length section
   is skipped automatically.
 - `max_steps` in the SPEC caps decisions per game; a random game must end well below it.
@@ -83,9 +90,13 @@ Keeping the repository healthy: `reproduce-experiment`, `add-metric`, `upgrade-p
 
 ## 5. Commands
 
+Run every command from the repository root with the project's `.venv` (`bgai` is not installed as a package; on
+Windows `.venv/Scripts/python`, elsewhere `.venv/bin/python`).
 ```bash
+python tools/new_game.py --slug <slug> --name "<Name>"   # scaffold a game folder from the template
 python -m pytest -q                                   # all tests (add -m slow for long checks)
-python -m bgai.checks --game <slug> --games 10000     # engine checks, writes games/<slug>/checks/report.json
+python -m bgai.checks --game <slug> --games 10000     # 10,000 games per player count, writes checks/report.json
+python -m bgai.show --game <slug> --seed 1            # one game as text
 python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/open --timesteps 40000000 --hours 9
 python -m bgai.rl.h2h --game <slug> --players 2 --a <ckpt> --b <ckpt|greedy> --seeds 750
 python -m bgai.models publish --game <slug> --id <model id> --players 2 --checkpoint <ckpt> --logs <csv>...
@@ -93,6 +104,7 @@ python -m bgai.models accept --game <slug> --id <model id> --vs greedy <ckpt> --
 python -m bgai.experiment --game <slug> --id p2-<model>-mirror --players 2 --seats <model id> --games 2000 --seed 1000
 python -m bgai.experiment --game <slug> --id <experiment id> --verify 20
 python tools/check_repo.py                            # the CI gate
+python tools/review_pr.py --game <slug>               # the mechanical part of a review, with a suggested verdict
 python tools/build_site.py && python -m http.server -d site 8000
 python tools/sync_skills.py                           # after editing .agents/skills
 ```
@@ -112,7 +124,9 @@ Use the project's virtual environment (`.venv`); dependencies are pinned in `req
 ## 7. How work is judged (what reviewers and the CI check)
 
 - `python tools/check_repo.py` and `python -m pytest -q` pass.
-- `games/<slug>/checks/report.json` shows 0 problems over ≥ 10,000 random games for every supported player count.
+- `games/<slug>/checks/report.json` shows 0 problems over ≥ 10,000 random games for every supported player count,
+  made on the current engine (check_repo fails when the engine changed after it).
 - `rules.md` cites two sources per rule and lists decisions; `data/SOURCES.md` shows the field-by-field comparison.
-- The model's strength card shows it is finished (train-model skill) — or the dashboard marks it as not finished.
+- The model's strength card shows it is finished (train-model skill) — or the dashboard marks it as not finished,
+  or the pull request is engine-only (no models or experiments yet; review-game-pr skill).
 - Every experiment replays (`--verify 20`); notes follow the write-notes rules (no causal claims, numbers from stats).
