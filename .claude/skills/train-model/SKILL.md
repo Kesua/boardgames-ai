@@ -30,12 +30,16 @@ evaluations in a row. The **open-run best** = the 3M-older checkpoint of the fir
 ```bash
 python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/anchored --start-from <open best ckpt> \
     --fixed <open best ckpt> greedy --keep-every 2000000 --lr 1e-4 --epochs 4 --reference <open best ckpt> \
-    --timesteps 30000000 --chunk 500000 --envs 10 --eval-workers 3 --hours 12
+    --timesteps 30000000 --chunk 500000 --envs 10 --eval-workers 3 --hours 12     --patience 3 --min-gain 0.02 --min-steps 6000000 --rebase-at 0.8
 ```
 Every 1M steps the log adds `win_vs_ref` (paired games against the reference on 750 deals); a checkpoint that
-beats the best result so far is copied to `ppo_best.zip`. Stop when `win_vs_ref` has brought no gain of 0.02 for three
-evaluations in a row — add `--patience 3 --min-gain 0.02 --min-steps 6000000` and the trainer stops by itself — or when
-the budget ends. The model to publish is `ppo_best.zip`.
+beats the best result so far is copied to `ppo_best.zip`. When the win rate against the reference reaches 0.8
+(`--rebase-at 0.8`), the best checkpoint becomes the new, stronger reference and the learning rate halves — without
+this, gains against a weak reference become too small to measure while the model still improves (Wingspan: stopped
+at 8M steps although 8M still beat 5M 59 %). The trainer stops by itself after three evaluations in a row without a
+gain of 0.02 against the current reference (`--patience 3 --min-gain 0.02`, not before `--min-steps`), or when the
+budget ends. Check `win_vs_3m` at the stop: clearly above 0.5 means the model was still improving — resume with a
+larger budget. The model to publish is `ppo_best.zip`.
 
 **Interrupted?** Run the same command again with `--resume`: it continues from the latest checkpoint in `--out` and
 replays the reference, best result and learning rate from the log. Use it also to extend a run that hit `--hours`.
