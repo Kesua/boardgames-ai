@@ -66,14 +66,14 @@ Keeping the repository healthy: `reproduce-experiment`, `add-metric`, `upgrade-p
 4. **Engines are deterministic**: all randomness from the game's seeded `Rng`; the same seed and answers give the same
    game. Never use `random` module functions directly, time, dict ordering of sets, or hash order.
 5. **The action numbering is frozen** once models exist (it is part of every model); change it = retrain.
-5b. **Scores are higher-is-better.** Winners, ranks and the training reward take the maximum; for a lowest-score-wins
+6. **Scores are higher-is-better.** Winners, ranks and the training reward take the maximum; for a lowest-score-wins
    game return negated scores (and say so in rules.md and the intro). `bgai.checks` catches an inverted score.
-6. **No statistic without its experiment**: dashboard numbers come only from `stats.json` built by `bgai.experiment`.
-7. **Hidden information stays hidden** in the encoder (other players' hands, secret cards, secret choices).
-8. **Platform code never names a game.** Game-specific needs go into the game folder or the manifest; shared needs
+7. **No statistic without its experiment**: dashboard numbers come only from `stats.json` built by `bgai.experiment`.
+8. **Hidden information stays hidden** in the encoder (other players' hands, secret cards, secret choices).
+9. **Platform code never names a game.** Game-specific needs go into the game folder or the manifest; shared needs
    into `bgai/` only when a second game needs them (see `bgai/kit/README.md`).
-9. **Budget:** one desktop, ≤ 24 h of training per player count, GPU optional. Say so if a game cannot fit.
-10. Ask a human before anything outward-facing (publisher notices, publishing the site, pushing to a remote).
+10. **Budget:** one desktop, ≤ 24 h of training per player count, GPU optional. Say so if a game cannot fit.
+11. Ask a human before anything outward-facing (publisher notices, publishing the site, pushing to a remote).
 
 ## 4b. Platform notes that save time
 
