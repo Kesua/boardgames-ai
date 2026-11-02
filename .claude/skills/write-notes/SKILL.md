@@ -16,17 +16,23 @@ a short script). Never invent a number: every number in the text is copied from 
 ## notes.json format
 ```json
 {"written": "YYYY-MM-DD",
+ "headline": {"en": "the game's main finding in one sentence (the Discoveries headline and the home page line)", "cs": "..."},
  "experiments": {"<experiment id>": {"games": 2000, "written": "YYYY-MM-DD",
-   "en": {"summary": "one sentence: the winning plan", "works": ["3–5 bullets"], "avoid": ["2–4 bullets"],
+   "en": {"summary": "one sentence: the winning plan", "do": ["3–5 short tips"], "dont": ["2–3 short tips"],
+          "works": ["3–5 bullets"], "avoid": ["2–4 bullets"],
           "order": "turn-order effect in one sentence", "length": ["optional bullets on game length"]},
    "cs": {...}}},
- "findings": [{"variant": "main", "id": "short-id", "link": "#strategy", "tag": "optional",
-   "en": {"title": "6–8 words", "text": "2–3 sentences", "label": "what the numbers measure",
-          "n2": "value for 2 players", "n4": "value for 4 players", "before": "optional: the earlier AI's value"},
-   "cs": {...}}]}
+ "findings": [{"variant": "main", "id": "short-id", "link": "strategy | items/<ITEM> | more | length",
+   "chart": {"p": 2, "top": 12, "focus": ["ITEM", "..."]},
+   "en": {"title": "the claim, 6–10 words", "text": "2–3 sentences", "label": "what the numbers measure",
+          "n2": "value for 2 players", "n4": "value for 4 players"},
+   "cs": {...}}],
+ "limits": {"en": ["known limits, one sentence each"], "cs": ["..."]}}
 ```
-Six findings per game is a good number; link each to the tab where its chart is (`#strategy`, `#items`, `#more`,
-`#compare`, `#length`).
+Findings are shown as a list in this order, so put the most important first; the title is the claim and links to
+`link`. Six to nine findings per game is a good number. `chart` is optional (two or three per game): a small bar chart
+of the `top` N cards by win-rate difference for that player count, or `"archetypes": true` for the board types, with
+only the `focus` entries in colour (the ones the text is about) and everything else grey.
 
 ## Rules for the text
 - Lead with what a player can do ("Few saplings, fill the trees").

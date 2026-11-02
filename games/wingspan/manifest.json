@@ -8,10 +8,10 @@
   "edition": "Base game (170 birds + the 10 Swift-Start birds, 26 bonus cards), green goal board",
   "players": [2, 3, 4, 5],
   "rights": "RIGHTS.md",
-  "theme": {"accent": "#2c6e8f", "accent_soft": "#e1eef4", "emoji": "🐦"},
+  "theme": {"accent": "#2c6e8f", "accent_soft": "#e1eef4"},
   "intro": {
-    "en": "Players attract birds to three habitats — forest, grassland and wetland. Each bird played makes its row stronger: gaining food, laying eggs or drawing cards gives more as the row fills, and many birds add a power. The game always lasts 4 rounds with fewer turns each round (8, 7, 6, 5), so every action counts.",
-    "cs": "Hráči lákají ptáky do tří prostředí — lesa, louky a mokřadu. Každý zahraný pták posílí svou řadu: získání potravy, kladení vajec i dobírání karet dává víc, čím je řada plnější, a mnoho ptáků přidá schopnost. Hra má vždy 4 kola a v každém o tah méně (8, 7, 6, 5), takže se počítá každá akce."
+    "en": "Players attract birds to three habitats: forest, grassland and wetland. Each bird played makes its row stronger: gaining food, laying eggs or drawing cards gives more as the row fills, and many birds add a power. The game always lasts 4 rounds with fewer turns each round (8, 7, 6, 5), so every action counts.",
+    "cs": "Hráči lákají ptáky do tří prostředí: lesa, louky a mokřadu. Každý zahraný pták posílí svou řadu: získání potravy, kladení vajec i dobírání karet dává víc, čím je řada plnější, a mnoho ptáků přidá schopnost. Hra má vždy 4 kola a v každém o tah méně (8, 7, 6, 5), takže se počítá každá akce."
   },
   "terms": {
     "en": {"item": "bird", "item_acc": "bird", "items": "birds", "items_acc": "birds", "items_gen": "birds", "board": "player mat", "boards": "player mats",

@@ -12,3 +12,5 @@ in our own words and card effects are stored as structured data.
 
 Rights holders: if you would like a game removed or anything changed, open an issue or contact the maintainers; we
 act within 7 days (process: `.agents/skills/handle-takedown/SKILL.md`).
+
+Fonts: the dashboard uses Source Serif 4 and Source Sans 3 (© Adobe), under the SIL Open Font License 1.1; licence text in `dashboard/fonts/OFL.txt`.

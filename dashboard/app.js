@@ -89,7 +89,8 @@
     return parts.length ? parts.join(alt ? " " + t("or") + " " : " + ") : "0";
   }
   /* "?" next to a measure: opens its line on the How to read page. */
-  const help = (k) => `<a class="qlink" href="#/how?t=${k}" title="${esc(t(k + "_d"))}" aria-label="${esc(t("what_is", { x: t(k) }))}">?</a>`;
+  const HELP = ["g_lift", "g_strength"];   // the only measures with a "?"; everything else is visible text or on How to read
+  const help = (k) => !HELP.includes(k) ? "" : `<a class="qlink" href="#/how?t=${k}" title="${esc(t(k + "_d"))}" aria-label="${esc(t("what_is", { x: t(k) }))}">?</a>`;
 
   // ------------------------------------------------------------------ who played: trained model or baseline agent
   function modelRole(g, id) {
@@ -208,7 +209,7 @@
       `<a href="#/${g.slug}" class="${r.game === g.slug ? "on" : ""}">${esc(g.name)}</a>`).join("");
     if (!r.game || r.game === "how") document.documentElement.style.removeProperty("--accent");
     const gm = index.games.find((x) => x.slug === r.game);
-    document.title = (r.game === "how" ? t("how_title") + " — " : gm ? gm.name + " — " : "") + "boardgames.ai";
+    document.title = (r.game === "how" ? t("how_title") + " · " : gm ? gm.name + " · " : "") + "boardgames.ai";
     $("#foot").innerHTML = `${esc(t("footer", { date: fmtDate(index.generated) }))} <a href="https://github.com/boardgames-ai/boardgames-ai">GitHub</a>`;
   }
 
@@ -236,7 +237,7 @@
       example = `<div class="card"><h2>${esc(t("how_example_h"))}</h2><p class="takeaway">${esc(t("how_example", {
         item: itemName(ex.g, ex.it.item), lift: pp(ex.it.win_lift), lift2: pp(ex.it.win_lift, 2), win: pct(ex.it.win_rate, 2), base: pct(ex.e.meta.baseline_win_rate, 2),
         even: pct(1 / ex.e.meta.players, 0), players: t("n_players", { n: ex.p }), game: ex.g.manifest.name }))}</p>
-        <p style="margin-top:8px"><a href="${link(ex.g.manifest.slug, "items", ex.it.item, { p: ex.p })}">${esc(t("how_example_link", { item: itemName(ex.g, ex.it.item) }))} →</a></p></div>`;
+        <p style="margin-top:8px"><a href="${link(ex.g.manifest.slug, "items", ex.it.item, { p: ex.p })}">${esc(t("how_example_link", { item: itemName(ex.g, ex.it.item) }))}</a></p></div>`;
     }
     const gameGloss = [];
     for (const gm of index.games) {
@@ -246,7 +247,7 @@
         `<dt>${esc(L(x.term))}</dt><dd>${esc(L(x.text))}</dd>`).join("")}</dl></div>`);
     }
     S.g = null;
-    main.innerHTML = `<section class="hero"><div class="eyebrow">${esc(t("how_read"))}</div><h1>${esc(t("how_title"))}</h1>
+    main.innerHTML = `<section class="hero"><h1>${esc(t("how_title"))}</h1>
       <p class="lede">${esc(t("how_lede"))}</p></section>
       ${example}
       <div class="card section"><h2>${esc(t("glossary_h"))}</h2><dl class="gloss">${GLOSSARY.map((k) => `<dt id="${k}">${esc(t(k))}</dt><dd>${esc(t(k + "_d"))}</dd>`).join("")}</dl></div>
@@ -263,48 +264,33 @@
   // ------------------------------------------------------------------ home
   function renderHome(main, index) {
     main.innerHTML = `
-      <section class="hero">
-        <div class="eyebrow">${esc(t("home_eyebrow"))}</div>
+      <section class="home-intro">
         <h1>${esc(t("home_q"))}</h1>
         <p class="lede">${esc(t("home_lede"))}</p>
-        <div class="steps">
-          <div class="step"><h3>${esc(t("step1_t"))}</h3><p>${esc(t("step1"))}</p></div>
-          <div class="step"><h3>${esc(t("step2_t"))}</h3><p>${esc(t("step2"))}</p></div>
-          <div class="step"><h3>${esc(t("step3_t"))}</h3><p>${esc(t("step3"))}</p></div>
-        </div>
       </section>
-      <section class="section"><h2>${esc(t("games_h"))}</h2><p class="sub">${esc(t("games_sub"))}</p>
-        <div class="grid cols-2" style="margin-top:12px">${index.games.map(gameCard).join("")}</div></section>
-      <section class="section grid cols-2">
-        <div class="card"><h2>${esc(t("trust_h"))}</h2><ul class="clean">${["trust_1", "trust_2", "trust_3", "trust_4"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ul>
-          <p style="margin-top:10px"><a href="#/how">${esc(t("how_title"))} →</a></p></div>
-        <div class="card"><h2>${esc(t("add_h"))}</h2><p class="takeaway">${esc(t("add_text"))}</p>
+      <section class="games-list" aria-label="${esc(t("games_h"))}">${index.games.map(gameRow).join("")}</section>
+      <section class="home-more">
+        <div><h2>${esc(t("trust_h"))}</h2><ul class="clean">${["trust_1", "trust_2", "trust_3", "trust_4"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ul>
+          <p style="margin-top:10px"><a href="#/how">${esc(t("how_title"))}</a></p></div>
+        <div><h2>${esc(t("add_h"))}</h2><p class="takeaway">${esc(t("add_text"))}</p>
           <ol class="clean" style="margin-top:10px">${["add_1", "add_2", "add_3", "add_4"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ol>
           <p style="margin-top:10px"><a href="https://github.com/boardgames-ai/boardgames-ai/blob/main/CONTRIBUTING.md">${esc(t("add_link"))}</a></p></div>
       </section>
       <p class="caveat">${esc(t("caveat"))}</p>`;
   }
-  function gameCard(g) {
+  /* One game on the home page: name and publisher, its main finding, and in one line what the numbers rest on. */
+  function gameRow(g) {
     const hl = Object.entries(g.headline || {}).sort((a, b) => a[0] - b[0]);
     const games = hl.reduce((a, [, h]) => a + h.games, 0);
-    const counts = hl.map(([p]) => p).join(" · ");
-    // one status per player count: who played those games (finished AI, early AI, or a simple baseline player)
     const status = hl.length ? hl.map(([p, h]) => {
       const pl = t("n_players", { n: p });
-      if (h.kind === "baseline") return `<span class="pill">${esc(t("status_baseline", { players: pl }))}</span>`;
-      return h.finished ? `<span class="pill ok">${esc(t("status_finished", { players: pl }))}</span>`
-        : `<span class="pill warn">${esc(t("status_early", { players: pl }))}</span>`;
-    }).join("") : `<span class="pill">${esc(t(g.ai_status === "training" ? "model_training" : "model_none"))}</span>`;
-    // count the current AI of each player count; older AIs kept for comparison are named apart
-    const cur = hl.filter(([, h]) => h.kind === "model"), done = cur.filter(([, h]) => h.finished).length, older = (g.models || 0) - cur.length;
-    return `<a class="card gcard" href="#/${g.slug}" style="--gaccent:${esc((g.theme || {}).accent || "")}">
-      <div class="gtitle"><span class="emoji" aria-hidden="true">${esc((g.theme || {}).emoji || "🎲")}</span>
-        <div><h2>${esc(g.name)}</h2><div class="sub">${esc([g.publisher, g.year].filter(Boolean).join(", "))}</div></div></div>
-      <p>${esc(L(g.intro))}</p>
-      <div class="kv"><div><b>${games ? int(games) : "–"}</b><span>${esc(t("games_analysed"))}</span></div>
-        <div><b>${esc(counts || "–")}</b><span>${esc(t("player_counts"))}</span></div>
-        <div><b>${cur.length ? esc(t("x_of_y", { x: int(done), y: int(cur.length) })) : "–"}</b><span>${esc(t("models_finished"))}${older > 0 ? `<br>${esc(t("models_extra", { n: int(older) }))}` : ""}</span></div></div>
-      <div class="row">${status}<span class="sub">${esc(t("open_game"))} →</span></div></a>`;
+      if (h.kind === "baseline") return t("status_baseline", { players: pl });
+      return t(h.finished ? "status_finished" : "status_early", { players: pl });
+    }).join(", ") : t(g.ai_status === "training" ? "model_training" : "model_none");
+    const claim = L(g.claim) || L(g.intro);
+    return `<article class="grow"><div><h2><a href="#/${g.slug}">${esc(g.name)}</a></h2><div class="by">${esc([g.publisher, g.year].filter(Boolean).join(", "))}</div></div>
+      <div><p class="claim"><a href="#/${g.slug}" style="color:inherit;text-decoration:none">${esc(claim)}</a></p>
+        <p class="facts">${esc(status)}${games ? " · " + esc(t("games_analysed_n", { n: int(games) })) : ""}</p></div></article>`;
   }
 
   // ------------------------------------------------------------------ game shell
@@ -354,11 +340,14 @@
       if (seen.has(key + s.players)) return "";
       seen.add(key + s.players);
       return `<div class="notice"><b>${esc(t(key + "_h", { players: t("n_players", { n: s.players }) }))}</b> ${esc(t(key, { players: t("n_players", { n: s.players }), agent: who.label.toLowerCase(), why: key === "tent_early" ? whyEarly(g, who.id) : "" }))}
-        <a href="${link(g.slug, who.role === "original" ? "compare" : "lab")}">${esc(t(who.role === "original" ? "tab_compare" : "tab_lab"))} →</a></div>`;
+        <a href="${link(g.slug, who.role === "original" ? "compare" : "lab")}">${esc(t(who.role === "original" ? "tab_compare" : "tab_lab"))}</a></div>`;
     }).join("");
     return notes;
   }
 
+  /* Top of every game page: the game's name and who publishes it. The main finding is the Discoveries headline. */
+  const gameHead = (g) => `<section class="ghead"><a class="gname" href="#/${g.slug}">${esc(gameName(g.manifest))}</a>
+      <span class="by">${esc([[g.manifest.publisher, g.manifest.year].filter(Boolean).join(", "), g.manifest.designer].filter(Boolean).join(" · "))}</span></section>`;
   async function renderGame(main, g, r) {
     const m = g.manifest;
     const feat = m.featured || {};
@@ -387,8 +376,7 @@
       ${showAi ? `<span class="lbl">${esc(cmpPcs.length < (pSel ? 1 : pcs.length) ? t("ai_for", { players: cmpPcs.map((p) => t("n_players", { n: p })).join(", ") }) : t("ai"))}</span><div class="seg">${[["", t("ai_new")], ["old", t("ai_original")], ["both", t("side_by_side")]].map(([v, lab]) =>
         `<button type="button" data-q="v" data-v="${v}" class="${(r.q.v || "") === v ? "on" : ""}">${esc(lab)}</button>`).join("")}</div>` : ""}
     </div>` : "";
-    main.innerHTML = `<section class="ghead"><div class="title"><span class="emoji" style="font-size:30px" aria-hidden="true">${esc((m.theme || {}).emoji || "")}</span>
-        <div><div class="eyebrow">${esc([m.publisher, m.year, m.designer].filter(Boolean).join(" · "))}</div><h1 style="font-size:clamp(26px,3.6vw,36px)">${esc(gameName(m))}</h1></div></div></section>
+    main.innerHTML = `${gameHead(g)}
       <nav class="tabs" aria-label="${esc(t("sections"))}">${tabs.map(([k, lab]) => `<a href="${link(g.slug, k)}" class="${r.tab === k ? "on" : ""}">${esc(lab)}</a>`).join("")}</nav>
       ${filters}${["lab", "compare"].includes(r.tab) ? "" : tentNote(g, srcs)}<div id="view"></div>`;
     main.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
@@ -405,48 +393,46 @@
   function renderNoData(main, g, r) {
     const m = g.manifest;
     const tab = r.tab === "lab" ? "lab" : "discoveries";
-    main.innerHTML = `<section class="ghead"><div class="title"><span class="emoji" style="font-size:30px" aria-hidden="true">${esc((m.theme || {}).emoji || "")}</span>
-        <div><div class="eyebrow">${esc([m.publisher, m.year, m.designer].filter(Boolean).join(" · "))}</div><h1 style="font-size:clamp(26px,3.6vw,36px)">${esc(gameName(m))}</h1></div></div></section>
+    main.innerHTML = `${gameHead(g)}
       <nav class="tabs"><a href="${link(g.slug, "discoveries")}" class="${tab === "discoveries" ? "on" : ""}">${esc(t("tab_discoveries"))}</a>
         <a href="${link(g.slug, "lab")}" class="${tab === "lab" ? "on" : ""}">${esc(t("tab_lab"))}</a></nav><div id="view"></div>`;
     const view = $("#view");
     if (tab === "lab") { vLab(view, { g, r }); return; }
     view.innerHTML = `<section class="hero" style="padding-top:0"><h1>${esc(t("game_q", { game: m.name }))}</h1><p class="lede">${esc(L(m.intro))}</p></section>
       <div class="card"><h2>${esc(t(m.ai_status === "training" ? "training_now_h" : "engine_ready_h"))}</h2><p class="takeaway">${esc(t(m.ai_status === "training" ? "training_now" : "engine_ready", { n: Object.keys(g.catalog.items || {}).length }))}</p>
-      <p style="margin-top:10px"><a href="${link(g.slug, "lab")}">${esc(t("tab_lab"))} →</a></p></div>`;
+      <p style="margin-top:10px"><a href="${link(g.slug, "lab")}">${esc(t("tab_lab"))}</a></p></div>`;
   }
 
   // ------------------------------------------------------------------ discoveries
   function vDiscoveries(view, { g, srcs, exps }) {
     const m = g.manifest;
-    // games the AI played against itself while learning (from the model card of the AI in the first seat)
-    const learnGames = srcs.map((src) => ((g.models[((g.experiments[src.exp] || {}).seats || [])[0]] || {}).games));
-    const tiles = [
-      ...(learnGames.every((v) => v) ? [[t("t_learn_games"), learnGames, int]] : []),
-      [t("t_games"), exps.map((e) => e.meta.games), int],
-      [t("t_boards"), exps.map((e) => e.meta.boards), int],
-      [t("t_winner"), exps.map((e) => e.meta.winner_score), (v) => num(v, 0)]];
     const notes = g.notes || {};
     const variant = (srcs[0] || {}).variant === "old" ? "compare" : "main";
     const findings = (notes.findings || []).filter((f) => f.variant === variant || (!f.variant && variant === "main"));
     view.innerHTML = `
-      <section class="hero" style="padding-top:0">
-        <h1>${esc(t("game_q", { game: m.name }))}</h1>
-        <p class="lede">${esc(L(m.intro))} ${esc(t("game_lede_tail"))}</p>
-        ${m.edition_note ? `<p class="sub">${esc(L(m.edition_note))}</p>` : ""}</section>
+      <section class="hero">
+        <h1>${esc(L(notes.headline) || t("game_q", { game: m.name }))}</h1>
+        <p class="lede">${esc(L(m.intro))}</p>
+        ${m.edition_note ? `<p class="sub" style="max-width:var(--read)">${esc(L(m.edition_note))}</p>` : ""}</section>
       ${oneLine(g, srcs)}
       <section class="section"><h2>${esc(t("findings_h"))}</h2>
-        ${findings.length ? `<div class="grid cols-3" style="margin-top:12px">${findings.map((f) => finding(g, f, srcs)).join("")}</div>`
-          : `<p class="sub" style="margin-top:6px">${esc(t("findings_none"))}</p>`}
-        ${autoFindings(g, srcs, exps)}
-        <p class="caveat">${esc(gameCaveat(g, srcs))}${limits(g).length ? ` <a href="${link(g.slug, "lab", null, { s: "limits" })}">${esc(t("limits_link"))} →</a>` : ""}</p></section>
-      <section class="section"><h2>${esc(t("how_h"))}</h2>
-        <div class="steps">
-          <div class="step"><h3>${esc(t("step1_t"))}</h3><p>${esc(howLearn(g, srcs))}</p></div>
-          <div class="step"><h3>${esc(t("step2_t"))}</h3><p>${esc(howPlay(g, srcs, exps))}</p></div>
-          <div class="step"><h3>${esc(t("step3_t"))}</h3><p>${esc(t("how_count"))}</p></div></div>
-        <div class="tiles" style="margin-top:12px">${tiles.map(([lab, vals, f]) => `<div class="tile"><div class="lab">${esc(lab)}</div><div class="vals">${vals.map((v, i) =>
-          `<div class="v"><b>${esc(f(v))}</b><span>${esc(srcLabel(g, srcs[i]))}</span></div>`).join("")}</div></div>`).join("")}</div></section>`;
+        ${findings.length ? `<div class="flist">${findings.map((f, i) => finding(g, f, srcs, i)).join("")}</div>`
+          : `<p class="sub" style="margin-top:6px">${esc(t("findings_none"))}</p>${autoFindings(g, srcs, exps)}`}
+        <p class="caveat">${esc(gameCaveat(g, srcs))}${limits(g).length ? ` <a href="${link(g.slug, "lab", null, { s: "limits" })}">${esc(t("limits_link"))}</a>` : ""}</p></section>
+      <section class="section"><h2>${esc(t("how_h"))}</h2><p class="made">${esc(howMade(g, srcs, exps))} <a href="${link(g.slug, "lab")}">${esc(t("how_lab_link"))}</a></p></section>`;
+    findings.forEach((f, i) => findingChart(g, f, srcs, exps, i));
+  }
+  /* How the numbers were made, in one paragraph: games the AI played while learning, then the games behind the page. */
+  function howMade(g, srcs, exps) {
+    const seen = new Set();
+    const rows = srcs.map((s, i) => [s, srcInfo(g, s), exps[i]]).filter(([s]) => !seen.has(s.players) && seen.add(s.players));
+    const plain = rows.every(([s, who]) => who.model && who.finished && (g.models[who.id] || {}).games
+      && ((g.experiments[s.exp] || {}).seats || []).every((x) => x === who.id));
+    if (!plain) return [howLearn(g, srcs), howPlay(g, srcs, exps), t("how_count")].join(" ");
+    const list = (xs) => xs.length > 1 ? xs.slice(0, -1).join(", ") + " " + t("and") + " " + xs[xs.length - 1] : xs[0];
+    const learn = list(rows.map(([s, who]) => t("how_para_one", { games: int(g.models[who.id].games), players: t("n_players", { n: s.players }) })));
+    const play = list(rows.map(([s, , e]) => t("how_para_one", { games: int(e.meta.games), players: t("n_players", { n: s.players }) })));
+    return t("how_para", { learn, play });
   }
   /* The caveat under the findings: honest about AIs that have not passed their strength test. */
   function gameCaveat(g, srcs) {
@@ -463,14 +449,14 @@
     const notes = (g.notes && g.notes.experiments) || {};
     const parts = srcs.map((s) => { const n = notes[s.exp]; const x = n ? n[S.lang] || n.en : null; return x && x.summary ? [s, x] : null; }).filter(Boolean);
     if (!parts.length) return "";
-    return `<div class="grid ${parts.length > 1 ? "cols-2" : ""}" style="margin-bottom:14px">${parts.map(([s, x]) => `<div class="card oneline${tentative(g, s) ? " tent" : ""}">
-      <div class="who">${esc(t("plan_one_line"))} · ${srcHead(g, s)}</div><p>${esc(x.summary)}</p>
+    return `<div class="plans">${parts.map(([s, x]) => `<div class="oneline">
+      <div class="who">${esc(t("plan_for", { players: t("n_players", { n: s.players }) }))}${tentPill(g, s)}</div><p>${esc(x.summary)}</p>
       ${checklist(x, tentative(g, s))}
-      <a href="${link(g.slug, "strategy", null, { p: String(s.players) })}">${esc(t("read_strategy"))} →</a></div>`).join("")}</div>`;
+      <a href="${link(g.slug, "strategy", null, { p: String(s.players) })}">${esc(t("read_strategy"))}</a></div>`).join("")}</div>`;
   }
   function checklist(x, tent) {
     if (!x.do && !x.dont) return "";
-    return `<p class="sub" style="margin-top:8px">${esc(t(tent ? "check_expl_early" : "check_expl"))}</p><div class="check">${x.do ? `<div><h3>${esc(t("do_h"))}</h3><ul class="clean do">${x.do.map((w) => `<li>${esc(w)}</li>`).join("")}</ul></div>` : ""}
+    return `${tent ? `<p class="sub">${esc(t("check_expl_early"))}</p>` : ""}<div class="check">${x.do ? `<div><h3>${esc(t("do_h"))}</h3><ul class="clean do">${x.do.map((w) => `<li>${esc(w)}</li>`).join("")}</ul></div>` : ""}
       ${x.dont ? `<div><h3>${esc(t("dont_h"))}</h3><ul class="clean dont">${x.dont.map((w) => `<li>${esc(w)}</li>`).join("")}</ul></div>` : ""}</div>`;
   }
   function howLearn(g, srcs) {
@@ -500,14 +486,33 @@
     const [tab, item] = raw.split("/");
     return link(g.slug, tab, item || null);
   }
-  function finding(g, f, srcs) {
+  /* One written finding: the claim as a heading (and a link to the details), its numbers per player count, the text,
+     and an optional small chart (notes.json "chart": {"p": 2, "top": 12 | "archetypes": true, "focus": [...]}) */
+  function finding(g, f, srcs, i) {
     const x = f[S.lang] || f.en;
-    const seenP = new Set();   // one number per player count (side by side shows the same count twice)
+    const seenP = new Set();   // one number per player count
     const nums = srcs.filter((s) => !seenP.has(s.players) && seenP.add(s.players)).map((s) => [s, x["n" + s.players]]).filter(([, v]) => v && v !== "–");
-    return `<article class="card finding"><h3>${esc(x.title)}</h3>
-      ${nums.length ? `<div class="nums">${nums.map(([s, v]) => `<div><b>${esc(v)}${String(v).includes(t("pp")) ? " " + help("g_pp") : ""}</b><span>${esc(t("n_players", { n: s.players }))}${tentative(g, s) ? ` · <em class="warn-ink">${esc(t(srcInfo(g, s).role === "original" ? "pill_original" : srcInfo(g, s).role === "baseline" ? "pill_baseline" : "pill_tentative"))}</em>` : ""}</span></div>`).join("")}</div>` : ""}
-      <p class="sub">${esc(x.label || "")}</p><p>${esc(x.text)}</p>${x.before ? `<p class="before">${esc(x.before)}</p>` : ""}
-      ${f.link ? `<a href="${notesLink(g, f)}">${esc(t("show_chart"))} →</a>` : ""}</article>`;
+    const isPp = nums.some(([, v]) => String(v).includes(t("pp")));
+    const chart = f.chart && srcs.some((s) => s.players === +f.chart.p);
+    return `<article class="fi"><h3>${f.link ? `<a href="${notesLink(g, f)}">${esc(x.title)}</a>` : esc(x.title)}</h3>
+      ${nums.length ? `<div class="nums">${nums.map(([s, v]) => `<div><b>${esc(v)}</b><span>${esc(t("n_players", { n: s.players }))}${tentative(g, s) ? ` · <em class="warn-ink">${esc(t(srcInfo(g, s).role === "baseline" ? "pill_baseline" : "pill_tentative"))}</em>` : ""}</span></div>`).join("")}</div>
+      <p class="lab">${esc(x.label || "")}${isPp ? " " + help("g_lift") : ""}</p>` : ""}
+      <p>${esc(x.text)}</p>${chart ? `<div class="chart" id="fc-${i}"></div><p class="sub">${esc(t(f.chart.archetypes ? "fchart_arch" : "fchart_items", { players: t("n_players", { n: f.chart.p }) }))}</p>` : ""}</article>`;
+  }
+  function findingChart(g, f, srcs, exps, i) {
+    const host = $("#fc-" + i);
+    const k = srcs.findIndex((s) => s.players === +(f.chart || {}).p);
+    if (!host || k < 0) return;
+    const e = exps[k], focus = new Set(f.chart.focus || []);
+    const opt = { fmt: (v) => pp(v, 0), vfmt: (v) => pp(v, 1), labelW: 210 };
+    if (f.chart.archetypes) {
+      C.divergingBars(host, (e.archetypes || []).filter((r) => r.share >= 0.02).sort((a, b) => b.win_lift - a.win_lift).map((r) => ({
+        label: archName(g, r.archetype), value: r.win_lift, err: 2 * (r.win_lift_se || 0), focus: focus.has(r.archetype),
+        tip: `<b>${esc(archName(g, r.archetype))}</b><br>${esc(t("share_of"))}: ${pct(r.share, 1)}<br>${esc(t("win_rate"))}: ${pct(r.win_rate, 1)}` })), opt);
+      return;
+    }
+    const ok = e.items.filter((r) => r.boards_with >= minBoards(e)).sort((a, b) => b.win_lift - a.win_lift).slice(0, f.chart.top || 10);
+    C.divergingBars(host, liftRows(g, e, ok).map((r, j) => Object.assign(r, { label: itemName(g, ok[j].item), focus: focus.has(ok[j].item) })), opt);
   }
   /* Data-driven takeaways shown under the written findings: always current, even before notes are written. */
   function autoFindings(g, srcs, exps) {
@@ -987,15 +992,6 @@
   }
 
   // ------------------------------------------------------------------ boot
-  function setTheme(th) {
-    if (th === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", th);
-    try { localStorage.setItem("theme", th); } catch (e) { /* storage blocked */ }
-    const icon = { auto: "◐", light: "☀", dark: "☾" }[th];
-    const b = $("#theme-btn");
-    b.textContent = icon;
-    b.title = t("theme_" + th);
-    b.setAttribute("aria-label", t("theme_" + th));
-  }
   async function setLang(lang) {
     S.lang = lang;
     try { localStorage.setItem("lang", lang); } catch (e) { /* storage blocked */ }
@@ -1006,15 +1002,9 @@
     const sk = $(".skip"); if (sk) sk.textContent = t("skip");
   }
   async function boot() {
-    let lang = "en", theme = "auto";
-    try { lang = localStorage.getItem("lang") || ((navigator.language || "").startsWith("cs") ? "cs" : "en"); theme = localStorage.getItem("theme") || "auto"; } catch (e) { /* storage blocked */ }
+    let lang = "en";
+    try { lang = localStorage.getItem("lang") || ((navigator.language || "").startsWith("cs") ? "cs" : "en"); } catch (e) { /* storage blocked */ }
     await setLang(lang);
-    setTheme(theme);
-    $("#theme-btn").addEventListener("click", () => {
-      let cur = "auto";
-      try { cur = localStorage.getItem("theme") || "auto"; } catch (e) { /* storage blocked */ }
-      setTheme({ auto: "light", light: "dark", dark: "auto" }[cur]);
-    });
     window.addEventListener("hashchange", () => { window.scrollTo({ top: 0 }); render(); });
     let rt = null, lastW = window.innerWidth;
     window.addEventListener("resize", () => {

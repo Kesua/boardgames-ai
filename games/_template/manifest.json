@@ -3,7 +3,7 @@
   "name": "Template (toy market game)",
   "publisher": null,
   "players": [2, 3, 4],
-  "theme": {"accent": "#6250d6", "emoji": "🧩"},
+  "theme": {"accent": "#4a5d6b"},
   "intro": {"en": "A toy game used as the starting point for new games and for testing the platform."},
   "terms": {"en": {"item": "card", "items": "cards", "board": "hand", "boards": "hands", "archetype": "main colour",
                    "archetypes": "main colours", "round": "round"}},

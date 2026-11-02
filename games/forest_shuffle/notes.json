@@ -1,5 +1,9 @@
 {
  "written": "2026-11-02",
+ "headline": {
+  "en": "With two players, combinations win. With four, points that come at once.",
+  "cs": "Ve dvou vyhrávají kombinace, ve čtyřech body, které přijdou hned."
+ },
  "experiments": {
   "p2-v2fix-15m-mirror": {
    "games": 2000,
@@ -141,27 +145,20 @@
  "findings": [
   {
    "variant": "main",
-   "id": "alpine",
-   "link": "strategy",
-   "en": {
-    "title": "Forests of the Stone Pine symbol win most",
-    "text": "A forest's type is the tree symbol it has most of, counting animals and plants too. Forests of the Stone Pine symbol, the Alpine symbol, win 61.3 % of 2-player games, where an equal share is 50.3 %, and 41.4 % of 4-player games, where it is 25.9 %: the best of all forest types with both player counts. Stone Pine scores 1 point per Alpine card, so Alpine cards help each other.",
-    "label": "wins of forests whose most common symbol is Stone Pine",
-    "n2": "61.3 %",
-    "n4": "41.4 %"
-   },
-   "cs": {
-    "title": "Nejvíc vyhrávají lesy se symbolem borovice limby",
-    "text": "Typ lesa je symbol stromu, kterého má les nejvíc; počítají se i zvířata a rostliny. Lesy se symbolem borovice limby, tedy alpským symbolem, vyhrávají 61,3 % her dvou hráčů, kde stejný podíl je 50,3 %, a 41,4 % her čtyř hráčů, kde je 25,9 %: nejvíc ze všech typů lesa při obou počtech hráčů. Borovice limba dá 1 bod za každou alpskou kartu, takže si alpské karty navzájem pomáhají.",
-    "label": "výhry lesů, kde převládá symbol borovice limby",
-    "n2": "61,3 %",
-    "n4": "41,4 %"
-   }
-  },
-  {
-   "variant": "main",
    "id": "combos",
    "link": "items/GENTIAN",
+   "chart": {
+    "p": 2,
+    "top": 12,
+    "focus": [
+     "GENTIAN",
+     "STINGING_NETTLE",
+     "PHOEBUS_APOLLO",
+     "SILVER_WASHED_FRITILLARY",
+     "MAP_BUTTERFLY",
+     "CAMBERWELL_BEAUTY"
+    ]
+   },
    "en": {
     "title": "With 2 players, combinations win",
     "text": "A 2-player game is long enough to build combinations. Gentian (3 points per butterfly) has the largest win-rate difference of the common cards, and 6 of the 12 cards that go most with winning are butterflies or score per butterfly. With 4 players there is no time for that: each butterfly is in at most 3 % of forests, and Gentian does not clearly go with winning.",
@@ -181,6 +178,16 @@
    "variant": "main",
    "id": "ready",
    "link": "items/STEINBOCK",
+   "chart": {
+    "p": 4,
+    "top": 8,
+    "focus": [
+     "STEINBOCK",
+     "FALLOW_DEER",
+     "COMMON_RAVEN",
+     "EDELWEISS"
+    ]
+   },
    "en": {
     "title": "With 4 players, points that come at once win",
     "text": "A 4-player game lasts only 15–38 turns per player. Its winners take cards that score at once: Steinbock (10 points; +11.0 pp), Fallow Deer (+8.3 pp), Common Raven (5 points; +7.2 pp) and Edelweiss (3 points; +4.5 pp). With 2 players the same Common Raven and Edelweiss go with losing (−9.2 pp and −8.0 pp): in a longer game a card in a combination is worth more.",
@@ -194,6 +201,32 @@
     "label": "rozdíl ve výhrách: Kozorožec horský",
     "n2": "+3,4 p. b.",
     "n4": "+11,0 p. b."
+   }
+  },
+  {
+   "variant": "main",
+   "id": "alpine",
+   "link": "strategy",
+   "chart": {
+    "p": 4,
+    "archetypes": true,
+    "focus": [
+     "SWISS_PINE"
+    ]
+   },
+   "en": {
+    "title": "Forests of the Stone Pine symbol win most",
+    "text": "A forest's type is the tree symbol it has most of, counting animals and plants too. Forests of the Stone Pine symbol, the Alpine symbol, win 61.3 % of 2-player games, where an equal share is 50.3 %, and 41.4 % of 4-player games, where it is 25.9 %: the best of all forest types with both player counts. Stone Pine scores 1 point per Alpine card, so Alpine cards help each other.",
+    "label": "wins of forests whose most common symbol is Stone Pine",
+    "n2": "61.3 %",
+    "n4": "41.4 %"
+   },
+   "cs": {
+    "title": "Nejvíc vyhrávají lesy se symbolem borovice limby",
+    "text": "Typ lesa je symbol stromu, kterého má les nejvíc; počítají se i zvířata a rostliny. Lesy se symbolem borovice limby, tedy alpským symbolem, vyhrávají 61,3 % her dvou hráčů, kde stejný podíl je 50,3 %, a 41,4 % her čtyř hráčů, kde je 25,9 %: nejvíc ze všech typů lesa při obou počtech hráčů. Borovice limba dá 1 bod za každou alpskou kartu, takže si alpské karty navzájem pomáhají.",
+    "label": "výhry lesů, kde převládá symbol borovice limby",
+    "n2": "61,3 %",
+    "n4": "41,4 %"
    }
   },
   {
@@ -236,25 +269,6 @@
   },
   {
    "variant": "main",
-   "id": "oak",
-   "link": "items/OAK",
-   "en": {
-    "title": "Oak and Horse Chestnut are money, not trees",
-    "text": "Oak trees planted in 2,000 games: 1 with 2 players and 5 with 4; Horse Chestnuts: 5 and 14. Their cards go to paying for other cards. Both score well only in big sets (the Oak needs all 8 tree species in the forest), and a game rarely gives the time for that.",
-    "label": "Oak trees planted in 2,000 games",
-    "n2": "1",
-    "n4": "5"
-   },
-   "cs": {
-    "title": "Dub a Jírovec maďal jsou peníze, ne stromy",
-    "text": "Zasazené duby ve 2 000 hrách: 1 ve dvou a 5 ve čtyřech; jírovce: 5 a 14. Jejich karty jdou na placení za jiné karty. Oba dobře bodují jen ve velkých sadách (Dub potřebuje v lese všech 8 druhů stromů) a hra na to málokdy dá čas.",
-    "label": "zasazené duby ve 2 000 hrách",
-    "n2": "1",
-    "n4": "5"
-   }
-  },
-  {
-   "variant": "main",
    "id": "clearing",
    "link": "more",
    "en": {
@@ -289,6 +303,25 @@
     "label": "výhry: první místo : poslední místo",
     "n2": "55,2 % : 45,5 %",
     "n4": "30,4 % : 21,3 %"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "oak",
+   "link": "items/OAK",
+   "en": {
+    "title": "Oak and Horse Chestnut are money, not trees",
+    "text": "Oak trees planted in 2,000 games: 1 with 2 players and 5 with 4; Horse Chestnuts: 5 and 14. Their cards go to paying for other cards. Both score well only in big sets (the Oak needs all 8 tree species in the forest), and a game rarely gives the time for that.",
+    "label": "Oak trees planted in 2,000 games",
+    "n2": "1",
+    "n4": "5"
+   },
+   "cs": {
+    "title": "Dub a Jírovec maďal jsou peníze, ne stromy",
+    "text": "Zasazené duby ve 2 000 hrách: 1 ve dvou a 5 ve čtyřech; jírovce: 5 a 14. Jejich karty jdou na placení za jiné karty. Oba dobře bodují jen ve velkých sadách (Dub potřebuje v lese všech 8 druhů stromů) a hra na to málokdy dá čas.",
+    "label": "zasazené duby ve 2 000 hrách",
+    "n2": "1",
+    "n4": "5"
    }
   },
   {

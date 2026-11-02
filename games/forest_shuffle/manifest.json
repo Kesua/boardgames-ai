@@ -7,7 +7,7 @@
   "edition": "Base game + Woodland Edge + Alpine expansions (233 deck cards)",
   "players": [2, 3, 4, 5],
   "rights": "RIGHTS.md",
-  "theme": {"accent": "#2f6b3a", "accent_soft": "#e3efe2", "emoji": "🌲"},
+  "theme": {"accent": "#2f6b3a", "accent_soft": "#e3efe2"},
   "intro": {
     "en": "Players build a forest: trees, with animals, mushrooms and plants attached to their four sides. Most cards score by combinations, so the order and mix of cards decides the game. Three winter cards hidden in the deck end it, so the length varies.",
     "cs": "Hráči staví les: stromy a k jejich čtyřem stranám zvířata, houby a rostliny. Většina karet boduje za kombinace, takže o hře rozhoduje pořadí a mix karet. Hru ukončí tři zimní karty skryté v balíčku, proto je různě dlouhá."

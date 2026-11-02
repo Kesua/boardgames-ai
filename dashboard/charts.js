@@ -80,7 +80,9 @@
     o = o || {};
     const W = widthOf(container);
     // phones: the name goes above its bar, so the bar gets the whole width
-    const stacked = W < 500, rowH = stacked ? 40 : 24, barTop = stacked ? 19 : 5, barH = 14, top = 6, h = top + rows.length * rowH + 24;
+    const stacked = W < 500, rowH = stacked ? 42 : 26, barTop = stacked ? 21 : 6, barH = 14, top = 6, h = top + rows.length * rowH + 24;
+    // grey first: when some rows are marked as the point of the chart, only those get colour
+    const focusMode = rows.some((r) => r.focus);
     const labelW = stacked ? 0 : Math.min(o.labelW || 200, Math.round(W * 0.38));
     const { svg } = svgBox(container, W, h);
     // the axis covers every uncertainty range, so no range line is cut at the plot edge
@@ -109,13 +111,13 @@
       const v = r.value, x = v >= 0 ? x0 : x0 + (v / max) * half, w = Math.max(1.5, Math.abs(v / max) * half), cy = y + barTop + barH / 2;
       // a bar whose uncertainty range crosses zero is drawn pale: the effect may be nothing
       const unclear = r.err && Math.abs(v) <= r.err;
-      const fill = o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", pale = r.dim || unclear;
-      const bar = el("rect", { x, y: y + barTop, width: w, height: barH, rx: 4, class: pale ? "mark pale" : "mark", style: pale ? `--c:${fill}` : null,
+      const fill = focusMode && !r.focus ? "var(--mute)" : o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", pale = r.dim || unclear;
+      const bar = el("rect", { x, y: y + barTop, width: w, height: barH, rx: 0, class: pale ? "mark pale" : "mark", style: pale ? `--c:${fill}` : null,
                                fill, opacity: r.dim ? .45 : unclear ? .3 : 1 }, svg);
       let right = v >= 0 ? x + w : x0;   // right end of what is drawn on the positive side of zero
       if (r.err) {
         const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half);
-        const wk = { stroke: "var(--ink-2)", "stroke-width": 1.5 };
+        const wk = { stroke: "var(--ink-2)", "stroke-width": 1.25 };
         el("line", Object.assign({ x1: ex1, x2: ex2, y1: cy, y2: cy }, wk), svg);
         el("line", Object.assign({ x1: ex1, x2: ex1, y1: cy - 4, y2: cy + 4 }, wk), svg);
         el("line", Object.assign({ x1: ex2, x2: ex2, y1: cy - 4, y2: cy + 4 }, wk), svg);
@@ -167,9 +169,9 @@
         const base = spec.diverge ? spec.baseline : 0;
         const x = cx - (k * (bw + gap)) / 2 + j * (bw + gap);
         const y1 = y(Math.max(v, base)), y2 = y(Math.min(v, base));
-        const fill = spec.diverge ? (v >= base ? "var(--pos)" : "var(--neg)") : (s.color || color(j));
+        const fill = spec.diverge ? (v >= base ? "var(--pos)" : "var(--neg)") : (s.color || (k === 1 ? "var(--accent)" : color(j)));   // one series: the game colour
         const pale = s.dims && s.dims[i];
-        el("rect", { x, y: y1, width: bw, height: Math.max(1.5, y2 - y1), rx: 3, fill, class: pale ? "mark pale" : "mark", style: pale ? `--c:${fill}` : null, opacity: pale ? .35 : 1 }, svg);
+        el("rect", { x, y: y1, width: bw, height: Math.max(1.5, y2 - y1), rx: 0, fill, class: pale ? "mark pale" : "mark", style: pale ? `--c:${fill}` : null, opacity: pale ? .35 : 1 }, svg);
         const hit = el("rect", { x: x - 2, y: T, width: bw + 4, height: H - T - B, class: "hit", tabindex: 0 }, svg);
         hover(hit, (s.tips && s.tips[i]) || `<b>${lab}</b><br>${s.name}: ${spec.fmt ? spec.fmt(v) : v}`);
       });
@@ -209,7 +211,7 @@
       text(svg, W - R, Y(r.y) - 5, r.label, "lab", "end");
     });
     spec.series.forEach((s, j) => {
-      const c = s.color || color(j);
+      const c = s.color || (spec.series.length === 1 ? "var(--accent)" : color(j));
       const p = s.points.slice().sort((a, b) => a.x - b.x);
       if (p.length > 1) el("path", { d: p.map((q, i) => (i ? "L" : "M") + X(q.x).toFixed(1) + " " + Y(q.y).toFixed(1)).join(""),
                                      fill: "none", stroke: c, "stroke-width": 2, "stroke-linejoin": "round" }, svg);
@@ -236,7 +238,7 @@
       const v = spec.counts[i][j];
       const x = L + i * cw, y = T + (ny - 1 - j) * ch;
       const step = v ? ramp[Math.min(6, Math.floor((Math.sqrt(v / max)) * 6.999))] : null;
-      const r = el("rect", { x: x + 1, y: y + 1, width: cw - 2, height: ch - 2, rx: 3, fill: step ? `var(${step})` : "var(--surface-2)", tabindex: v ? 0 : -1 }, svg);
+      const r = el("rect", { x: x + 1, y: y + 1, width: cw - 2, height: ch - 2, rx: 1, fill: step ? `var(${step})` : "var(--surface-2)", tabindex: v ? 0 : -1 }, svg);
       hover(r, `${spec.xlabel}: ${spec.xEdges[i]}–${spec.xEdges[i + 1]}<br>${spec.ylabel}: ${spec.yEdges[j]}–${spec.yEdges[j + 1]}<br><b>${v}</b> ${spec.unit || ""}`);
     }
     for (let i = 0; i <= nx; i += Math.max(1, Math.ceil(nx / 10))) text(svg, L + i * cw, H - B + 14, spec.xEdges[i], "lab", "middle");

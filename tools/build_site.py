@@ -3,7 +3,7 @@
 python tools/build_site.py            # then open site/index.html through a static server:
 python -m http.server -d site 8000    # http://127.0.0.1:8000
 
-site/data/index.json            all games: name, publisher, players, intro, theme, headline numbers
+site/data/index.json            all games: name, publisher, players, intro, main finding, theme, headline numbers
 site/data/<slug>/game.json      manifest, translations, item catalog, notes, models (with training logs),
                                 experiment recipes, comparisons of new vs original model
 site/data/<slug>/exp/<id>.json  one experiment's stats.json (without the per-game score list)
@@ -146,6 +146,7 @@ def build_game(slug: str, out: Path) -> dict:
     return {"slug": slug, "name": manifest["name"], "publisher": manifest.get("publisher"), "year": manifest.get("year"),
             "designer": manifest.get("designer"), "players": manifest.get("players"), "theme": manifest.get("theme"),
             "intro": manifest.get("intro"), "edition": manifest.get("edition"), "headline": headline,
+            "claim": (notes or {}).get("headline"),   # the game's main finding, shown on the home page
             "models": len(models), "models_finished": sum(1 for m in models.values() if (m.get("strength") or {}).get("finished")),
             "experiments": len(experiments), "ai_status": manifest.get("ai_status")}
 

@@ -1,5 +1,9 @@
 {
  "written": "2026-11-02",
+ "headline": {
+  "en": "Winners score on round goals, eggs and tucked cards, not on big birds.",
+  "cs": "Vítězové bodují z cílů kol, vajec a zastrčených karet, ne z velkých ptáků."
+ },
  "experiments": {
   "p2-28m-mirror": {
    "games": 2000,
@@ -95,6 +99,16 @@
     "text": "Barn Swallow má největší rozdíl ve výhrách ze všech ptáků, kteří jsou aspoň na 5 % hracích desek (+14,7 p. b.). Mezi prvními deseti jsou 4 ptáci se stejným druhem schopnosti (zastrč kartu z ruky, pak dober kartu nebo polož vejce); další jsou Purple Martin (+9,6 p. b.), American Robin (+8,4 p. b.) a Bushtit (+7,8 p. b.).",
     "label": "rozdíl ve výhrách: Barn Swallow",
     "n2": "+14,7 p. b."
+   },
+   "chart": {
+    "p": 2,
+    "top": 10,
+    "focus": [
+     "BARN_SWALLOW",
+     "PURPLE_MARTIN",
+     "AMERICAN_ROBIN",
+     "BUSHTIT"
+    ]
    }
   },
   {
@@ -112,6 +126,13 @@
     "text": "Hráči, jejichž hlavní prostředí (řada s nejvíce ptáky) je les, vyhrávají 43 % her; je to 16 % hracích desek. Desky s loukou vyhrávají 52 % (louka a mokřad se jasně neliší). Pravděpodobný důvod: lesní řada dává potravu, zatímco vítězové AI bodují vejci a kartami.",
     "label": "výhry desek hlavně s lesními ptáky",
     "n2": "43 %"
+   },
+   "chart": {
+    "p": 2,
+    "archetypes": true,
+    "focus": [
+     "forest"
+    ]
    }
   },
   {
