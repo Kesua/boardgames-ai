@@ -47,7 +47,7 @@ checks = [
     ("N StonePine symbol share", P(arch(N, "SWISS_PINE")["share"])), ("N StonePine symbol win", P(arch(N, "SWISS_PINE")["win_rate"])),
     ("N Stone Pine presence", P(item(N, "STONE_PINE")["presence_rate"])), ("N Stone Pine edge", E(item(N, "STONE_PINE")["winner_edge"])),
     ("N Stone Pine lift", PP(item(N, "STONE_PINE")["win_lift"])), ("N Stone Pine lift within chance (must be True)", str(abs(item(N, "STONE_PINE")["win_lift"]) <= 2 * item(N, "STONE_PINE")["win_lift_se"])),
-    ("N saplings/player", r(out(N)["x_saplings"], 1)), ("N sapling forests", P(arch(N, "SAPLING")["share"])), ("N sapling win", P(arch(N, "SAPLING")["win_rate"])),
+    ("N saplings/player", r(out(N)["x_saplings"], 1)), ("N sapling forests", P(arch(N, "SAPLING")["share"])),
     ("N Beech presence", P(item(N, "BEECH")["presence_rate"])), ("N Beech edge", E(item(N, "BEECH")["winner_edge"])),
     ("N Beech symbol share", P(arch(N, "BEECH")["share"])), ("N Beech symbol win", P(arch(N, "BEECH")["win_rate"])),
     ("N Raccoon", PP(item(N, "RACCOON")["win_lift"])), ("N Raccoon presence", P(item(N, "RACCOON")["presence_rate"])), ("N Raccoon edge", E(item(N, "RACCOON")["winner_edge"])),
@@ -89,6 +89,7 @@ checks = [
     ("O Gentian", PP(item(O, "GENTIAN")["win_lift"])),
     # --- 4p early AI
     ("F Fallow", PP(item(F, "FALLOW_DEER")["win_lift"]) + f" over {item(F, 'FALLOW_DEER')['boards_with']:,} edge " + E(item(F, "FALLOW_DEER")["winner_edge"])),
+    ("F Gentian", PP(item(F, "GENTIAN")["win_lift"])),
     ("F max edge card", max(st[F]["items"], key=lambda x: x["winner_edge"] or -9)["item"]),
     ("F Wolf/Roe/Red", " / ".join(PP(item(F, k)["win_lift"]) for k in ("WOLF", "ROE_DEER", "RED_DEER"))),
     ("F LT/MapB/Camberwell/Gentian", " / ".join(PP(item(F, k)["win_lift"]) for k in ("LARGE_TORTOISESHELL", "MAP_BUTTERFLY", "CAMBERWELL_BEAUTY", "GENTIAN"))),

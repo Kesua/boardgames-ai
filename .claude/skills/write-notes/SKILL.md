@@ -30,7 +30,7 @@ Six findings per game is a good number; link each to the tab where its chart is 
 
 ## Rules for the text
 - Lead with what a player can do ("Few saplings, fill the trees").
-- Use the dashboard's terms: effect on winning (percentage points), winner vs loser (copies), presence.
+- Use the dashboard's terms: win-rate difference (percentage points; it describes, it does not prove a cause), winner vs loser (copies), presence.
 - Prefer findings that hold across player counts and are large compared with their uncertainty (> 2 standard errors;
   at least ~200 boards).
 - Say "winners have more X", not "X makes you win". Mention when a finding may come from game length or from the AI's

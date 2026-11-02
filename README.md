@@ -26,7 +26,7 @@ against an equally strong copy of itself — not a proven best strategy.
 
 | Game | State | Examples of what the AI's games show |
 |---|---|---|
-| Forest Shuffle (base + Woodland Edge + Alpine) | **2 players:** finished AI (15M training steps), 2,000 games. **4 players:** an early AI trained before the training recipe existed; its findings are tentative. | Winners draw from the deck far more than from the clearing; players with Gentian among their butterflies win more often; forests built mostly from saplings rarely win. |
+| Forest Shuffle (base + Woodland Edge + Alpine) | **2 players:** finished AI (15M training steps), 2,000 games. **4 players:** an early AI trained before the training recipe existed; its findings are tentative. | Winners draw from the deck far more than from the clearing; players with Gentian among their butterflies win more often; the strong AI almost never builds a forest mainly from saplings. |
 | Wingspan (base game) | Rules engine verified, all 180 birds tested; the AI is in training. | — |
 
 ## Why you can trust the numbers — and how far

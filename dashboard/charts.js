@@ -53,22 +53,38 @@
     return out;
   }
   const color = (i) => `var(--s${(i % 8) + 1})`;
-  // axis labels: whole-number ticks drop trailing zero decimals ("20.0" -> "20", "4,0 %" -> "4 %")
+  // axis labels: whole-number ticks drop trailing zero decimals ("20.0" -> "20", "4,0 %" -> "4 %"), never a thousands
+  // separator ("3,000" stays): only the page language's decimal mark counts
   const tickText = (fmt, t, ticks) => {
     const s = String(fmt ? fmt(t) : t);
-    return ticks.every((v) => Number.isInteger(v)) ? s.replace(/([.,]0+)(?=[^0-9]*$)/, "") : s;
+    const re = document.documentElement.lang === "cs" ? /,0+(?=[^0-9]*$)/ : /\.0+(?=[^0-9]*$)/;
+    return ticks.every((v) => Number.isInteger(v)) ? s.replace(re, "") : s;
   };
+  /* A label in at most three lines of about maxCh characters (split at spaces), the last shortened with "…" if needed. */
+  function wrapLines(label, maxCh) {
+    const words = String(label).split(" "), out = [];
+    while (words.length && out.length < 3) {
+      let a = words.shift();
+      while (words.length && (a + " " + words[0]).length <= maxCh) a += " " + words.shift();
+      out.push(a);
+    }
+    if (words.length) out[2] += " " + words.join(" ");
+    return out.map((x) => (x.length > maxCh + 2 ? x.slice(0, maxCh) + "…" : x));
+  }
 
   /* Horizontal bars around zero (polarity): rows [{label, value, tip, dim}]. Positive = --pos, negative = --neg.
      o.mag: plain magnitudes (shares, points) in one hue. The axis only covers the signs present. */
   function divergingBars(container, rows, o) {
     o = o || {};
-    const W = widthOf(container), rowH = 24, top = 6, h = top + rows.length * rowH + 24;
-    const labelW = Math.min(o.labelW || 200, Math.round(W * (W < 500 ? 0.5 : 0.38)));   // phones: names need more of the width
+    const W = widthOf(container);
+    // phones: the name goes above its bar, so the bar gets the whole width
+    const stacked = W < 500, rowH = stacked ? 40 : 24, barTop = stacked ? 19 : 5, barH = 14, top = 6, h = top + rows.length * rowH + 24;
+    const labelW = stacked ? 0 : Math.min(o.labelW || 200, Math.round(W * 0.38));
     const { svg } = svgBox(container, W, h);
-    const max = Math.max(1e-9, ...rows.map((r) => Math.abs(r.value) + (r.err || 0) * 0.5), o.minMax || 0);
+    // the axis covers every uncertainty range, so no range line is cut at the plot edge
+    const max = Math.max(1e-9, ...rows.map((r) => Math.abs(r.value) + (r.err || 0)), o.minMax || 0);
     const anyNeg = rows.some((r) => r.value < 0), anyPos = rows.some((r) => r.value > 0);
-    const plotW = W - labelW - 56;
+    const plotW = W - labelW - 72;
     const x0 = labelW + 8 + (anyNeg && anyPos ? plotW / 2 : anyNeg ? plotW : 0);
     const half = anyNeg && anyPos ? plotW / 2 : plotW;
     const clipX = (x) => Math.max(labelW + 4, Math.min(W - 4, x));
@@ -81,29 +97,29 @@
     });
     rows.forEach((r, i) => {
       const y = top + i * rowH;
-      // labels that do not fit the label column are shortened (about 6.6 px per character at this font size)
-      const maxCh = Math.max(6, Math.floor((labelW - 4) / 6.2));
+      // labels that do not fit are shortened (about 6.6 px per character at this font size)
+      const maxCh = Math.max(6, Math.floor(((stacked ? W : labelW) - 4) / 6.6));
       const full = String(r.label), cut = full.lastIndexOf(" · "), tail = cut > 0 ? full.slice(cut) : "", head = cut > 0 ? full.slice(0, cut) : full;
       const lab = full.length > maxCh ? head.slice(0, Math.max(3, maxCh - tail.length - 1)) + "…" + tail : full;   // keep a " · 58 %" ending
-      const t = text(svg, labelW, y + rowH / 2 + 4, lab, "name", "end");
+      const t = stacked ? text(svg, 2, y + 14, lab, "name", "start") : text(svg, labelW, y + rowH / 2 + 4, lab, "name", "end");
       if (lab !== r.label) el("title", {}, t).textContent = r.label;
       if (r.dim) t.setAttribute("opacity", ".55");
-      const v = r.value, x = v >= 0 ? x0 : x0 + (v / max) * half, w = Math.max(1.5, Math.abs(v / max) * half);
+      const v = r.value, x = v >= 0 ? x0 : x0 + (v / max) * half, w = Math.max(1.5, Math.abs(v / max) * half), cy = y + barTop + barH / 2;
       // a bar whose uncertainty range crosses zero is drawn pale: the effect may be nothing
       const unclear = r.err && Math.abs(v) <= r.err;
-      const bar = el("rect", { x, y: y + 5, width: w, height: rowH - 10, rx: 4, class: "mark",
+      const bar = el("rect", { x, y: y + barTop, width: w, height: barH, rx: 4, class: "mark",
                                fill: o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", opacity: r.dim ? .45 : unclear ? .3 : 1 }, svg);
-      let end = v >= 0 ? x + w : x;
+      let right = v >= 0 ? x + w : x0;   // right end of what is drawn on the positive side of zero
       if (r.err) {
-        const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half), cy = y + rowH / 2;
+        const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half);
         const wk = { stroke: "var(--ink-2)", "stroke-width": 1.5 };
         el("line", Object.assign({ x1: ex1, x2: ex2, y1: cy, y2: cy }, wk), svg);
         el("line", Object.assign({ x1: ex1, x2: ex1, y1: cy - 4, y2: cy + 4 }, wk), svg);
         el("line", Object.assign({ x1: ex2, x2: ex2, y1: cy - 4, y2: cy + 4 }, wk), svg);
-        end = v >= 0 ? Math.max(end, ex2) : Math.min(end, ex1);
+        right = Math.max(right, ex2);
       }
-      // positive: after the bar (and its whisker); negative: on the empty side of the zero line, never over the label
-      text(svg, v >= 0 ? Math.min(end + 5, W - 48) : x0 + 6, y + rowH / 2 + 4, o.vfmt ? o.vfmt(v) : o.fmt ? o.fmt(v) : v, "val", "start");
+      // the value sits right of the bar and its range line (negative bar: right of zero, or of a range crossing it), never over them
+      text(svg, Math.min(right + 5, W - 58), cy + 4, o.vfmt ? o.vfmt(v) : o.fmt ? o.fmt(v) : v, "val", "start");
       const hit = el("rect", { x: 0, y, width: W, height: rowH, class: "hit", tabindex: 0 }, svg);
       if (r.tip) hover(hit, r.tip);
       svg.insertBefore(hit, bar);
@@ -113,7 +129,9 @@
 
   /* Vertical bars, one series or grouped: {x:[labels], series:[{name, values, tips}], fmt, baseline, base_label} */
   function columns(container, spec) {
-    const W = widthOf(container), H = (spec.height || 240) + (spec.xlabel ? 16 : 0), L = spec.ylabel ? 60 : 46, R = 10, T = 12, B = 34 + (spec.xlabel ? 16 : 0);
+    const W = widthOf(container), maxCh = Math.max(6, Math.floor(((W - 70) / Math.max(1, spec.x.length) - 4) / 6));
+    const nl = spec.allLabels ? Math.max(1, ...spec.x.map((lab) => wrapLines(lab, maxCh).length)) : 1;   // long names wrap onto more lines
+    const H = (spec.height || 240) + (spec.xlabel ? 16 : 0) + (nl - 1) * 13, L = spec.ylabel ? 60 : 46, R = 10, T = 12, B = 34 + (spec.xlabel ? 16 : 0) + (nl - 1) * 13;
     const { wrap, svg } = svgBox(container, W, H);
     const all = spec.series.flatMap((s) => s.values).filter((v) => v !== null && v !== undefined);
     let lo = Math.min(0, ...all), hi = Math.max(0, ...all, spec.baseline ?? 0);
@@ -125,16 +143,21 @@
       const pad = (hi - lo) * 0.08 || 0.05; lo = Math.max(0, lo - pad); hi = hi + pad;
     }
     const ticks = niceTicks(lo, hi, 4);
+    // the axis ends on a labelled tick, so the tallest bar never sticks out above the last number
+    if (ticks.length > 1 && hi > ticks[ticks.length - 1] + 1e-9 && !spec.diverge) ticks.push(+(ticks[ticks.length - 1] + ticks[1] - ticks[0]).toFixed(10));
     lo = Math.min(lo, ticks[0]); hi = Math.max(hi, ticks[ticks.length - 1]);
     const y = (v) => T + (H - T - B) * (1 - (v - lo) / (hi - lo || 1));
     const g = el("g", { class: "grid" }, svg);
-    ticks.forEach((t) => { el("line", { x1: L, x2: W - R, y1: y(t), y2: y(t) }, g); text(svg, L - 6, y(t) + 4, tickText(spec.fmt, t, ticks), "lab", "end"); });
+    ticks.forEach((t) => { el("line", { x1: L, x2: W - R, y1: y(t), y2: y(t) }, g); text(svg, L - 6, y(t) + 4, tickText(spec.tickFmt || spec.fmt, t, ticks), "lab", "end"); });
     const n = spec.x.length, k = spec.series.length, band = (W - L - R) / n, gap = 2;
     const bw = Math.max(3, Math.min(42, (band - 10) / k - gap));
     spec.x.forEach((lab, i) => {
       const cx = L + band * i + band / 2;
       const every = spec.allLabels ? 1 : Math.ceil(n / Math.max(1, Math.floor((W - L - R) / 70)));
-      if (i % every === 0 && lab !== "") text(svg, cx, H - B + 16, String(lab).length > 14 && band < 90 ? String(lab).slice(0, 12) + "…" : lab, "lab", "middle");
+      if (i % every === 0 && lab !== "") {
+        if (spec.allLabels) wrapLines(lab, maxCh).forEach((line, li) => { const tt = text(svg, cx, H - B + 16 + li * 13, line, "lab", "middle"); if (line.endsWith("…")) el("title", {}, tt).textContent = lab; });
+        else text(svg, cx, H - B + 16, String(lab).length > 14 && band < 90 ? String(lab).slice(0, 12) + "…" : lab, "lab", "middle");
+      }
       spec.series.forEach((s, j) => {
         const v = s.values[i];
         if (v === null || v === undefined) return;
