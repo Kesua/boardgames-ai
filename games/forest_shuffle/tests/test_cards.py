@@ -12,6 +12,7 @@ from bgai.game import load_spec
 from games.forest_shuffle.core.actions import Action
 from games.forest_shuffle.core.actions import ActionKind as K
 from games.forest_shuffle.core.state import make_sapling
+from games.forest_shuffle.engine import effects
 from games.forest_shuffle.engine.scoring import score_cards, score_player
 from games.forest_shuffle.tests.conftest import attach, give, hand_only, plant, play_half
 
@@ -246,18 +247,27 @@ def test_bat_and_gnat_counters(game):
 @pytest.mark.rule("F6.2")
 @pytest.mark.card("GOSHAWK")
 @pytest.mark.card("BLUEBERRY")
-@pytest.mark.card("EUROPEAN_WILDCAT")
 def test_bird_counters(game):
     s1, s2, s3 = sapling(game), sapling(game), sapling(game)
     attach(game, 0, s1, "GOSHAWK")
     attach(game, 0, s1, "BLUEBERRY")
-    attach(game, 0, s1, "EUROPEAN_WILDCAT")
     attach(game, 0, s1, "CAPERCAILLIE")
     attach(game, 0, s2, "CHAFFINCH")
     attach(game, 0, s3, "CHAFFINCH")
     assert pts(game, "GOSHAWK") == 12          # 4 birds (goshawk, capercaillie, 2 chaffinch) x 3
-    assert pts(game, "EUROPEAN_WILDCAT") == 4  # 4 birds x 1
     assert pts(game, "BLUEBERRY") == 6         # 3 different birds x 2
+
+
+@pytest.mark.rule("F6.2")
+@pytest.mark.card("EUROPEAN_WILDCAT")
+def test_wildcat_counts_woodland_edge_cards(game):
+    s1, s2 = sapling(game), sapling(game)
+    attach(game, 0, s1, "EUROPEAN_WILDCAT")
+    attach(game, 0, s1, "NIGHTINGALE")         # Woodland Edge bird
+    attach(game, 0, s1, "STINGING_NETTLE")     # Woodland Edge plant
+    attach(game, 0, s2, "EUROPEAN_BISON")      # Woodland Edge cloven-hoofed animal
+    attach(game, 0, s2, "CHAFFINCH")           # a bird from the base game: not counted
+    assert pts(game, "EUROPEAN_WILDCAT") == 4  # wildcat itself + nightingale + nettle + bison = 4 x 1
 
 
 @pytest.mark.rule("F6.2")
@@ -732,3 +742,19 @@ def test_barn_owl_extra_turn_with_a_bat(game):
     pay_all(game)
     use(game)
     assert game.state.current == 0 and game.state.turn_index == 1
+
+
+@pytest.mark.rule("F4.6")
+@pytest.mark.card("BLACK_TRUMPET")
+def test_black_trumpet_works_in_the_turn_it_is_placed(game):
+    t = plant(game, 0, "BIRCH")
+    attach(game, 0, t, "BLACK_TRUMPET")        # placed this turn (turn_index unchanged)
+    attach(game, 0, plant(game, 0, "BIRCH"), "PENNY_BUN")   # an ordinary mushroom placed this turn stays silent
+    trumpet = game.state.players[0].forest[t].slots["BOTTOM"][0]
+    alps = ("PAWED_ANIMAL", "ALPS")
+    labels = [lab for _, lab in effects.matching_triggers(game, 0, alps, "TOP", game.state.players[0].forest[t],
+                                                          False, None, placed_uid=-1)]
+    assert labels == [f"{game.db.species['BLACK_TRUMPET'].label} trigger"]
+    # never for itself: the Black Trumpet is an Alps card too
+    assert effects.matching_triggers(game, 0, ("MUSHROOM", "ALPS"), "BOTTOM", game.state.players[0].forest[t],
+                                     False, None, placed_uid=trumpet.uid) == []

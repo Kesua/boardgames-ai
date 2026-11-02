@@ -8,7 +8,7 @@ ALL = ("base", "woodland_edge", "alpine")
 
 @pytest.mark.rule("F2.1")
 def test_removal_counts():
-    assert removal_count(2, ("base",)) == 40 and removal_count(5, ("base",)) == 10
+    assert removal_count(2, ("base",)) == 30 and removal_count(5, ("base",)) == 0     # no extra 10 without expansions
     assert removal_count(2, ("base", "alpine")) == 55
     assert removal_count(3, ALL) == 60 and removal_count(5, ALL) == 30
 

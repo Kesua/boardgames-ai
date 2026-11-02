@@ -386,7 +386,9 @@ class Game:
         sp = self.db.species[key]
         host = s.players[seat].forest[idx]
         # permanent triggers resolve last → push first
-        for action, label in effects.matching_triggers(self, seat, types, position, host, is_tree_play, source_idx):
+        placed_uid = dweller.uid if dweller is not None else host.uid
+        for action, label in effects.matching_triggers(self, seat, types, position, host, is_tree_play, source_idx,
+                                                       placed_uid):
             s.decisions.append(Decision("USE_OR_SKIP", {"effect": action, "label": label,
                                                         "source": {"species": key, "idx": idx}}))
         if free:

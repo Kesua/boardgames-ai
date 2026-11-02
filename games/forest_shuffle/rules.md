@@ -14,8 +14,8 @@ the card images — see `card_catalog.md`). The original design and test history
   each split card shows two dwellers, each half with its own tree symbol.
 
 ## F2 Setup
-- **F2.1** Set the 3 winter cards aside, shuffle, remove 10 cards unseen, then remove more by player count (base only
-  / one expansion / both: 2p 30/45/80, 3p 20/30/50, 4p 10/15/35, 5p 0/0/20).
+- **F2.1** Set the 3 winter cards aside, shuffle and remove cards unseen by player count (base only / one expansion /
+  both: 2p 30/45/80, 3p 20/30/50, 4p 10/15/35, 5p 0/0/20); with at least one expansion remove 10 more cards first.
 - **F2.2** Split the rest into three piles; shuffle two winter cards into the bottom pile, put the third winter card
   on top of it; stack the two other piles on top.
 - **F2.3** Each player draws 6 cards. A hand without a tree may be replaced once (mulligan: discard the 6 to the box,
@@ -40,7 +40,7 @@ the card images — see `card_catalog.md`). The original design and test history
 - **F4.5** After playing: use the card's effect, then its bonus (both optional). The bonus requires that every paid
   card shows the played card's tree symbol.
 - **F4.6** Mushrooms and shrubs have permanent effects that trigger when later cards are placed (from your next turn;
-  a shrub's own bonus already applies it).
+  a shrub's own bonus already applies it). Black Trumpet works at once: from the moment it is placed, not for itself.
 - **F4.7** Effects that place cards for free skip those cards' effects and bonuses.
 
 ## F5 End of turn

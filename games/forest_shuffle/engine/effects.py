@@ -77,7 +77,7 @@ def _trigger_matches(trigger: dict, placed_types, position, host, is_tree_play) 
     return False
 
 
-def matching_triggers(game, seat, placed_types, position, host, is_tree_play, allow_idx=None) -> list:
+def matching_triggers(game, seat, placed_types, position, host, is_tree_play, allow_idx=None, placed_uid=None) -> list:
     s = game.state
     out = []
     for idx, w in enumerate(s.players[seat].forest):
@@ -90,7 +90,9 @@ def matching_triggers(game, seat, placed_types, position, host, is_tree_play, al
         for d in w.dwellers():
             sp = game.db.species[d.species]
             eff = sp.effect
-            if eff and eff["type"] == "permanent" and d.placed_turn < s.turn_index:
+            # from the next turn on (F4.6), except effects marked "starts": "now" (Black Trumpet), never by itself
+            active = d.placed_turn < s.turn_index or (eff and eff.get("starts") == "now" and d.uid != placed_uid)
+            if eff and eff["type"] == "permanent" and active:
                 if _trigger_matches(eff["trigger"], placed_types, position, host, is_tree_play):
                     out.append((eff["action"], f"{sp.label} trigger"))
     return out

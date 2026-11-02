@@ -67,7 +67,7 @@
         "4": 35,
         "5": 20
       },
-      "always_removed_first": 10
+      "removed_first_with_expansions": 10
     },
     "notes": [
       "Each half of a split card has its own tree_symbol; bonuses match on the symbol of the played card (either half for payment cards).",
@@ -1909,7 +1909,7 @@
         "points": 1,
         "filter": {
           "types": [
-            "BIRD"
+            "WOODLAND_EDGE"
           ]
         }
       }
@@ -2247,7 +2247,8 @@
         "action": {
           "type": "draw",
           "count": 1
-        }
+        },
+        "starts": "now"
       },
       "bonus": null,
       "scoring": {

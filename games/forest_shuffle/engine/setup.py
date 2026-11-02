@@ -10,7 +10,7 @@ REMOVAL = {0: {2: 30, 3: 20, 4: 10, 5: 0}, 1: {2: 45, 3: 30, 4: 15, 5: 0}, 2: {2
 
 def removal_count(num_players: int, expansions) -> int:
     n_exp = len([e for e in expansions if e != "base"])
-    return 10 + REMOVAL[n_exp][num_players]
+    return (10 if n_exp else 0) + REMOVAL[n_exp][num_players]      # the extra 10 only with an expansion (F2.1)
 
 
 def build_deck(db, rng, num_players: int, expansions):

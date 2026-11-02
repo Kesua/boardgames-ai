@@ -125,7 +125,7 @@ Tree symbol abbreviations: Li=Linden, Oa=Oak, SF=Silver Fir, Bi=Birch, Be=Beech,
 | Wild Boar (♀) | Clovenhoofed Animal, Woodland Edge | 2 | remove all clearing cards from game | place 1 Squeaker from hand free (no effect/bonus) | 10 per Squeaker |  |
 | Bee Swarm | Insect, Woodland Edge | 1 | put all Plant/Shrub/Tree cards from clearing into cave | - | 1 per Plant |  |
 | European Bison | Clovenhoofed Animal, Woodland Edge | 3 | extra turn | - | 2 per card showing Beech/Oak |  |
-| European Wildcat | Pawed Animal, Woodland Edge | 1 | take 1 from clearing to hand | - | 1 per Bird |  |
+| European Wildcat | Pawed Animal, Woodland Edge | 1 | take 1 from clearing to hand | - | 1 per Woodland Edge card (itself included) | corrected 2026-11-02 (was 1 per Bird); official card appendix + 2 implementations |
 | Common Pipistrelle | Bat, Woodland Edge | 1 | - | - | 5 if ≥3 different Bat |  |
 | Crane Fly | Insect, Woodland Edge | 1 | place any Bat from hand free (no effect/bonus) | take all Bat from clearing to hand | 1 per Bat |  |
 | European Polecat | Pawed Animal, Woodland Edge | 2 | - | extra turn | 10 if it is the only dweller on its tree/shrub |  |
