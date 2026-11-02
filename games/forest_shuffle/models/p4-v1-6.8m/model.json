@@ -19,21 +19,26 @@
   "strength": {
     "finished": false,
     "legacy": true,
-    "measured": "2026-11-01",
+    "measured": "2026-11-02",
     "games": [
-      {
-        "opponent": "greedy",
-        "label": "greedy baseline",
-        "games": 8,
-        "win": 1.0,
-        "required": ">=0.95"
-      },
       {
         "opponent": "ppo_1000000",
         "label": "its 1M checkpoint (equal strength = 25 %)",
         "games": 40,
         "win": 0.275,
         "required": null
+      },
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 400,
+        "win": 0.9525,
+        "win_se": 0.0106,
+        "margin": 81.09,
+        "margin_se": 2.57,
+        "score": 196.3,
+        "other": 115.2,
+        "required": ">=0.95"
       }
     ],
     "note": "Legacy, not finished: barely stronger than its 1M snapshot. A 4-player model with the recipe is in training."

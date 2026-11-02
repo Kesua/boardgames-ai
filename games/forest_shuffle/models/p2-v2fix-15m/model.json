@@ -48,10 +48,10 @@
         "games": 400,
         "win": 1.0,
         "win_se": 0.0,
-        "margin": 294.58,
-        "margin_se": 5.13,
-        "score": 449.4,
-        "other": 154.8,
+        "margin": 301.22,
+        "margin_se": 4.84,
+        "score": 452.5,
+        "other": 151.2,
         "required": ">=0.95"
       }
     ]

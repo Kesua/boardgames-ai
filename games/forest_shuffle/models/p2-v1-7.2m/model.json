@@ -20,21 +20,26 @@
   "strength": {
     "finished": false,
     "legacy": true,
-    "measured": "2026-11-01",
+    "measured": "2026-11-02",
     "games": [
-      {
-        "opponent": "greedy",
-        "label": "greedy baseline",
-        "games": 40,
-        "win": 1.0,
-        "required": ">=0.95"
-      },
       {
         "opponent": "ppo_1000000",
         "label": "its 1M checkpoint (40 games, not paired)",
         "games": 40,
         "win": 0.775,
         "required": null
+      },
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 400,
+        "win": 0.9975,
+        "win_se": 0.0025,
+        "margin": 240.44,
+        "margin_se": 4.83,
+        "score": 417.8,
+        "other": 177.4,
+        "required": ">=0.95"
       }
     ],
     "note": "Original AI, kept for the comparison; trained before the recipe existed."
