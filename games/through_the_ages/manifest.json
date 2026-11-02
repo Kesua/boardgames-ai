@@ -11,70 +11,145 @@
     "accent": "#4a5d6b"
   },
   "intro": {
-    "en": "A toy game used as the starting point for new games and for testing the platform."
+    "en": "A civilization-building card game: take cards from a shared row, develop technologies, build farms, mines and cities, choose leaders and wonders, and score culture from antiquity to the modern age. Played here with the New Leaders and Wonders expansion."
   },
   "terms": {
     "en": {
       "item": "card",
       "items": "cards",
-      "board": "hand",
-      "boards": "hands",
-      "archetype": "main colour",
-      "archetypes": "main colours",
+      "board": "civilization",
+      "boards": "civilizations",
+      "archetype": "main card kind",
+      "archetypes": "main card kinds",
       "round": "round"
     }
   },
   "tags": {
-    "colour": {
-      "en": "Colour"
-    }
-  },
-  "archetype": {
-    "tag": "colour",
-    "min_share": 0.0,
-    "rule": {
-      "en": "The colour a player holds most cards of."
+    "kind": {
+      "en": "Card kind"
+    },
+    "age": {
+      "en": "Age"
+    },
+    "set": {
+      "en": "Card set"
     }
   },
   "score_categories": {
-    "numbers": {
-      "en": "Numbers"
+    "production": {
+      "en": "Culture production"
     },
-    "sets": {
-      "en": "Colour sets"
+    "leaders": {
+      "en": "Leader abilities"
+    },
+    "wonders": {
+      "en": "Wonder abilities"
+    },
+    "events": {
+      "en": "Events"
+    },
+    "military": {
+      "en": "Aggressions and wars"
+    },
+    "colonies": {
+      "en": "Colonies"
+    },
+    "actions": {
+      "en": "Action cards"
+    },
+    "famine": {
+      "en": "Famine"
+    },
+    "resigned": {
+      "en": "Resigned"
     }
   },
   "seat_extras": {
-    "cards": {
-      "en": "Cards"
+    "science": {
+      "en": "Science points"
+    },
+    "culture_rating": {
+      "en": "Culture rating"
+    },
+    "science_rating": {
+      "en": "Science rating"
+    },
+    "strength": {
+      "en": "Military strength"
+    },
+    "workers": {
+      "en": "Population"
     }
   },
-  "top_decision": "TAKE",
+  "top_decision": "ACTION",
   "actions": {
-    "MARKET": {
-      "en": "Take from the market"
+    "TAKE": {
+      "en": "Take a card"
     },
-    "DECK": {
-      "en": "Take from the deck"
+    "DEVELOP": {
+      "en": "Develop a technology"
+    },
+    "GOVERNMENT": {
+      "en": "Change government"
+    },
+    "PLAY_LEADER": {
+      "en": "Play a leader"
+    },
+    "PLAY_ACTION": {
+      "en": "Play an action card"
+    },
+    "INCREASE_POP": {
+      "en": "Increase population"
+    },
+    "BUILD": {
+      "en": "Build"
+    },
+    "UPGRADE": {
+      "en": "Upgrade"
+    },
+    "DESTROY": {
+      "en": "Destroy"
+    },
+    "WONDER_STAGE": {
+      "en": "Build a wonder stage"
+    },
+    "BUILD_UNIT": {
+      "en": "Build a military unit"
+    },
+    "UPGRADE_UNIT": {
+      "en": "Upgrade a military unit"
+    },
+    "DISBAND": {
+      "en": "Disband a military unit"
+    },
+    "END": {
+      "en": "End the action phase"
     }
   },
   "fate": {
-    "taken": [
-      "MARKET"
+    "played": [
+      "DEVELOP",
+      "GOVERNMENT",
+      "PLAY_LEADER",
+      "PLAY_ACTION"
     ]
   },
   "fate_labels": {
-    "taken": {
-      "en": "Taken"
+    "played": {
+      "en": "Played"
     },
     "left_in_hand": {
-      "en": "Left"
+      "en": "Left in hand"
     }
   },
   "length": {
-    "show": false
+    "show": true
   },
-  "item_attributes": [],
+  "item_attributes": [
+    "kind",
+    "age",
+    "set"
+  ],
   "featured": {},
   "languages": [
     "en"

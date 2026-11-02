@@ -43,6 +43,17 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
       independent review (51 findings) worked in; design choices C1–C5 confirmed (round 3: automatic payment,
       two-step actions, culture per card, bids up to 128, resigning off by default in checks).
 - [ ] build-engine: engine + tests (every rule ID, every card)
+  - [x] stage 1 (PLAN 13 steps 1-3, 2026-11-02): a complete peaceful game. Modules `cards.py`, `state.py`,
+        `economy.py`, `effects.py` (hook registry; 10 of 150 effect types: `effects.UNIMPLEMENTED_EFFECT_TYPES`),
+        `military.py` (draw, discard by age, strength without armies), `engine.py`, `describe.py`, first `encoder.py`
+        and greedy `agents.py`. Military units (build/upgrade/disband, T6.1-T6.3) are in; tactics, armies,
+        politics (only END offered), events, colonies, aggressions, wars, pacts, resignation are not.
+        `bgai.checks --games 200`: 0 problems, greedy beats random 40/40. Random 2p game ~12 ms (209 decisions,
+        ~20 rounds), 4p ~32 ms. Rule IDs still untested (later stages): T6.4, T7.x, T8.x, T9.x, T10.x, T11.3
+        (armies part; unit strength works), T11.4, T12.9, T14.2 (stub `effects.final_events`), T15.1, T15.5,
+        T15.7, T15.10, T16.2. No card tests yet (stage 6).
+  - [ ] stage 2: military (tactics, armies, strength T11.3-T11.4, T6.4), politics (T7-T10), resignation
+  - [ ] stage 3: card effects family by family (140 effect types left), card tests, expansion details
 - [ ] verify-engine: checks/report.json 0 problems (10,000 games per player count), independent review in checks/review.md
 - [ ] design-rl: encoder, greedy, smoke training learns
 - [ ] train-model: open run, anchored run, acceptance -> finished model
@@ -62,4 +73,21 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
 ## Open questions
 - Missing: the four unidentified 3+ action cards; pictures of the rebalanced Republic, Communism,
   Fundamentalism, Professional Sports, Military Theory (text-only values, data/SOURCES.md).
-- The scaffold still holds the template's toy game (engine, encoder, agents, rules tests); replaced from build-engine on.
+- Build-engine stage 1 readings (rules.md silent or unclear; the lead decides, then rules.md T17 gets a row):
+  - Q1 Payment change (T12.3, C1): the engine lets change come from the blue bank as new smaller tokens (a 2-token
+    paying 1 becomes a 1-token; a 5-token paying 1 can become 3+1), limited by the bank's tokens; with too few bank
+    tokens for exact change it pays the smallest possible overpayment. rules.md only names returning tokens and
+    moving a token to a lower-value card; its "paying more empties your blue bank" clause implies bank change.
+  - Q2 Frugality (`increase_population` + `then_gain` food): implemented literally from card data: the player must
+    afford the full food cost, then gains the food. If the printed card is a discount, the data should say so.
+  - Q3 Engineering Genius (`wonder_stage` discount): with a construction technology it may build several stages in
+    that action; the discount comes off their summed cost once.
+  - Q4 Wonder stage with an empty blue bank (T5.7): the owner picks a farm/mine token (LOSE_BLUE decision); with no
+    token anywhere the stage still counts, uncovered.
+  - Q5 Developing a government with a lower urban limit than the buildings in play: nothing is destroyed (rules
+    silent); so the invariants do not check the urban limit, only building legality does.
+  - Q6 Revolution through a develop action card (T5.10): allowed when all civil actions were available before the
+    card was played; the revolution then spends all of them.
+  - Q7 T13.3: antiquated cards are discarded from both hands (civil and military).
+  - Q8 Each age's civil and military decks are built when the age begins, for the players still in the game
+    (T7.2); proxy counts follow the setup selection (6/4 or 7/5) even after a resignation.
