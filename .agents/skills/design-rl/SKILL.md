@@ -40,7 +40,10 @@ check against greedy shows learning:
 ```bash
 python -m bgai.rl.h2h --game <slug> --players 2 --a runs/<slug>/smoke/p2/ppo_<last>.zip --b greedy --seeds 150
 ```
-(the training log's greedy column uses only `--greedy-games` games and moves in coarse steps). If it does not learn:
+(150 deals = 300 paired games). Pass: the last checkpoint's win rate against greedy is higher than the first
+checkpoint's by more than 2 standard errors (about 8 points at 300 games; run the same command for the first
+checkpoint). The training log's greedy column uses only `--greedy-games` games and moves in coarse steps. If it does
+not learn:
 check the mask (illegal answers?), the reward sign (`scores()` higher-is-better?), whether the observation contains
 the decision context.
 

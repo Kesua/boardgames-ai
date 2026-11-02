@@ -45,6 +45,7 @@ def main(argv=None) -> int:
     left = [str(f.relative_to(ROOT)) for f in dst.rglob("*.py") if "_template" in f.read_text(encoding="utf-8")]
     print(f"created {dst.relative_to(ROOT)}" + (f"; still mentions _template: {left}" if left else ""))
     print(f"next: fill STATUS.md (fit check), then the ingest-rules skill. Check: python -m pytest -q games/{a.slug}")
+    print("note: tools/check_repo.py reports this game until verify-engine writes checks/report.json; that is expected")
     return 0
 
 

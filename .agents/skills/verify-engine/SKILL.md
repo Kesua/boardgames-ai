@@ -22,7 +22,8 @@ independent reviewer who did not write the code.
    test marked `card("<ID>")` (or one test parametrized over the whole catalog marked `card("*")`), and the
    pipeline files exist.
 3. **Rulebook examples:** turn every worked example in the rulebook (setup examples, scoring examples) into a test.
-4. **Independent review** — give a separate agent/session this brief: the goal (a rule bug publishes false insights),
+4. **Independent review** — you start it yourself when your tool can (a subagent or a new session); otherwise ask
+   the human to start one and hand them the brief. Give the separate agent/session this brief: the goal (a rule bug publishes false insights),
    `rules.md`, the engine files, the two researchers' notes; ask it to check every rule ID against the code, look for
    wrong numbers/timing/optionality/illegal or missing options/effects on the wrong target/stuck states, to reproduce
    suspicions with scripts, to read 3 full game logs (`g.text_state()` + the log) against the rules, and to report

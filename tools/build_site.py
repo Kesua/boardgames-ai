@@ -147,7 +147,7 @@ def build_game(slug: str, out: Path) -> dict:
             "designer": manifest.get("designer"), "players": manifest.get("players"), "theme": manifest.get("theme"),
             "intro": manifest.get("intro"), "edition": manifest.get("edition"), "headline": headline,
             "models": len(models), "models_finished": sum(1 for m in models.values() if (m.get("strength") or {}).get("finished")),
-            "experiments": len(experiments)}
+            "experiments": len(experiments), "ai_status": manifest.get("ai_status")}
 
 
 def main():

@@ -259,7 +259,7 @@
       if (h.kind === "baseline") return `<span class="pill">${esc(t("status_baseline", { players: pl }))}</span>`;
       return h.finished ? `<span class="pill ok">${esc(t("status_finished", { players: pl }))}</span>`
         : `<span class="pill warn">${esc(t("status_early", { players: pl }))}</span>`;
-    }).join("") : `<span class="pill">${esc(t("model_training"))}</span>`;
+    }).join("") : `<span class="pill">${esc(t(g.ai_status === "training" ? "model_training" : "model_none"))}</span>`;
     return `<a class="card gcard" href="#/${g.slug}" style="--gaccent:${esc((g.theme || {}).accent || "")}">
       <div class="gtitle"><span class="emoji" aria-hidden="true">${esc((g.theme || {}).emoji || "🎲")}</span>
         <div><h2>${esc(g.name)}</h2><div class="sub">${esc([g.publisher, g.year].filter(Boolean).join(", "))}</div></div></div>
@@ -364,7 +364,7 @@
     const view = $("#view");
     if (tab === "lab") { vLab(view, { g }); return; }
     view.innerHTML = `<section class="hero" style="padding-top:0"><h1>${esc(t("game_q", { game: m.name }))}</h1><p class="lede">${esc(L(m.intro))}</p></section>
-      <div class="card"><h2>${esc(t("training_now_h"))}</h2><p class="takeaway">${esc(t("training_now", { n: Object.keys(g.catalog.items || {}).length }))}</p>
+      <div class="card"><h2>${esc(t(m.ai_status === "training" ? "training_now_h" : "engine_ready_h"))}</h2><p class="takeaway">${esc(t(m.ai_status === "training" ? "training_now" : "engine_ready", { n: Object.keys(g.catalog.items || {}).length }))}</p>
       <p style="margin-top:10px"><a href="${link(g.slug, "lab")}">${esc(t("tab_lab"))} →</a></p></div>`;
   }
 

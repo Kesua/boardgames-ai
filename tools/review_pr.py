@@ -6,13 +6,17 @@ Prints, step by step (PASS / FAIL / CHECK = a human looks):
   1. the game's tests                       5. strength card of every model
   2. tools/check_repo.py (this game)        6. files changed outside games/<slug>/ against --base
   3. checks/report.json                     7. 5 random rule IDs and 5 random items to compare with the real game
-  4. --verify 20 of every experiment        8. one game played by the greedy agent, as text
-Then a suggested verdict. Takes a few minutes (the replays dominate); nothing is written.
+  4. --verify 20 of every experiment and    8. one game played by the greedy agent, as text
+     the game's notes checker (check_*.py)
+Then a suggested verdict (approve / approve as not finished / approve as engine only / request changes / review
+incomplete). Takes a few minutes (the replays dominate); nothing is written.
 """
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+import os
 import random
 import re
 import subprocess
@@ -24,7 +28,8 @@ sys.path.insert(0, str(ROOT))
 
 
 def run(cmd: list) -> tuple:
-    r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    env = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONUTF8="1")
+    r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", env=env)
     return r.returncode, (r.stdout + r.stderr).strip()
 
 
@@ -39,8 +44,9 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, default=7, help="seed for the random picks and the printed game")
     ap.add_argument("--log-lines", type=int, default=80)
     a = ap.parse_args(argv)
+    sys.stdout.reconfigure(encoding="utf-8")
     g, py, rng = ROOT / "games" / a.game, sys.executable, random.Random(a.seed)
-    results = {}
+    results, incomplete = {}, []
 
     head("1. Tests")
     code, out = run([py, "-m", "pytest", "-q", f"games/{a.game}"])
@@ -79,25 +85,38 @@ def main(argv=None) -> int:
         print(("PASS " if code == 0 else "FAIL ") + f"{e}: {out.splitlines()[-1] if out else ''}")
     if not exps:
         print("none (an engine-only pull request)")
-
-    head("5. Models (strength cards)")
+    for chk in sorted(g.glob("check_*.py")):
+        run([py, "tools/build_site.py"])
+        code, out = run([py, str(chk.relative_to(ROOT))])
+        bad = [l for l in out.splitlines() if l.startswith("MISMATCH")]
+        results["notes"] = code == 0 and not bad
+        print(("PASS " if results["notes"] else "FAIL ") + f"{chk.name}: " +
+              (f"{len(out.splitlines())} cited numbers match stats.json" if not bad else "\n".join(bad[:10])))
     models = sorted((g / "models").glob("*/model.json")) if (g / "models").exists() else []
-    results["models"] = bool(models) and all(
-        json.loads(m.read_text(encoding="utf-8")).get("strength", {}).get("finished") or
-        json.loads(m.read_text(encoding="utf-8")).get("legacy") for m in models)
+    unfinished = []
     for m in models:
         meta = json.loads(m.read_text(encoding="utf-8"))
         st = meta.get("strength", {})
-        state = "finished" if st.get("finished") else "legacy" if meta.get("legacy") else "NOT finished"
+        state = "finished" if st.get("finished") else "legacy, not finished" if meta.get("legacy") else "NOT finished"
+        if not st.get("finished"):
+            unfinished.append(meta["id"])
         print(f"{meta['id']}: {state}")
         for r in st.get("games", []):
             se = f" ± {2 * r['win_se']:.1%}" if r.get("win_se") else ""
             print(f"   vs {r.get('label') or r['opponent']}: {r['games']} games, win {r['win']:.1%}{se}, "
                   f"required {r.get('required') or '-'}")
+        for log in sorted(m.parent.glob("train_log*.csv")):
+            rows = [r for r in csv.DictReader(open(log, encoding="utf-8")) if r.get("win_vs_greedy")]
+            if rows:
+                pts = [(int(float(r["steps"])), float(r["win_vs_greedy"])) for r in rows]
+                picks = [pts[int(i * (len(pts) - 1) / 5)] for i in range(6)]
+                print(f"   {log.name} win vs greedy: " + "  ".join(f"{s / 1e6:.1f}M {w:.0%}" for s, w in picks)
+                      + f"  (best {max(w for _, w in pts):.0%}, last {pts[-1][1]:.0%})")
+    results["models"] = bool(models) and not unfinished
     if not models:
         print("none (an engine-only pull request)")
-    print("CHECK the training curve in each model's train_log*.csv did not collapse (win against greedy keeps rising, "
-          "then levels off)")
+    print("CHECK the training curve: win against greedy rises, then stays high; a fall of more than 10 points that "
+          "does not recover is a collapse (ask why)")
 
     head(f"6. Files changed outside games/{a.game}/ (against {a.base})")
     code, out = run(["git", "diff", "--name-only", f"{a.base}...HEAD"])
@@ -124,21 +143,33 @@ def main(argv=None) -> int:
             info = {x: y for x, y in items[k].items() if x not in ("cards", "tags")}
             print(f"CHECK card  {k}: {json.dumps(info, ensure_ascii=False)} {json.dumps(texts.get(k, {}), ensure_ascii=False)}"[:400])
     except Exception as e:
-        print(f"FAIL cannot load the game's catalog: {e}")
+        incomplete.append("card spot checks")
+        print(f"FAIL cannot list cards to spot-check: {e}")
 
     head("8. One game played by the greedy agent (does it look like the real game?)")
     code, out = run([py, "-m", "bgai.show", "--game", a.game, "--seed", str(a.seed), "--max-lines", str(a.log_lines)])
+    if code:
+        incomplete.append("printed game")
+        print("FAIL the game could not be printed:")
     print(out[-12000:])
 
     head("Suggested verdict")
     engine_ok = results["tests"] and results["repo"] and results["checks"]
-    if engine_ok and results["replay"] and results["models"] and exps:
+    if incomplete:
+        print("REVIEW INCOMPLETE: " + ", ".join(incomplete) + " could not be shown; fix that before deciding.")
+    elif not engine_ok or not results["replay"] or not results.get("notes", True):
+        print("REQUEST CHANGES: " + ", ".join(k for k, v in results.items() if not v and k != "models") + " failed.")
+    elif exps and models and not unfinished:
         print("APPROVE if the CHECK items (spot checks, game log, training curve, notes) look right.")
-    elif engine_ok and not exps and not models:
+    elif exps and unfinished:
+        print("APPROVE AS NOT FINISHED if the CHECK items look right: " + ", ".join(unfinished) + " did not pass the "
+              "strength test; the dashboard marks findings from it as tentative. Ask for a training run with the "
+              "train-model recipe.")
+    elif not exps and not models:
         print("APPROVE AS ENGINE ONLY if the spot checks and the game log look right: the game is listed as "
               "'engine ready, AI not trained yet'; training can follow in a later pull request.")
     else:
-        print("REQUEST CHANGES: " + ", ".join(k for k, v in results.items() if not v) + " failed.")
+        print("REQUEST CHANGES: models without experiments, or experiments without models.")
     return 0
 
 

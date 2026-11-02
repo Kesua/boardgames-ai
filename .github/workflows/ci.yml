@@ -48,9 +48,9 @@ jobs:
         with:
           python-version: "3.10"
       - run: |
-          pip install numpy pandas
+          grep -v "^torch==" requirements.lock > /tmp/req.txt
           pip install "torch==$(grep '^torch==' requirements.lock | sed 's/torch==//; s/+.*//')" --index-url https://download.pytorch.org/whl/cpu
-          pip install sb3-contrib gymnasium
+          pip install -r /tmp/req.txt
           python tools/build_site.py
       - uses: actions/upload-pages-artifact@v3
         with:

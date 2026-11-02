@@ -356,5 +356,8 @@
  "g_seed": "Číslo rozdání, přehrání",
  "g_seed_d": "Každá hra se rozdá z očíslovaného zamíchání. Se stejnou AI a stejnými čísly kdokoli přehraje přesně tytéž hry — tak se dají čísla ověřit.",
  "games_col": "Her",
- "avoid_plain": "Co jde s prohrou"
+ "avoid_plain": "Co jde s prohrou",
+ "model_none": "Pravidla hotová, AI zatím netrénovaná",
+ "engine_ready_h": "Pravidla jsou hotová, AI zatím netrénovaná",
+ "engine_ready": "Pravidla a všechny karty (celkem {n}) jsou hotové a otestované. Pro tuhle hru zatím žádná AI netrénovala; zvládne to kdokoli se silným počítačem (zhruba den na jeden počet hráčů). Objevy se tu objeví, až AI projde zkouškou síly a odehraje svých 2 000 her."
 }

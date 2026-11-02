@@ -33,16 +33,20 @@ against an equally strong copy of itself — not a proven best strategy.
 
 | Evidence | Forest Shuffle | Wingspan |
 |---|---|---|
-| Rules in own words, an ID and a test per rule | `rules.md` F1–F7, from the three official rulebooks | `rules.md` W1–W15, two independent researchers, 14 decisions where sources differed |
+| Rules in own words, an ID and a test per rule | `rules.md` F1–F7, from the three official rulebooks | `rules.md` W1–W14, two independent researchers, 14 decisions where sources differed |
 | Card data checked field by field | against the official card appendix and three independent implementations; 3 errors found and fixed (`data/SOURCES.md`) | two card lists compared field by field, a fan wiki as third source: 177/180 agree, 3 settled (`data/SOURCES.md`) |
 | A test for every card | all 92 species | all 180 birds |
 | Automated engine checks | 10,000 random games per player count (`checks/report.json`) | 10,000 random games per player count |
 | Independent review | card check, and the port replayed the original project's games identically (`checks/review.md`) | audit of code against rules: 5 findings, all fixed (`checks/review.md`) |
-| AI strength card | 2p: beats the original AI 98.6 %, an unseen checkpoint 95.9 %, greedy 100 % (400 games) | after training |
-| Reproducible | every experiment has a recipe; CI replays the first 20 games of each and compares a fingerprint | same |
+| AI strength card: paired games against opponents it never trained against and a simple greedy player | 2 players: wins 98.6 % against the original AI and 95.9 % against a checkpoint from another training run (1,500 games each), 100 % against the greedy player (400 games) | after training |
+| Reproducible | every experiment is a recipe (code, model, seeds); CI replays its first 20 games and compares their final scores | same |
 
 `tools/check_repo.py` (run by CI on every pull request) fails when a rule or card has no test, when the engine
 changed after its check report, or when a pipeline file is missing.
+
+Known limit: the Forest Shuffle models were trained before an independent card check corrected one card's scoring
+(European Wildcat) on 2026-11-02. All experiments were re-run on the corrected engine; the models themselves were not
+retrained (the card is in 0.4 % of the 2-player forests and 6 % of the 4-player forests).
 
 ## Add a game
 Open a branch and ask your coding agent (Claude Code, Codex, Grok, Cursor …) to *"add the game <name>"*. The agent

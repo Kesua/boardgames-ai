@@ -63,6 +63,7 @@
   "optional_decisions": {"decision": "USE_POWER", "use": "USE", "skip": "SKIP", "group_pattern": "^(.*)$"},
   "length": {"show": false},
   "item_attributes": ["points", "habitats", "nest", "egg_limit", "wingspan", "food_total", "power_color", "predator", "flocking"],
+  "ai_status": "training",
   "featured": {},
   "languages": ["en", "cs"]
 }

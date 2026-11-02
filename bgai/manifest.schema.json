@@ -68,6 +68,7 @@
                  "additionalProperties": {"type": "object", "required": ["main"],
                                           "properties": {"main": {"type": "string"}, "compare": {"type": "string"}, "versus": {"type": "string"}},
                                           "additionalProperties": false}},
+    "ai_status": {"enum": ["training"], "description": "Set while a model is being trained, so a game without experiments shows 'the AI is still learning' instead of 'engine ready, AI not trained yet'. Remove it when the first experiment is published."},
     "languages": {"type": "array", "items": {"type": "string"}, "contains": {"const": "en"},
                   "description": "Languages with complete texts (intro, terms, labels, i18n files, notes)."}
   }

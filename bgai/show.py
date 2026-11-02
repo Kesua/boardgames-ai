@@ -8,6 +8,7 @@ Agents: greedy, random or a model id (games/<slug>/models/<id>). Use it to read 
 from __future__ import annotations
 
 import argparse
+import sys
 
 from .agents import PolicyAgent, RandomAgent
 from .game import load_spec
@@ -42,6 +43,7 @@ def show(slug: str, players: int, seed: int, agents: list, max_lines: int) -> li
 
 
 def main(argv=None):
+    sys.stdout.reconfigure(encoding="utf-8")      # card names and symbols on Windows consoles and pipes
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--game", required=True)
     ap.add_argument("--players", type=int, default=2)

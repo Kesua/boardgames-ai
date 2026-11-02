@@ -21,7 +21,9 @@ and a pull request a maintainer can review in minutes because every claim points
    > games and publish which cards and strategies win (https://…). We added <Game>: the repository contains the rules
    > in our own words, card data as numbers (no card text or art) and statistics. It does not let anyone play the
    > game. If you would prefer we remove it or change anything, reply and we will do so within 7 days.
-5. Open the PR with this body:
+5. Push the branch and open the pull request only when the human says so (AGENTS.md: ask before anything
+   outward-facing); until then, write the pull request text into `STATUS.md` so it is ready. Use
+   `.github/pull_request_template.md` and add `python tools/review_pr.py --game <slug>` output. Body outline:
    ```
    ## <Game>
    - Rules: games/<slug>/rules.md (sources A/B, N decisions)
@@ -34,4 +36,5 @@ and a pull request a maintainer can review in minutes because every claim points
    ```
 
 ## Done when
-The PR is open with all checks green, and the maintainer review (review-game-pr skill) has what it needs.
+The human has the pull request text and `review_pr.py` output (or the pull request is open, if they asked for it),
+all checks are green, and the maintainer review (review-game-pr skill) has what it needs.
