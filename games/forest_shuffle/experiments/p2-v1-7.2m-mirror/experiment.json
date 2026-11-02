@@ -21,19 +21,18 @@
     "p2-v1-7.2m": "2121261030f9034e191df037191bd4062793f26ad1b5e63c155f9fcea67a8b60"
   },
   "card_data_sha256": {
-    "cards.json": "f99b24e3991e585b6ee42e3cc1fbed7e5ea264639863b5757d3c4ab51b2c3e85"
+    "cards.json": "501c728f4a8a1ec35a825f9c71c48cf990a4933c1ed7e701f87937d894278db3"
   },
-  "code_commit": null,
-  "requirements_lock_sha256": null,
+  "code_commit": "6c296f1f75869a3161309cecad8aab93ceaf6ffa",
+  "requirements_lock_sha256": "111a70644b1bdc5dc9b2e8f0cd85ffa0d592f217fde2cdaf4e3b2a4a125d8836",
   "environment": {
     "os": "Windows-10-10.0.26300-SP0",
     "python": "3.10.11",
     "numpy": "2.2.6",
     "torch": "2.14.0+cu126"
   },
-  "command": "python -m bgai.experiment --game forest_shuffle --id p2-v1-7.2m-mirror --players 2 --seats p2-v1-7.2m p2-v1-7.2m --games 2000 --seed 1000",
-  "made_by": "imported from the original record file (p2_ppo_7200000_mirror_2k.jsonl, 2026-10-31T23:06:59, 950.5 s); identical games, verified by replay",
-  "seconds": 950.5,
+  "command": "python -m bgai.experiment --game forest_shuffle --id p2-v1-7.2m-mirror --players 2 --seats p2-v1-7.2m p2-v1-7.2m --games 2000 --seed 1000 --workers 4",
+  "seconds": 318.6,
   "schema_version": 1,
-  "created": "2026-10-31T23:22:49"
+  "created": "2026-11-02T01:29:32"
 }

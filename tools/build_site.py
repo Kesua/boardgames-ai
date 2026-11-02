@@ -119,7 +119,7 @@ def build_game(slug: str, out: Path) -> dict:
         stats[d.name] = st
         experiments[d.name] = rec
         slim = {k: v for k, v in st.items() if k != "per_game_scores"}
-        (exp_out / f"{d.name}.json").write_text(json.dumps(slim, separators=(",", ":")), encoding="utf-8")
+        (exp_out / f"{d.name}.json").write_text(json.dumps(slim, separators=(",", ":")), encoding="utf-8", newline="\n")
     comparisons = {}
     for p, f in (manifest.get("featured") or {}).items():
         if "main" in f and "compare" in f and f["main"] in stats and f["compare"] in stats:
@@ -129,20 +129,25 @@ def build_game(slug: str, out: Path) -> dict:
     game = {"slug": slug, "manifest": manifest, "i18n": i18n, "catalog": catalog, "notes": notes, "models": models,
             "experiments": experiments, "compare": comparisons, "rights": rights}
     (out / slug).mkdir(parents=True, exist_ok=True)
-    (out / slug / "game.json").write_text(json.dumps(game, separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
+    (out / slug / "game.json").write_text(json.dumps(game, separators=(",", ":"), ensure_ascii=False), encoding="utf-8", newline="\n")
     headline = {}
     for p, f in (manifest.get("featured") or {}).items():
         st = stats.get(f.get("main"))
         if st:
+            # seat 0 names who played: a trained model (its id) or a baseline agent such as "greedy"
             mid = experiments[f["main"]]["seats"][0]
-            m = models.get(mid, {})
+            m = models.get(mid)
+            strength = (m or {}).get("strength", {})
             headline[p] = {"experiment": f["main"], "games": st["meta"]["games"], "boards": st["meta"]["boards"],
                            "winner_score": st["meta"]["winner_score"], "best_score": st["meta"]["best_score"],
-                           "model": mid, "steps": m.get("steps"), "finished": m.get("strength", {}).get("finished")}
+                           "model": mid, "kind": "model" if m else "baseline", "steps": (m or {}).get("steps"),
+                           "finished": bool(strength.get("finished")),
+                           "legacy": bool(strength.get("legacy") or (m or {}).get("legacy"))}
     return {"slug": slug, "name": manifest["name"], "publisher": manifest.get("publisher"), "year": manifest.get("year"),
             "designer": manifest.get("designer"), "players": manifest.get("players"), "theme": manifest.get("theme"),
             "intro": manifest.get("intro"), "edition": manifest.get("edition"), "headline": headline,
-            "models": len(models), "experiments": len(experiments)}
+            "models": len(models), "models_finished": sum(1 for m in models.values() if (m.get("strength") or {}).get("finished")),
+            "experiments": len(experiments)}
 
 
 def main():
@@ -155,7 +160,7 @@ def main():
     games = [build_game(d.name, data) for d in sorted((ROOT / "games").iterdir())
              if d.is_dir() and not d.name.startswith(("_", ".")) and (d / "manifest.json").exists()]
     index = {"generated": time.strftime("%Y-%m-%d %H:%M"), "games": games}
-    (data / "index.json").write_text(json.dumps(index, separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
+    (data / "index.json").write_text(json.dumps(index, separators=(",", ":"), ensure_ascii=False), encoding="utf-8", newline="\n")
     total = sum(f.stat().st_size for f in site.rglob("*") if f.is_file())
     print(f"site/: {len(games)} games, {total / 2 ** 20:.1f} MB")
 

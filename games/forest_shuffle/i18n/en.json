@@ -336,7 +336,7 @@
   "EUROPEAN_WILDCAT": {
    "name": "European Wildcat",
    "effect": "Take 1 card from the clearing into your hand.",
-   "scoring": "1 per bird."
+   "scoring": "1 per Woodland Edge card in your forest (itself included)."
   },
   "COMMON_PIPISTRELLE": {
    "name": "Common Pipistrelle",
@@ -434,47 +434,94 @@
    "SYCAMORE": "Sycamore",
    "DOUGLAS_FIR": "Douglas Fir",
    "HORSE_CHESTNUT": "Horse Chestnut",
-   "ALPINE_LARCH": "Alpine Larch",
-   "SWISS_PINE": "Swiss Pine (Stone Pine)"
+   "ALPINE_LARCH": "European Larch",
+   "SWISS_PINE": "Stone Pine"
+  },
+  "kind": {
+   "TREE": "Tree",
+   "SHRUB": "Shrub",
+   "DWELLER": "Dweller (animal, plant or mushroom)"
+  },
+  "position": {
+   "TOP": "Top of a tree",
+   "BOTTOM": "Bottom of a tree",
+   "LEFT_RIGHT": "Left or right of a tree"
+  },
+  "expansion": {
+   "base": "Base game",
+   "woodland_edge": "Woodland Edge",
+   "alpine": "Alpine"
+  },
+  "types": {
+   "PAWED_ANIMAL": "Pawed animal",
+   "INSECT": "Insect",
+   "BIRD": "Bird",
+   "TREE": "Tree",
+   "CLOVENHOOFED_ANIMAL": "Cloven-hoofed animal",
+   "PLANT": "Plant",
+   "BUTTERFLY": "Butterfly",
+   "BAT": "Bat",
+   "MUSHROOM": "Mushroom",
+   "AMPHIBIAN": "Amphibian",
+   "SHRUB": "Shrub",
+   "DEER": "Deer"
   }
  },
  "archetypes": {
-  "LINDEN": "Linden",
-  "OAK": "Oak",
-  "SILVER_FIR": "Silver Fir",
-  "BIRCH": "Birch",
-  "BEECH": "Beech",
-  "SYCAMORE": "Sycamore",
-  "DOUGLAS_FIR": "Douglas Fir",
-  "HORSE_CHESTNUT": "Horse Chestnut",
-  "ALPINE_LARCH": "Alpine Larch",
-  "SWISS_PINE": "Swiss Pine (Stone Pine)",
+  "LINDEN": "Linden symbol",
+  "OAK": "Oak symbol",
+  "SILVER_FIR": "Silver Fir symbol",
+  "BIRCH": "Birch symbol",
+  "BEECH": "Beech symbol",
+  "SYCAMORE": "Sycamore symbol",
+  "DOUGLAS_FIR": "Douglas Fir symbol",
+  "HORSE_CHESTNUT": "Horse Chestnut symbol",
+  "ALPINE_LARCH": "European Larch symbol",
+  "SWISS_PINE": "Stone Pine symbol",
   "SAPLING": "Saplings",
-  "MIXED": "Mixed",
+  "MIXED": "Mixed (no clear symbol)",
   "NONE": "None"
  },
  "sections": {
   "clearing_title": "Drawing from the clearing",
-  "clearing_note": "Win rate by how many of a player's draws came from the clearing (face-up cards) instead of the deck.",
-  "clearing_x": "Share of draws from the clearing",
+  "clearing_note": "Win rate of players grouped by how many of their draws came from the clearing (face-up cards) instead of the deck. This counts draws only, not all turns.",
+  "clearing_x": "Share of a player's draws taken from the clearing",
   "clearing_bars": "Players",
   "win_rate": "Win rate",
-  "clearing_winners": "Winners: share from the clearing",
-  "clearing_losers": "Others: share from the clearing",
-  "wipes_title": "Clearing wipes",
-  "wipes_note": "When the clearing reaches 10 cards it is emptied. Inferred from the clearing size; Brown Bear moving the clearing to its cave counts too. The trigger is the player whose action filled it.",
-  "wipes_triggered": "Wipes caused",
+  "clearing_winners": "Winners: share of their draws from the clearing",
+  "clearing_losers": "Others: share of their draws from the clearing",
+  "wipes_title": "Emptying the clearing",
+  "wipes_note": "When the clearing reaches 10 cards it is thrown away. Worked out from the clearing size; the Brown Bear moving the clearing into its cave counts too. It counts for the player whose action filled the clearing.",
+  "wipes_triggered": "Times the player emptied the clearing",
   "players_col": "Players",
   "mean_rank": "Average place",
-  "wipes_per_game": "Wipes per game",
-  "wipes_winners": "Wipes caused by winners",
-  "wipes_losers": "Wipes caused by others",
+  "wipes_per_game": "Times the clearing is emptied per game",
+  "wipes_winners": "Emptied by the winner, per game",
+  "wipes_losers": "Emptied by each other player, per game",
   "drivers_title": "What makes a game long",
-  "drivers_note": "Few deck cards left at the end = the winter cards came late = a long game, whatever the players do. Share of the variation in game length explained:",
+  "drivers_note": "The game ends when the third winter card comes out of the deck, and the winter cards are shuffled at random into its last third. Few deck cards left at the end = the winters came late = a long game, whatever the players do. How much of the difference in game length each thing explains:",
   "drivers_x": "Deck cards left at the end",
-  "rounds_per_player": "Rounds per player",
-  "r2_deck": "by the deck alone (chance)",
-  "r2_clearing": "by clearing draws alone (players)",
-  "r2_both": "by both"
+  "rounds_per_player": "Turns per player",
+  "r2_deck": "deck left at the end alone (chance)",
+  "r2_clearing": "clearing draws alone (players' choice)",
+  "r2_both": "both together",
+  "drivers_title_after": "The two overlap, so the shares do not add up. Colour: how many games fall in each box."
+ },
+ "optional": {
+  "effect": "card effects",
+  "bonus": "bonuses",
+  "trigger": "triggered effects",
+  "other": "other choices"
+ },
+ "models": {
+  "p2-v1-7.2m": {
+   "note": "Original AI, kept for the comparison; trained before the current training recipe existed. Its test against its own early copy used 40 unpaired games."
+  },
+  "p4-v1-6.8m": {
+   "note": "Early AI, not finished: it barely beats its own copy after 1 M steps (27.5 % where 25 % means equal). A 4-player AI trained with the current recipe is in training."
+  },
+  "p2-v2fix-15m": {
+   "note": "The current training recipe was derived from this run."
+  }
  }
 }

@@ -1,139 +1,185 @@
 {
- "written": "2026-11-01",
+ "written": "2026-11-02",
  "experiments": {
   "p2-v2fix-15m-mirror": {
    "games": 2000,
-   "written": "2026-11-01",
+   "written": "2026-11-02",
    "en": {
-    "summary": "A fast game from the deck: real trees (mainly Stone Pine) instead of saplings, filled for the Beech Marten, Gentian with butterflies, and a herd of cloven-hoofed animals with a wolf.",
+    "summary": "Draw from the deck, play a few saplings at most and build real trees full of dwellers: Gentian with butterflies, Beech Marten on fully filled trees, and cloven-hoofed animals with a Wolf.",
+    "do": [
+     "Draw from the deck almost every time; take from the clearing only for a card you really need.",
+     "Play Gentian together with butterflies.",
+     "Fill your trees on all four sides when you have the Beech Marten.",
+     "Collect cloven-hoofed animals (Fallow Deer, European Bison, deer) and add a Wolf.",
+     "Lean towards the Stone Pine symbol."
+    ],
+    "dont": [
+     "Do not build your forest mainly from saplings; a few are fine.",
+     "Do not pile up Beech.",
+     "Be wary of the Raccoon, Sycamore, Great Spotted Woodpecker and Eurasian Jay."
+    ],
     "works": [
-     "Few saplings, fill the trees. The winner has 2.5 saplings and 3.9 woody plants, the loser 2.7 and 4.4; the winner has more dwellers (20.5 vs 19.4). Beech Marten (5 per fully occupied tree) gives the winner 24.5 points (loser 15.5), and the winner has 0.35 more copies of it than the loser, the most of any card.",
-     "Gentian and butterflies. Gentian (3 per butterfly) gives the winner 16.3 points (loser 9.1) and has the largest effect on winning of the common cards (+8.6 pp); Phoebus Apollo (+5.0 pp) and Silver-Washed Fritillary (+2.7 pp) help too.",
-     "Cloven-hoofed animals and the Wolf. Fallow Deer gives the winner 21.3 points (loser 13.0), European Bison 11.9 (8.8), Wolf 14.8 (10.1); Steinbock +3.4 pp. The winner has 3.2 deer, the loser 2.8.",
-     "Stone Pine (Swiss Pine symbol). It is in 87 % of forests and the winner has 0.18 more copies; Swiss Pine forests (13 % of all) win 61 % of games, Oak 57 %, Horse Chestnut 56 %."
+     "Gentian and butterflies. Gentian (3 points per butterfly) has the largest effect on winning of the common cards (+8.5 pp; in 58 % of forests) and scores 17.2 points per copy; the winner has 0.33 more copies than the loser. Phoebus Apollo (+5.1 pp) and Silver-Washed Fritillary (+2.7 pp) also go with winning.",
+     "Fill the trees for the Beech Marten (5 points per fully occupied tree). It is in 76 % of forests and scores 15.8 points per copy, and the winner has 0.35 more copies than the loser, more than for any other card.",
+     "Cloven-hoofed animals and the Wolf. Fallow Deer +4.6 pp (17.3 points per copy; the winner has 0.33 more copies), European Bison +4.5 pp, Steinbock +3.4 pp, Wolf +2.2 pp (14.5 points per copy).",
+     "Lean towards the Stone Pine symbol. Forests whose most common symbol is Stone Pine (13 % of forests) win 61 % of games. The Stone Pine card itself is in 87 % of forests and the winner has 0.18 more copies, but its own effect on winning (+1.0 pp) is within chance."
     ],
     "avoid": [
-     "A sapling forest: the new AI builds one in only 1 % of forests and it wins 37 % of games (original AI: 68 % of forests, 59 % wins).",
-     "Too much Beech. Beech is in 69 % of forests, but the winner has 0.51 fewer copies than the loser; Beech forests (30 % of all) win 45 %.",
-     "Raccoon (−13.5 pp; the winner has 0.29 fewer), Sycamore (−18 pp), Great Spotted Woodpecker (−23 pp) and Eurasian Jay (−15.5 pp)."
+     "A forest built mainly from saplings. Players still play 2.6 saplings a game, but only 1 % of forests consist mostly of saplings, and those win 37 % of games (original AI: 68 % of forests, 59 % wins).",
+     "Too much Beech. Beech is in 69 % of forests, but the winner has 0.51 fewer copies than the loser, the biggest gap of any card, and forests mostly of the Beech symbol (30 %) win 45 %.",
+     "Raccoon (−13.5 pp, in 39 % of forests; the winner has 0.29 fewer), Sycamore (−18.4 pp), Great Spotted Woodpecker (−23.1 pp) and Eurasian Jay (−15.3 pp). Apart from the Raccoon these are in only 7–11 % of forests; they may mark a weak hand rather than cause the loss.",
+     "Planting Oak or Horse Chestnut: the strong AI almost never does. It used its Oak cards to pay for others (5,258 times) or as saplings (793) and planted one Oak in 2,000 games. Forests of the Oak symbol (3 %) still win 57 %: their symbols come from animals and plants, not from Oak trees."
     ],
-    "order": "The first player wins 55.2 % of games (second 45.6 %); with the original AI it was 52.5 %.",
+    "order": "The first player wins 55.2 % of games, the second 45.5 % (original AI: 52.6 % for the first player).",
     "length": [
-     "Games are shorter: 28.5–60.5 rounds per player (original AI 40–96), and the winner's score rises with length from 141 to 275 points. Length is mostly the deck left at the third winter (it alone explains 74 % of the differences).",
-     "The clearing is hardly used: winner and loser take 9.6 % of their draws from it (original AI 31–34 %). So it fills up and is emptied more often, 4.9 times a game (original 3.5), and the winner triggers it as often as the loser (2.5 and 2.4)."
+     "Games are short: about 29–61 turns per player (original AI 40–96). The winner's average score rises from 140 in the shortest fifth of games to 274 in the longest, so compare scores only between games of similar length. How many cards were left in the deck at the end (chance) explains 74.5 % of the differences in length.",
+     "The clearing is hardly used: winners and losers take 13.9 % and 13.8 % of their draws from it (original AI 36.0 % and 35.6 %). Counted over all turns, playing included, taking from the clearing is only 6 % of turns. The clearing is emptied 4.9 times a game (original 3.5), by winner and loser about equally often (2.46 and 2.42 times)."
     ]
    },
    "cs": {
-    "summary": "Rychlá hra z balíčku: skutečné stromy (hlavně limba) místo semenáčků, zaplněné pro Kunu, Hořec s motýly a stádo kopytníků s vlkem.",
+    "summary": "Ber z balíčku, semenáčků zahraj nanejvýš pár a stav skutečné stromy plné obyvatel: Hořec s motýly, Kunu skalní na plně obsazených stromech a sudokopytníky s Vlkem obecným.",
+    "do": [
+     "Dobírej skoro vždy z balíčku; z mýtiny ber jen kartu, kterou opravdu potřebuješ.",
+     "Hraj Hořec spolu s motýly.",
+     "Když máš Kunu skalní, obsazuj stromy ze všech čtyř stran.",
+     "Sbírej sudokopytníky (Daněk evropský, Zubr evropský, jeleni) a přidej Vlka obecného.",
+     "Směřuj k symbolu limby."
+    ],
+    "dont": [
+     "Nestav les hlavně ze semenáčků; pár jich nevadí.",
+     "Nehromaď Buky.",
+     "Dej si pozor na Mývala severního, Javor klen, Strakapouda velkého a Sojku obecnou."
+    ],
     "works": [
-     "Málo semenáčků, stromy plnit. Vítěz má v lese 2,5 semenáčku a 3,9 dřeviny, poražený 2,7 a 4,4; obyvatel má vítěz víc (20,5 proti 19,4). Kuna skalní (5 b. za plně obsazený strom) dá vítězi 24,5 b. (poražený 15,5) a vítěz jí má o 0,35 kopie víc než poražený – nejvíc ze všech karet.",
-     "Hořec a motýli. Hořec (3 b. za motýla) dá vítězi 16,3 b. (poražený 9,1) a má největší přínos k výhře mezi častými kartami (+8,6 p. b.); pomáhají i Jasoň phoebus (+5,0 p. b.) a Perleťovec stříbropásek (+2,7 p. b.).",
-     "Kopytníci a vlk. Daněk evropský dá vítězi 21,3 b. (poražený 13,0), Zubr evropský 11,9 b. (8,8), Vlk obecný 14,8 b. (10,1); Kozorožec horský +3,4 p. b. Vítěz má 3,2 jelena, poražený 2,8.",
-     "Limba. Borovice limba je v 87 % lesů a vítěz jí má o 0,18 kopie víc; les typu Limba (13 % lesů) vyhrává 61 % her, Dub 57 %, Jírovec 56 %."
+     "Hořec a motýli. Hořec (3 body za motýla) má ze všech častých karet největší přínos k výhře (+8,5 p. b.; výskyt 58 %) a jedna kopie dá 17,2 bodu; vítěz má o 0,33 kopie víc než poražený. S výhrou jdou i Jasoň phoebus (+5,1 p. b.) a Perleťovec stříbropásek (+2,7 p. b.).",
+     "Plnit stromy kvůli Kuně skalní (5 bodů za každý plně obsazený strom). Je v 76 % lesů, jedna kopie dá 15,8 bodu a vítěz jí má o 0,35 kopie víc než poražený – víc než u kterékoli jiné karty.",
+     "Sudokopytníci a Vlk obecný. Daněk evropský +4,6 p. b. (17,3 bodu za kopii; vítěz má o 0,33 kopie víc), Zubr evropský +4,5 p. b., Kozorožec horský +3,4 p. b., Vlk obecný +2,2 p. b. (14,5 bodu za kopii).",
+     "Směřovat k symbolu limby. Lesy, kde je nejčastější symbol limby (13 % lesů), vyhrávají 61 % her. Samotná karta Borovice limba je v 87 % lesů a vítěz jí má o 0,18 kopie víc, její vlastní přínos k výhře (+1,0 p. b.) je ale v mezích náhody."
     ],
     "avoid": [
-     "Les ze semenáčků: nová AI ho staví jen v 1 % lesů a vyhrává 37 % her (původní AI 68 % lesů a 59 % výher).",
-     "Moc buků. Buk je v 69 % lesů, ale vítěz ho má o 0,51 kopie méně než poražený; bukový les (30 % lesů) vyhrává 45 %.",
-     "Mýval severní (−13,5 p. b.; vítěz ho má o 0,29 kopie méně), Javor klen (−18 p. b.), Strakapoud velký (−23 p. b.) a Sojka obecná (−15,5 p. b.)."
+     "Les hlavně ze semenáčků. Hráči pořád zahrají 2,6 semenáčku za hru, ale jen 1 % lesů je převážně ze semenáčků a takové lesy vyhrávají 37 % her (původní AI: 68 % lesů, 59 % výher).",
+     "Moc Buků. Buk je v 69 % lesů, ale vítěz ho má o 0,51 kopie méně než poražený – největší rozdíl ze všech karet – a lesy se symbolem buku (30 %) vyhrávají 45 %.",
+     "Mýval severní (−13,5 p. b., výskyt 39 %; vítěz ho má o 0,29 kopie méně), Javor klen (−18,4 p. b.), Strakapoud velký (−23,1 p. b.) a Sojka obecná (−15,3 p. b.). Kromě Mývala jsou jen ve 7–11 % lesů; spíš prozrazují slabou ruku, než aby prohru způsobily.",
+     "Sázet Dub nebo Jírovec maďal: silná AI to skoro nedělá. Karty Dubu použila jako platbu za jiné karty (5 258×) nebo jako semenáček (793×) a za 2 000 her zasadila jediný Dub. Lesy se symbolem dubu (3 %) přesto vyhrávají 57 %: jejich symboly jsou na zvířatech a rostlinách, ne na dubech."
     ],
-    "order": "Kdo táhne první, vyhrává 55,2 % her (druhý 45,6 %); u původní AI to bylo 52,5 %.",
+    "order": "Kdo táhne první, vyhrává 55,2 % her, druhý 45,5 % (u původní AI první 52,6 %).",
     "length": [
-     "Hry jsou kratší: 28,5–60,5 kola na hráče (původní AI 40–96) a skóre vítěze roste s délkou ze 141 na 275 bodů. Délku dělá hlavně zbytek balíčku při třetí zimě (sám vysvětlí 74 % rozdílů).",
-     "Z mýtiny se skoro nebere: vítěz i poražený z ní berou 9,6 % dobrání (původní AI 31–34 %). Mýtina se proto plní a vyprazdňuje častěji, 4,9× za hru (původní 3,5×), a vítěz ji vyprázdní stejně často jako poražený (2,5× a 2,4×)."
+     "Hry jsou krátké: zhruba 29–61 tahů na hráče (původní AI 40–96). Průměrné skóre vítěze roste ze 140 v nejkratší pětině her na 274 v nejdelší, takže skóre porovnávej jen mezi podobně dlouhými hrami. Kolik karet zbylo na konci v balíčku (náhoda), vysvětlí 74,5 % rozdílů v délce.",
+     "Z mýtiny se skoro nebere: vítěz a poražený z ní berou 13,9 % a 13,8 % svých dobrání (původní AI 36,0 % a 35,6 %). Počítáno ze všech tahů včetně hraní je braní z mýtiny jen 6 % tahů. Mýtina se vyprázdní 4,9× za hru (původní 3,5×), vítězem i poraženým zhruba stejně často (2,46× a 2,42×)."
     ]
    }
   },
   "p2-v1-7.2m-mirror": {
    "games": 2000,
-   "written": "2026-11-01",
+   "written": "2026-11-02",
    "en": {
-    "summary": "A wide forest of free saplings filled with dwellers that count trees, plus a herd of deer with a wolf.",
+    "summary": "A wide forest of free saplings filled with dwellers that count trees, plus deer with a Wolf — a plan the new, stronger AI dropped.",
     "works": [
-     "Saplings instead of trees. The winner has 7.9 saplings and only 3.0 real trees, the loser 6.5 and 3.9. Sapling-type forests (68 % of all) win 59 % of games against an average of 50 %. A sapling costs nothing, has the same 4 slots as a tree and a dweller on it scores just as much (8.2 points either way).",
-     "Cards that count trees, since a sapling counts as a tree: Red Deer (1 per tree or plant), Beech Marten (5 per fully occupied tree), Sycamore (1 per tree), Moss (10 with at least 10 trees) and Wood Ant. The winner gets 26 points from Red Deer (loser 14) and 23 from Beech Marten (13). Points from these cards track the score more closely than anything else (correlation 0.72).",
-     "Fill trees instead of adding them. Beech Marten scores only fully occupied trees, so the winner plays more dwellers (25.2 vs 23.5) and fewer woody plants (3.0 vs 3.9).",
-     "Deer and the Wolf. Fallow Deer (3 per cloven-hoofed animal) gives the winner 19 points (loser 9), Wolf (5 per deer) 19 points (10). The winner has 3.8 deer, the loser 2.4.",
-     "Plants as a supplement: Digitalis (set of different plants), Gentian (3 per butterfly), Alpine Marmot (3 per different plant) and Blackberries."
+     "Saplings instead of trees: players have 7.2 saplings a game, and forests mostly of saplings (68 % of all) win 59 % of games.",
+     "Cards that count trees, since a sapling counts as a tree: Red Deer (+6.9 pp; the winner has 0.63 more copies, the most of any card), Beech Marten (+6.3 pp; +0.48 copies), Wood Ant (+9.3 pp) and Moss (+8.3 pp).",
+     "Deer and the Wolf: Fallow Deer +9.6 pp (the winner has 0.41 more copies), Wolf +2.6 pp.",
+     "Butterflies and plants: Map Butterfly +15.0 pp, Gentian +8.2 pp, Digitalis +7.8 pp, Blackberries +7.3 pp."
     ],
     "avoid": [
-     "Trees that cost a card or a turn and give little back: Douglas Fir forests win only 9 % of games and the Douglas Fir card has a win lift of −39 pp; the winner hardly plants Birch or European Larch.",
-     "Cards the winner almost never plays: Violet Carpenter Bee, European Hare, Red Fox, Penny Bun, Eurasian Magpie.",
-     "Leaving cards idle: the winner ends with 4.3 cards in hand, the loser with 6.0."
+     "Trees that cost a card and give little back: forests mostly of the Douglas Fir symbol (6 %) win only 9.3 % of games; the Douglas Fir card −38.7 pp, Birch −26.6 pp, European Larch −35.9 pp.",
+     "Cards the winner rarely has: Violet Carpenter Bee (−31.3 pp), Eurasian Magpie (−29.9 pp), Red Fox (−28.4 pp), Penny Bun (−26.8 pp), European Hare (−16.9 pp).",
+     "Leaving cards unused: players end with 5.1 cards in hand on average (new AI: 3.8)."
     ],
-    "order": "The first player wins 52.5 % of games (second 48.1 %).",
+    "order": "The first player wins 52.6 % of games, the second 48.0 %.",
     "length": [
-     "Game length ranges from 40 to 96 rounds per player and the winner's score rises with it from 178 to 347 points (shortest vs longest fifth of games). Length is mostly chance: the deck left at the third winter alone explains 64 % of the differences, clearing draws 49 % (they overlap, 86 % together).",
-     "Drawing from the clearing neither pays nor hurts with 2 players: winners take 36.0 % of their draws from it, losers 35.6 %. A middle rate of 30–40 % does best (54 % wins); players who hardly use it (under 10 %) or mostly use it (over 70 %) win only about 32–40 % (few seats, noisy).",
-     "Clearing wipes (3.5 per game) do not affect winning: winners trigger 1.7 per game, the same as losers.",
-     "The effect of commonly played cards hardly changes with length. A sapling forest pays off in short games (+6 pp) and even more in long ones (+11.5 pp); Map Butterfly grows from +12 to +18 pp because a butterfly set needs time."
+     "Games last 40–96 turns per player; the winner's average score rises from 178 in the shortest fifth of games to 347 in the longest. The deck left at the end explains 64.1 % of the differences in length, clearing draws 48.6 % (they overlap: 86.4 % together).",
+     "Drawing from the clearing neither helps nor hurts with 2 players: winners take 36.0 % of their draws from it, losers 35.6 %. Players at 30–40 % win 54.1 %, those under 10 % only 39.7 % (few players).",
+     "Emptying the clearing (3.5 times a game) does not go with winning: winners empty it 1.72 times a game, losers 1.75.",
+     "A sapling forest goes with winning at every length: +6.1 pp in the shortest games, +11.5 pp in the longest; Map Butterfly from +12.7 to +16.8 pp, because a butterfly set needs time."
     ]
    },
    "cs": {
-    "summary": "Široký les z levných semenáčků, zaplněný obyvateli, kteří počítají stromy, a stádem jelenů s vlkem.",
+    "summary": "Široký les z bezplatných semenáčků plný obyvatel, kteří počítají stromy, a k tomu jeleni s Vlkem obecným – plán, který nová, silnější AI opustila.",
     "works": [
-     "Semenáčky místo stromů. Vítěz má v lese 7,9 semenáčku a jen 3,0 skutečného stromu, poražený 6,5 a 3,9. Les typu Semenáček (68 % lesů) vyhrává 59 % her, průměr je 50 %. Semenáček je zdarma, má stejná 4 místa jako strom a obyvatel na něm boduje stejně (8,2 b. proti 8,2 b.).",
-     "Karty, které počítají stromy, protože semenáček se počítá jako strom: Jelen lesní (1 b. za strom nebo rostlinu), Kuna skalní (5 b. za plně obsazený strom), Javor klen (1 b. za strom), Mech (10 b. při aspoň 10 stromech) a Mravenec lesní. Vítěz bere z Jelena 26 b. (poražený 14) a z Kuny 23 b. (13). Body z těchto karet souvisí se skóre nejvíc ze všeho (korelace 0,72).",
-     "Stromy plnit, ne přidávat. Kuna boduje jen za plně obsazené stromy, proto vítěz zahraje víc obyvatel (25,2 proti 23,5) a méně dřevin (3,0 proti 3,9).",
-     "Jeleni a Vlk. Daněk evropský (3 b. za každého sudokopytníka) dá vítězi 19 b. (poražený 9), Vlk obecný (5 b. za jelena) 19 b. (10). Vítěz má v lese 3,8 jelena, poražený 2,4.",
-     "Rostliny jako doplněk: Náprstník (sada různých rostlin), Hořec (3 b. za motýla), Svišť horský (3 b. za různou rostlinu) a Ostružiník."
+     "Semenáčky místo stromů: hráči mají 7,2 semenáčku za hru a lesy převážně ze semenáčků (68 % lesů) vyhrávají 59 % her.",
+     "Karty, které počítají stromy, protože semenáček se počítá jako strom: Jelen lesní (+6,9 p. b.; vítěz má o 0,63 kopie víc, nejvíc ze všech karet), Kuna skalní (+6,3 p. b.; +0,48 kopie), Mravenec lesní (+9,3 p. b.) a Mech (+8,3 p. b.).",
+     "Jeleni a Vlk obecný: Daněk evropský +9,6 p. b. (vítěz má o 0,41 kopie víc), Vlk obecný +2,6 p. b.",
+     "Motýli a rostliny: Babočka síťkovaná +15,0 p. b., Hořec +8,2 p. b., Náprstník +7,8 p. b., Ostružiník +7,3 p. b."
     ],
     "avoid": [
-     "Stromy, které stojí kartu nebo tah a vrátí málo: les typu Douglaska vyhrává jen 9 % her a Douglaska jako karta má přínos k výhře −39 p. b.; vítěz skoro nesází Břízu ani Modřín opadavý.",
-     "Karty, které vítěz téměř nehraje: Drvodělka fialová, Zajíc polní, Liška obecná, Hřib smrkový, Straka obecná.",
-     "Nechávat karty ležet: vítěz končí s 4,3 kartami v ruce, poražený s 6,0."
+     "Stromy, které stojí kartu a vrátí málo: lesy se symbolem douglasky (6 %) vyhrávají jen 9,3 % her; karta Douglaska tisolistá −38,7 p. b., Bříza −26,6 p. b., Modřín opadavý −35,9 p. b.",
+     "Karty, které vítěz má zřídka: Drvodělka fialová (−31,3 p. b.), Straka obecná (−29,9 p. b.), Liška obecná (−28,4 p. b.), Hřib smrkový (−26,8 p. b.), Zajíc polní (−16,9 p. b.).",
+     "Nechávat karty nevyužité: hráči končí v průměru s 5,1 kartami v ruce (nová AI: 3,8)."
     ],
-    "order": "Kdo táhne první, vyhrává 52,5 % her (druhý 48,1 %).",
+    "order": "Kdo táhne první, vyhrává 52,6 % her, druhý 48,0 %.",
     "length": [
-     "Délka hry kolísá mezi 40 a 96 koly na hráče a skóre vítěze s ní roste ze 178 na 347 bodů (nejkratší proti nejdelší pětině her). Délku dělá hlavně náhoda: zbytek balíčku při třetí zimě sám vysvětlí 64 % rozdílů v délce, dobírání z mýtiny 49 % (obojí se překrývá, dohromady 86 %).",
-     "Brát z mýtiny se ve 2 hráčích nevyplácí ani netrestá: vítěz bere z mýtiny 36,0 % dobrání, poražený 35,6 %. Nejlépe vychází střední míra 30–40 % (54 % výher); kdo z mýtiny skoro nebere (do 10 %) nebo bere většinou (nad 70 %), vyhrává jen kolem 32–40 % (málo míst, velký šum).",
-     "Vyprázdnění mýtiny (3,5× za hru) na výhru nemá vliv: vítěz ho spustí 1,7× za hru stejně jako poražený.",
-     "Vliv často hraných karet se s délkou hry téměř nemění. Les ze semenáčků je výhodný v krátké hře (+6 p. b.) a ještě víc v dlouhé (+11,5 p. b.); Babočka síťkovaná sílí z +12 na +18 p. b., protože sada motýlů potřebuje čas."
+     "Hry trvají 40–96 tahů na hráče; průměrné skóre vítěze roste ze 178 v nejkratší pětině her na 347 v nejdelší. Zbytek balíčku na konci vysvětlí 64,1 % rozdílů v délce, braní z mýtiny 48,6 % (obojí se překrývá, dohromady 86,4 %).",
+     "Braní z mýtiny ve 2 hráčích nepomáhá ani neškodí: vítěz bere z mýtiny 36,0 % svých dobrání, poražený 35,6 %. Hráči s 30–40 % vyhrávají 54,1 %, ti pod 10 % jen 39,7 % (málo hráčů).",
+     "Vyprázdnění mýtiny (3,5× za hru) s výhrou nesouvisí: vítěz ji vyprázdní 1,72× za hru, poražený 1,75×.",
+     "Les ze semenáčků jde s výhrou při každé délce hry: +6,1 p. b. v nejkratších hrách, +11,5 p. b. v nejdelších; Babočka síťkovaná z +12,7 na +16,8 p. b., protože sada motýlů potřebuje čas."
     ]
    }
   },
   "p4-v1-6.8m-mirror": {
    "games": 2000,
-   "written": "2026-11-01",
+   "written": "2026-11-02",
    "en": {
-    "summary": "A herd of cloven-hoofed animals with a wolf on alpine Stone Pines; expensive cards pay off, saplings do not.",
+    "summary": "Tentative, from an early AI: cloven-hoofed animals with a Wolf, butterflies and Gentian, in a forest leaning towards the Stone Pine symbol; a sapling forest almost never wins.",
+    "do": [
+     "Collect cloven-hoofed animals, above all Fallow Deer, and add a Wolf.",
+     "Play butterflies (Large Tortoiseshell, Map Butterfly) and Gentian.",
+     "Lean towards the Stone Pine symbol, with Steinbock.",
+     "Draw mostly from the deck."
+    ],
+    "dont": [
+     "Do not build a forest of saplings.",
+     "Avoid the Gnat and bats such as Bechstein's Bat, and the Great Spotted Woodpecker.",
+     "Do not take most of your cards from the clearing."
+    ],
     "works": [
-     "Cloven-hoofed animals and the Wolf. Fallow Deer makes the biggest difference between winner and loser: 17.4 vs 5.6 points, win lift +12.9 pp over 3,774 forests. Then Wolf (9.3 vs 2.7), Red Deer (11.4 vs 6.4) and Roe Deer (7.7 vs 4.1). The winner has 5.2 cloven-hoofed animals (2.9 of them deer), the loser 3.4 (1.6).",
-     "An alpine forest. Stone Pine scores 1 per Alps card including itself. The winner has 1.3 of them, the loser 0.8, and Swiss Pine-type forests win 53 % of games against an average of 25 %. Steinbock (10 points) and Gentian complete it.",
-     "Pay for expensive cards. The number of cards paid tracks the score more closely than anything else (correlation 0.63): the winner pays 20.9 cards, the loser 18.3, and has more cards in the forest (18.7 vs 17.4).",
-     "Plants as a supplement: Digitalis, Blackberries (2 per plant) and Gentian."
+     "Cloven-hoofed animals and the Wolf. Fallow Deer: +12.9 pp over 3,774 forests, and the winner has 0.56 more copies than the loser, the biggest gap of any card. Then Wolf (+9.8 pp), Roe Deer (+8.6 pp) and Red Deer (+8.3 pp).",
+     "Butterflies and Gentian. Large Tortoiseshell (+13.6 pp) and Map Butterfly (+13.1 pp) go most with winning, Camberwell Beauty +9.6 pp, Gentian +8.1 pp.",
+     "Lean towards the Stone Pine symbol. Forests mostly of the Stone Pine symbol (7 %) win 53 % of games, where an equal share is 25 %. The Stone Pine card is in 63 % of forests (+4.8 pp; the winner has 0.44 more copies); Steinbock (+7.2 pp) fits in.",
+     "Plants as a supplement: Blackberries (+8.2 pp) and Digitalis (+5.8 pp)."
     ],
     "avoid": [
-     "Saplings. Sapling-type forests (32 % of all) win only 8.5 % of games. The winner plays fewer saplings (3.1 vs 4.2). Cards that count trees give little with 4 players (18 points instead of 63 with 2): everyone gets fewer cards and the Woodpecker has to beat three opponents for most trees.",
-     "Bats and Gnat (win lift −20 to −21 pp), European Fat Dormouse, Nightingale; the winner hardly plays European Hare, Great Spotted Woodpecker, Bullfinch or Tawny Owl.",
-     "Oak (17 % wins), Douglas Fir (18 %) and Horse Chestnut (20 %) forest types."
+     "Saplings. Forests mostly of saplings are 33 % of all and win only 8.5 % of games.",
+     "Gnat (−20.3 pp), Bechstein's Bat (−21.2 pp), Black Trumpet (−20.2 pp), Blackthorn (−19.4 pp) and Great Spotted Woodpecker (−19.3 pp).",
+     "Forests mostly of the Oak symbol (17 % wins), Douglas Fir symbol (18 %) or Horse Chestnut symbol (20 %); each is only 1–2 % of forests."
     ],
     "order": "Seat 1 wins 28.4 % of games, seat 4 only 22.2 %.",
     "length": [
-     "Game length ranges from 22 to 58 rounds per player and the winner's score rises with it from 80 to 153 points. The deck left at the third winter (chance) explains 70 % of the differences in length, clearing draws 62 % (91 % together).",
-     "Drawing from the clearing does not pay with 4 players. Winners take 34.8 % of their draws from it, losers 41.2 %. The win rate drops with every ten percent: 34 % wins at 10–20 % clearing draws, 25 % at 40–50 %, 12 % at 60–70 % and 6 % above 70 %. Partly it is a consequence too: a player with a weak hand reaches for the clearing more often.",
-     "Players who empty the clearing win more often: a player who triggers no wipe wins 23 %, one who triggers 3 or more 29 %. Mostly paying for expensive cards fills the clearing, so it marks a player who plays a lot.",
-     "Cards that build on trees grow stronger in long games: Moss from −1 to +9 pp, Linden from 0 to +7 pp, Sycamore from −4 to +1 pp. Fallow Deer is strongest in short games (+15 pp) and weakens slightly in long ones (+11 pp). Swiss Pine forests win at every length (+25 to +31 pp), sapling forests lose at every length (−14 to −19 pp)."
+     "Games last about 22–58 turns per player; the winner's average score rises from 80 in the shortest fifth of games to 153 in the longest. The deck left at the end (chance) explains 70.1 % of the differences in length, clearing draws 61.9 % (they overlap: 90.7 % together).",
+     "Drawing from the clearing goes with losing. Winners take 34.8 % of their draws from it, the others 41.2 %. The win rate falls as the share rises: 34.2 % at 10–20 %, 25.1 % at 40–50 %, 11.7 % at 60–70 % and 6.3 % at 70–80 %. Partly this is a consequence: a player with a weak hand reaches for the clearing more often.",
+     "Players who empty the clearing more often win more often: 22.9 % with no emptying, 29.3 % with 3 or more. The clearing fills mostly with cards paid for expensive cards, so this probably marks a player who plays a lot.",
+     "Cards that build on trees do better in long games: Moss from −1.0 to +8.6 pp, Linden from −0.4 to +6.7 pp. Fallow Deer is strongest in short games (+14.8 pp) and a little weaker in long ones (+11.3 pp). Forests mostly of the Stone Pine symbol win at every length (+24.4 to +31.2 pp), sapling forests lose at every length (−13.8 to −18.9 pp)."
     ]
    },
    "cs": {
-    "summary": "Stádo sudokopytníků s vlkem na alpských borovicích limbách; drahé karty se vyplatí, semenáčky ne.",
+    "summary": "Jen orientačně, od rané AI: sudokopytníci s Vlkem obecným, motýli a Hořec v lese se symbolem limby; les ze semenáčků skoro nikdy nevyhraje.",
+    "do": [
+     "Sbírej sudokopytníky, hlavně Daňka evropského, a přidej Vlka obecného.",
+     "Hraj motýly (Babočka jilmová, Babočka síťkovaná) a Hořec.",
+     "Směřuj k symbolu limby, s Kozorožcem horským.",
+     "Dobírej hlavně z balíčku."
+    ],
+    "dont": [
+     "Nestav les ze semenáčků.",
+     "Vyhni se Komárovi, netopýrům jako Netopýr velkouchý a Strakapoudovi velkému.",
+     "Neber většinu karet z mýtiny."
+    ],
     "works": [
-     "Sudokopytníci a Vlk. Největší rozdíl mezi vítězem a poraženým dělá Daněk evropský: 17,4 b. proti 5,6 b., přínos k výhře +12,9 p. b. na 3 774 lesích. Dále Vlk obecný (9,3 proti 2,7 b.), Jelen lesní (11,4 proti 6,4) a Srnec obecný (7,7 proti 4,1). Vítěz má v lese 5,2 sudokopytníka (z toho 2,9 jelena), poražený 3,4 (1,6).",
-     "Alpský les. Borovice limba dává 1 b. za každou alpskou kartu včetně sebe. Vítěz jich má 1,3, poražený 0,8, a les typu Limba vyhrává 53 % her proti průměru 25 %. Doplňují ji Kozorožec horský (10 b.) a Hořec.",
-     "Platit za drahé karty. Počet zaplacených karet souvisí se skóre nejvíc ze všeho (korelace 0,63): vítěz zaplatí 20,9 karty, poražený 18,3, a v lese má víc karet (18,7 proti 17,4).",
-     "Rostliny jako doplněk: Náprstník, Ostružiník (2 b. za rostlinu) a Hořec."
+     "Sudokopytníci a Vlk obecný. Daněk evropský: +12,9 p. b. na 3 774 lesích a vítěz ho má o 0,56 kopie víc než poražený – největší rozdíl ze všech karet. Dále Vlk obecný (+9,8 p. b.), Srnec obecný (+8,6 p. b.) a Jelen lesní (+8,3 p. b.).",
+     "Motýli a Hořec. Nejvíc s výhrou jdou Babočka jilmová (+13,6 p. b.) a Babočka síťkovaná (+13,1 p. b.), dále Babočka osiková +9,6 p. b. a Hořec +8,1 p. b.",
+     "Směřovat k symbolu limby. Lesy převážně se symbolem limby (7 %) vyhrávají 53 % her, přičemž rovný podíl je 25 %. Karta Borovice limba je v 63 % lesů (+4,8 p. b.; vítěz jí má o 0,44 kopie víc); hodí se k ní Kozorožec horský (+7,2 p. b.).",
+     "Rostliny jako doplněk: Ostružiník (+8,2 p. b.) a Náprstník (+5,8 p. b.)."
     ],
     "avoid": [
-     "Semenáčky. Les typu Semenáček (32 % lesů) vyhrává jen 8,5 % her. Vítěz hraje méně semenáčků (3,1 proti 4,2). Karty, které počítají stromy, dávají při 4 hráčích málo (18 b. místo 63 b. ve 2 hráčích): každý hráč dostane méně karet a Strakapoud musí mít víc stromů než tři soupeři.",
-     "Netopýři a Komár (přínos k výhře −20 až −21 p. b.), Plch velký, Slavík obecný; vítěz skoro nehraje Zajíce polního, Strakapouda velkého, Hýla ani Puštíka.",
-     "Lesy typu Dub (17 % výher), Douglaska (18 %) a Jírovec (20 %)."
+     "Semenáčky. Lesy převážně ze semenáčků tvoří 33 % všech lesů a vyhrávají jen 8,5 % her.",
+     "Komár (−20,3 p. b.), Netopýr velkouchý (−21,2 p. b.), Stroček trubkovitý (−20,2 p. b.), Trnka obecná (−19,4 p. b.) a Strakapoud velký (−19,3 p. b.).",
+     "Lesy se symbolem dubu (17 % výher), douglasky (18 %) nebo jírovce (20 %); každý z nich tvoří jen 1–2 % lesů."
     ],
     "order": "Místo 1 vyhrává 28,4 % her, místo 4 jen 22,2 %.",
     "length": [
-     "Délka hry kolísá mezi 22 a 58 koly na hráče a skóre vítěze s ní roste z 80 na 153 bodů. Zbytek balíčku při třetí zimě (náhoda) vysvětlí 70 % rozdílů v délce, dobírání z mýtiny 62 % (dohromady 91 %).",
-     "Brát z mýtiny se při 4 hráčích nevyplácí. Vítěz bere z mýtiny 34,8 % dobrání, poražený 41,2 %. Podíl výher klesá s každou desítkou procent: 34 % výher při 10–20 % dobrání z mýtiny, 25 % při 40–50 %, 12 % při 60–70 % a 6 % nad 70 %. Zčásti je to i důsledek: hráč se slabou rukou častěji sahá po mýtině.",
-     "Kdo mýtinu vyprazdňuje, vyhrává častěji: hráč, který za hru spustí 0 vyprázdnění, vyhrává 23 %, při 3 a víc 29 %. Mýtinu plní hlavně placení za drahé karty, takže je to znak hráče, který hodně hraje.",
-     "V dlouhé hře sílí karty, které staví na stromech: Mech z −1 na +9 p. b., Lípa z 0 na +7 p. b., Javor klen z −4 na +1 p. b. Daněk evropský je nejsilnější v krátké hře (+15 p. b.) a v dlouhé mírně slábne (+11 p. b.). Les typu Limba vyhrává při každé délce (+25 až +31 p. b.), les ze semenáčků při každé délce prohrává (−14 až −19 p. b.)."
+     "Hry trvají zhruba 22–58 tahů na hráče; průměrné skóre vítěze roste z 80 v nejkratší pětině her na 153 v nejdelší. Zbytek balíčku na konci (náhoda) vysvětlí 70,1 % rozdílů v délce, braní z mýtiny 61,9 % (obojí se překrývá, dohromady 90,7 %).",
+     "Braní z mýtiny jde s prohrou. Vítězové berou z mýtiny 34,8 % svých dobrání, ostatní 41,2 %. Podíl výher s rostoucím podílem klesá: 34,2 % při 10–20 %, 25,1 % při 40–50 %, 11,7 % při 60–70 % a 6,3 % při 70–80 %. Zčásti je to důsledek: hráč se slabou rukou sahá po mýtině častěji.",
+     "Kdo mýtinu vyprazdňuje častěji, častěji vyhrává: 22,9 % bez vyprázdnění, 29,3 % při 3 a více. Mýtinu plní hlavně karty zaplacené za drahé karty, takže to nejspíš prozrazuje hráče, který hodně hraje.",
+     "V dlouhých hrách si vedou lépe karty, které staví na stromech: Mech z −1,0 na +8,6 p. b., Lípa z −0,4 na +6,7 p. b. Daněk evropský je nejsilnější v krátkých hrách (+14,8 p. b.) a v dlouhých o něco slabší (+11,3 p. b.). Lesy převážně se symbolem limby vyhrávají při každé délce (+24,4 až +31,2 p. b.), lesy ze semenáčků při každé délce prohrávají (−13,8 až −18,9 p. b.)."
     ]
    }
   }
@@ -142,87 +188,87 @@
   {
    "variant": "main",
    "id": "saplings",
-   "link": "#compare",
+   "link": "compare",
    "tag": "SAPLING",
    "en": {
-    "title": "The stronger AI dropped saplings",
-    "text": "The original AI built 68 % of its forests mainly from saplings. The new, stronger AI builds such a forest in only 1 % of games and wins 37 % with it; it plays mixed (33 %) and Beech forests (30 %) instead, and Swiss Pine forests win most (61 %). With 4 players (original AI) 33 % of forests are sapling forests and they win only 8.5 %.",
-    "label": "of forests built from saplings",
-    "n2": "1 %",
-    "n4": "33 %",
-    "before": "Original AI with 2 players: 68 % sapling forests, 59 % wins."
+    "title": "The stronger AI plays few saplings",
+    "text": "The new AI still plays two or three saplings a game, but it almost never builds its forest mainly from them: only 1 % of its forests are sapling forests, and they win 37 % of games. The original AI built 68 % of its forests that way. With 4 players a third of forests (33 %) are sapling forests and they win only 8.5 %.",
+    "label": "saplings per player at the end of the game",
+    "n2": "2.6",
+    "n4": "4.0",
+    "before": "Original AI with 2 players: 7.2 saplings per player; 68 % of its forests mainly saplings."
    },
    "cs": {
-    "title": "Silnější AI opustila semenáčky",
-    "text": "Původní AI stavěla 68 % lesů hlavně ze semenáčků. Nová, silnější AI takový les staví jen v 1 % lesů a vyhrává s ním 37 % her; místo toho hraje smíšené (33 %) a bukové lesy (30 %) a nejčastěji vyhrává les z limby (61 %). Ve 4 hráčích (původní AI) je ze semenáčků 33 % lesů a vyhrají jen 8,5 %.",
-    "label": "lesů ze semenáčků",
-    "n2": "1 %",
-    "n4": "33 %",
-    "before": "Původní AI ve 2 hráčích: 68 % lesů ze semenáčků, 59 % výher."
+    "title": "Silnější AI hraje málo semenáčků",
+    "text": "Nová AI pořád zahraje dva až tři semenáčky za hru, ale les z nich skoro nikdy nestaví: jen 1 % jejích lesů je převážně ze semenáčků a takové lesy vyhrávají 37 % her. Původní AI takhle stavěla 68 % lesů. Ve 4 hráčích je ze semenáčků třetina lesů (33 %) a vyhrávají jen 8,5 %.",
+    "label": "semenáčků na hráče na konci hry",
+    "n2": "2,6",
+    "n4": "4,0",
+    "before": "Původní AI ve 2 hráčích: 7,2 semenáčku na hráče; 68 % jejích lesů převážně ze semenáčků."
    }
   },
   {
    "variant": "main",
    "id": "clearing",
-   "link": "#length",
+   "link": "more",
    "tag": "BIRCH",
    "en": {
     "title": "The new AI hardly draws from the clearing",
-    "text": "Winner and loser take only 9.6 % of their draws from the clearing and draw nearly everything from the deck. The deck reaches the winters sooner, games are shorter and the clearing is emptied more often (4.9 times a game).",
-    "label": "draws from the clearing, winner : loser",
-    "n2": "9.6 % : 9.7 %",
-    "n4": "35 % : 41 %",
-    "before": "Original AI with 2 players: 31 % : 34 %."
+    "text": "Winners and losers take only about one draw in seven from the clearing and draw the rest from the deck. Counted over all turns, playing included, taking from the clearing is just 6 % of turns. The deck runs down faster, games are shorter and the clearing is emptied more often (4.9 times a game).",
+    "label": "share of draws taken from the clearing, winner : others",
+    "n2": "13.9 % : 13.8 %",
+    "n4": "34.8 % : 41.2 %",
+    "before": "Original AI with 2 players: 36.0 % : 35.6 %."
    },
    "cs": {
     "title": "Nová AI skoro nebere z mýtiny",
-    "text": "Vítěz i poražený berou z mýtiny jen 9,6 % dobrání, téměř vše táhnou z balíčku. Balíček tak rychleji dojde k zimám, hry jsou kratší a mýtina se vyprazdňuje častěji (4,9× za hru).",
-    "label": "dobrání z mýtiny, vítěz : poražený",
-    "n2": "9,6 % : 9,7 %",
-    "n4": "35 % : 41 %",
-    "before": "Původní AI ve 2 hráčích: 31 % : 34 %."
+    "text": "Vítěz i poražený berou z mýtiny jen zhruba každé sedmé dobrání, zbytek táhnou z balíčku. Počítáno ze všech tahů včetně hraní je braní z mýtiny jen 6 % tahů. Balíček tak rychleji ubývá, hry jsou kratší a mýtina se vyprazdňuje častěji (4,9× za hru).",
+    "label": "podíl dobrání z mýtiny, vítěz : ostatní",
+    "n2": "13,9 % : 13,8 %",
+    "n4": "34,8 % : 41,2 %",
+    "before": "Původní AI ve 2 hráčích: 36,0 % : 35,6 %."
    }
   },
   {
    "variant": "main",
    "id": "short",
-   "link": "#length",
+   "link": "length",
    "tag": "DOUGLAS_FIR",
    "en": {
-    "title": "Shorter games, the deck sets the length",
-    "text": "A game of the new AI lasts 28.5–60.5 rounds per player (original 40–96). Length is mostly chance: the deck left at the third winter alone explains 74 % of the differences. The winner's score rises with length from 141 to 275 points.",
-    "label": "of game length explained by winter timing",
-    "n2": "74 %",
-    "n4": "70 %",
-    "before": "Original AI with 2 players: 64 %, games of 40–96 rounds."
+    "title": "Shorter games, and the deck sets the length",
+    "text": "A game of the new AI lasts about 29–61 turns per player (original 40–96). Length is mostly chance: how many cards were left in the deck at the end explains most of the differences. The winner's average score rises from 140 in the shortest fifth of games to 274 in the longest, so compare scores only between games of similar length.",
+    "label": "of the differences in game length explained by the deck left at the end",
+    "n2": "74.5 %",
+    "n4": "70.1 %",
+    "before": "Original AI with 2 players: 64.1 %, games of 40–96 turns per player."
    },
    "cs": {
-    "title": "Kratší hry, délku dělá balíček",
-    "text": "Hra nové AI trvá 28,5–60,5 kola na hráče (původní 40–96). Délku dělá hlavně náhoda: zbytek balíčku při třetí zimě sám vysvětlí 74 % rozdílů v délce. Skóre vítěze roste s délkou ze 141 na 275 bodů.",
-    "label": "délky hry vysvětlí načasování zim",
-    "n2": "74 %",
-    "n4": "70 %",
-    "before": "Původní AI ve 2 hráčích: 64 %, hry 40–96 kol."
+    "title": "Kratší hry a délku určuje balíček",
+    "text": "Hra nové AI trvá zhruba 29–61 tahů na hráče (původní 40–96). Délka je hlavně náhoda: kolik karet zbylo na konci v balíčku, vysvětlí většinu rozdílů. Průměrné skóre vítěze roste ze 140 v nejkratší pětině her na 274 v nejdelší, takže skóre porovnávej jen mezi podobně dlouhými hrami.",
+    "label": "rozdílů v délce hry vysvětlí zbytek balíčku na konci",
+    "n2": "74,5 %",
+    "n4": "70,1 %",
+    "before": "Původní AI ve 2 hráčích: 64,1 %, hry 40–96 tahů na hráče."
    }
   },
   {
    "variant": "main",
    "id": "gentian",
-   "link": "#cards&card=GENTIAN",
+   "link": "items/GENTIAN",
    "tag": "LINDEN",
    "en": {
-    "title": "Gentian and butterflies lead",
-    "text": "Gentian (3 per butterfly) has the largest effect on winning of the common cards and gives the winner 16.3 points against the loser's 9.1. With it win Beech Marten (the winner has 0.35 more copies) and Fallow Deer (+0.33).",
+    "title": "With 2 players, Gentian leads the common cards",
+    "text": "Gentian (3 points per butterfly) has the largest effect on winning of the cards found in at least 5 % of forests and scores 17.2 points per copy. The winner's biggest extra copies are Beech Marten (+0.35), Gentian and Fallow Deer (+0.33 each). With 4 players Gentian is still clearly positive, but butterflies (Large Tortoiseshell +13.6 pp) and Fallow Deer lead there.",
     "label": "effect on winning: Gentian",
-    "n2": "+8.6 pp",
+    "n2": "+8.5 pp",
     "n4": "+8.1 pp",
     "before": "Original AI with 2 players: +8.2 pp."
    },
    "cs": {
-    "title": "Hořec a motýli vedou",
-    "text": "Hořec (3 b. za motýla) má největší přínos k výhře mezi častými kartami a vítězi dá 16,3 b. proti 9,1 b. poraženého. Spolu s ním vítězí Kuna skalní (vítěz jí má o 0,35 kopie víc) a Daněk evropský (+0,33).",
+    "title": "Ve 2 hráčích vede mezi častými kartami Hořec",
+    "text": "Hořec (3 body za motýla) má největší přínos k výhře ze všech karet, které jsou aspoň v 5 % lesů, a jedna kopie dá 17,2 bodu. Nejvíc kopií navíc má vítěz u Kuny skalní (+0,35), Hořce a Daňka evropského (po +0,33). Ve 4 hráčích je Hořec pořád jasně v plusu, vedou tam ale motýli (Babočka jilmová +13,6 p. b.) a Daněk evropský.",
     "label": "přínos k výhře: Hořec",
-    "n2": "+8,6 p. b.",
+    "n2": "+8,5 p. b.",
     "n4": "+8,1 p. b.",
     "before": "Původní AI ve 2 hráčích: +8,2 p. b."
    }
@@ -230,165 +276,185 @@
   {
    "variant": "main",
    "id": "beech",
-   "link": "#cards&card=BEECH",
+   "link": "items/BEECH",
    "tag": "BEECH",
    "en": {
     "title": "Beech is everywhere, winners have less",
-    "text": "Beech is in 69 % of the new AI's forests, but the winner has 0.51 fewer copies than the loser of the same game, the most of any card. Beech forests win 45 %, Swiss Pine forests 61 %.",
-    "label": "copies of Beech: winner vs loser",
+    "text": "With 2 players Beech is in 69 % of the new AI's forests, but the winner has 0.51 fewer copies than the loser of the same game, the biggest gap of any card. Forests mostly of the Beech symbol win 45 %, those of the Stone Pine symbol 61 %. With 4 players (early AI) winners have slightly more Beech.",
+    "label": "copies of Beech: winner minus loser",
     "n2": "−0.51",
-    "n4": "–",
-    "before": "Original AI: hardly played Beech (3 % Beech forests)."
+    "n4": "+0.10",
+    "before": "Original AI: Beech in 26 % of forests, winner −0.13."
    },
    "cs": {
     "title": "Buk je všude, vítěz ho má méně",
-    "text": "Buk je v 69 % lesů nové AI, ale vítěz ho má o 0,51 kopie méně než poražený ve stejné hře – nejvíc ze všech karet. Bukový les vyhrává 45 %, les z limby 61 %.",
-    "label": "kopií Buku: vítěz vs poražený",
+    "text": "Ve 2 hráčích je Buk v 69 % lesů nové AI, ale vítěz ho má o 0,51 kopie méně než poražený ve stejné hře – největší rozdíl ze všech karet. Lesy převážně se symbolem buku vyhrávají 45 %, se symbolem limby 61 %. Ve 4 hráčích (raná AI) má vítěz Buku o trochu víc.",
+    "label": "kopií Buku: vítěz minus poražený",
     "n2": "−0,51",
-    "n4": "–",
-    "before": "Původní AI: Buk v lesích skoro nehrála (bukový les 3 %)."
+    "n4": "+0,10",
+    "before": "Původní AI: Buk v 26 % lesů, vítěz −0,13."
+   }
+  },
+  {
+   "variant": "main",
+   "id": "oak",
+   "link": "items/OAK",
+   "tag": "OAK",
+   "en": {
+    "title": "\"Oak forests\" without Oak trees",
+    "text": "The new AI planted one Oak tree in 2,000 games; it used its Oak cards to pay for other cards or as saplings. Yet forests mostly of the Oak symbol (3 %) win 57 %. A forest's type counts tree symbols on animals and plants too, so \"Oak symbol forests win\" does not mean \"plant Oaks\".",
+    "label": "forests with an Oak tree, out of 4,000",
+    "n2": "1",
+    "before": "Original AI with 2 players: Oak tree in 57 forests."
+   },
+   "cs": {
+    "title": "„Dubové lesy“ bez dubů",
+    "text": "Nová AI za 2 000 her zasadila jediný Dub; karty Dubu použila jako platbu za jiné karty nebo jako semenáček. Lesy převážně se symbolem dubu (3 %) přesto vyhrávají 57 %. Typ lesa počítá symboly stromů i na zvířatech a rostlinách, takže „lesy se symbolem dubu vyhrávají“ neznamená „sázej duby“.",
+    "label": "lesů s Dubem ze 4 000",
+    "n2": "1",
+    "before": "Původní AI ve 2 hráčích: Dub v 57 lesích."
    }
   },
   {
    "variant": "main",
    "id": "order",
-   "link": "#experiments&file=p2_v2fix_15M_mirror_2k",
+   "link": "strategy",
    "tag": "SILVER_FIR",
    "en": {
     "title": "Going first matters more for the stronger AI",
-    "text": "The first player wins 55.2 % of the new AI's games, the second 45.6 %. The more precisely both sides play, the more the extra tempo decides.",
+    "text": "The first player wins 55.2 % of the new AI's games, the second 45.5 %. The more precisely both sides play, the more the extra tempo decides.",
     "label": "wins from the first : last seat",
-    "n2": "55 % : 46 %",
-    "n4": "28 % : 22 %",
-    "before": "Original AI with 2 players: 52.5 % : 48 %."
+    "n2": "55.2 % : 45.5 %",
+    "n4": "28.4 % : 22.2 %",
+    "before": "Original AI with 2 players: 52.6 % : 48.0 %."
    },
    "cs": {
-    "title": "První tah je u silnější AI větší výhoda",
-    "text": "Kdo táhne první, vyhrává 55,2 % her nové AI, druhý 45,6 %. Čím přesněji obě strany hrají, tím víc rozhoduje tempo navíc.",
-    "label": "výher z prvního : posledního místa",
-    "n2": "55 % : 46 %",
-    "n4": "28 % : 22 %",
-    "before": "Původní AI ve 2 hráčích: 52,5 % : 48 %."
+    "title": "U silnější AI je první tah větší výhoda",
+    "text": "Kdo táhne první, vyhrává 55,2 % her nové AI, druhý 45,5 %. Čím přesněji obě strany hrají, tím víc rozhoduje tempo navíc.",
+    "label": "výhry z prvního : posledního místa",
+    "n2": "55,2 % : 45,5 %",
+    "n4": "28,4 % : 22,2 %",
+    "before": "Původní AI ve 2 hráčích: 52,6 % : 48,0 %."
    }
   },
   {
    "variant": "compare",
    "id": "saplings",
-   "link": "#strategies",
+   "link": "strategy",
    "tag": "SAPLING",
    "en": {
-    "title": "Saplings win with two players and lose with four",
-    "text": "With 2 players 68 % of forests are built mainly from saplings, and they win more often than average. With 4 players there is too little time and too few cards: a sapling forest wins only 8.5 % of games where a typical forest wins 25 %. The best forest with 4 players is Swiss Pine (53 % wins).",
+    "title": "For the original AI, saplings win with two players and lose with four",
+    "text": "With 2 players the original AI built 68 % of its forests mainly from saplings, and they win more often than average. With 4 players (early AI) a sapling forest wins only 8.5 % of games where an equal share is 25 %; the best forests there are those of the Stone Pine symbol (53 % wins). The new 2-player AI dropped sapling forests.",
     "label": "wins of a sapling forest",
-    "n2": "59 %",
+    "n2": "59.0 %",
     "n4": "8.5 %"
    },
    "cs": {
-    "title": "Semenáčky vyhrávají ve dvou, ve čtyřech prohrávají",
-    "text": "Ve 2 hráčích je 68 % lesů postavených hlavně ze semenáčků a vyhrávají častěji než průměr. Ve 4 hráčích na ně zbývá málo času i karet: les ze semenáčků vyhraje jen 8,5 % her, i když běžný les vyhrává 25 %. Nejlepší les ve 4 hráčích je Limba (53 % výher).",
+    "title": "U původní AI semenáčky vyhrávají ve dvou a prohrávají ve čtyřech",
+    "text": "Ve 2 hráčích stavěla původní AI 68 % lesů hlavně ze semenáčků a ty vyhrávají častěji než průměr. Ve 4 hráčích (raná AI) les ze semenáčků vyhraje jen 8,5 % her, přičemž rovný podíl je 25 %; nejlepší jsou tam lesy se symbolem limby (53 % výher). Nová AI pro 2 hráče lesy ze semenáčků opustila.",
     "label": "výher lesa ze semenáčků",
-    "n2": "59 %",
+    "n2": "59,0 %",
     "n4": "8,5 %"
    }
   },
   {
    "variant": "compare",
    "id": "clearing",
-   "link": "#length",
+   "link": "more",
    "tag": "BIRCH",
    "en": {
     "title": "Drawing from the clearing does not pay with four",
-    "text": "With 2 players winners and losers take the same share of their draws from the clearing (36 %). With 4 players winners take less: players who take 10–20 % of their draws from it win 34 %, those above 70 % only 6 %. Partly a consequence: a weak hand reaches for the clearing more often.",
-    "label": "from the clearing, winner : loser",
-    "n2": "36 % : 36 %",
-    "n4": "35 % : 41 %"
+    "text": "With 2 players winners and losers take about the same share of their draws from the clearing. With 4 players winners take less: players who take 10–20 % of their draws from it win 34.2 %, those at 70–80 % only 6.3 %. Partly a consequence: a weak hand reaches for the clearing more often.",
+    "label": "share of draws from the clearing, winner : others",
+    "n2": "36.0 % : 35.6 %",
+    "n4": "34.8 % : 41.2 %"
    },
    "cs": {
     "title": "Brát z mýtiny se ve čtyřech nevyplácí",
-    "text": "Ve 2 hráčích bere vítěz i poražený z mýtiny stejně (36 % dobrání). Ve 4 hráčích bere vítěz méně: kdo bere z mýtiny 10–20 % dobrání, vyhrává 34 %, kdo přes 70 %, jen 6 %. Zčásti je to důsledek: se slabou rukou se po mýtině sahá častěji.",
-    "label": "z mýtiny bere vítěz : poražený",
-    "n2": "36 % : 36 %",
-    "n4": "35 % : 41 %"
+    "text": "Ve 2 hráčích bere vítěz i poražený z mýtiny zhruba stejný podíl dobrání. Ve 4 hráčích bere vítěz méně: kdo bere z mýtiny 10–20 % dobrání, vyhrává 34,2 %, kdo 70–80 %, jen 6,3 %. Zčásti je to důsledek: se slabou rukou se po mýtině sahá častěji.",
+    "label": "podíl dobrání z mýtiny, vítěz : ostatní",
+    "n2": "36,0 % : 35,6 %",
+    "n4": "34,8 % : 41,2 %"
    }
   },
   {
    "variant": "compare",
    "id": "chance",
-   "link": "#length",
+   "link": "more",
    "tag": "DOUGLAS_FIR",
    "en": {
     "title": "Game length is mostly chance",
-    "text": "The game ends with the third winter, shuffled at random into the bottom part of the deck. How many cards were left when it appeared explains 64 % of the differences in game length with 2 players and 70 % with 4. Drawing from the clearing makes games longer but adds little.",
-    "label": "of length explained by winter timing",
-    "n2": "64 %",
-    "n4": "70 %"
+    "text": "The game ends with the third winter card, shuffled at random into the last third of the deck. How many cards were left in the deck at the end explains 64.1 % of the differences in game length with 2 players and 70.1 % with 4. Drawing from the clearing makes games longer, but the two overlap.",
+    "label": "of the differences in length explained by the deck left at the end",
+    "n2": "64.1 %",
+    "n4": "70.1 %"
    },
    "cs": {
-    "title": "Délku hry dělá hlavně náhoda",
-    "text": "Hra končí třetí zimou, která leží náhodně ve spodní části balíčku. Kolik karet v balíčku zbylo, když vyšla, samo vysvětlí 64 % rozdílů v délce hry ve 2 hráčích a 70 % ve 4. Dobírání z mýtiny hru prodlužuje, ale přidá jen málo.",
-    "label": "délky hry určí načasování zim",
-    "n2": "64 %",
-    "n4": "70 %"
+    "title": "Délku hry určuje hlavně náhoda",
+    "text": "Hra končí třetí zimní kartou, která je náhodně zamíchaná do poslední třetiny balíčku. Kolik karet zbylo na konci v balíčku, vysvětlí 64,1 % rozdílů v délce hry ve 2 hráčích a 70,1 % ve 4. Braní z mýtiny hru prodlužuje, ale obojí se překrývá.",
+    "label": "rozdílů v délce vysvětlí zbytek balíčku na konci",
+    "n2": "64,1 %",
+    "n4": "70,1 %"
    }
   },
   {
    "variant": "compare",
    "id": "butterflies",
-   "link": "#cards&card=MAP_BUTTERFLY",
+   "link": "items/MAP_BUTTERFLY",
    "tag": "LINDEN",
    "en": {
-    "title": "Butterflies and deer always help",
-    "text": "Map Butterfly is among the strongest cards with 2 and with 4 players: forests with it win 15 and 13 percentage points more often than average. Fallow Deer likewise (+10 and +13 pp). Butterflies score as a set, so they grow with every butterfly played.",
+    "title": "Butterflies and Fallow Deer go with winning in both",
+    "text": "Map Butterfly is among the cards that go most with winning with 2 and with 4 players. Fallow Deer likewise (+9.6 and +12.9 pp). Butterflies score as a set, so they grow with every butterfly played.",
     "label": "effect on winning: Map Butterfly",
-    "n2": "+14.9 pp",
+    "n2": "+15.0 pp",
     "n4": "+13.1 pp"
    },
    "cs": {
-    "title": "Motýli a daňci pomáhají vždy",
-    "text": "Babočka síťkovaná patří k nejsilnějším kartám ve 2 i 4 hráčích: lesy s ní vyhrávají o 15 a 13 procentních bodů častěji než průměr. Podobně Daněk evropský (+10 a +13 p. b.). Motýli bodují jako sada, proto rostou s počtem zahraných motýlů.",
+    "title": "Motýli a Daněk evropský jdou s výhrou v obou",
+    "text": "Babočka síťkovaná patří ve 2 i 4 hráčích ke kartám, které jdou s výhrou nejvíc. Podobně Daněk evropský (+9,6 a +12,9 p. b.). Motýli bodují jako sada, proto rostou s každým dalším zahraným motýlem.",
     "label": "přínos k výhře: Babočka síťkovaná",
-    "n2": "+14,9 p. b.",
+    "n2": "+15,0 p. b.",
     "n4": "+13,1 p. b."
    }
   },
   {
    "variant": "compare",
    "id": "long",
-   "link": "#length&sp=LINDEN,MOSS,FALLOW_DEER",
+   "link": "length",
    "tag": "LINDEN",
    "en": {
-    "title": "Trees grow strong in long four-player games",
-    "text": "With 4 players building on trees pays off in long games: Linden goes from 0 to +7 pp, Moss from −1 to +9 pp. With 2 players Linden does not improve with length, and the effect of most common cards stays the same.",
+    "title": "With four players, tree cards do better in long games",
+    "text": "With 4 players Linden goes from −0.4 to +6.7 pp from the shortest to the longest games, Moss from −1.0 to +8.6 pp. With 2 players (original AI) Linden does not improve with length.",
     "label": "Linden: shortest → longest games",
-    "n2": "−2 → −5 pp",
-    "n4": "0 → +7 pp"
+    "n2": "−1.8 → −5.2 pp",
+    "n4": "−0.4 → +6.7 pp"
    },
    "cs": {
-    "title": "V dlouhé hře ve čtyřech sílí stromy",
-    "text": "Ve 4 hráčích se v dlouhých hrách vyplácí stavět na stromech: Lípa jde z 0 na +7 p. b., Mech z −1 na +9 p. b. Ve 2 hráčích se Lípa s délkou hry nezlepší a vliv většiny častých karet zůstává stejný.",
+    "title": "Ve čtyřech si karty stromů vedou lépe v dlouhých hrách",
+    "text": "Ve 4 hráčích jde Lípa od nejkratších po nejdelší hry z −0,4 na +6,7 p. b., Mech z −1,0 na +8,6 p. b. Ve 2 hráčích (původní AI) se Lípa s délkou hry nezlepšuje.",
     "label": "Lípa: nejkratší → nejdelší hry",
-    "n2": "−2 → −5 p. b.",
-    "n4": "0 → +7 p. b."
+    "n2": "−1,8 → −5,2 p. b.",
+    "n4": "−0,4 → +6,7 p. b."
    }
   },
   {
    "variant": "compare",
    "id": "order",
-   "link": "#experiments&file=p4_ppo_6800000_mirror",
+   "link": "strategy",
    "tag": "SILVER_FIR",
    "en": {
     "title": "Going first is an advantage",
-    "text": "The AI plays against itself and seats rotate, so differences come from turn order alone. With 2 players the starting player wins 52.5 % of games. With 4 players the win rate drops from the first seat (28 %) to the last (22 %).",
+    "text": "The AI plays against itself and seats rotate, so differences come from turn order alone. With 2 players the starting player wins 52.6 % of games. With 4 players the win rate drops from the first seat to the last.",
     "label": "wins from the first : last seat",
-    "n2": "52.5 % : 48 %",
-    "n4": "28 % : 22 %"
+    "n2": "52.6 % : 48.0 %",
+    "n4": "28.4 % : 22.2 %"
    },
    "cs": {
     "title": "Kdo začíná, má výhodu",
-    "text": "AI hraje sama proti sobě a místa se střídají, takže rozdíly dělá jen pořadí tahů. Ve 2 hráčích vyhrává začínající hráč 52,5 % her. Ve 4 hráčích klesá podíl výher od prvního místa (28 %) k poslednímu (22 %).",
+    "text": "AI hraje sama proti sobě a místa se střídají, takže rozdíly dělá jen pořadí tahů. Ve 2 hráčích vyhrává začínající hráč 52,6 % her. Ve 4 hráčích klesá podíl výher od prvního místa k poslednímu.",
     "label": "výhry z prvního : posledního místa",
-    "n2": "52,5 % : 48 %",
-    "n4": "28 % : 22 %"
+    "n2": "52,6 % : 48,0 %",
+    "n4": "28,4 % : 22,2 %"
    }
   }
  ]

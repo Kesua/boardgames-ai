@@ -37,6 +37,11 @@ Six findings per game is a good number; link each to the tab where its chart is 
   own style.
 - Plain words; no jargon without explanation; short sentences.
 
+## Keep the numbers checkable
+Write a small script in the game folder that recomputes every number the notes cite from `stats.json`, rounded the way
+the site rounds, and prints a MISMATCH line for each difference (example: `games/forest_shuffle/check_notes.py`).
+Run it after every re-run of an experiment; notes with a stale number are false.
+
 ## Done when
 `notes.json` validates (the site builds and shows the findings), every number traces to stats.json, at least English
 and every language in the manifest are present.

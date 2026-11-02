@@ -336,7 +336,7 @@
   "EUROPEAN_WILDCAT": {
    "name": "Kočka divoká",
    "effect": "Vezmi si 1 kartu z mýtiny do ruky.",
-   "scoring": "1 bod za každého ptáka."
+   "scoring": "1 bod za každou kartu Okraje lesa ve tvém lese (včetně sebe)."
   },
   "COMMON_PIPISTRELLE": {
    "name": "Netopýr hvízdavý",
@@ -428,53 +428,100 @@
   "symbol": {
    "LINDEN": "Lípa",
    "OAK": "Dub",
-   "SILVER_FIR": "Jedle",
+   "SILVER_FIR": "Jedle bělokorá",
    "BIRCH": "Bříza",
    "BEECH": "Buk",
-   "SYCAMORE": "Javor",
-   "DOUGLAS_FIR": "Douglaska",
-   "HORSE_CHESTNUT": "Jírovec",
-   "ALPINE_LARCH": "Modřín",
-   "SWISS_PINE": "Limba"
+   "SYCAMORE": "Javor klen",
+   "DOUGLAS_FIR": "Douglaska tisolistá",
+   "HORSE_CHESTNUT": "Jírovec maďal",
+   "ALPINE_LARCH": "Modřín opadavý",
+   "SWISS_PINE": "Borovice limba"
+  },
+  "kind": {
+   "TREE": "Strom",
+   "SHRUB": "Keř",
+   "DWELLER": "Obyvatel (zvíře, rostlina nebo houba)"
+  },
+  "position": {
+   "TOP": "Nahoře na stromě",
+   "BOTTOM": "Dole pod stromem",
+   "LEFT_RIGHT": "Vlevo nebo vpravo od stromu"
+  },
+  "expansion": {
+   "base": "Základní hra",
+   "woodland_edge": "Okraj lesa",
+   "alpine": "Alpy"
+  },
+  "types": {
+   "PAWED_ANIMAL": "Zvíře s tlapkami",
+   "INSECT": "Hmyz",
+   "BIRD": "Pták",
+   "TREE": "Strom",
+   "CLOVENHOOFED_ANIMAL": "Sudokopytník",
+   "PLANT": "Rostlina",
+   "BUTTERFLY": "Motýl",
+   "BAT": "Netopýr",
+   "MUSHROOM": "Houba",
+   "AMPHIBIAN": "Obojživelník",
+   "SHRUB": "Keř",
+   "DEER": "Jelen"
   }
  },
  "archetypes": {
-  "LINDEN": "Lípa",
-  "OAK": "Dub",
-  "SILVER_FIR": "Jedle",
-  "BIRCH": "Bříza",
-  "BEECH": "Buk",
-  "SYCAMORE": "Javor",
-  "DOUGLAS_FIR": "Douglaska",
-  "HORSE_CHESTNUT": "Jírovec",
-  "ALPINE_LARCH": "Modřín",
-  "SWISS_PINE": "Limba",
+  "LINDEN": "Symbol lípy",
+  "OAK": "Symbol dubu",
+  "SILVER_FIR": "Symbol jedle",
+  "BIRCH": "Symbol břízy",
+  "BEECH": "Symbol buku",
+  "SYCAMORE": "Symbol javoru",
+  "DOUGLAS_FIR": "Symbol douglasky",
+  "HORSE_CHESTNUT": "Symbol jírovce",
+  "ALPINE_LARCH": "Symbol modřínu",
+  "SWISS_PINE": "Symbol limby",
   "SAPLING": "Semenáčky",
-  "MIXED": "Smíšený",
+  "MIXED": "Smíšený (bez jasného symbolu)",
   "NONE": "Žádný"
  },
  "sections": {
   "clearing_title": "Braní z mýtiny",
-  "clearing_note": "Podíl výher podle toho, kolik dobrání hráče bylo z mýtiny (odkryté karty) místo z balíčku.",
-  "clearing_x": "Podíl dobrání z mýtiny",
+  "clearing_note": "Podíl výher hráčů podle toho, kolik jejich dobrání bylo z mýtiny (odkryté karty) místo z balíčku. Počítají se jen dobrání, ne všechny tahy.",
+  "clearing_x": "Podíl dobrání hráče z mýtiny",
   "clearing_bars": "Hráči",
   "win_rate": "Podíl výher",
-  "clearing_winners": "Vítězové: podíl z mýtiny",
-  "clearing_losers": "Ostatní: podíl z mýtiny",
+  "clearing_winners": "Vítězové: podíl dobrání z mýtiny",
+  "clearing_losers": "Ostatní: podíl dobrání z mýtiny",
   "wipes_title": "Vyprázdnění mýtiny",
-  "wipes_note": "Když mýtina dosáhne 10 karet, vyprázdní se. Odvozeno z velikosti mýtiny; počítá se i Medvěd hnědý, který mýtinu přesune do jeskyně. Spouštěč je hráč, jehož akce ji naplnila.",
-  "wipes_triggered": "Způsobená vyprázdnění",
+  "wipes_note": "Když mýtina dosáhne 10 karet, všechny se odhodí. Odvozeno z velikosti mýtiny; počítá se i Medvěd hnědý, který mýtinu přesune do jeskyně. Počítá se hráči, jehož akce mýtinu naplnila.",
+  "wipes_triggered": "Kolikrát hráč mýtinu vyprázdnil",
   "players_col": "Hráči",
   "mean_rank": "Průměrné umístění",
-  "wipes_per_game": "Vyprázdnění za hru",
-  "wipes_winners": "Způsobená vítězi",
-  "wipes_losers": "Způsobená ostatními",
+  "wipes_per_game": "Vyprázdnění mýtiny za hru",
+  "wipes_winners": "Vyprázdnil vítěz, za hru",
+  "wipes_losers": "Vyprázdnil každý další hráč, za hru",
   "drivers_title": "Co dělá hru dlouhou",
-  "drivers_note": "Málo karet v balíčku na konci = zimy přišly pozdě = dlouhá hra, ať hráči dělají cokoli. Podíl rozdílů v délce hry, který vysvětlí:",
+  "drivers_note": "Hra končí, když z balíčku vyjde třetí zimní karta, a zimní karty jsou náhodně zamíchané do jeho poslední třetiny. Málo karet v balíčku na konci = zimy přišly pozdě = dlouhá hra, ať hráči dělají cokoli. Kolik rozdílů v délce hry která věc vysvětlí:",
   "drivers_x": "Karet v balíčku na konci",
-  "rounds_per_player": "Kol na hráče",
-  "r2_deck": "sám balíček (náhoda)",
-  "r2_clearing": "samo braní z mýtiny (hráči)",
-  "r2_both": "obojí"
+  "rounds_per_player": "Tahů na hráče",
+  "r2_deck": "sám zbytek balíčku na konci (náhoda)",
+  "r2_clearing": "samo braní z mýtiny (volba hráčů)",
+  "r2_both": "obojí dohromady",
+  "drivers_title_after": "Obojí se překrývá, takže se podíly nesčítají. Barva: kolik her spadá do každého políčka."
+ },
+ "optional": {
+  "effect": "efekty karet",
+  "bonus": "bonusy",
+  "trigger": "spouštěné efekty",
+  "other": "jiné volby"
+ },
+ "models": {
+  "p2-v1-7.2m": {
+   "note": "Původní AI, ponechaná pro srovnání; učila se dřív, než vznikl dnešní recept tréninku. Zkouška proti její rané kopii měla 40 nepárových her."
+  },
+  "p4-v1-6.8m": {
+   "note": "Raná AI, neprošla zkouškou: svou kopii po 1 mil. kroků porazí jen těsně (27,5 %, kde 25 % = stejná síla). AI pro 4 hráče podle dnešního receptu se učí."
+  },
+  "p2-v2fix-15m": {
+   "note": "Dnešní recept tréninku vznikl z tohoto běhu."
+  }
  }
 }

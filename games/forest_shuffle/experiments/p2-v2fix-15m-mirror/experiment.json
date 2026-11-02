@@ -21,19 +21,18 @@
     "p2-v2fix-15m": "5c51cd473c7f3e853b07c17f0b26e22d7a83ac106b0f0ac2fb702de305791020"
   },
   "card_data_sha256": {
-    "cards.json": "f99b24e3991e585b6ee42e3cc1fbed7e5ea264639863b5757d3c4ab51b2c3e85"
+    "cards.json": "501c728f4a8a1ec35a825f9c71c48cf990a4933c1ed7e701f87937d894278db3"
   },
-  "code_commit": null,
-  "requirements_lock_sha256": null,
+  "code_commit": "d302bf3148168db627a1399b07d53eb0f86bb150",
+  "requirements_lock_sha256": "111a70644b1bdc5dc9b2e8f0cd85ffa0d592f217fde2cdaf4e3b2a4a125d8836",
   "environment": {
     "os": "Windows-10-10.0.26300-SP0",
     "python": "3.10.11",
     "numpy": "2.2.6",
     "torch": "2.14.0+cu126"
   },
-  "command": "python -m bgai.experiment --game forest_shuffle --id p2-v2fix-15m-mirror --players 2 --seats p2-v2fix-15m p2-v2fix-15m --games 2000 --seed 1000",
-  "made_by": "imported from the original record file (p2_v2fix_15M_mirror_2k.jsonl, 2026-11-01T21:05:06, 2014.2 s); identical games, verified by replay",
-  "seconds": 2014.2,
+  "command": "python -m bgai.experiment --game forest_shuffle --id p2-v2fix-15m-mirror --players 2 --seats p2-v2fix-15m p2-v2fix-15m --games 2000 --seed 1000 --workers 4",
+  "seconds": 322.2,
   "schema_version": 1,
-  "created": "2026-11-01T21:38:40"
+  "created": "2026-11-02T01:15:51"
 }

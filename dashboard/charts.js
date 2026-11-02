@@ -47,7 +47,7 @@
     if (lo === hi) { lo -= 1; hi += 1; }
     const span = hi - lo, step0 = span / Math.max(1, n);
     const mag = Math.pow(10, Math.floor(Math.log10(step0)));
-    const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= step0) || step0;
+    const step = [1, 2, 5, 10].map((m) => m * mag).find((s) => s >= step0) || step0;
     const out = [];
     for (let v = Math.ceil(lo / step) * step; v <= hi + step * 1e-9; v += step) out.push(+v.toFixed(10));
     return out;
@@ -59,7 +59,7 @@
   function divergingBars(container, rows, o) {
     o = o || {};
     const W = widthOf(container), rowH = 24, top = 6, h = top + rows.length * rowH + 24;
-    const labelW = Math.min(o.labelW || 200, Math.round(W * 0.38));
+    const labelW = Math.min(o.labelW || 200, Math.round(W * (W < 500 ? 0.5 : 0.38)));   // phones: names need more of the width
     const { svg } = svgBox(container, W, h);
     const max = Math.max(1e-9, ...rows.map((r) => Math.abs(r.value) + (r.err || 0) * 0.5), o.minMax || 0);
     const anyNeg = rows.some((r) => r.value < 0), anyPos = rows.some((r) => r.value > 0);
@@ -75,19 +75,29 @@
     });
     rows.forEach((r, i) => {
       const y = top + i * rowH;
-      const t = text(svg, labelW, y + rowH / 2 + 4, r.label, "name", "end");
+      // labels that do not fit the label column are shortened (about 6.6 px per character at this font size)
+      const maxCh = Math.max(6, Math.floor((labelW - 4) / 6.2));
+      const full = String(r.label), cut = full.lastIndexOf(" · "), tail = cut > 0 ? full.slice(cut) : "", head = cut > 0 ? full.slice(0, cut) : full;
+      const lab = full.length > maxCh ? head.slice(0, Math.max(3, maxCh - tail.length - 1)) + "…" + tail : full;   // keep a " · 58 %" ending
+      const t = text(svg, labelW, y + rowH / 2 + 4, lab, "name", "end");
+      if (lab !== r.label) el("title", {}, t).textContent = r.label;
       if (r.dim) t.setAttribute("opacity", ".55");
       const v = r.value, x = v >= 0 ? x0 : x0 + (v / max) * half, w = Math.max(1.5, Math.abs(v / max) * half);
+      // a bar whose uncertainty range crosses zero is drawn pale: the effect may be nothing
+      const unclear = r.err && Math.abs(v) <= r.err;
       const bar = el("rect", { x, y: y + 5, width: w, height: rowH - 10, rx: 4, class: "mark",
-                               fill: o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", opacity: r.dim ? .45 : 1 }, svg);
+                               fill: o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", opacity: r.dim ? .45 : unclear ? .3 : 1 }, svg);
       let end = v >= 0 ? x + w : x;
       if (r.err) {
-        const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half);
-        el("line", { x1: ex1, x2: ex2, y1: y + rowH / 2, y2: y + rowH / 2, stroke: "var(--ink-3)", "stroke-width": 1, opacity: .6 }, svg);
+        const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half), cy = y + rowH / 2;
+        const wk = { stroke: "var(--ink-2)", "stroke-width": 1.5 };
+        el("line", Object.assign({ x1: ex1, x2: ex2, y1: cy, y2: cy }, wk), svg);
+        el("line", Object.assign({ x1: ex1, x2: ex1, y1: cy - 4, y2: cy + 4 }, wk), svg);
+        el("line", Object.assign({ x1: ex2, x2: ex2, y1: cy - 4, y2: cy + 4 }, wk), svg);
         end = v >= 0 ? Math.max(end, ex2) : Math.min(end, ex1);
       }
       // positive: after the bar (and its whisker); negative: on the empty side of the zero line, never over the label
-      text(svg, v >= 0 ? Math.min(end + 5, W - 40) : x0 + 6, y + rowH / 2 + 4, o.fmt ? o.fmt(v) : v, "val", "start");
+      text(svg, v >= 0 ? Math.min(end + 5, W - 48) : x0 + 6, y + rowH / 2 + 4, o.vfmt ? o.vfmt(v) : o.fmt ? o.fmt(v) : v, "val", "start");
       const hit = el("rect", { x: 0, y, width: W, height: rowH, class: "hit", tabindex: 0 }, svg);
       if (r.tip) hover(hit, r.tip);
       svg.insertBefore(hit, bar);
@@ -97,11 +107,17 @@
 
   /* Vertical bars, one series or grouped: {x:[labels], series:[{name, values, tips}], fmt, baseline, base_label} */
   function columns(container, spec) {
-    const W = widthOf(container), H = spec.height || 240, L = 46, R = 10, T = 12, B = 34;
+    const W = widthOf(container), H = (spec.height || 240) + (spec.xlabel ? 16 : 0), L = spec.ylabel ? 60 : 46, R = 10, T = 12, B = 34 + (spec.xlabel ? 16 : 0);
     const { wrap, svg } = svgBox(container, W, H);
     const all = spec.series.flatMap((s) => s.values).filter((v) => v !== null && v !== undefined);
     let lo = Math.min(0, ...all), hi = Math.max(0, ...all, spec.baseline ?? 0);
-    if (spec.diverge && spec.baseline !== undefined) { lo = Math.min(lo, spec.baseline); }
+    if (spec.diverge && spec.baseline !== undefined) {
+      // bars hang from the baseline, so the axis only needs to cover the values and the baseline
+      lo = Math.min(spec.baseline, ...all); hi = Math.max(spec.baseline, ...all);
+      // at least ±(minSpan) around the baseline, so small noisy differences also look small
+      const span = spec.minSpan || 0; lo = Math.min(lo, spec.baseline - span); hi = Math.max(hi, spec.baseline + span);
+      const pad = (hi - lo) * 0.08 || 0.05; lo = Math.max(0, lo - pad); hi = hi + pad;
+    }
     const ticks = niceTicks(lo, hi, 4);
     lo = Math.min(lo, ticks[0]); hi = Math.max(hi, ticks[ticks.length - 1]);
     const y = (v) => T + (H - T - B) * (1 - (v - lo) / (hi - lo || 1));
@@ -111,8 +127,8 @@
     const bw = Math.max(3, Math.min(42, (band - 10) / k - gap));
     spec.x.forEach((lab, i) => {
       const cx = L + band * i + band / 2;
-      const every = Math.ceil(n / Math.max(1, Math.floor((W - L - R) / 70)));
-      if (i % every === 0) text(svg, cx, H - B + 16, String(lab).length > 14 && band < 90 ? String(lab).slice(0, 12) + "…" : lab, "lab", "middle");
+      const every = spec.allLabels ? 1 : Math.ceil(n / Math.max(1, Math.floor((W - L - R) / 70)));
+      if (i % every === 0 && lab !== "") text(svg, cx, H - B + 16, String(lab).length > 14 && band < 90 ? String(lab).slice(0, 12) + "…" : lab, "lab", "middle");
       spec.series.forEach((s, j) => {
         const v = s.values[i];
         if (v === null || v === undefined) return;
@@ -120,12 +136,13 @@
         const x = cx - (k * (bw + gap)) / 2 + j * (bw + gap);
         const y1 = y(Math.max(v, base)), y2 = y(Math.min(v, base));
         const fill = spec.diverge ? (v >= base ? "var(--pos)" : "var(--neg)") : (s.color || color(j));
-        el("rect", { x, y: y1, width: bw, height: Math.max(1.5, y2 - y1), rx: 3, fill, class: "mark" }, svg);
+        el("rect", { x, y: y1, width: bw, height: Math.max(1.5, y2 - y1), rx: 3, fill, class: "mark", opacity: s.dims && s.dims[i] ? .35 : 1 }, svg);
         const hit = el("rect", { x: x - 2, y: T, width: bw + 4, height: H - T - B, class: "hit", tabindex: 0 }, svg);
         hover(hit, (s.tips && s.tips[i]) || `<b>${lab}</b><br>${s.name}: ${spec.fmt ? spec.fmt(v) : v}`);
       });
     });
-    el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), class: "zero" }, svg);
+    if (lo <= 0 && hi >= 0) el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), class: "zero" }, svg);
+    axisTitles(svg, W, H, L, R, T, B, spec);
     if (spec.baseline !== undefined && spec.baseline !== 0) {
       el("line", { x1: L, x2: W - R, y1: y(spec.baseline), y2: y(spec.baseline), stroke: "var(--ink-3)", "stroke-dasharray": "4 4" }, svg);
       if (spec.base_label) text(svg, W - R, y(spec.baseline) - 5, spec.base_label, "lab", "end");
@@ -135,13 +152,13 @@
 
   /* Lines: {series:[{name, points:[{x,y,tip,hollow}]}], xfmt, yfmt, zero, xlabel} */
   function lines(container, spec) {
-    const W = widthOf(container), H = spec.height || 260, L = 46, R = 14, T = 12, B = 36;
+    const W = widthOf(container), H = spec.height || 260, L = 46, R = 14, T = 16, B = 36;
     const { wrap, svg } = svgBox(container, W, H);
     spec.series = spec.series.map((s) => Object.assign({}, s, { points: s.points.filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y)) }))
       .filter((s) => s.points.length);
     const pts = spec.series.flatMap((s) => s.points);
     if (!pts.length) { container.innerHTML = '<p class="sub">No data.</p>'; return; }
-    let xlo = Math.min(...pts.map((p) => p.x)), xhi = Math.max(...pts.map((p) => p.x));
+    let xlo = Math.min(...pts.map((p) => p.x), spec.xmin ?? Infinity), xhi = Math.max(...pts.map((p) => p.x), spec.xmax ?? -Infinity);
     let ylo = Math.min(...pts.map((p) => p.y), spec.zero ? 0 : Infinity), yhi = Math.max(...pts.map((p) => p.y), spec.zero ? 0 : -Infinity);
     if (spec.ymin !== undefined) ylo = Math.min(ylo, spec.ymin);
     if (spec.ymax !== undefined) yhi = Math.max(yhi, spec.ymax);
@@ -176,8 +193,8 @@
 
   /* Count grid (heatmap, sequential): {xEdges, yEdges, counts[x][y], xlabel, ylabel} */
   function grid(container, spec) {
-    const W = widthOf(container), H = 300, L = 46, R = 10, T = 10, B = 40;
-    const { svg } = svgBox(container, W, H);
+    const W = widthOf(container), H = 300, L = 60, R = 10, T = 10, B = 40;
+    const { wrap, svg } = svgBox(container, W, H);
     const nx = spec.counts.length, ny = spec.counts[0].length;
     const max = Math.max(1, ...spec.counts.flat());
     const cw = (W - L - R) / nx, ch = (H - T - B) / ny;
@@ -192,6 +209,21 @@
     for (let i = 0; i <= nx; i += Math.max(1, Math.ceil(nx / 10))) text(svg, L + i * cw, H - B + 14, spec.xEdges[i], "lab", "middle");
     for (let j = 0; j <= ny; j += Math.max(1, Math.ceil(ny / 6))) text(svg, L - 6, T + (ny - j) * ch + 4, spec.yEdges[j], "lab", "end");
     text(svg, (L + W - R) / 2, H - 4, spec.xlabel, "lab", "middle");
+    axisTitles(svg, W, H, L, R, T, B, { ylabel: spec.ylabel });
+    if (spec.legendLo) {
+      const d = document.createElement("div");
+      d.className = "legend";
+      d.innerHTML = `<span>${spec.legendLo}</span>${ramp.map((c) => `<i style="background:var(${c});margin:0"></i>`).join("")}<span style="margin-left:6px">${spec.legendHi}</span>`;
+      wrap.appendChild(d);
+    }
+  }
+  /* Axis titles: x under the tick labels, y rotated along the left edge. */
+  function axisTitles(svg, W, H, L, R, T, B, spec) {
+    if (spec.xlabel) text(svg, (L + W - R) / 2, H - 4, spec.xlabel, "lab", "middle");
+    if (spec.ylabel) {
+      const tt = text(svg, 0, 0, spec.ylabel, "lab", "middle");
+      tt.setAttribute("transform", `translate(12 ${(T + H - B) / 2}) rotate(-90)`);
+    }
   }
 
   function legend(wrap, items) {

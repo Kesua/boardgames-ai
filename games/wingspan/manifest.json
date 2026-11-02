@@ -13,10 +13,12 @@
     "cs": "Hráči lákají ptáky do tří prostředí — lesa, louky a mokřadu. Každý zahraný pták posílí svou řadu: získání potravy, kladení vajec i dobírání karet dává víc, čím je řada plnější, a mnoho ptáků přidá schopnost. Hra má vždy 4 kola a v každém o tah méně (8, 7, 6, 5), takže se počítá každá akce."
   },
   "terms": {
-    "en": {"item": "bird", "items": "birds", "board": "player mat", "boards": "player mats", "archetype": "main habitat",
-           "archetypes": "main habitats", "round": "round"},
-    "cs": {"item": "pták", "items": "ptáci", "board": "hrací deska", "boards": "hrací desky", "archetype": "hlavní prostředí",
-           "archetypes": "hlavní prostředí", "round": "kolo"}
+    "en": {"item": "bird", "items": "birds", "items_acc": "birds", "items_gen": "birds", "board": "player mat", "boards": "player mats",
+           "boards_gen": "player mats", "in_own_board": "on their final player mat", "all_items": "all birds",
+           "archetype": "main habitat", "archetypes": "main habitats", "round": "round"},
+    "cs": {"item": "pták", "items": "ptáci", "items_acc": "ptáky", "items_gen": "ptáků", "board": "hrací deska", "boards": "hrací desky",
+           "boards_gen": "hracích desek", "in_own_board": "na své hrací desce", "with_it": "s ním", "it_acc": "ho", "all_items": "všichni ptáci",
+           "archetype": "hlavní prostředí", "archetypes": "hlavní prostředí", "round": "kolo"}
   },
   "tags": {"habitat": {"en": "Habitat", "cs": "Prostředí"}, "nest": {"en": "Nest", "cs": "Hnízdo"},
            "power": {"en": "Power colour", "cs": "Barva schopnosti"}},
