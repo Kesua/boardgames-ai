@@ -93,6 +93,8 @@ def check_report(g: Path, players: list) -> list:
         out.append(f"{name}: checks/report.json has fewer than {MIN_CHECK_GAMES:,} games for player count(s) {', '.join(short)}")
     if not rep.get("code_commit"):
         out.append(f"{name}: checks/report.json lacks code_commit (rerun python -m bgai.checks)")
+    elif rep["code_commit"].endswith("-dirty"):
+        out.append(f"{name}: checks/report.json was made with uncommitted engine changes; commit them and rerun")
     else:
         changed = engine_changed_since(name, rep["code_commit"])
         if changed is None:

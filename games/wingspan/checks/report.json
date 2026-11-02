@@ -1,14 +1,20 @@
 {
   "game": "wingspan",
+  "code_commit": "d302bf3148168db627a1399b07d53eb0f86bb150",
   "games_per_player_count": {
-    "2": 2500,
-    "3": 2500,
-    "4": 2500,
-    "5": 2500
+    "2": 10000,
+    "3": 10000,
+    "4": 10000,
+    "5": 10000
   },
   "problems": [],
   "problem_count": 0,
-  "seconds": 181.8,
+  "seconds": 985.9,
+  "greedy_vs_random": {
+    "players": 2,
+    "games": 40,
+    "win": 0.95
+  },
   "checks": [
     "ends",
     "legal",
@@ -16,6 +22,8 @@
     "clone",
     "scores",
     "records",
+    "encoder",
+    "direction",
     "invariants"
   ]
 }

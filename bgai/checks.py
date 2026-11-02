@@ -145,10 +145,24 @@ def check_direction(spec, players: int, games: int = 40) -> tuple:
     return rate, problems
 
 
+def engine_commit(slug: str):
+    """The commit the checked engine comes from; "<commit>-dirty" when engine files have uncommitted changes."""
+    import subprocess
+    from .experiment import code_commit
+    commit = code_commit()
+    r = subprocess.run(["git", "status", "--porcelain", "--", f"games/{slug}", "bgai/kit", "bgai/game.py"], cwd=ROOT,
+                       capture_output=True, text=True)
+    changed = [l[3:] for l in r.stdout.splitlines()
+               if not any(x in l for x in ("/tests/", "/checks/", "/models/", "/experiments/", "/i18n/", "notes.json",
+                                           "manifest.json", ".md"))]
+    return f"{commit}-dirty" if commit and changed else commit
+
+
 def run(slug: str, games: int, players: list) -> dict:
     from .game import load_spec
     spec = load_spec(slug)
     players = players or list(spec.players)
+    commit = engine_commit(slug)
     t0 = time.time()
     problems, counts = [], {}
     for p in players:
@@ -163,8 +177,7 @@ def run(slug: str, games: int, players: list) -> dict:
         counts[str(p)] = n
     rate, direction = check_direction(spec, min(players))
     problems += direction
-    from .experiment import code_commit
-    report = {"game": slug, "code_commit": code_commit(), "games_per_player_count": counts, "problems": problems[:200],
+    report = {"game": slug, "code_commit": commit, "games_per_player_count": counts, "problems": problems[:200],
               "problem_count": len(problems), "seconds": round(time.time() - t0, 1),
               "greedy_vs_random": {"players": min(players), "games": 40, "win": rate},
               "checks": ["ends", "legal", "seed", "clone", "scores", "records", "encoder", "direction"]
