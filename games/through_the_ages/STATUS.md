@@ -97,7 +97,41 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
         change (Trade Routes Agreement). Ruined wonders also count for International Tourism and United Nations
         (F10, D28); Columbus / Suez Canal colonizations record the territory (F13). Details: checks/review.md.
   - [ ] checks/report.json over 10,000 games per player count on the current engine
-- [ ] design-rl: encoder, greedy, smoke training learns
+- [x] design-rl (2026-11-02): encoder, greedy, smoke training learns
+  - Encoder version 1 (older versions dropped, no model existed): 3,385 / 3,705 / 4,025 floats for 2 / 3 / 4 players
+    (global 1,427 incl. 13 row slots x 47 = take cost for the decider, discard flag and 45 printed card features;
+    decision 651 incl. the card concerned + its features and the decider-only candidate vector; own 667; per player
+    320, decider first then clockwise; static card features precomputed once). ~0.15 / 0.2 ms per observation (2p / 4p).
+    Hiding tests unchanged and green; `tests/test_learning.py` pins sizes, range, row slots, decision context.
+  - Greedy: plays each answer out to the end of the turn in a clone (completion steps by best value, depth 2; rest of
+    the turn: end/pass), value = own position value - best other's (agents.py docstring). Paired seats, seeds 5000+:
+    2p vs random 0.995 +- 0.005 (200 games, score 182 vs 16); 2p vs old greedy 0.990 +- 0.007 (200 games, 218 vs 93);
+    4p vs random 1.000 (120 games, 349 vs 59; old greedy: 0.942, 198 vs 68); 4p vs old greedy 0.975 +- 0.014
+    (120 games, 398 vs 238). Mirror scores: new 166 (2p), old 105. Speed (one process): 1.6 s per 2p greedy-mirror
+    game (old 1.1 s), 8.4 s per 4p mirror game (~2 s of thinking per seat). `bgai.checks --games 300 --no-write`:
+    0 problems, greedy beats random 40/40.
+  - Smoke run (2p, `--timesteps 1000000 --chunk 200000 --envs 8 --eval-workers 3`, runs/through_the_ages/smoke):
+
+    | steps | games | win_vs_random | win_vs_greedy (40 g) | win_vs_anchor |
+    |---|---|---|---|---|
+    | 200k | 983 | 0.925 | 0.000 | |
+    | 400k | 1,854 | 0.950 (random retired) | 0.025 | |
+    | 600k | 2,688 | | 0.125 | |
+    | 800k | 3,510 | | 0.225 | 0.500 |
+    | 1M | 4,330 | | 0.300 | 0.650 |
+
+    Paired h2h vs greedy, 150 deals (300 games): ppo_200000 0.010 +- 0.006 (margin -135), ppo_1000000 0.187 +- 0.023
+    (margin -52): +0.177, 7.4 standard errors. Pass (random > 0.9 at 200k; greedy gain > 2 SE).
+  - Throughput (22 cores, CUDA update; a `bgai.checks` job ran in parallel): `--envs 8`: 7.3M learned steps/h
+    (31,700 games/h, ~230 learned decisions per 2p game, rising as play improves), 5.9M/h with evaluation.
+    `--envs 16 --eval-workers 4` (400k-step runs): 2p 10.0M steps/h (46,000 games/h), 4p 9.6M steps/h (15,300
+    games/h, ~630 decisions per game); 4p evaluation is slow (greedy games ~8 s; 1.4 min per chunk with 40 greedy games).
+    Model-vs-model paired games: ~0.3 s (2p) / ~1.1 s (4p) per game per evaluation worker.
+  - Budget estimate (train-model recipe, `--chunk 500000`, `--envs 16 --eval-workers 4`): 2p ~7.5M steps/h open,
+    ~6M/h anchored (750-deal reference) -> 40M open in ~5.5 h + 30M anchored in ~5 h; ~150M steps would fit in 24 h.
+    4p: ~4.7M/h open, ~2.3M/h anchored with the default 750 reference deals (3,000 games per evaluation); with
+    `--greedy-games 8 --reference-deals 250` ~5.7M/h open and ~4M/h anchored -> ~100M steps in 24 h (40M open ~7 h,
+    30M anchored ~7.5 h).
 - [ ] train-model: open run, anchored run, acceptance -> finished model
 - [ ] run-experiment: mirror (+ versus) per player count, --verify passes
 - [ ] write-notes: notes.json (en + other languages)

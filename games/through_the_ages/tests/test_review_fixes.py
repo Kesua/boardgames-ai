@@ -8,8 +8,8 @@ from games.through_the_ages import effects
 from games.through_the_ages import engine as En
 from games.through_the_ages import military as M
 from games.through_the_ages import politics as P
-from games.through_the_ages.cards import EFFECT, KEY, N_CARDS, SCIENCE_COST, STAGE_COSTS
-from games.through_the_ages.encoder import M_INDEX, N_MIL, StateEncoder
+from games.through_the_ages.cards import EFFECT, KEY, SCIENCE_COST, STAGE_COSTS
+from games.through_the_ages.encoder import M_INDEX, StateEncoder
 from games.through_the_ages.tests.conftest import (answer, cid, give, has, kind, options, place, reveal_now, run_now,
                                                    touch)
 from games.through_the_ages.tests.test_cards_civil import complete, game, hand, lead, own_action, play, res, st
@@ -261,7 +261,7 @@ def test_f12_nostradamus_does_not_learn_the_order_after_the_future_deck_is_shuff
     assert {e[0] for e in g.s.current_events} == {e1, e2}
     enc = StateEncoder(3)
     v = enc.encode(g, q)
-    known = enc.global_size + enc.context_size + 3 * N_CARDS + N_MIL
+    known = enc.known_offset
     assert v[known + M_INDEX[e1]] == v[known + M_INDEX[e2]] == 0.5
     h = g.clone()
     h.s.current_events.reverse()
