@@ -13,9 +13,9 @@ and a pull request a maintainer can review in minutes because every claim points
 1. `python -m pytest -q`, `python tools/check_repo.py`, `python tools/sync_skills.py --check` all pass.
 2. `python tools/build_site.py`; open every tab of the game in a browser (light and dark, phone width). Fix anything
    broken or unclear.
-3. `games/<slug>/RIGHTS.md`: publisher, designer, what is and is not in the repository, removal process.
+3. `games/<slug>/RIGHTS.md`: publisher, designer, what is and is not in the repository.
 4. Draft the publisher notice (do **not** send it yourself — a human sends it and records date and reply in
-   RIGHTS.md):
+   STATUS.md):
    > Subject: Fan research project about <Game>
    > Hello, we run boardgames.ai, an open-source, non-commercial research project in which AI agents learn board
    > games and publish which cards and strategies win (https://…). We added <Game>: the repository contains the rules
@@ -32,7 +32,7 @@ and a pull request a maintainer can review in minutes because every claim points
    - Model: models/<id>/model.json (strength card: finished yes/no)
    - Experiments: experiments/<ids> (--verify 20 matches)
    - Notes: notes.json (languages)
-   - Rights: RIGHTS.md (notice drafted / sent on …)
+   - Rights: RIGHTS.md; publisher notice drafted / sent on … (STATUS.md)
    ```
 
 ## Done when

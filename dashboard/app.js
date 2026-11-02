@@ -419,7 +419,10 @@
   // ------------------------------------------------------------------ discoveries
   function vDiscoveries(view, { g, srcs, exps }) {
     const m = g.manifest;
+    // games the AI played against itself while learning (from the model card of the AI in the first seat)
+    const learnGames = srcs.map((src) => ((g.models[((g.experiments[src.exp] || {}).seats || [])[0]] || {}).games));
     const tiles = [
+      ...(learnGames.every((v) => v) ? [[t("t_learn_games"), learnGames, int]] : []),
       [t("t_games"), exps.map((e) => e.meta.games), int],
       [t("t_boards"), exps.map((e) => e.meta.boards), int],
       [t("t_winner"), exps.map((e) => e.meta.winner_score), (v) => num(v, 0)]];
@@ -476,7 +479,7 @@
     const models = parts.filter((w) => w.model);
     const base = parts.filter((w) => !w.model);
     const out = [];
-    if (models.length) out.push(t("how_learn", { list: models.map((w) => t("how_learn_one", { steps: w.steps ? fmtSteps(w.steps) : "?", players: t("n_players", { n: w.players }), who: w.label })).join("; ") }));
+    if (models.length) out.push(t("how_learn", { list: models.map((w) => t((g.models[w.id] || {}).games ? "how_learn_games" : "how_learn_one", { steps: w.steps ? fmtSteps(w.steps) : "?", games: int((g.models[w.id] || {}).games), players: t("n_players", { n: w.players }), who: w.label })).join("; ") }));
     if (base.length) out.push(t("how_learn_base", { who: base.map((w) => w.label.toLowerCase()).join(", ") }));
     return out.join(" ");
   }
