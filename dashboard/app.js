@@ -73,6 +73,21 @@
     const day = S.lang === "cs" ? `${d}. ${mo}. ${m[1]}` : `${d} ${t("month_" + mo)} ${m[1]}`;
     return m[4] ? `${day}, ${m[4]}` : day;
   }
+  /* The game's name, in Czech etc. with its local title: "Wingspan (česky Na křídlech)" (manifest name_local). */
+  const gameName = (m) => m.name + ((m.name_local || {})[S.lang] ? ` (${t("name_local", { name: m.name_local[S.lang] })})` : "");
+  /* Every item exists once (one card per item): "copies" mean nothing, so per-copy wording and columns are dropped. */
+  function unique(g) {
+    if (g._unique === undefined) g._unique = Object.entries(g.catalog.items || {}).every(([k, it]) => (it.cards || [k]).length === 1
+      && (((g.catalog.cards || {})[(it.cards || [k])[0]] || {}).count || 1) === 1);
+    return g._unique;
+  }
+  const pointsLabel = (g) => t(unique(g) ? "points_per_unique" : "points_per");
+  /* Food cost from a catalog "food" object {type: n} (+ wild, alternative): "1× fish + 1× seed" or "fish or seed". */
+  function foodText(g, it) {
+    const alt = it.alternative, parts = Object.entries(it.food).map(([k, n]) => (alt ? "" : n + "× ") + tagName(g, "food", k));
+    if (it.wild) parts.push(it.wild + "× " + tagName(g, "food", "wild"));
+    return parts.length ? parts.join(alt ? " " + t("or") + " " : " + ") : "0";
+  }
   /* "?" next to a measure: opens its line on the How to read page. */
   const help = (k) => `<a class="qlink" href="#/how?t=${k}" title="${esc(t(k + "_d"))}" aria-label="${esc(t("what_is", { x: t(k) }))}">?</a>`;
 
@@ -373,7 +388,7 @@
         `<button type="button" data-q="v" data-v="${v}" class="${(r.q.v || "") === v ? "on" : ""}">${esc(lab)}</button>`).join("")}</div>` : ""}
     </div>` : "";
     main.innerHTML = `<section class="ghead"><div class="title"><span class="emoji" style="font-size:30px" aria-hidden="true">${esc((m.theme || {}).emoji || "")}</span>
-        <div><div class="eyebrow">${esc([m.publisher, m.year, m.designer].filter(Boolean).join(" · "))}</div><h1 style="font-size:clamp(26px,3.6vw,36px)">${esc(m.name)}</h1></div></div></section>
+        <div><div class="eyebrow">${esc([m.publisher, m.year, m.designer].filter(Boolean).join(" · "))}</div><h1 style="font-size:clamp(26px,3.6vw,36px)">${esc(gameName(m))}</h1></div></div></section>
       <nav class="tabs" aria-label="${esc(t("sections"))}">${tabs.map(([k, lab]) => `<a href="${link(g.slug, k)}" class="${r.tab === k ? "on" : ""}">${esc(lab)}</a>`).join("")}</nav>
       ${filters}${["lab", "compare"].includes(r.tab) ? "" : tentNote(g, srcs)}<div id="view"></div>`;
     main.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
@@ -391,7 +406,7 @@
     const m = g.manifest;
     const tab = r.tab === "lab" ? "lab" : "discoveries";
     main.innerHTML = `<section class="ghead"><div class="title"><span class="emoji" style="font-size:30px" aria-hidden="true">${esc((m.theme || {}).emoji || "")}</span>
-        <div><div class="eyebrow">${esc([m.publisher, m.year, m.designer].filter(Boolean).join(" · "))}</div><h1 style="font-size:clamp(26px,3.6vw,36px)">${esc(m.name)}</h1></div></div></section>
+        <div><div class="eyebrow">${esc([m.publisher, m.year, m.designer].filter(Boolean).join(" · "))}</div><h1 style="font-size:clamp(26px,3.6vw,36px)">${esc(gameName(m))}</h1></div></div></section>
       <nav class="tabs"><a href="${link(g.slug, "discoveries")}" class="${tab === "discoveries" ? "on" : ""}">${esc(t("tab_discoveries"))}</a>
         <a href="${link(g.slug, "lab")}" class="${tab === "lab" ? "on" : ""}">${esc(t("tab_lab"))}</a></nav><div id="view"></div>`;
     const view = $("#view");
@@ -487,7 +502,7 @@
     const seenP = new Set();   // one number per player count (side by side shows the same count twice)
     const nums = srcs.filter((s) => !seenP.has(s.players) && seenP.add(s.players)).map((s) => [s, x["n" + s.players]]).filter(([, v]) => v && v !== "–");
     return `<article class="card finding"><h3>${esc(x.title)}</h3>
-      ${nums.length ? `<div class="nums">${nums.map(([s, v]) => `<div><b>${esc(v)}</b><span>${esc(t("n_players", { n: s.players }))}${tentative(g, s) ? ` · <em class="warn-ink">${esc(t(srcInfo(g, s).role === "original" ? "pill_original" : srcInfo(g, s).role === "baseline" ? "pill_baseline" : "pill_tentative"))}</em>` : ""}</span></div>`).join("")}</div>` : ""}
+      ${nums.length ? `<div class="nums">${nums.map(([s, v]) => `<div><b>${esc(v)}${String(v).includes(t("pp")) ? " " + help("g_pp") : ""}</b><span>${esc(t("n_players", { n: s.players }))}${tentative(g, s) ? ` · <em class="warn-ink">${esc(t(srcInfo(g, s).role === "original" ? "pill_original" : srcInfo(g, s).role === "baseline" ? "pill_baseline" : "pill_tentative"))}</em>` : ""}</span></div>`).join("")}</div>` : ""}
       <p class="sub">${esc(x.label || "")}</p><p>${esc(x.text)}</p>${x.before ? `<p class="before">${esc(x.before)}</p>` : ""}
       ${f.link ? `<a href="${notesLink(g, f)}">${esc(t("show_chart"))} →</a>` : ""}</article>`;
   }
@@ -507,7 +522,9 @@
       const q = { p: String(s.players), v: s.variant === "old" ? "old" : "" };
       if (best) cards.push([t("auto_best"), itemName(g, best.item), t("auto_lift", { lift: pp(best.win_lift), share: pct(best.presence_rate, 0) }), lab, link(g.slug, "items", best.item, q), tent]);
       if (worst) cards.push([t("auto_worst"), itemName(g, worst.item), t("auto_lift", { lift: pp(worst.win_lift), share: pct(worst.presence_rate, 0) }), lab, link(g.slug, "items", worst.item, q), tent]);
-      if (first) cards.push([t("auto_first"), pct(first.win_rate, 1), t("auto_first_sub", { base: pct(e.meta.baseline_win_rate, 1) }), lab, link(g.slug, "strategy", null, q), tent]);
+      // within chance: the first seat's difference from the average player is inside 2 standard errors (n = seats)
+      const chance = first && Math.abs(first.win_rate - e.meta.baseline_win_rate) <= 2 * Math.sqrt(first.win_rate * (1 - first.win_rate) / first.seats);
+      if (first) cards.push([t("auto_first"), pct(first.win_rate, 1), t("auto_first_sub", { base: pct(e.meta.baseline_win_rate, 1) }) + (chance ? "; " + t("auto_first_chance") : ""), lab, link(g.slug, "strategy", null, q), tent]);
     });
     if (!cards.length) return "";
     return `<h3 style="margin-top:22px">${esc(t("auto_h"))}</h3><p class="sub">${esc(t("auto_sub", { n: "" }))}</p>
@@ -519,7 +536,7 @@
   // ------------------------------------------------------------------ strategy
   function liftRows(g, e, list) {
     return list.map((r) => ({ label: `${itemName(g, r.item)} · ${pct(r.presence_rate, 0)}`, value: r.win_lift, err: 2 * (r.win_lift_se || 0),
-      tip: `<b>${esc(itemName(g, r.item))}</b><br>${esc(t("win_lift"))}: ${pp(r.win_lift)} (± ${pp(2 * (r.win_lift_se || 0)).replace(/^[+−]/, "")})<br>${esc(t("tip_win", { win: pct(r.win_rate, 1), base: pct(e.meta.baseline_win_rate, 1) }))}<br>${esc(t("presence"))}: ${pct(r.presence_rate, 0)} ${esc(t("of_boards"))}<br>${esc(t("points_per"))}: ${ppcText(e, r)}${noPoints(e, r) ? ` (${esc(t("points_none"))})` : ""}${r.winner_edge !== null && r.winner_edge !== undefined ? `<br>${esc(t("winner_edge"))}: ${signed(r.winner_edge)}` : ""}` }));
+      tip: `<b>${esc(itemName(g, r.item))}</b><br>${esc(t("win_lift"))}: ${pp(r.win_lift)} (± ${pp(2 * (r.win_lift_se || 0)).replace(/^[+−]/, "")})<br>${esc(t("tip_win", { win: pct(r.win_rate, 1), base: pct(e.meta.baseline_win_rate, 1) }))}<br>${esc(t("presence"))}: ${pct(r.presence_rate, 0)} ${esc(t("of_boards"))}<br>${esc(pointsLabel(g))}: ${ppcText(e, r)}${noPoints(e, r) ? ` (${esc(t("points_none"))})` : ""}${!unique(g) && r.winner_edge !== null && r.winner_edge !== undefined ? `<br>${esc(t("winner_edge"))}: ${signed(r.winner_edge)}` : ""}` }));
   }
   function vStrategy(view, { g, srcs, exps }) {
     const notes = (g.notes && g.notes.experiments) || {};
@@ -572,7 +589,8 @@
     const cat = g.catalog.items || {};
     const tagKinds = Object.keys(g.manifest.tags || {});
     const nRare = e.items.filter((r) => r.boards_with < min).length;
-    view.innerHTML = `<div class="spread"><div><h2>${esc(t("Tc:items"))} · ${srcHead(g, s)}</h2><p class="sub">${esc(t("items_expl", { n: e.items.length }))} ${help("g_lift")}</p></div>
+    const edge = !unique(g), ncol = edge ? 6 : 5;
+    view.innerHTML = `<div class="spread"><div><h2>${esc(t("Tc:items"))} · ${srcHead(g, s)}</h2><p class="sub">${esc(t("items_expl", { n: int(e.items.length) + (g.manifest.items_note ? ` (${L(g.manifest.items_note)})` : "") }))} ${help("g_lift")}</p></div>
       <div class="row"><input type="search" id="q" placeholder="${esc(t("search"))}" aria-label="${esc(t("search"))}">
       ${tagKinds.length ? `<select id="tagf" aria-label="${esc(t("filter"))}">${tagKinds.map((k) => {
         const vals = [...new Set(Object.values(cat).flatMap((it) => (it.tags && it.tags[k]) || []))].sort((a, b) => tagName(g, k, a).localeCompare(tagName(g, k, b)));
@@ -581,8 +599,8 @@
       <div class="table-wrap" style="margin-top:12px"><table class="items"><thead><tr>
         <th>${esc(t("Tc:item"))}</th><th class="num sort" data-k="win_lift">${esc(t("win_lift"))} ${help("g_lift")}</th>
         <th class="num sort" data-k="presence_rate">${esc(t("presence"))} ${help("g_presence")}</th>
-        <th class="num sort" data-k="points_per_copy">${esc(t("points_per"))} ${help("g_points")}</th>
-        <th class="num sort" data-k="winner_edge">${esc(t("winner_edge"))} ${help("g_edge")}</th><th class="num sort" data-k="boards_with">${esc(t("boards_with"))}</th>
+        <th class="num sort" data-k="points_per_copy">${esc(pointsLabel(g))} ${help("g_points")}</th>
+        ${edge ? `<th class="num sort" data-k="winner_edge">${esc(t("winner_edge"))} ${help("g_edge")}</th>` : ""}<th class="num sort" data-k="boards_with">${esc(t("boards_with"))}</th>
       </tr></thead><tbody id="rows"></tbody></table></div><p class="sub" style="margin-top:8px">${esc(t("grey_note", { n: int(min) }))}</p>`;
     let key = "win_lift", dir = -1, open = false;
     view.querySelectorAll("th .qlink").forEach((a) => a.addEventListener("click", (ev) => ev.stopPropagation()));
@@ -598,14 +616,14 @@
       const max = Math.max(1e-9, ...e.items.filter((r) => r.boards_with >= min).map((r) => Math.abs(r.win_lift)));
       const row = (r, dim) => `<tr class="${dim ? "dim" : ""}">
         <td class="namecell"><a href="${link(g.slug, "items", r.item)}">${esc(itemName(g, r.item))}</a></td>
-        <td class="num">${pp(r.win_lift)} ${dim ? `<span class="minibar none"></span>` : `<span class="minibar" style="width:${Math.max(2, Math.round(40 * Math.min(1, Math.abs(r.win_lift) / max)))}px;background:${r.win_lift >= 0 ? "var(--pos)" : "var(--neg)"};opacity:${Math.abs(r.win_lift) > 2 * (r.win_lift_se || 0) ? 1 : 0.35}"></span>`}</td>
+        <td class="num">${pp(r.win_lift)} ${dim ? `<span class="minibar none"></span>` : `<span class="minibar${Math.abs(r.win_lift) > 2 * (r.win_lift_se || 0) ? "" : " pale"}" style="width:${Math.max(2, Math.round(40 * Math.min(1, Math.abs(r.win_lift) / max)))}px;--c:${r.win_lift >= 0 ? "var(--pos)" : "var(--neg)"}"></span>`}</td>
         <td class="num">${pct(r.presence_rate, 0)}</td>
-        <td class="num"${noPoints(e, r) ? ` title="${esc(t("points_none"))}"` : ""}>${ppcText(e, r)}</td><td class="num">${signed(r.winner_edge)}</td><td class="num">${int(r.boards_with)}</td></tr>`;
+        <td class="num"${noPoints(e, r) ? ` title="${esc(t("points_none"))}"` : ""}>${ppcText(e, r)}</td>${edge ? `<td class="num">${signed(r.winner_edge)}</td>` : ""}<td class="num">${int(r.boards_with)}</td></tr>`;
       const showRare = open || q || tf;
       $("#rows").innerHTML = (ok.map((r) => row(r, false)).join("")
-        + (rare.length ? `<tr class="group"><td colspan="6"><button type="button" class="linkbtn" id="rare-btn" aria-expanded="${showRare ? "true" : "false"}">${esc(t(showRare ? "rare_hide" : "rare_show", { n: rare.length, min: int(min) }))}</button></td></tr>` : "")
+        + (rare.length ? `<tr class="group"><td colspan="${ncol}"><button type="button" class="linkbtn" id="rare-btn" aria-expanded="${showRare ? "true" : "false"}">${esc(t(showRare ? "rare_hide" : "rare_show", { n: rare.length, min: int(min) }))}</button></td></tr>` : "")
         + (showRare ? rare.map((r) => row(r, true)).join("") : ""))
-        || `<tr><td colspan="6" class="muted">${esc(t("no_match"))}</td></tr>`;
+        || `<tr><td colspan="${ncol}" class="muted">${esc(t("no_match"))}</td></tr>`;
       const rb = $("#rare-btn");
       if (rb) rb.addEventListener("click", () => { open = !open; draw(); });
       void nRare;
@@ -629,8 +647,12 @@
     if (!st) return ["none", t("verdict_never")];
     if (st.boards_with < min) return ["none", t("verdict_rare", { n: int(st.boards_with), min: int(min) })];
     const err = 2 * (st.win_lift_se || 0);
+    // under 3 standard errors: among many compared items one or two such results are expected by chance
+    const maybe = Math.abs(st.win_lift) < 1.5 * err, rare = st.presence_rate < 0.15;
+    if (maybe && st.win_lift - err > 0) return ["pos", t("verdict_pos_maybe")];
+    if (maybe && st.win_lift + err < 0) return ["neg", t("verdict_neg_maybe") + (rare ? " " + t("verdict_rare_hint") : "")];
     if (st.win_lift - err > 0.02) return ["pos", t("verdict_pos")];
-    if (st.win_lift + err < -0.02) return ["neg", t(st.presence_rate < 0.15 ? "verdict_neg_rare" : "verdict_neg")];
+    if (st.win_lift + err < -0.02) return ["neg", t(rare ? "verdict_neg_rare" : "verdict_neg")];
     if (st.win_lift - err > 0) return ["pos", t("verdict_pos_small")];
     if (st.win_lift + err < 0) return ["neg", t("verdict_neg_small")];
     return ["none", t("verdict_none")];
@@ -640,7 +662,7 @@
     const key = r.item;
     const cat = (g.catalog.items || {})[key] || {};
     const attrs = (g.manifest.item_attributes || []).filter((a) => cat[a] !== undefined && cat[a] !== null && !(Array.isArray(cat[a]) && !cat[a].length));
-    const fmtAttr = (a, v) => Array.isArray(v) ? v.map((x) => tagName(g, a, x)).join(", ") : typeof v === "boolean" ? (v ? t("yes") : t("no")) : (typeof v === "string" ? tagName(g, a, v) : v);
+    const fmtAttr = (a, v) => a.startsWith("food") && cat.food && typeof cat.food === "object" ? foodText(g, cat) : Array.isArray(v) ? v.map((x) => tagName(g, a, x)).join(", ") : typeof v === "boolean" ? (v ? t("yes") : t("no")) : (typeof v === "string" ? tagName(g, a, v) : v);
     const desc = describeItem(g, key);
     let html = `<p><a href="${link(g.slug, "items")}">← ${esc(t("all_items"))}</a></p>
       <div class="card" style="margin-top:10px"><h2>${esc(itemName(g, key))}</h2>
@@ -655,8 +677,8 @@
         <p class="verdict ${vk}">${esc(vtext)}</p>${st && st.boards_with >= minBoards(e) ? `
         <div class="kv" style="margin-top:10px"><div><b>${pp(st.win_lift)}</b><span>${esc(t("win_lift"))} ${help("g_lift")}</span></div>
         <div><b>${pct(st.presence_rate, 0)}</b><span>${esc(t("presence"))} ${help("g_presence")}</span></div>
-        <div><b>${ppcText(e, st)}</b><span>${esc(t("points_per"))} ${help("g_points")}${noPoints(e, st) ? `<br>${esc(t("points_none"))}` : ""}</span></div>
-        <div><b>${signed(st.winner_edge)}</b><span>${esc(t("winner_edge"))} ${help("g_edge")}</span></div></div>
+        <div><b>${ppcText(e, st)}</b><span>${esc(pointsLabel(g))} ${help("g_points")}${noPoints(e, st) ? `<br>${esc(t("points_none"))}` : ""}</span></div>
+        ${unique(g) ? "" : `<div><b>${signed(st.winner_edge)}</b><span>${esc(t("winner_edge"))} ${help("g_edge")}</span></div>`}</div>
         <p class="sub" style="margin-top:8px">${esc(t("profile_expl", { win: pct(st.win_rate, 2), base: pct(e.meta.baseline_win_rate, 2), lift: pp(st.win_lift, 2), err: pp(2 * (st.win_lift_se || 0)).replace(/^[+−]/, ""), n: int(st.boards_with) }))}</p>`
         : ""}
         <div id="fate-${i}"></div>
@@ -676,7 +698,7 @@
       const host = $("#fate-" + i);
       if (tot.some((v) => v)) {
         host.innerHTML = `<h3 style="margin-top:14px">${esc(t("fate_h"))}</h3><p class="sub">${esc(t("fate_expl", { games: int(e.meta.games), n: copies ? int(copies) : "–" }))} ${esc(L(g.manifest.fate_note))}</p><div class="plot"></div>`;
-        C.columns(host.querySelector(".plot"), { x: fateNames.map((k) => L((g.manifest.fate_labels || {})[k]) || k), series: [{ name: t("cards_n"), values: tot }], fmt: (v) => num(v, 2), tickFmt: (v) => num(v, 1), height: 190, ylabel: t("cards_n"), allLabels: true });
+        C.columns(host.querySelector(".plot"), { x: fateNames.map((k) => L((g.manifest.fate_labels || {})[k]) || k), series: [{ name: t("cards_n"), values: tot }], fmt: (v) => num(v, 2), tickFmt: (v, d) => num(v, Math.max(1, d || 0)), height: 190, ylabel: t("cards_n"), allLabels: true });
       }
       if (e.length && $("#len-" + i)) {
         const bins = Object.fromEntries(e.length.bins.map((b) => [b.bin, b]));
@@ -717,7 +739,7 @@
       }).join("")}</div>`;
     } else {
       body = Object.keys(byGroup).map((gk) => `<div class="mat-row" style="margin-top:6px"><div class="rh">${esc(tagName(g, "habitat", gk))}</div>
-        ${[0, 1, 2, 3, 4].map((c) => { const x = byGroup[gk].find((y) => y.slot === c); return x ? `<div class="slot filled"><div class="sn">${esc(itemName(g, x.item))}</div>
+        ${[0, 1, 2, 3, 4].map((c) => { const x = byGroup[gk].find((y) => y.slot === c); return x ? `<div class="slot filled"><div class="sn"${(gi18n(g).items || {})[x.item] ? "" : ' lang="en"'}>${esc(itemName(g, x.item))}</div>
           <div class="sd">${int(x.points)} ${esc(t("points_short"))}${x.tags && x.tags.eggs ? ` · ${x.tags.eggs} 🥚` : ""}${x.tags && x.tags.tucked ? ` · ${x.tags.tucked} ${esc(t("tucked_short"))}` : ""}${x.tags && x.tags.cache ? ` · ${x.tags.cache} ${esc(t("cache_short"))}` : ""}</div></div>` : `<div class="slot"></div>`; }).join("")}</div>`).join("");
     }
     return `<div class="card flat">${head}<div style="margin-top:8px">${body}</div></div>`;

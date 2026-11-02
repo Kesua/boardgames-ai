@@ -29,6 +29,14 @@
    "forest": "Forest",
    "grassland": "Grassland",
    "wetland": "Wetland"
+  },
+  "food": {
+   "invertebrate": "invertebrate",
+   "seed": "seed",
+   "fish": "fish",
+   "fruit": "fruit",
+   "rodent": "rodent",
+   "wild": "any food"
   }
  },
  "archetypes": {
@@ -52,7 +60,7 @@
   "bonus_cards_winners": "Bonus cards held by winners",
   "bonus_cards_others": "Bonus cards held by others",
   "goals_title": "Round goals",
-  "goals_note": "Points from the end-of-round goal in each round: winners against the others (green board: 1st/2nd/3rd place).",
+  "goals_note": "Points from the end-of-round goal in each round: winners against the others (green side of the goal board: points for 1st and 2nd place, with 3 or more players also for 3rd).",
   "round": "Round",
   "actions_title": "What players do in each round",
   "actions_note": "Share of each action per round, winners against the others.",
@@ -70,5 +78,32 @@
   "birds_others": "Birds: others",
   "food_left_winners": "Food left: winners",
   "hand_left_winners": "Cards left in hand: winners"
+ },
+ "optional": {
+  "all_draw_deck": "Everyone draws a card",
+  "all_gain_supply": "Everyone gains a food",
+  "all_lay_nest": "Everyone lays an egg",
+  "draw": "Draw cards",
+  "draw_bonus": "Draw bonus cards",
+  "each_gain_die": "Everyone takes a die",
+  "egg_for_cards": "Pay an egg for 2 cards",
+  "egg_for_wild": "Pay an egg for any food",
+  "fewest_die": "Fewest forest birds: a die",
+  "fewest_draw": "Fewest wetland birds: a card",
+  "food_for_tucks": "Food for 2 tucked cards",
+  "gain_all_feeder": "All dice of one food",
+  "gain_feeder": "A die from the feeder",
+  "gain_supply": "Food from the supply",
+  "hunt_card": "Hunt: tuck a smaller bird",
+  "hunt_dice": "Hunt: roll dice for food",
+  "lay_each_nest": "Egg on each bird of a nest",
+  "lay_egg": "Lay an egg",
+  "move": "Move to another habitat",
+  "oystercatcher": "Everyone picks a card",
+  "play_another": "Play another bird",
+  "repeat": "Repeat another power",
+  "take_tray": "Take the 3 face-up birds",
+  "trade_food": "Swap a food",
+  "tuck_hand": "Tuck a card from hand"
  }
 }

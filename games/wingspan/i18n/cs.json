@@ -29,6 +29,14 @@
    "forest": "Les",
    "grassland": "Louka",
    "wetland": "Mokřad"
+  },
+  "food": {
+   "invertebrate": "bezobratlý",
+   "seed": "semeno",
+   "fish": "ryba",
+   "fruit": "ovoce",
+   "rodent": "hlodavec",
+   "wild": "libovolná potrava"
   }
  },
  "archetypes": {
@@ -52,7 +60,7 @@
   "bonus_cards_winners": "Bonusových karet u vítězů",
   "bonus_cards_others": "Bonusových karet u ostatních",
   "goals_title": "Cíle kol",
-  "goals_note": "Body z cíle na konci každého kola: vítězové proti ostatním (zelená deska: 1./2./3. místo).",
+  "goals_note": "Body z cíle na konci každého kola: vítězové proti ostatním (zelená strana desky cílů: body za 1. a 2. místo, při 3 a více hráčích i za 3.).",
   "round": "Kolo",
   "actions_title": "Co hráči dělají v každém kole",
   "actions_note": "Podíl každé akce v kole, vítězové proti ostatním.",
@@ -70,5 +78,32 @@
   "birds_others": "Ptáků: ostatní",
   "food_left_winners": "Zbylá potrava: vítězové",
   "hand_left_winners": "Karet v ruce: vítězové"
+ },
+ "optional": {
+  "all_draw_deck": "Všichni dobírají kartu",
+  "all_gain_supply": "Všichni získají potravu",
+  "all_lay_nest": "Všichni kladou vejce",
+  "draw": "Dobrat karty",
+  "draw_bonus": "Dobrat bonusové karty",
+  "each_gain_die": "Všichni berou kostku",
+  "egg_for_cards": "Vejce za 2 karty",
+  "egg_for_wild": "Vejce za libovolnou potravu",
+  "fewest_die": "Málo ptáků v lese: kostka",
+  "fewest_draw": "Málo ptáků v mokřadu: karta",
+  "food_for_tucks": "Potrava za 2 zastrčené karty",
+  "gain_all_feeder": "Všechny kostky jedné potravy",
+  "gain_feeder": "Kostka z krmítka",
+  "gain_supply": "Potrava ze zásoby",
+  "hunt_card": "Lov: zastrčit menšího ptáka",
+  "hunt_dice": "Lov: hod kostkami o potravu",
+  "lay_each_nest": "Vejce na ptáky s hnízdem",
+  "lay_egg": "Položit vejce",
+  "move": "Přesun do jiného prostředí",
+  "oystercatcher": "Všichni si vyberou kartu",
+  "play_another": "Zahrát dalšího ptáka",
+  "repeat": "Zopakovat jinou schopnost",
+  "take_tray": "Vzít 3 odkryté ptáky",
+  "trade_food": "Vyměnit potravu",
+  "tuck_hand": "Zastrčit kartu z ruky"
  }
 }

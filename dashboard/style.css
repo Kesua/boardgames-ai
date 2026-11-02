@@ -91,6 +91,7 @@ dl.gloss dd { margin: 0; color: var(--ink-2); }
 main { max-width: 1180px; margin: 0 auto; padding: 22px 16px 60px; min-height: 70vh; }
 .loading, .empty { color: var(--ink-3); padding: 40px 0; }
 .grid { display: grid; gap: 14px; }
+.grid > * { min-width: 0; }   /* a wide table scrolls inside its own box instead of widening the page */
 .cols-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
 .cols-3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
 .cols-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
@@ -183,7 +184,8 @@ td.num, th.num { text-align: right; }
 tr:last-child td { border-bottom: 0; }
 tbody tr:hover td { background: var(--surface-2); }
 td.dim, tr.dim td { color: var(--ink-4); }
-.minibar { display: inline-block; height: 8px; border-radius: 4px; vertical-align: middle; }
+.minibar { display: inline-block; height: 8px; border-radius: 4px; vertical-align: middle; background: var(--c); }
+.minibar.pale { opacity: .35; }
 .namecell a { color: var(--ink); text-decoration: none; font-weight: 600; }
 .namecell a:hover { color: var(--link); }
 tr.dim .namecell a { color: var(--ink-3); font-weight: 500; }
@@ -209,6 +211,14 @@ input[type=search] { width: min(320px, 100%); }
 .chart .zero { stroke: var(--ink-4); stroke-width: 1; }
 .chart .hit { fill: transparent; cursor: default; }
 .chart .hit:hover + .mark, .chart .mark:hover { opacity: .85; }
+/* pale (chance-level or too few) marks: on dark pages a see-through red or blue looks muddy brown, so they are drawn
+   as a faint fill with a coloured outline instead */
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .chart .mark.pale { opacity: 1; fill-opacity: .2; stroke: var(--c); stroke-opacity: .75; }
+  :root:where(:not([data-theme="light"])) .minibar.pale { opacity: 1; background: color-mix(in srgb, var(--c) 20%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 75%, transparent); }
+}
+:root[data-theme="dark"] .chart .mark.pale { opacity: 1; fill-opacity: .2; stroke: var(--c); stroke-opacity: .75; }
+:root[data-theme="dark"] .minibar.pale { opacity: 1; background: color-mix(in srgb, var(--c) 20%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 75%, transparent); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--ink-2); margin-top: 8px; }
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 .tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--bg); padding: 7px 10px; border-radius: 8px;
@@ -227,11 +237,13 @@ input[type=search] { width: min(320px, 100%); }
 .cross .c-top { grid-column: 2; grid-row: 1; } .cross .c-left { grid-column: 1; grid-row: 2; } .cross .c-host { grid-column: 2; grid-row: 2; }
 .cross .c-right { grid-column: 3; grid-row: 2; } .cross .c-bottom { grid-column: 2; grid-row: 3; }
 .cross .c-host .bitem { background: var(--accent-soft); font-weight: 600; }
-.mat-row { display: grid; grid-template-columns: 110px repeat(5, minmax(0, 1fr)); gap: 6px; align-items: stretch; }
-.mat-row .rh { font-size: 12.5px; color: var(--ink-3); font-weight: 650; align-self: center; }
+/* mats: the row name above its 5 slots, and two mats side by side only when each slot fits a long bird name */
+.board .cols-2:has(.mat-row) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr)); }
+.mat-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; align-items: stretch; }
+.mat-row .rh { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); font-weight: 650; }
 .slot { border: 1px dashed var(--line); border-radius: 8px; min-height: 54px; padding: 6px; font-size: 12.5px; background: var(--surface-2); }
 .slot.filled { border-style: solid; background: var(--surface); }
-.slot .sn { font-weight: 600; line-height: 1.25; }
+.slot .sn { font-weight: 600; font-size: 12px; line-height: 1.25; hyphens: auto; overflow-wrap: anywhere; }   /* long names wrap, never cut */
 .slot .sd { color: var(--ink-3); font-size: 11.5px; margin-top: 2px; }
 
 /* profile */
@@ -276,7 +288,8 @@ dl.gloss dt.hl { padding: 0 4px; }
   .top-inner { flex-wrap: wrap; gap: 8px; }
   .game-switch { order: 3; flex-basis: 100%; }
   .card { padding: 14px; }
-  .mat-row { grid-template-columns: 70px repeat(5, minmax(0, 1fr)); }
+  /* phones: the row name above its slots, three slots per line, so bird names stay readable */
+  .mat-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .slot { font-size: 11px; padding: 4px; }
 }
 @media (forced-colors: active) { .minibar, .mark { forced-color-adjust: none; } }

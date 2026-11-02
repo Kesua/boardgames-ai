@@ -26,6 +26,8 @@
                              "accent_soft": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}$"},
                              "emoji": {"type": "string"}}},
     "intro": {"$ref": "#/definitions/text", "description": "Two or three plain sentences: how the game is played and what decides it. First thing a reader sees."},
+    "name_local": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Optional official title per language when it differs (shown as \"Name (local title)\" in that language only)."},
+    "items_note": {"$ref": "#/definitions/text", "description": "Optional note next to the item count on the items tab, e.g. how the total is made up."},
     "terms": {"type": "object", "description": "Per language, the game's own words the dashboard uses in its sentences.",
               "additionalProperties": {"type": "object",
                                        "required": ["item", "items", "board", "boards", "archetype", "archetypes", "round"],

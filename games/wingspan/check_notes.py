@@ -42,10 +42,12 @@ checks = [("goals winners", mix["goals"]["winners"], "n"), ("goals others", mix[
           ("Purple Martin", item("PURPLE_MARTIN")["win_lift"], "pp"), ("American Robin", item("AMERICAN_ROBIN")["win_lift"], "pp"),
           ("Bushtit", item("BUSHTIT")["win_lift"], "pp"),
           ("birds winners", fact("birds", "birds_winners"), "n"), ("birds others", fact("birds", "birds_others"), "n"),
-          ("wins with 5 birds", birds[5]["win_rate"], "p"), ("wins with 8 birds", birds[8]["win_rate"], "p"),
+          ("wins with 6 birds", birds[6]["win_rate"], "p"), ("wins with 8 birds", birds[8]["win_rate"], "p"),
           ("wins with 10 birds", birds[10]["win_rate"], "p"),
           ("Falconer", bonus["Falconer"]["win_lift"], "pp"), ("Falconer holders", bonus["Falconer"]["holders"], "i"),
-          ("Omnivore Expert", bonus["Omnivore Expert"]["win_lift"], "pp"), ("Omnivore holders", bonus["Omnivore Expert"]["holders"], "i"),
+          ("Omnivore Expert", bonus["Omnivore Expert"]["win_lift"], "pp"), ("Enclosure Builder", bonus["Enclosure Builder"]["win_lift"], "pp"),
+          ("Passerine Specialist", bonus["Passerine Specialist"]["win_lift"], "pp"),
+          ("Peregrine Falcon", item("PEREGRINE_FALCON")["win_lift"], "pp"), ("Cooper's Hawk", item("COOPER_S_HAWK")["win_lift"], "pp"), ("Omnivore holders", bonus["Omnivore Expert"]["holders"], "i"),
           ("forest mats share", arch("forest")["share"], "p"), ("forest mats wins", arch("forest")["win_rate"], "p"),
           ("forest mats difference", arch("forest")["win_lift"], "pp"),
           ("grassland mats share", arch("grassland")["share"], "p"), ("grassland mats wins", arch("grassland")["win_rate"], "p"),
@@ -60,6 +62,13 @@ claims = [("Barn Swallow has the largest win-rate difference of birds on >= 5 % 
           ("winners lead in every round", all(g["winners"] > g["others"] for g in goals)),
           ("Falconer and Omnivore Expert are clear (> 2 standard errors)",
            all(bonus[c]["win_lift"] > 2 * bonus[c]["win_lift_se"] for c in ("Falconer", "Omnivore Expert"))),
+          ("Enclosure Builder and Passerine Specialist clearly lose (> 2 standard errors)",
+           all(bonus[c]["win_lift"] < -2 * bonus[c]["win_lift_se"] for c in ("Enclosure Builder", "Passerine Specialist"))),
+          ("4 of the top 10 birds tuck from the hand (Barn Swallow, Purple Martin, American Robin, Bushtit)",
+           sorted(x["item"] for x in lifts[:10] if x["item"] in ("BARN_SWALLOW", "PURPLE_MARTIN", "AMERICAN_ROBIN", "BUSHTIT")) ==
+           ["AMERICAN_ROBIN", "BARN_SWALLOW", "BUSHTIT", "PURPLE_MARTIN"]),
+          ("grassland and wetland mats do not clearly differ",
+           abs(arch("grassland")["win_rate"] - arch("wetland")["win_rate"]) < 2 * (arch("grassland")["win_lift_se"] ** 2 + arch("wetland")["win_lift_se"] ** 2) ** 0.5),
           ("forest mats clearly lose (> 2 standard errors)", arch("forest")["win_lift"] < -2 * arch("forest")["win_lift_se"])]
 bad = 0
 for lang in ("en", "cs"):

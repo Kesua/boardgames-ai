@@ -1,6 +1,7 @@
 {
   "slug": "wingspan",
   "name": "Wingspan",
+  "name_local": {"cs": "Na křídlech"},
   "publisher": "Stonemaier Games",
   "designer": "Elizabeth Hargrave",
   "year": 2019,
@@ -13,10 +14,10 @@
     "cs": "Hráči lákají ptáky do tří prostředí — lesa, louky a mokřadu. Každý zahraný pták posílí svou řadu: získání potravy, kladení vajec i dobírání karet dává víc, čím je řada plnější, a mnoho ptáků přidá schopnost. Hra má vždy 4 kola a v každém o tah méně (8, 7, 6, 5), takže se počítá každá akce."
   },
   "terms": {
-    "en": {"item": "bird", "items": "birds", "items_acc": "birds", "items_gen": "birds", "board": "player mat", "boards": "player mats",
+    "en": {"item": "bird", "item_acc": "bird", "items": "birds", "items_acc": "birds", "items_gen": "birds", "board": "player mat", "boards": "player mats",
            "boards_gen": "player mats", "in_own_board": "on their final player mat", "all_items": "all birds",
            "archetype": "main habitat", "archetypes": "main habitats", "round": "round"},
-    "cs": {"item": "pták", "items": "ptáci", "items_acc": "ptáky", "items_gen": "ptáků", "board": "hrací deska", "boards": "hrací desky",
+    "cs": {"item": "pták", "item_acc": "ptáka", "items": "ptáci", "items_acc": "ptáky", "items_gen": "ptáků", "board": "hrací deska", "boards": "hrací desky",
            "boards_gen": "hracích desek", "in_own_board": "na své hrací desce", "with_it": "s ním", "it_acc": "ho", "all_items": "všichni ptáci",
            "archetype": "hlavní prostředí", "archetypes": "hlavní prostředí", "round": "kolo"}
   },
@@ -62,6 +63,7 @@
   },
   "optional_decisions": {"decision": "USE_POWER", "use": "USE", "skip": "SKIP", "group_pattern": "^(.*)$"},
   "length": {"show": false},
+  "items_note": {"en": "170 + 10 Swift-Start birds", "cs": "170 + 10 ptáků z balíčku Swift-Start"},
   "item_attributes": ["points", "habitats", "nest", "egg_limit", "wingspan", "food_total", "power_color", "predator", "flocking"],
   "featured": {"2": {"main": "p2-28m-mirror"}},
   "languages": ["en", "cs"]

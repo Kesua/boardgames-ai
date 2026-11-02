@@ -54,9 +54,11 @@
   }
   const color = (i) => `var(--s${(i % 8) + 1})`;
   // axis labels: whole-number ticks drop trailing zero decimals ("20.0" -> "20", "4,0 %" -> "4 %"), never a thousands
-  // separator ("3,000" stays): only the page language's decimal mark counts
+  // separator ("3,000" stays): only the page language's decimal mark counts. The formatter also gets the decimals the
+  // tick step needs (0.05 -> 2), so it can keep ticks distinct ("0.05 0.10", not "0.1 0.1").
   const tickText = (fmt, t, ticks) => {
-    const s = String(fmt ? fmt(t) : t);
+    const step = ticks.length > 1 ? Math.abs(ticks[1] - ticks[0]) : 1, dec = Math.max(0, Math.ceil(-Math.log10(step) - 1e-9));
+    const s = String(fmt ? fmt(t, dec) : t);
     const re = document.documentElement.lang === "cs" ? /,0+(?=[^0-9]*$)/ : /\.0+(?=[^0-9]*$)/;
     return ticks.every((v) => Number.isInteger(v)) ? s.replace(re, "") : s;
   };
@@ -107,8 +109,9 @@
       const v = r.value, x = v >= 0 ? x0 : x0 + (v / max) * half, w = Math.max(1.5, Math.abs(v / max) * half), cy = y + barTop + barH / 2;
       // a bar whose uncertainty range crosses zero is drawn pale: the effect may be nothing
       const unclear = r.err && Math.abs(v) <= r.err;
-      const bar = el("rect", { x, y: y + barTop, width: w, height: barH, rx: 4, class: "mark",
-                               fill: o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", opacity: r.dim ? .45 : unclear ? .3 : 1 }, svg);
+      const fill = o.mag ? "var(--accent)" : v >= 0 ? "var(--pos)" : "var(--neg)", pale = r.dim || unclear;
+      const bar = el("rect", { x, y: y + barTop, width: w, height: barH, rx: 4, class: pale ? "mark pale" : "mark", style: pale ? `--c:${fill}` : null,
+                               fill, opacity: r.dim ? .45 : unclear ? .3 : 1 }, svg);
       let right = v >= 0 ? x + w : x0;   // right end of what is drawn on the positive side of zero
       if (r.err) {
         const ex1 = clipX(x0 + ((v - r.err) / max) * half), ex2 = clipX(x0 + ((v + r.err) / max) * half);
@@ -165,7 +168,8 @@
         const x = cx - (k * (bw + gap)) / 2 + j * (bw + gap);
         const y1 = y(Math.max(v, base)), y2 = y(Math.min(v, base));
         const fill = spec.diverge ? (v >= base ? "var(--pos)" : "var(--neg)") : (s.color || color(j));
-        el("rect", { x, y: y1, width: bw, height: Math.max(1.5, y2 - y1), rx: 3, fill, class: "mark", opacity: s.dims && s.dims[i] ? .35 : 1 }, svg);
+        const pale = s.dims && s.dims[i];
+        el("rect", { x, y: y1, width: bw, height: Math.max(1.5, y2 - y1), rx: 3, fill, class: pale ? "mark pale" : "mark", style: pale ? `--c:${fill}` : null, opacity: pale ? .35 : 1 }, svg);
         const hit = el("rect", { x: x - 2, y: T, width: bw + 4, height: H - T - B, class: "hit", tabindex: 0 }, svg);
         hover(hit, (s.tips && s.tips[i]) || `<b>${lab}</b><br>${s.name}: ${spec.fmt ? spec.fmt(v) : v}`);
       });

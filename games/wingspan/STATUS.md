@@ -16,8 +16,8 @@ Base game only (180 birds, 26 bonus cards, base goal tiles), no expansions, no a
       open-run checkpoint it never trained against, 89.7 % against the open-run best, 59.7 % against its 16M-step
       predecessor. Finished.
 - [x] run-experiment: `experiments/p2-28m-mirror` (2,000 games, seed 1000, 95 seconds with 16 workers; `--verify 20` ok)
-- [x] write-notes: `notes.json` (en + cs, 7 findings, known limit); `check_notes.py` recomputes all 39 cited numbers
-      and 5 data-dependent claims
+- [x] write-notes: `notes.json` (en + cs, 7 findings, known limit); `check_notes.py` recomputes all 43 cited numbers
+      per language and 8 data-dependent claims
 - [ ] publish-game: publisher notice not sent yet (needs the maintainer's go-ahead)
 
 ## Open
