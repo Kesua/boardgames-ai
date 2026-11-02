@@ -1,20 +1,29 @@
 {
   "game": "forest_shuffle",
+  "code_commit": "e5c6e56f7c442e8480abebe34feaa8c0957294d7",
   "games_per_player_count": {
-    "2": 500,
-    "3": 500,
-    "4": 500,
-    "5": 500
+    "2": 10000,
+    "3": 10000,
+    "4": 10000,
+    "5": 10000
   },
   "problems": [],
   "problem_count": 0,
-  "seconds": 124.7,
+  "seconds": 3175.6,
+  "greedy_vs_random": {
+    "players": 2,
+    "games": 40,
+    "win": 0.95
+  },
   "checks": [
     "ends",
     "legal",
     "seed",
     "clone",
     "scores",
-    "records"
+    "records",
+    "encoder",
+    "direction",
+    "invariants"
   ]
 }
