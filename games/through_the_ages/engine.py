@@ -20,7 +20,7 @@ from . import economy as E
 from . import effects, military
 from .cards import (AGE, BUILDINGS, EFFECT, EFFECT_TYPE, IS_STARTING, IS_TECH, IS_UNIT, KEY, KIND,
                     LEADERS_BY_AGE, LEVEL, N_CARDS, NAME, NEXT_AGE, RESOURCE_COST, REVOLUTION_COST,
-                    SCIENCE_COST, SET, SPECIALS, STAGE_COSTS, TOKEN_SYMBOLS, TOKEN_VALUE, UNITS, URBAN,
+                    SCIENCE_COST, SET, SPECIALS, STAGE_COSTS, TOKEN_SYMBOLS, UNITS, URBAN,
                     WONDERS_BY_AGE, civil_deck_cards, military_deck_cards)
 from .state import LEADER_PROXY, ROW_SIZE, WONDER_PROXY, Player, State
 
@@ -39,9 +39,10 @@ A_OPTION = CODEC.encode("OPTION", 0)
 
 VERBS = ("INCREASE_POP", "BUILD", "UPGRADE", "DESTROY", "BUILD_UNIT", "UPGRADE_UNIT", "DISBAND", "WONDER_STAGE",
          "COPY_TACTIC", "PREPARE", "AGGRESSION", "WAR", "PACT", "CANCEL_PACT", "RESIGN",
-         # 15..31: card abilities (frozen once a model exists; 26..31 spare)
+         # 15..31: card abilities (frozen once a model exists; 27..31 spare)
          "ALEXANDER", "COLUMBUS", "CATHERINE", "OLYMPICS",                          # political (POLITICS)
-         "HAMMURABI", "BARBAROSSA", "OCEAN_LINER", "BACH", "CHURCHILL", "LOUVRE", "RED_CROSS")   # ACTION
+         "HAMMURABI", "BARBAROSSA", "OCEAN_LINER", "BACH", "CHURCHILL", "LOUVRE", "RED_CROSS",   # ACTION
+         "GUTENBERG")                                                               # ACTION (review F14, D30)
 assert len(VERBS) <= 32
 V = {name: i for i, name in enumerate(VERBS)}
 VERB_TEXT = {"INCREASE_POP": "Increase population", "BUILD": "Build a farm, mine or urban building",
@@ -58,7 +59,8 @@ VERB_TEXT = {"INCREASE_POP": "Increase population", "BUILD": "Build a farm, mine
              "BACH": "Bach: upgrade an urban building to a theater",
              "CHURCHILL": "Winston Churchill: choose his bonus",
              "LOUVRE": "Louvre Museum: return a token for 2 resources",
-             "RED_CROSS": "International Red Cross: build a stage of another player's Red Cross"}
+             "RED_CROSS": "International Red Cross: build a stage of another player's Red Cross",
+             "GUTENBERG": "Johannes Gutenberg: use his extra civil action for the next lab or library action"}
 
 DECISION_KINDS = ("POLITICS", "POLITICS_CARD", "TARGET", "PACT_SIDE", "PACT_ANSWER", "CANCEL_WHICH", "DEFEND",
                   "ACTION", "CHOOSE_TECH", "UPGRADE_TO", "STAGES", "REVOLT", "SUB_ACTION", "CHOOSE_TACTIC",
@@ -263,16 +265,18 @@ class Game:
 
     # ================================================================================= paying (T12.3, T12.9, pacts)
     def trade_conversion(self, seat: int, kind: str) -> int:
-        """Trade Routes Agreement: side A may use 1 food as 1 resource, side B 1 resource as 1 food (once per turn,
-        used automatically when needed to pay, choice C1)."""
+        """Trade Routes Agreement: side A may use food as resources, side B resources as food, 1 for 1, during its own
+        turn, as often as it likes (D33); used automatically only when needed to pay (choice C1). Returns how much of
+        the other kind could be used."""
+        if self.s.turn_seat != seat:
+            return 0
         p = self.p(seat)
         for owner, card, partner, side in military.pacts_in_play(self):
-            if EFFECT_TYPE[card] != "pact_trade_routes" or p.flags.get("trade_routes_used", 0) >= \
-                    EFFECT[card]["uses_per_turn"]:
+            if EFFECT_TYPE[card] != "pact_trade_routes":
                 continue
             sd = military.side_of(owner, partner, side, seat)
             if (sd == "A" and kind == "mine") or (sd == "B" and kind == "farm"):
-                return 1 if E.total(p, "farm" if kind == "mine" else "mine") >= 1 else 0
+                return E.total(p, "farm" if kind == "mine" else "mine")
         return 0
 
     def afford(self, seat: int, kind: str, amount: int, purpose=None) -> bool:
@@ -297,10 +301,10 @@ class Game:
             amount -= use
         if amount <= 0:
             return
-        if E.total(p, kind) < amount and self.trade_conversion(seat, kind):
-            E.pay(p, "farm" if kind == "mine" else "mine", 1)
-            p.flags["trade_routes_used"] = p.flags.get("trade_routes_used", 0) + 1
-            amount -= 1
+        short = amount - E.total(p, kind)
+        if short > 0 and self.trade_conversion(seat, kind):
+            E.pay(p, "farm" if kind == "mine" else "mine", short)
+            amount -= short
         E.pay(p, kind, amount)
 
     @staticmethod
@@ -309,19 +313,26 @@ class Game:
         return "unit" if IS_UNIT[card] else "civic" if KIND[card] in URBAN else None
 
     # ================================================================================= Gutenberg
+    # Johannes Gutenberg's extra civil action (NLW p8, D30) is optional: the ACTION verb GUTENBERG ("arming") says
+    # that the next action uses it; then only lab/library actions are legal (take, develop, build, upgrade, or an
+    # action card used for one of these), which spend it instead of a civil action, with his discount and culture.
     def gutenberg_ready(self, seat: int) -> bool:
-        """Johannes Gutenberg's extra civil action of this turn is still unused."""
+        """Johannes Gutenberg's extra civil action of this turn is still unused and not chosen yet."""
         p = self.p(seat)
-        return effects.leader_type(p) == "gutenberg" and not p.flags.get("gutenberg_used")
+        return effects.leader_type(p) == "gutenberg" and not p.flags.get("gutenberg_used") and \
+            not p.flags.get("gutenberg_armed")
+
+    def gutenberg_armed(self, seat: int) -> bool:
+        return bool(self.p(seat).flags.get("gutenberg_armed"))
 
     def gutenberg_for(self, seat: int, kind: str, free: bool = False) -> bool:
-        """Gutenberg's action applies (taken/developed/built/upgraded lab or library, not a free action); it is
-        always used for the first such action of the turn (it is never worse than a normal civil action)."""
-        return not free and kind in EFFECT_GUTENBERG_KINDS and self.gutenberg_ready(seat)
+        """Gutenberg's action pays for this action (chosen, a lab or library, not a free action)."""
+        return not free and kind in EFFECT_GUTENBERG_KINDS and self.gutenberg_armed(seat)
 
     def use_gutenberg(self, seat: int) -> None:
         p = self.p(seat)
         p.flags["gutenberg_used"] = True
+        p.flags["gutenberg_armed"] = False
         E.add_culture(p, EFFECT[p.leader]["culture_per_use"], "leaders", p.leader)
 
     def move_cost(self, seat: int, frm: int, to: int) -> int:
@@ -377,9 +388,24 @@ class Game:
             E.add_science(self.p(coop[0]), -coop[2])
 
     # ================================================================================= tactics (T6.4, T3.3)
+    def sun_tzu_common(self):
+        """The tactic marked by Sun Tzu (its own special tactic, +1 per army for whoever uses it, never merged: NLW p7,
+        D32) once it lies in the common tactics area; None otherwise."""
+        x = self.s.sun_tzu_tactic
+        return x[0] if x is not None and x[1] is None else None
+
+    def to_common(self, seat: int, c: int) -> None:
+        """An exclusive tactic moves to the common tactics area (Sun Tzu's marked card stays its own entry)."""
+        self.s.common_tactics.append(c)
+        x = self.s.sun_tzu_tactic
+        if x is not None and x[1] == seat and x[0] == c:
+            x[1] = None
+
     def copy_options(self, seat: int) -> list:
         p = self.p(seat)
-        return sorted(c for c in set(self.s.common_tactics) if c != p.tactic)
+        boosted = self.sun_tzu_common()
+        return sorted(c for c in set(self.s.common_tactics)
+                      if c != p.tactic or (c == boosted and p.tactic_boost != c))
 
     def play_tactic(self, seat: int, c: int) -> None:
         """T6.4: 1 military action; the tactic becomes your exclusive tactic and your marker moves onto it."""
@@ -390,17 +416,20 @@ class Game:
             if effects.leader_type(p) == "sun_tzu":                         # Sun Tzu: it stays, uncopyable
                 p.kept_tactics.append(p.exclusive_tactic)
             else:
-                self.s.common_tactics.append(p.exclusive_tactic)
+                self.to_common(seat, p.exclusive_tactic)
         p.exclusive_tactic = c
         p.tactic = c
+        p.tactic_boost = None                                               # its own copy: never Sun Tzu's card
         p.flags["tactic_done"] = True
         E.touch(p)
 
     def copy_tactic(self, seat: int, c: int) -> None:
-        """T6.4: 2 military actions; the marker moves onto a common tactic."""
+        """T6.4: 2 military actions; the marker moves onto a common tactic (onto Sun Tzu's marked card when it is
+        that tactic: the same card with +1 per army, never worse, D32)."""
         p = self.p(seat)
         E.spend_military(p, 2)
         p.tactic = c
+        p.tactic_boost = c if c == self.sun_tzu_common() else None
         p.flags["tactic_done"] = True
         E.touch(p)
 
@@ -416,7 +445,7 @@ class Game:
             self.s.log.add(seat, f"{self.card_name(c)} becomes a common tactic")
         p.kept_tactics = []
         if p.exclusive_tactic is not None:
-            self.s.common_tactics.append(p.exclusive_tactic)
+            self.to_common(seat, p.exclusive_tactic)
             self.s.log.add(seat, f"{self.card_name(p.exclusive_tactic)} becomes a common tactic")
             p.exclusive_tactic = None
 
@@ -545,8 +574,9 @@ class Game:
         """Row slots can_take() allows, computed in one pass (hot path of action_legal)."""
         p = self.p(seat)
         have = E.civil_available(self, seat) if budget is None else budget
-        gut = budget is None and self.gutenberg_ready(seat)
+        gut = budget is None and self.gutenberg_armed(seat)
         hand_ok = len(p.civil_hand) < E.civil_hand_limit(self, seat)
+        disc = self.stats(seat).take_disc                                    # Darwin (technologies, minimum 1)
         names = None
         out = []
         for i, c in enumerate(self.s.row):
@@ -557,7 +587,8 @@ class Game:
                 if p.unfinished is not None:
                     continue
             else:
-                if not hand_ok or ROW_COST[i] > have + gut:
+                low = max(1, ROW_COST[i] - disc) if disc and IS_TECH[c] else ROW_COST[i]
+                if not hand_ok or low > have + gut:
                     continue
                 if IS_TECH[c]:
                     if names is None:
@@ -616,19 +647,17 @@ class Game:
         unit = kinds[0] in UNITS
         if p.pool < 1:
             return []
-        ok = self._action_ok(seat, unit, free)
-        ready = not unit and not free and self.gutenberg_ready(seat)
-        gut = not ok and ready
-        if not ok and not gut:
+        gut = not unit and not free and self.gutenberg_armed(seat)          # only labs/libraries, his discount
+        if not gut and not self._action_ok(seat, unit, free):
             return []
-        gd = EFFECT[p.leader]["discount"] if ready else 0
+        gd = EFFECT[p.leader]["discount"] if gut else 0
         limit = self.stats(seat).urban_limit
         out = []
         for c in p.techs:
             k = KIND[c]
             if k not in kinds or (gut and k not in EFFECT_GUTENBERG_KINDS):
                 continue
-            d = discount + (gd if k in EFFECT_GUTENBERG_KINDS else 0)
+            d = discount + gd
             if not self.afford(seat, "mine", self.build_cost(seat, c, d), self.purpose_of(c)):
                 continue
             if k in URBAN and E.urban_workers(p, k) >= limit:                  # T5.3
@@ -645,9 +674,8 @@ class Game:
     def upgrade_from_options(self, seat: int, kinds: tuple = BUILDINGS, discount: int = 0, free: bool = False) -> list:
         p = self.p(seat)
         unit = kinds[0] in UNITS
-        ok = self._action_ok(seat, unit, free)
-        gut = not ok and not unit and self.gutenberg_ready(seat)
-        if not ok and not gut:
+        gut = not unit and not free and self.gutenberg_armed(seat)
+        if not gut and not self._action_ok(seat, unit, free):
             return []
         return [c for c in p.techs if KIND[c] in kinds and p.workers.get(c, 0)
                 and (not gut or KIND[c] in EFFECT_GUTENBERG_KINDS)
@@ -660,14 +688,15 @@ class Game:
         kinds = UNITS if unit else BUILDINGS
         return [c for c in p.techs if KIND[c] in kinds and p.workers.get(c, 0)]
 
-    def wonder_max_stages(self, seat: int, discount: int = 0, free: bool = False) -> int:
-        """Stages buildable in one action now (T5.7): 1, or more with a construction technology; 0 if none."""
+    def wonder_max_stages(self, seat: int, discount: int = 0, free: bool = False, single: bool = False) -> int:
+        """Stages buildable in one action now (T5.7): 1, or more with a construction technology; 0 if none. An action
+        card that builds a stage (Engineering Genius) builds exactly one (`single`, D20)."""
         p = self.p(seat)
         if p.unfinished is None or not self._action_ok(seat, False, free):
             return 0
         card, paid, _ = p.unfinished
         costs = STAGE_COSTS[card][paid:]
-        allowed = min(len(costs), self.stats(seat).wonder_stages)
+        allowed = min(len(costs), 1 if single else self.stats(seat).wonder_stages)
         kind, purpose, discount = self.stage_payment(card, discount)
         k = 0
         for i in range(1, allowed + 1):
@@ -695,11 +724,12 @@ class Game:
         p = self.p(seat)
         return effects.leader_type(p) == "robespierre" and EFFECT[p.leader]["revolution_spends_military_actions"]
 
-    def can_revolution(self, seat: int, card: int, free: bool = False, revolution_ok: bool = False) -> bool:
-        """T5.9: all civil actions still available (a develop action card: they were before it was played).
-        Maximilien Robespierre: all military actions instead (Q23)."""
+    def can_revolution(self, seat: int, card: int, free: bool = False, revolution_ok: bool = False,
+                       discount: int = 0) -> bool:
+        """T5.9: all civil actions still available (a develop action card or Development of Civilization: they were
+        before; the event's science discount applies, D23). Maximilien Robespierre: all military actions instead."""
         p = self.p(seat)
-        if not self.can_pay_science(seat, card, True):
+        if not self.can_pay_science(seat, card, True, discount):
             return False
         if self.robespierre(seat):
             return p.military_spent == 0 and self.stats(seat).military >= 1
@@ -708,19 +738,20 @@ class Game:
         return p.civil_spent == 0 and self.stats(seat).civil >= 1
 
     def develop_options(self, seat: int, free: bool = False, exclude: int = None, revolution_ok: bool = None,
-                        sci_discount: int = 0) -> list:
-        """Technologies in hand that can be developed now. With a develop action card (free), a revolution needs all
-        civil actions available before the card was played (revolution_ok; None = now, before playing it)."""
+                        sci_discount: int = 0, only: tuple = None) -> list:
+        """Technologies in hand that can be developed now (`only`: of these kinds). With a develop action card (free),
+        a revolution needs all civil actions available before the card was played (revolution_ok; None = now, before
+        playing it)."""
         p = self.p(seat)
         if free and revolution_ok is None:
             revolution_ok = p.civil_spent == 0 and self.stats(seat).civil >= 1
         out = []
         for c in sorted(set(p.civil_hand)):
-            if c == exclude or not IS_TECH[c]:
+            if c == exclude or not IS_TECH[c] or (only is not None and KIND[c] not in only):
                 continue
             if KIND[c] == "government":
                 ok = self.can_peaceful(seat, c, free, sci_discount) or \
-                    (not sci_discount and self.can_revolution(seat, c, free, bool(revolution_ok)))
+                    self.can_revolution(seat, c, free, bool(revolution_ok), sci_discount)
             elif self.gutenberg_for(seat, KIND[c], free):
                 ok = self.can_pay_science(seat, c, False, sci_discount + self._gut_discount(seat, KIND[c], free))
             else:
@@ -810,20 +841,25 @@ class Game:
         p.pool += 1
         E.touch(p)
 
-    def develop(self, seat: int, c: int, free: bool = False, revolution: bool = False, sci_discount: int = 0) -> None:
-        """T5.8 develop a technology; T5.9 revolution."""
+    def develop(self, seat: int, c: int, free: bool = False, revolution: bool = False, sci_discount: int = 0,
+                by_card: bool = False) -> None:
+        """T5.8 develop a technology; T5.9 revolution (temporary actions are not part of the totals and stay, D24,
+        D25). `by_card`: through a develop action card (Robespierre: that card's civil action is given back, D24)."""
         p = self.p(seat)
         p.civil_hand.remove(c)
         before = E.totals(self, seat)
         robes = revolution and self.robespierre(seat)
         if robes:                                                               # all military actions instead
             p.military_spent = before[1]
-            p.temp_military = 0
-            self.pay_science(seat, c, True)
+            if by_card:
+                if p.civil_spent:
+                    p.civil_spent -= 1
+                else:
+                    p.temp_civil += 1
+            self.pay_science(seat, c, True, sci_discount)
         elif revolution:
             p.civil_spent = before[0]
-            p.temp_civil = 0
-            self.pay_science(seat, c, True)
+            self.pay_science(seat, c, True, sci_discount)
         else:
             sci_discount += self._civil_or_gutenberg(seat, KIND[c], free)
             self.pay_science(seat, c, False, sci_discount)
@@ -894,7 +930,11 @@ class Game:
         eff = effects.action_effect(self, seat, c)
         if eff is not EFFECT[c]:
             p.flags["silk_road_used"] = True
-        E.spend_civil(p, 1)
+        if self.gutenberg_armed(seat):                                          # his action pays (D30); the card's
+            self.use_gutenberg(seat)                                            # task then serves labs/libraries
+            p.flags["gutenberg_card"] = True                                    # only (effects.gutenberg_card)
+        else:
+            E.spend_civil(p, 1)
         p.civil_hand.remove(c)
         self.s.removed_civil.append(c)
         self.used_kidnapped(seat, c)
@@ -1156,6 +1196,8 @@ def h_turn(g: Game, t: dict, a):
                 s.log.add(seat, "gives up this political action (International Agreement)")
             if n > 0:
                 s.tasks.append({"op": "politics", "seat": seat, "left": n})
+            elif "OLYMPICS" in [VERBS[x - A_VERB] for x in effects.ability_verbs(g, seat, "POLITICS")]:
+                s.tasks.append({"op": "politics", "seat": seat, "left": 0, "only_olympics": True})   # D26
             effects.fire(g, "start_of_politics", seat, owner=seat)              # Joan of Arc, Ian Fleming first
     elif st == "actions":                                                       # T3.5
         s.phase = "actions"
@@ -1179,8 +1221,10 @@ def action_legal(g: Game, seat: int) -> list:
     legal += [A_ROW + i for i in g.take_slots(seat)]
     if s.round == 1:                                                            # T3.2: only take cards
         return legal
+    if g.gutenberg_armed(seat):                                                 # Gutenberg chosen (D30)
+        return legal[:1] + gutenberg_legal(g, seat)
     civil = E.civil_available(g, seat)
-    if civil >= 1 or g.gutenberg_ready(seat):
+    if civil >= 1:
         if civil and g.can_increase_population(seat):
             legal.append(A_VERB + V["INCREASE_POP"])
         if g.build_options(seat, BUILDINGS):
@@ -1213,6 +1257,48 @@ def action_legal(g: Game, seat: int) -> list:
         elif g.can_play_hand(seat, c):
             legal.append(A_CARD + c)
     return legal
+
+
+def gutenberg_legal(g: Game, seat: int) -> list:
+    """ACTION answers after choosing Gutenberg's action: lab/library takes, builds, upgrades, developments and action
+    cards used for one of these (NLW p8, D30)."""
+    p = g.p(seat)
+    out = [A_ROW + i for i in g.take_slots(seat) if KIND[g.s.row[i]] in EFFECT_GUTENBERG_KINDS]
+    if g.build_options(seat, BUILDINGS):
+        out.append(A_VERB + V["BUILD"])
+    if g.upgrade_from_options(seat, BUILDINGS):
+        out.append(A_VERB + V["UPGRADE"])
+    dev = None
+    for c in sorted(set(p.civil_hand)):
+        if IS_TECH[c] and KIND[c] in EFFECT_GUTENBERG_KINDS:
+            if dev is None:
+                dev = g.develop_options(seat)
+            if c in dev:
+                out.append(A_CARD + c)
+        elif KIND[c] == "action" and gutenberg_card_ok(g, seat, c):
+            out.append(A_CARD + c)
+    return out
+
+
+def gutenberg_card_ok(g: Game, seat: int, c: int) -> bool:
+    """An action card Gutenberg's action can pay for: it develops, builds or upgrades a lab or library now, with his
+    discount added to the card's."""
+    p = g.p(seat)
+    if c in p.taken_this_phase and not g.harvard_ready(seat):
+        return False
+    eff = effects.action_effect(g, seat, c)
+    gd = EFFECT[p.leader]["discount"]
+    t = EFFECT_TYPE[c]
+    if t == "develop":
+        return bool(g.develop_options(seat, free=True, exclude=c, sci_discount=gd, only=EFFECT_GUTENBERG_KINDS))
+    if t in ("build_or_upgrade", "upgrade"):
+        kinds = tuple(k for k in effects.action_targets(eff) if k in EFFECT_GUTENBERG_KINDS)
+        if not kinds:
+            return False
+        d = eff["discount"] + gd
+        return bool((t == "build_or_upgrade" and g.build_options(seat, kinds, d, True))
+                    or g.upgrade_from_options(seat, kinds, d, True))
+    return False
 
 
 def h_actions(g: Game, t: dict, a):
@@ -1321,7 +1407,7 @@ def h_wonder(g: Game, t: dict, a):
     p = g.p(seat)
     if "stages" not in t:
         if a is None:
-            k = g.wonder_max_stages(seat, t["discount"], t["free"])
+            k = g.wonder_max_stages(seat, t["discount"], t["free"], t.get("single", False))
             g._ask("STAGES", seat, [A_AMOUNT + i for i in range(k)], card=p.unfinished[0])
             return
         t["stages"] = a - A_AMOUNT + 1
@@ -1363,7 +1449,8 @@ def h_develop(g: Game, t: dict, a):
     seat = t["seat"]
     if t["card"] is None:                                                       # develop action card: which card
         if a is None:
-            opts = g.develop_options(seat, True, t["source"], t["revolution_ok"], t.get("sci_discount", 0))
+            opts = g.develop_options(seat, True, t["source"], t["revolution_ok"], t.get("sci_discount", 0),
+                                     t.get("only"))
             g._ask("SUB_ACTION", seat, [A_CARD + c for c in opts], verb="DEVELOP", source=t["source"])
             return
         t["card"] = a - A_CARD
@@ -1371,7 +1458,7 @@ def h_develop(g: Game, t: dict, a):
     c = t["card"]
     if KIND[c] == "government" and "revolution" not in t:
         peace = g.can_peaceful(seat, c, t["free"], t.get("sci_discount", 0))
-        rev = g.can_revolution(seat, c, t["free"], t["revolution_ok"]) and not t.get("sci_discount", 0)
+        rev = g.can_revolution(seat, c, t["free"], t["revolution_ok"], t.get("sci_discount", 0))
         if peace and rev:
             if a is None:
                 g._ask("REVOLT", seat, [A_YES, A_NO], card=c)
@@ -1380,7 +1467,9 @@ def h_develop(g: Game, t: dict, a):
         else:
             t["revolution"] = rev
     g._finish(t)
-    g.develop(seat, c, t["free"], t.get("revolution", False), t.get("sci_discount", 0))
+    src = t["source"]
+    g.develop(seat, c, t["free"], t.get("revolution", False), t.get("sci_discount", 0),
+              by_card=src is not None and KIND[src] == "action")
     if t["then_gain"]:
         g.apply_gain(seat, t["then_gain"], "actions", t["source"])
 
@@ -1504,8 +1593,8 @@ def invariants(g) -> list:
             out.append(f"{tag} yellow tokens {p.yellow_bank}+{p.pool}+{workers} != {p.yellow_owned}")
         if any(c not in p.techs for c, k in p.workers.items() if k):
             out.append(f"{tag} workers on a card not in play")
-        if any(KIND[c] not in ("farm", "mine") or c not in p.techs for c, k in p.tokens.items() if k):
-            out.append(f"{tag} blue tokens on a card that is not a farm or mine in play")
+        if any(KIND[c] not in ("farm", "mine", "lab") or c not in p.techs for c, k in p.tokens.items() if k):
+            out.append(f"{tag} blue tokens on a card that is not a farm, mine or (Bill Gates) lab in play")
         if p.culture < 0 or p.science < 0:
             out.append(f"{tag} negative points")
         st = E.compute_stats(g, p)
@@ -1517,7 +1606,7 @@ def invariants(g) -> list:
             ([p.leader] if p.leader is not None else []) + p.wonders + p.colonies
         if sorted(expected_play) != sorted(p.play_order):
             out.append(f"{tag} play order {p.play_order} does not match the cards in play")
-        if any(TOKEN_VALUE[c] <= 0 for c in p.tokens):
+        if any(E.VALUE[c] <= 0 for c in p.tokens):
             out.append(f"{tag} token on a card without a value")
     if civil != s.civil_created:
         out.append(f"civil cards {civil} != {s.civil_created}")

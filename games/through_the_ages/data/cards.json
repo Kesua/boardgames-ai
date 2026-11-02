@@ -6252,8 +6252,7 @@
   "effect": {
    "type": "pact_trade_routes",
    "a_food_as_resource": 1,
-   "b_resource_as_food": 1,
-   "uses_per_turn": 1
+   "b_resource_as_food": 1
   }
  },
  {

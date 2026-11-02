@@ -90,10 +90,18 @@ only these three entries changed):
   to the printed costs of the destroyed buildings divided by 2, rounded up. Printed on the card (B; T) but missing
   from the structured effect; stage 2 had it hard-coded in the handler (STATUS Q12), which now reads the parameter.
 - **Trade Routes Agreement:** new parameter `uses_per_turn: 1` — each party may convert once per turn (any player's
-  turn), the stage-2 reading (STATUS Q10); the engine reads it.
+  turn), the stage-2 reading (STATUS Q10); the engine reads it. (Removed again after the review, below.)
 - **Maximilien Robespierre:** new parameter `revolution_spends_military_actions: True` — a revolution costs all
   military actions instead of all civil actions (B's reading of the base card); the structured effect had only the
   3 culture (STATUS Q23).
+
+After the independent engine review (2026-11-02; `card_effects.py` edited, `cards.json` rebuilt with
+`build_cards.py` from the inbox sources — only this entry changed):
+- **Trade Routes Agreement:** parameter `uses_per_turn: 1` removed. The card text (B: "Civilization A can use 1 food
+  as 1 resource during its turn", side B the reverse) prints no per-turn limit; the limit came from the stage-3
+  reading. Now: each party converts 1 for 1 as often as needed, only during its own turn (rules.md D33, review F17).
+
+All other review fixes (checks/review.md) changed engine code only; no other card data changed.
 
 ## Open
 

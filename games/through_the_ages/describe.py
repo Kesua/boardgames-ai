@@ -271,6 +271,9 @@ def record_info(g, a: int) -> dict:
         label = data.get("what")
         action = f"ABILITY_{label.upper()}" if seg != "NO" else f"ABILITY_{label.upper()}_NONE"
         card = data.get("card")
+        if label == "colonize" and seg == "CARD":
+            card = off                                  # Columbus / Suez Canal: the territory colonized (review F13)
+            extra = {"by": KEY[data["card"]]}
     elif kind in ("MIX", "TAKE_LOOP", "STEAL_TECH", "KIDNAP", "INFILTRATE", "ANNEX", "LOSE_WORKER", "TERRORISM",
                   "EVENT_CHOICE"):
         action = kind if seg != "NO" else kind + "_NONE"

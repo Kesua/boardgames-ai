@@ -213,7 +213,7 @@ BASE = {
     ("Open Borders Agreement", "I"): {"type": "pact_symmetric", "both": {"military_actions": 1},
                                       "attack_bonus": 2},
     ("Trade Routes Agreement", "I"): {"type": "pact_trade_routes", "a_food_as_resource": 1,
-                                      "b_resource_as_food": 1, "uses_per_turn": 1},  # per party, any turn (Q10)
+                                      "b_resource_as_food": 1},  # own turn, no limit (D33)
     ("Acceptance of Supremacy", "II"): {"type": "pact_ab", "a": {"resource_production": 1},
                                         "b": {"resource_production": -1}, "no_attack": True},
     ("International Trade Agreement", "II"): {"type": "pact_ab", "a": {"resource_production": 1},

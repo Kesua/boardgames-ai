@@ -124,7 +124,10 @@ def h_politics(g, t: dict, a):
     st = t.setdefault("stage", "verb")
     if st == "verb":
         if a is None:
-            g._ask("POLITICS", seat, politics_legal(g, seat))
+            legal = politics_legal(g, seat)
+            if t.get("only_olympics"):                                  # political action given up (IA): D26
+                legal = [x for x in legal if x == A_END or x == A_VERB + V["OLYMPICS"]]
+            g._ask("POLITICS", seat, legal)
             return
         if a == A_END:
             g._finish(t)
@@ -217,8 +220,13 @@ def prepare(g, seat: int, card: int) -> None:
 
 
 def known_by(entry) -> list:
-    """Seats that know an event deck entry besides its preparer (Nostradamus, Joan of Arc)."""
-    return entry[2] if len(entry) > 2 else []
+    """Seats that know an event deck entry besides its preparer (Nostradamus; Joan of Arc's look included)."""
+    return (entry[2] if len(entry) > 2 else []) + peeked_by(entry)
+
+
+def peeked_by(entry) -> list:
+    """Seats that looked at this entry as the top card of the current events deck (Joan of Arc)."""
+    return entry[3] if len(entry) > 3 else []
 
 
 def reveal(g, seat: int) -> None:
@@ -589,7 +597,9 @@ def resign(g, seat: int, t: dict) -> None:
     for c in p.kept_tactics:                            # Sun Tzu's kept tactics
         M.discard(g, c)
     p.kept_tactics = []
-    p.tactic = None
+    p.tactic = p.tactic_boost = None
+    if s.sun_tzu_tactic is not None and s.sun_tzu_tactic[1] == seat:   # Sun Tzu's card was still exclusive
+        s.sun_tzu_tactic = None
     if s.olympics is not None and s.olympics[0] == seat:
         s.olympics = None
     for card, target in p.wars:
@@ -766,15 +776,18 @@ def h_free_build(g, t: dict, a):
 
 def h_dev_civ(g, t: dict, a):
     """Development of Civilization: may increase population, build a farm/mine/urban building, or develop a
-    technology, each 1 food / resource / science cheaper (SUB_ACTION; no actions spent)."""
+    technology, each 1 food / resource / science cheaper (SUB_ACTION; no actions spent). The development may be a
+    revolution (1 science cheaper, all civil actions spent, D23)."""
     seat, d = t["seat"], t["discount"]
+    p = g.p(seat)
+    rev_ok = p.civil_spent == 0 and E.stats(g, seat).civil >= 1          # a revolution: all civil actions (D23)
     if a is None:
         legal = [A_NO]
         if g.can_increase_population(seat, free_action=True, discount=d):
             legal.append(A_OPTION)
         if g.build_options(seat, BUILDINGS, d, True):
             legal.append(A_OPTION + 1)
-        if g.develop_options(seat, free=True, revolution_ok=False, sci_discount=d):
+        if g.develop_options(seat, free=True, revolution_ok=rev_ok, sci_discount=d):
             legal.append(A_OPTION + 2)
         g._ask("SUB_ACTION", seat, legal, verb="DEV_CIV", source=t["card"])
         return
@@ -785,7 +798,7 @@ def h_dev_civ(g, t: dict, a):
         push(g, {"op": "build", "seat": seat, "kinds": BUILDINGS, "discount": d, "free": True, "card": t["card"]})
     elif a == A_OPTION + 2:
         push(g, {"op": "develop", "seat": seat, "card": None, "free": True, "then_gain": None, "source": t["card"],
-                 "revolution_ok": False, "sci_discount": d})
+                 "revolution_ok": rev_ok, "sci_discount": d})
 
 
 def h_planning(g, t: dict, a):

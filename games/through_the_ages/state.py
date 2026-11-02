@@ -67,7 +67,7 @@ class Player:
     louvre_tokens: int = 0                          # blue tokens kept on the Louvre (owned, not resources)
     saladin: Optional[int] = None                   # Saladin's mode: 0 = +2 strength, 1 = +1 civil action
     kept_tactics: list = field(default_factory=list)    # Sun Tzu: replaced exclusive tactics kept in own area
-    tactic_boost: Optional[int] = None              # Sun Tzu tucked under this tactic: +1 strength per army
+    tactic_boost: Optional[int] = None              # marker on Sun Tzu's marked tactic (this id): +1 per army
     peek: Optional[list] = None                     # Ian Fleming: [seat, its military hand when looked at]
     fleming_last: Optional[int] = None              # Ian Fleming: the player looked at on the previous turn
 
@@ -97,7 +97,7 @@ class State:
     military_deck: Deck = field(default_factory=Deck)
     military_discard: list = field(default_factory=list)     # current age only (T6.5, D7)
     age_a_unused: list = field(default_factory=list)          # Age A military cards set aside (T2.5)
-    current_events: list = field(default_factory=list)        # [card, preparer|None(, known_by seats)], 0 = top
+    current_events: list = field(default_factory=list)        # [card, preparer|None(, known_by, peeked_by)], 0 = top
     future_events: list = field(default_factory=list)
     past_events: list = field(default_factory=list)
     common_tactics: list = field(default_factory=list)
@@ -113,6 +113,8 @@ class State:
     resigned: int = 0
     nobel_prize: Optional[int] = None                         # Alfred Nobel beside the culture track (card id)
     olympics: Optional[list] = None                           # [owner seat, Coubertin card] while the Games run
+    sun_tzu_tactic: Optional[list] = None                     # [tactic Sun Tzu lies under, seat whose exclusive
+                                                              #  tactic it still is | None once common] (D32)
     tasks: list = field(default_factory=list)
     decisions: DecisionStack = field(default_factory=DecisionStack)
     log: TextLog = field(default_factory=TextLog)

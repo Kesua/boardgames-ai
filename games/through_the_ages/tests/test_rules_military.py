@@ -761,7 +761,7 @@ def hidden_variants(g, viewer):
         h.s.age_a_unused.reverse()
 
     def known(e):
-        return e[1] == viewer or (len(e) > 2 and viewer in e[2])
+        return e[1] == viewer or viewer in P.known_by(e)
 
     def events(h):
         h.s.current_events = [e if known(e) else [swap(e[0])] + e[1:] for e in h.s.current_events]
@@ -802,7 +802,8 @@ def test_changing_anything_hidden_from_a_seat_leaves_its_observation_unchanged()
 
 @rule("T16.2")
 def test_cards_that_reveal_information_reach_exactly_the_players_who_may_see_it():
-    """Joan of Arc's top event and Nostradamus' seen events reach their owner's observation only; Ian Fleming's look
+    """Joan of Arc's top event and Nostradamus' seen events reach their owner's observation only (Nostradamus: not
+    their order once the future deck became the shuffled current deck, review F12); Ian Fleming's look
     only his owner's; Ashoka's open civil hand every player's."""
     g, s, (o1, o2) = two(n=3)
     enc = SPEC.encoder(3)
@@ -818,10 +819,14 @@ def test_cards_that_reveal_information_reach_exactly_the_players_who_may_see_it(
             e[0] = cid("Development of Science") if e[0] != cid("Development of Science") else cid("Rats")
         return change
 
-    g.s.current_events.insert(0, [cid("Development of Crafts"), None, [s]])        # Joan of Arc's look
+    g.s.current_events.insert(0, [cid("Development of Crafts"), None, [], [s]])    # Joan of Arc's look
     assert seen_by(swap_event("current_events")) == [s]
     g.s.future_events.insert(0, [cid("Development of Crafts"), o1, [s]])            # o1's, seen by Nostradamus
     assert seen_by(swap_event("future_events")) == [s, o1]
+    g.s.current_events = [[cid("Good Harvest"), o1, [s]], [cid("Rats"), o1, [s]]]   # Nostradamus' cards after the
+    assert seen_by(lambda h: h.s.current_events.reverse()) == []                    # shuffle: the order is hidden
+    g.s.current_events[0].append([s])                                               # unless Joan of Arc looked at
+    assert seen_by(lambda h: h.s.current_events.reverse()) == [s]                   # the top card
     g.p(s).peek = [o1, [cid("Legion")]]                                             # Ian Fleming's look
     assert seen_by(lambda h: setattr(h.p(s), "peek", [o1, [cid("Phalanx")]])) == [s]
     g.p(o2).civil_hand = [cid("Iron")]

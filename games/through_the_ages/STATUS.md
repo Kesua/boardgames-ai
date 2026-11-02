@@ -89,6 +89,13 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
         ~10-30 decisions, choice C5). Random game ~19 / 32 / 55 ms for 2 / 3 / 4 players (238 / 411 / 668 decisions;
         a quiet-machine run; stage 2 measured 16 / 28 / 45). Greedy beats random 40/40.
 - [ ] verify-engine: checks/report.json 0 problems (10,000 games per player count), independent review in checks/review.md
+  - [x] independent review (2026-11-02, an agent that did not write the engine): 20 findings (1 bug-high, 12 bug-low,
+        5 doubtful, 2 info); every bug and all five doubtful findings fixed the reviewer's way (lead's decision: the
+        official rulebooks support them), each with a test in `tests/test_review_fixes.py` that failed before;
+        readings recorded as rules.md D20–D33, Q3/Q10/Q17/Q22–Q26/Q29/Q30/Q34/Q38/Q39 corrected below; one card data
+        change (Trade Routes Agreement). Ruined wonders also count for International Tourism and United Nations
+        (F10, D28); Columbus / Suez Canal colonizations record the territory (F13). Details: checks/review.md.
+  - [ ] checks/report.json over 10,000 games per player count on the current engine
 - [ ] design-rl: encoder, greedy, smoke training learns
 - [ ] train-model: open run, anchored run, acceptance -> finished model
 - [ ] run-experiment: mirror (+ versus) per player count, --verify passes
@@ -115,8 +122,8 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     smallest such overpayment is chosen (`economy.plan_payment`, test T12.3 in test_rules_military.py).
   - Q2 Frugality (`increase_population` + `then_gain` food): implemented literally from card data: the player must
     afford the full food cost, then gains the food. If the printed card is a discount, the data should say so.
-  - Q3 Engineering Genius (`wonder_stage` discount): with a construction technology it may build several stages in
-    that action; the discount comes off their summed cost once.
+  - Q3 Engineering Genius (`wonder_stage` discount) — REVERSED after the review (F1, rules D20): it builds exactly one
+    stage with its discount, even with a construction technology (was: several stages).
   - Q4 Wonder stage with an empty blue bank (T5.7): the owner picks a farm/mine token (LOSE_BLUE decision); with no
     token anywhere the stage still counts, uncovered.
   - Q5 Developing a government with a lower urban limit than the buildings in play: nothing is destroyed (rules
@@ -129,9 +136,9 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
 - Build-engine stage 2 readings (rules.md and card data silent or unclear; the lead decides):
   - Q9 Development of Planning: after every player picked, the 3 shown cards go back to the Age A cards set aside
     (rulebooks silent); while shown they are in `State.resolving`.
-  - Q10 Trade Routes Agreement: side A may use 1 food as 1 resource, side B 1 resource as 1 food, once per turn
-    (any player's turn; flag cleared at the end of the owner's turn), used automatically only when the tokens are
-    not enough (C1). Card data says only "a_food_as_resource: 1".
+  - Q10 Trade Routes Agreement — REVERSED after the review (F17, rules D33): each party converts 1 for 1 only during
+    its own turn, with no per-turn limit (was: any player's turn, once per turn); still automatic only when the tokens
+    are not enough (C1). Card data: `uses_per_turn` removed (data/SOURCES.md).
   - Q11 Arms Industry: a player with no technology of a unit type gets nothing for that type (nobody "ties at none").
   - Q12 Aggression: Raid: the aggressor chooses the buildings, mandatory as far as possible; Raid II/III fill the
     "Age II (III) or older" slot first, then the "Age I (II) or older" slot; the aggressor gains half the printed
@@ -148,8 +155,9 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     player is left the game ends at once without the final Age III evaluation (T14.2 is "after the last round").
   - Q16 Scientific Cooperation applies to every development incl. revolutions; if the partner has no science to
     pay, the party cannot develop at all (literal reading of "is possible only if").
-  - Q17 Development of Religion / Warfare: the free build respects the urban building limit; Development of
-    Civilization's "develop a technology" is a peaceful development (no revolution).
+  - Q17 Development of Religion / Warfare: the free build respects the urban building limit. Second part REVERSED
+    after the review (F5, rules D23): Development of Civilization's development may be a revolution (1 science
+    cheaper, all civil actions spent, only with all of them available).
   - Q18 Defense (T9.2, D4): the card cap is the defender's military action total; the defense ends automatically
     when the tie is reached; an aggression is legal even when its effect would find nothing to take (Annex without
     colonies, Infiltrate without leader or unfinished wonder): rules.md gives only the strength and pact conditions.
@@ -160,20 +168,26 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
   - Q21 SEND: military bonus cards are offered only while the force is below the bid; units may still be sent after
     it (T8.5 overpaying).
 - Build-engine stage 3 readings (card texts in the sources leave these open; the lead decides):
-  - Q22 Johannes Gutenberg: his extra civil action is used automatically for the first lab/library take, develop,
-    build or upgrade of the turn (never worse than a normal civil action, choice C1; PLAN 3 had also listed it as a
-    verb), with its 1 science / 1 resource discount and 2 culture. Not modelled: paying for an action card with it
-    (the engine cannot restrict the card's later choice to a lab/library).
+  - Q22 Johannes Gutenberg — REVERSED after the review (F14, rules D30): his extra civil action is optional; the
+    ACTION verb GUTENBERG (frozen number 26, a former spare; numbering still 479) chooses it for the next action,
+    which must be a lab/library take, develop, build or upgrade, or an action card used for one of these (the card's
+    task is then limited to labs/libraries and his discount adds to the card's); 1 science / 1 resource discount and
+    2 culture as before.
   - Q23 Maximilien Robespierre: a revolution spends all military actions instead of all civil actions (data flag);
     the new government's added military actions arrive spent, added civil actions arrive available (T5.9 mirrored).
-  - Q24 "Produces culture" of other cards: Charlie Chaplin doubles the best theater's printed culture; Hollywood and
-    Internet count the printed symbols of the buildings (bonuses of leaders, booked to the leaders, not included).
-  - Q25 Bill Gates: lab resources are a resource production bonus (gained with the other bonuses after mine
-    production, T15.6), not tokens on the labs; Impact of Industry does not count them; culture on leaving / at game
-    end = that bonus.
-  - Q26 Sun Tzu tucked under a tactic: +1 per army formed with that tactic (air forces double it) for its owner while
-    the marker is on that tactic card; other players copying the common card do not get it (no separate card
-    identity for the boosted tactic). Kept tactics become common on the first turn without him.
+    Corrected after the review (F6, rules D24): Patriotism's temporary military action is not spent; a revolution
+    through Breakthrough gives the card's civil action back. Likewise (F18, D25) any revolution keeps temporary civil
+    actions (Hammurabi).
+  - Q24 "Produces culture" of other cards: Charlie Chaplin doubles the best theater's printed culture. Hollywood and
+    Internet part REVERSED after the review (F4, rules D22): they count everything the buildings add incl. effects of
+    other cards on them (statistics with minus without those buildings' workers).
+  - Q25 Bill Gates — REVERSED after the review (F15, rules D31): Age I+ labs work as mines while he is in play (1 blue
+    token per worker in mine production, worth the lab's level; they store and make change; tokens stay usable after
+    he leaves); Impact of Industry does not count them; culture on leaving / at game end = their production.
+  - Q26 Sun Tzu tucked under a tactic — REVERSED after the review (F16, rules D32): the marked card is its own special
+    tactic, never merged, with +1 per army (air forces double it) for whoever has the marker on it; copying that
+    tactic takes the marked card (`State.sun_tzu_tactic`, `Player.tactic_boost`). Kept tactics become common on the
+    first turn without him.
   - Q27 Himeji Castle: the sacrificed unit adds its printed strength once more (+3 when defending); the aggressor
     decides after naming the target (the T9.1 check counts the best sacrifice; lost even if repelled; +3 culture);
     the defender's sacrifice is a DEFEND answer outside the card cap (D4 still applies); in a war the declarer then
@@ -181,16 +195,21 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
   - Q28 Genghis Khan's "ties go to you" applies to his own end-of-turn check only.
   - Q29 Nostradamus: +3 also in the T9.1 legality check of an aggression against him, not in wars; events other
     players prepare while he is in play stay known to his owner while they lie in an event deck (also after he
-    leaves).
+    leaves). Encoder corrected after the review (F12): Joan of Arc's look is kept apart (`peeked_by`), so Nostradamus'
+    known cards no longer reveal their position after the future deck became the shuffled current deck.
   - Q30 Silk Road: active from the first stage (unfinished) and when completed; +1 to each benefit of the first action
-    card of the turn, Patriotism's military action included; "per civilization" totals +1 only when not zero.
-  - Q31 Louvre's token exchange is an ACTION verb (own action phase only), not "at any time".
+    card of the turn, Patriotism's military action included. "Per civilization" part REVERSED after the review (F8,
+    rules D27): +1 in total always, also when the count is 0.
+  - Q31 Louvre's token exchange is an ACTION verb (own action phase only), not "at any time" (review F19: kept as a
+    documented simplification, small effect).
   - Q32 Ian Fleming's look is optional (NO), the snapshot lasts until the end of his owner's turn; a turn without a
     look lifts the "not the same player twice in a row" limit. Joan of Arc's look is automatic (free information).
   - Q33 Winston Churchill's choice is an ACTION verb once per turn (no forced choice); Saladin's mode is chosen at
     every end of turn (keeping it is one of the two answers).
-  - Q34 Happy-face chain: Darwin, Steve Jobs, Marlene Dietrich and Homer's tuck change cards' happy faces first, then
-    St. Peter's Basilica (+1 per worker on a building), then Michelangelo and Joan of Arc read the result.
+  - Q34 Happy-face chain — corrected after the review (F3, rules D21): Steve Jobs, Marlene Dietrich and Homer's tuck
+    first, then St. Peter's Basilica (+1 per worker on a building), then Darwin (so with both, temples give their
+    printed faces), then Michelangelo and Joan of Arc read the result. Homer's face stays on a ruined wonder (F9,
+    D28).
   - Q35 International Red Cross for other players: 1 civil action + 3 food, once per turn; the stage token comes from
     the owner's blue bank, else a farm/mine token of the owner's choice (LOSE_BLUE asked to the owner), else none
     (Q4).
@@ -200,10 +219,12 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     only purchases that keep the bid reachable are offered; Cook discards any military card that is not a
     colonization bonus card, at most 2. The bid limit counts Cook's discards and Isabella's best affordable purchase.
   - Q38 Nelson Mandela: the take surcharge counts discontent after Forbidden City; surplus = happiness − faces
-    required. James Watt on leaving: best farm/mine production = workers × token value (extra tokens not counted).
+    required. James Watt part REVERSED after the review (F11, rules D29): on leaving, best
+    farm/mine production includes Machu Picchu's / Transcontinental Railroad's extra tokens.
   - Q39 Julius Caesar with International Agreement: the forfeit takes one of his two political actions. Coubertin's
     Olympic Games also cost their owner 8 culture for an attack and end at the owner's next Politics Phase (forfeited
-    or not) or when he resigns.
+    or not) or when he resigns. Added after the review (F7, rules D26): the Games can be declared even when the
+    political action was given up to International Agreement.
   - Q40 Ashoka's colours by card kind: farm/mine brown, urban grey, unit red, special blue, government orange, leader
     green, action yellow. Frederick Barbarossa is legal only when both steps can be paid (with a Trade Routes pact
     the check simulates the food payment first).

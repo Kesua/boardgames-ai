@@ -727,8 +727,9 @@ def test_gutenberg(key):
     lead(g, s, key)
     res(g, s, 2)
     c0, cult, r0 = E.civil_available(g, s), p.culture, E.resources(p)
+    answer(g, "Johannes Gutenberg")                                               # optional: chosen (D30)
     answer(g, "Build a farm, mine or urban building")
-    answer(g, "on Philosophy")
+    maybe(g, "on Philosophy")                                                     # labs/libraries only
     assert p.workers[cid("Philosophy")] == 2 and r0 - E.resources(p) == RESOURCE_COST[cid("Philosophy")] - 1
     assert E.civil_available(g, s) == c0 and p.culture == cult + 2               # his extra action
     p.civil_spent = st(g, s).civil
@@ -976,7 +977,7 @@ def test_bill_gates(key):
     p = g.p(s)
     lead(g, s, key)
     mil(g, s, "Alchemy", k=2)
-    assert st(g, s).resource_bonus == 2
+    assert E.output(g, s, "mine") - E.output(g, s, "mine", bonuses=False) == 2       # labs produce (D31)
     c0 = p.culture
     lead(g, s, "aristotle_a")
     assert p.culture == c0 + 2                                                    # leaving: this production

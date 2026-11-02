@@ -138,7 +138,7 @@ completing step (section 9).
   Raiders' loss are full), the last bidder's colonization, war resolution, production, corruption, consumption,
   age-change losses (T13.4).
 - Automatic (no decision): payments of food and resources (choice C1), army forming for the highest strength (T11.4),
-  Trade Routes conversions and Gutenberg's restricted action when they are needed to pay (C1).
+  Trade Routes conversions when they are needed to pay (C1). (Gutenberg's action: an ACTION verb, rules D30.)
 - Every answer other than END must use up something bounded (actions, a once-per-turn flag, tokens, cards), so turns
   end; tested.
 
@@ -255,8 +255,9 @@ random players about 40 rounds × 4 players × ~40 decisions ≈ 6,400 decisions
 
 - **C1 Automatic payment.** Food and resources are paid automatically: the exact amount, choosing among exact
   payments the one that returns the most blue tokens to the blue bank (lowers corruption), ties keeping higher-value
-  tokens; with no exact payment, the smallest overpayment that empties the bank (T12.3). Trade Routes conversions and
-  Gutenberg's restricted action are used automatically when needed to pay; temporary resources first (T12.9). Losing
+  tokens; with no exact payment, the smallest overpayment that empties the bank (T12.3). Trade Routes conversions are
+  used automatically when needed to pay (Gutenberg's action is a choice after the review, rules D30); temporary
+  resources first (T12.9). Losing
   blue tokens from cards with an empty bank stays a decision (`LOSE_BLUE`). The rules let a player choose each
   combination; a decision per token would add many steps for almost no strategic weight.
 - **C2 Two-step actions.** Take a card = one answer; playing a hand card = one answer; build/upgrade/destroy and

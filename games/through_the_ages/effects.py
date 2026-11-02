@@ -34,7 +34,8 @@ HOOKS = ("passive", "on_enter_play", "on_leave_play", "start_of_turn", "start_of
 # is applied (engine/politics/military read them by type), registered for the bookkeeping only.
 REGISTRY = {h: {} for h in HOOKS}
 # passive effects that read the happy faces other cards give, run after all other cards, in this order
-LATE_ORDER = ("darwin", "steve_jobs", "marlene_dietrich", "st_peters_basilica", "michelangelo", "joan_of_arc")
+# (Darwin after St. Peter's Basilica: with both, temples give their printed faces, NLW p9, D21)
+LATE_ORDER = ("steve_jobs", "marlene_dietrich", "st_peters_basilica", "darwin", "michelangelo", "joan_of_arc")
 
 
 def leader_type(p):
@@ -391,11 +392,24 @@ def _pop(g, seat, card, eff):
     g.apply_gain(seat, eff.get("then_gain", {}), "actions", card)
 
 
-def _targets(eff) -> tuple:
+def action_targets(eff) -> tuple:
     out = []
     for t in eff["targets"]:
         out += ["lab", "temple", "library", "theater", "arena"] if t == "urban" else [t]
     return tuple(out)
+
+
+_targets = action_targets
+
+
+def gutenberg_card(g, seat: int, kinds: tuple, discount: int) -> tuple:
+    """(kinds, discount) of an action card's build/upgrade/develop: when Johannes Gutenberg's action paid for the
+    card (engine.play_action_card) only labs/libraries, with his discount added (NLW p8, D30)."""
+    p = g.s.players[seat]
+    if not p.flags.pop("gutenberg_card", False):
+        return kinds, discount
+    eff = EFFECT[p.leader]
+    return tuple(k for k in kinds if k in eff["extra_civil_action_for"]), discount + eff["discount"]
 
 
 @handler("can_play_action", "build_or_upgrade")
@@ -407,8 +421,8 @@ def _can_build_or_upgrade(g, seat, card, eff):
 
 @handler("play_action", "build_or_upgrade")
 def _build_or_upgrade(g, seat, card, eff):
-    g.s.tasks.append({"op": "sub_action", "seat": seat, "card": card, "kinds": _targets(eff),
-                      "discount": eff["discount"]})
+    kinds, d = gutenberg_card(g, seat, _targets(eff), eff["discount"])
+    g.s.tasks.append({"op": "sub_action", "seat": seat, "card": card, "kinds": kinds, "discount": d})
 
 
 @handler("can_play_action", "upgrade")
@@ -418,17 +432,20 @@ def _can_upgrade(g, seat, card, eff):
 
 @handler("play_action", "upgrade")
 def _upgrade(g, seat, card, eff):
-    g.s.tasks.append(g.upgrade_task(seat, _targets(eff), eff["discount"], True, card))
+    kinds, d = gutenberg_card(g, seat, _targets(eff), eff["discount"])
+    g.s.tasks.append(g.upgrade_task(seat, kinds, d, True, card))
 
 
 @handler("can_play_action", "wonder_stage")
 def _can_wonder(g, seat, card, eff):
-    return g.wonder_max_stages(seat, eff["discount"], True) > 0
+    return g.wonder_max_stages(seat, eff["discount"], True, single=True) > 0
 
 
 @handler("play_action", "wonder_stage")
 def _wonder(g, seat, card, eff):
-    g.s.tasks.append({"op": "wonder", "seat": seat, "discount": eff["discount"], "free": True, "card": card})
+    """Engineering Genius: exactly one stage, even with a construction technology (D20)."""
+    g.s.tasks.append({"op": "wonder", "seat": seat, "discount": eff["discount"], "free": True, "card": card,
+                      "single": True})
 
 
 @handler("play_action", "military_boost")
@@ -447,8 +464,11 @@ def _can_develop(g, seat, card, eff):
 
 @handler("play_action", "develop")
 def _develop(g, seat, card, eff):
-    g.s.tasks.append({"op": "develop", "seat": seat, "card": None, "free": True, "then_gain": eff.get("then_gain"),
-                      "source": card, "revolution_ok": g.s.players[seat].flags.get("all_civil_before_action", False)})
+    task = {"op": "develop", "seat": seat, "card": None, "free": True, "then_gain": eff.get("then_gain"),
+            "source": card, "revolution_ok": g.s.players[seat].flags.get("all_civil_before_action", False)}
+    if g.s.players[seat].flags.get("gutenberg_card"):
+        task["only"], task["sci_discount"] = gutenberg_card(g, seat, ("lab", "library"), 0)
+    g.s.tasks.append(task)
 
 
 # ================================================================================================= military helpers
@@ -1082,7 +1102,8 @@ def _pact_ab(g, p, card, eff, st, side, other):
 
 @handler("pact", "pact_international_tourism")
 def _pact_tourism(g, p, card, eff, st, side, other):
-    k = eff["culture_per_partner_wonder"] * len(g.s.players[other].wonders)
+    q = g.s.players[other]
+    k = eff["culture_per_partner_wonder"] * (len(q.wonders) + len(q.ruined))       # ruins count (D28)
     st.v[S_CULT] += k
     st.culture_parts[card] = st.culture_parts.get(card, 0) + k
 

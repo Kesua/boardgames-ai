@@ -24,11 +24,12 @@ import numpy as np
 from . import economy as E
 from . import military as M
 from .cards import AGE, AGES, EFFECT_TYPE, HOLDS_WORKERS, KIND, MILITARY_KINDS, N_CARDS
+from .politics import known_by, peeked_by
 from .state import LEADER_PROXY, WONDER_PROXY
 
 WORKER_CARDS = [c for c in range(N_CARDS) if HOLDS_WORKERS[c]]
 W_INDEX = {c: i for i, c in enumerate(WORKER_CARDS)}
-TOKEN_CARDS = [c for c in range(N_CARDS) if KIND[c] in ("farm", "mine")]
+TOKEN_CARDS = [c for c in range(N_CARDS) if E.VALUE[c]]                    # farms, mines, Bill Gates' labs
 T_INDEX = {c: i for i, c in enumerate(TOKEN_CARDS)}
 MIL_CARDS = [c for c in range(N_CARDS) if KIND[c] in MILITARY_KINDS]
 M_INDEX = {c: i for i, c in enumerate(MIL_CARDS)}
@@ -144,10 +145,10 @@ class StateEncoder:
         for e in s.current_events + s.future_events:                        # my prepared events (I know them)
             if e[1] == seat:
                 v[i + M_INDEX[e[0]]] += 0.5
-            elif len(e) > 2 and seat in e[2]:                                # Nostradamus, Joan of Arc
+            elif seat in known_by(e):                                        # Nostradamus, Joan of Arc
                 v[known + M_INDEX[e[0]]] += 0.5
-        if s.current_events and len(s.current_events[0]) > 2 and seat in s.current_events[0][2]:
-            v[known + M_INDEX[s.current_events[0][0]]] = 1.0                # the top card (Joan of Arc)
+        if s.current_events and seat in peeked_by(s.current_events[0]):      # only Joan's look tells the position:
+            v[known + M_INDEX[s.current_events[0][0]]] = 1.0                # the top card (Nostradamus' cards do not)
         i += 2 * N_MIL
         if me.peek is not None:                                              # Ian Fleming's look this turn
             for c in me.peek[1]:

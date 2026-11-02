@@ -6,7 +6,7 @@ One handler per effect type of data/card_effects.py, registered into effects.REG
   read the happy faces other cards give),
 - hooks (start of turn / politics / action phase, take card, develop, prepare event, wonder stage / completion,
   leaving play, end of turn, age start, game end),
-- activated abilities as VERB answers (ABILITIES; numbers 15-25 of the frozen VERB segment),
+- activated abilities as VERB answers (ABILITIES; numbers 15-26 of the frozen VERB segment),
 - "rules": effects applied where the rule itself is computed (engine, politics, military: Gutenberg's action,
   Gandhi, Himeji Castle, Isabella, James Cook, Genghis Khan / Jan Zizka / Marlene Dietrich army forming, Sun Tzu's
   tactics, Silk Road, Harvard College, Machu Picchu, Transcontinental Railroad, Ashoka, Julius Caesar, Nobel); they
@@ -149,14 +149,10 @@ def _sid_meier(g, p, card, eff, st):
             st.v[S_SCI] += eff["lab_science_change"] * k
 
 
-@handler("passive", "bill_gates")
-def _bill_gates(g, p, card, eff, st):
-    """Each lab produces resources = its level (a resource production bonus, T15.6; Q25)."""
-    st.v[S_RESB] += gates_production(p, eff)
-
-
 def gates_production(p, eff) -> int:
-    return eff["lab_resources_per_level"] * sum(LEVEL[c] * k for c, k in p.workers.items() if k and KIND[c] == "lab")
+    """Bill Gates: Age I+ labs work as mines while he is in play (economy.kind_cards / produce, D31); culture on leaving
+    and at game end = their production."""
+    return E.gates_production(p, eff["lab_resources_per_level"])
 
 
 @handler("passive", "gaudi")
@@ -386,13 +382,14 @@ def _maria(g, seat, card, eff, owner):
 
 @handler("start_of_politics", "joan_of_arc")
 def _joan_peek(g, seat, card, eff, owner):
-    """Looks at the top card of the current events deck (free information: always taken)."""
+    """Looks at the top card of the current events deck (free information: always taken). Recorded apart from the
+    seats that know a card (Nostradamus) as `peeked_by` (entry[3]): only this look tells where the card lies."""
     if seat == owner and g.s.current_events:
         entry = g.s.current_events[0]
-        if len(entry) < 3:
+        while len(entry) < 4:
             entry.append([])
-        if seat not in entry[2]:
-            entry[2].append(seat)
+        if seat not in entry[3]:
+            entry[3].append(seat)
 
 
 @handler("start_of_politics", "ian_fleming")
@@ -467,10 +464,17 @@ def _confucius_leave(g, seat, card, eff):
 
 @handler("on_leave_play", "watt")
 def _watt_leave(g, seat, card, eff):
-    """Culture = production of the best farm or mine (the one producing most)."""
+    """Culture = production of the best farm or mine (the one producing most, extra tokens of Machu Picchu and
+    Transcontinental Railroad included: NLW p9, D29)."""
     p = g.p(seat)
-    best = max((p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] in ("farm", "mine")), default=0)
-    score(g, seat, best, card, "leaders")
+    prod = {}
+    for kind in ("farm", "mine"):
+        for c in p.techs:
+            if KIND[c] == kind:
+                prod[c] = p.workers.get(c, 0) * TOKEN_VALUE[c]
+        for c in effects.extra_token_cards(g, p, kind):
+            prod[c] += TOKEN_VALUE[c]
+    score(g, seat, max(prod.values(), default=0), card, "leaders")
 
 
 @handler("on_leave_play", "bill_gates")
@@ -485,11 +489,19 @@ def _gates_end(g, seat, card, eff):
 
 @handler("on_leave_play", "sun_tzu")
 def _sun_tzu_leave(g, seat, card, eff):
-    """Tucked under the current tactic: it gives +1 strength per army while the marker stays on it (Q26)."""
+    """Tucked under the current tactic: that card becomes its own special tactic with +1 strength per army for
+    whoever has the marker on it, never merged, copyable when common (NLW p7, D32). On the own exclusive tactic it
+    becomes common as usual; on a common card every player on that card gets it at once."""
     p = g.p(seat)
-    if p.tactic is not None:
-        p.tactic_boost = p.tactic
-        g.touch(seat)
+    c = p.tactic
+    if c is None:
+        return
+    own = p.exclusive_tactic == c
+    g.s.sun_tzu_tactic = [c, seat if own else None]
+    for q in g.s.players:
+        if q.seat == seat or (not own and q.tactic == c and q.exclusive_tactic != c):
+            q.tactic_boost = c
+            g.touch(q.seat)
 
 
 @handler("on_leave_play", "saladin")
@@ -582,21 +594,32 @@ def _fsf(g, seat, card, eff):
           "wonders")
 
 
+def produced_by(g, p, kinds, stats) -> int:
+    """What the buildings of these kinds add to the stats (raw sums), effects of other cards on their production
+    included (Shakespeare, Bach, Chaplin, Newton, Einstein, Sid Meier, ...: CoL p12, D22): the player's statistics
+    with these buildings' workers minus the statistics without them."""
+    full = E.compute_stats(g, p)
+    saved = p.workers
+    p.workers = {c: k for c, k in saved.items() if KIND[c] not in kinds}
+    try:
+        empty = E.compute_stats(g, p)
+    finally:
+        p.workers = saved
+    return max(0, sum(full.v[i] - empty.v[i] for i in stats))
+
+
 @handler("on_wonder_complete", "hollywood")
 def _hollywood(g, seat, card, eff):
-    """Twice the (printed) culture produced by theaters and libraries (Q24)."""
-    p = g.p(seat)
-    k = sum(_yield(c, S_CULT) * n for c, n in p.workers.items() if n and KIND[c] in eff["of"])
+    """Twice the culture produced by theaters and libraries, leader bonuses on them included (D22)."""
+    k = produced_by(g, g.p(seat), tuple(eff["of"]), (S_CULT,))
     score(g, seat, eff["culture_multiplier"] * k, card, "wonders")
 
 
 @handler("on_wonder_complete", "internet")
 def _internet(g, seat, card, eff):
-    """Culture and science produced by urban buildings plus the strength they give (printed symbols, Q24)."""
-    p = g.p(seat)
-    k = sum((_yield(c, S_CULT) + _yield(c, S_SCI) + _yield(c, S_STR)) * n for c, n in p.workers.items()
-            if n and KIND[c] in URBAN)
-    score(g, seat, k, card, "wonders")
+    """Culture and science produced by urban buildings plus the strength they give, bonuses of other cards on them
+    included (D22)."""
+    score(g, seat, produced_by(g, g.p(seat), URBAN, (S_CULT, S_SCI, S_STR)), card, "wonders")
 
 
 @handler("on_wonder_complete", "manhattan_project")
@@ -621,11 +644,12 @@ def _esb(g, seat, card, eff):
 
 @handler("on_wonder_complete", "united_nations")
 def _un(g, seat, card, eff):
-    """4 culture x the highest of: wonders (itself included), special technologies, urban building types; then may
-    evaluate an Age III event from hand for everybody (it stays in hand)."""
+    """4 culture x the highest of: wonders (itself and ruins included), special technologies, urban building types;
+    then may evaluate an Age III event from hand for everybody (it stays in hand)."""
     p = g.p(seat)
     kinds = len({KIND[c] for c, k in p.workers.items() if k and KIND[c] in URBAN})
-    score(g, seat, eff["culture_multiplier"] * max(len(p.wonders), len(p.specials), kinds), card, "wonders")
+    wonders = len(p.wonders) + len(p.ruined)                                # ruins count (D28)
+    score(g, seat, eff["culture_multiplier"] * max(wonders, len(p.specials), kinds), card, "wonders")
     if eff["may_evaluate_age_iii_event_from_hand"] and _age_iii_events(p):
         push(g, {"op": "ability", "seat": seat, "what": "un_event", "card": card})
 
@@ -658,7 +682,7 @@ def _per_stronger(g, seat, card, eff):
     """Wave of Nationalism, Military Build-Up: resources for military units this turn per stronger civilization."""
     me = E.stats(g, seat).strength
     n = sum(1 for x in g.active_seats() if x != seat and E.stats(g, x).strength > me)
-    k = eff["per_player"][str(max(2, len(g.active_seats())))] * n + (eff.get("bonus_total", 0) if n else 0)
+    k = eff["per_player"][str(max(2, len(g.active_seats())))] * n + eff.get("bonus_total", 0)   # D27
     _temp(g.p(seat), "unit", k)
 
 
@@ -667,7 +691,7 @@ def _per_more_cultured(g, seat, card, eff):
     """Endowment for the Arts: culture per civilization with more culture points."""
     me = g.p(seat).culture
     n = sum(1 for x in g.active_seats() if x != seat and g.p(x).culture > me)
-    k = eff["per_player"][str(max(2, len(g.active_seats())))] * n + (eff.get("bonus_total", 0) if n else 0)
+    k = eff["per_player"][str(max(2, len(g.active_seats())))] * n + eff.get("bonus_total", 0)   # D27
     score(g, seat, k, card, "actions")
 
 
@@ -876,6 +900,23 @@ def _use_olympics(g, seat):
     g.s.olympics = [seat, p.leader]
 
 
+def _can_gutenberg(g, seat):
+    """Choosing Gutenberg's action is legal when some lab/library action could use it now (engine.gutenberg_legal)."""
+    if not g.gutenberg_ready(seat):
+        return False
+    p = g.p(seat)
+    p.flags["gutenberg_armed"] = True
+    try:
+        return bool(En.gutenberg_legal(g, seat))
+    finally:
+        p.flags["gutenberg_armed"] = False
+
+
+def _use_gutenberg(g, seat):
+    """The next action uses his extra civil action (NLW p8: optional, also for an action card; D30)."""
+    g.p(seat).flags["gutenberg_armed"] = True
+
+
 ABILITIES = {          # verb: (decision, card types, legal, use)
     "ALEXANDER": ("POLITICS", ("alexander",), _can_alexander, _use_alexander),
     "COLUMBUS": ("POLITICS", ("columbus",), _can_columbus, _use_columbus),
@@ -888,6 +929,7 @@ ABILITIES = {          # verb: (decision, card types, legal, use)
     "CHURCHILL": ("ACTION", ("churchill",), _can_churchill, _use_churchill),
     "LOUVRE": ("ACTION", ("louvre",), _can_louvre, _use_louvre),
     "RED_CROSS": ("ACTION", ("red_cross",), _can_red_cross, _use_red_cross),
+    "GUTENBERG": ("ACTION", ("gutenberg",), _can_gutenberg, _use_gutenberg),
 }
 for _verb, (_where, _types, _can, _use) in ABILITIES.items():
     for _t in _types:

@@ -39,6 +39,7 @@ def value(g, seat: int) -> float:
     r = rounds_left(g)
     food_prod = sum(p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == "farm") + st.food_bonus
     res_prod = sum(p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == "mine") + st.resource_bonus
+    res_prod += E.gates_production(p) if E.gates(p) else 0                         # Bill Gates' labs (D31)
     net_food = food_prod - E.consumption(p.yellow_bank)
     net_res = res_prod - E.corruption(p.blue_bank)
     horizon = min(r, 8)

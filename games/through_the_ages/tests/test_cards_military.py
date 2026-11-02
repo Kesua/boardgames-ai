@@ -780,10 +780,10 @@ def test_trade_routes(key):
     make_pact(g, s, o, "Trade Routes Agreement", "I", "A")
     tokens(g, s, "Bronze", 1)
     food = E.food(g.p(s))
-    assert g.afford(s, "mine", 2) and not g.afford(s, "mine", 3) and not g.afford(o, "farm", 99)
+    assert g.afford(s, "mine", 1 + food) and not g.afford(s, "mine", 2 + food) and not g.afford(o, "farm", 99)
     answer(g, "Build a military unit")                                             # Warriors cost 2: 1 + 1 food
-    assert E.resources(g.p(s)) == 0 and E.food(g.p(s)) == food - 1 and g.p(s).flags["trade_routes_used"]
-    assert not g.afford(s, "mine", 1)                                              # once per turn
+    assert E.resources(g.p(s)) == 0 and E.food(g.p(s)) == food - 1
+    assert g.afford(s, "mine", 1)                                                  # no per-turn limit (D33)
 
 
 @pytest.mark.parametrize("key", [mcard("acceptance_of_supremacy_ii"), mcard("international_trade_agreement_ii"),

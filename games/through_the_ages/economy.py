@@ -9,8 +9,8 @@ from __future__ import annotations
 from functools import lru_cache
 
 from . import effects, military
-from .cards import (EFFECT_TYPE, HOLDS_WORKERS, KIND, N_STATS, S_CIVIL, S_COLON, S_CULT, S_FOODB, S_HAPPY, S_MIL,
-                    S_RESB, S_SCI, S_STR, S_UNHAPPY, STAT_YIELDS, TOKEN_VALUE, URBAN_LIMIT)
+from .cards import (EFFECT, EFFECT_TYPE, HOLDS_WORKERS, KIND, LEVEL, N_CARDS, N_STATS, S_CIVIL, S_COLON, S_CULT,
+                    S_FOODB, S_HAPPY, S_MIL, S_RESB, S_SCI, S_STR, S_UNHAPPY, STAT_YIELDS, TOKEN_VALUE, URBAN_LIMIT)
 
 
 # ---------------------------------------------------------------------------------------------- tables (T1.7, T1.8)
@@ -124,7 +124,8 @@ def compute_stats(g, p) -> Stats:
     for c in p.ruined:                                   # Ravages of Time: a ruined wonder produces 2 culture
         v[S_CULT] += 2
         parts[c] = parts.get(c, 0) + 2
-    if p.homer_wonder is not None and p.homer_wonder in p.wonders:   # Homer tucked under a wonder: +1 happy face
+    if p.homer_wonder is not None and (p.homer_wonder in p.wonders or p.homer_wonder in p.ruined):
+        # Homer tucked under a wonder: +1 happy face, kept by its ruins (CoL p12, D28)
         v[S_HAPPY] += 1
         happy[p.homer_wonder] = happy.get(p.homer_wonder, 0) + 1
     if late:                                             # effects that read other cards' happy faces, in order
@@ -229,15 +230,31 @@ def military_hand_limit(g, seat: int) -> int:
 
 
 # ---------------------------------------------------------------------------------------------- tokens (T12)
-def kind_cards(p, kind: str) -> list:
-    """Farm or mine technologies in play, highest token value first (values differ per age)."""
-    return sorted((c for c in p.techs if KIND[c] == kind), key=lambda c: -TOKEN_VALUE[c])
+# Bill Gates (CoL p12, D31): labs of Age I or higher work as mines while he is in play: 1 blue token per worker in
+# production, each worth the lab's level; they store and make change; tokens left on them stay usable after he leaves.
+VALUE = [TOKEN_VALUE[c] or (LEVEL[c] if KIND[c] == "lab" else 0) for c in range(N_CARDS)]   # food/resources per token
+TOKEN_KIND = ["mine" if KIND[c] == "lab" else KIND[c] for c in range(N_CARDS)]
+
+
+def gates(p) -> bool:
+    return p.leader is not None and EFFECT_TYPE[p.leader] == "bill_gates"
+
+
+def kind_cards(p, kind: str, producing: bool = False) -> list:
+    """Cards holding food (farms) or resources (mines; Bill Gates' labs while he is in play, and labs still holding
+    tokens unless `producing`), highest token value first (values differ per age)."""
+    if kind == "mine" and (gates(p) or (not producing and any(KIND[c] == "lab" for c in p.tokens))):
+        g = gates(p)
+        cards = [c for c in p.techs if KIND[c] == "mine" or
+                 (KIND[c] == "lab" and VALUE[c] and (g or (not producing and p.tokens.get(c))))]
+    else:
+        cards = [c for c in p.techs if KIND[c] == kind]
+    return sorted(cards, key=lambda c: -VALUE[c])
 
 
 def total(p, kind: str) -> int:
     """Food (kind 'farm') or resources (kind 'mine') a player has."""
-    tok = p.tokens
-    return sum(tok.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == kind)
+    return sum(k * VALUE[c] for c, k in p.tokens.items() if TOKEN_KIND[c] == kind)
 
 
 def food(p) -> int:
@@ -344,7 +361,7 @@ def pay(p, kind: str, amount: int) -> int:
     if amount <= 0:
         return 0
     cards = kind_cards(p, kind)
-    values = tuple(TOKEN_VALUE[c] for c in cards)
+    values = tuple(VALUE[c] for c in cards)
     orig = tuple(p.tokens.get(c, 0) for c in cards)
     final = plan_payment(values, orig, p.blue_bank, amount)
     if final is None:
@@ -372,7 +389,7 @@ def gain(p, kind: str, amount: int) -> int:
     if amount <= 0:
         return 0
     cards = kind_cards(p, kind)
-    values = tuple(TOKEN_VALUE[c] for c in cards)
+    values = tuple(VALUE[c] for c in cards)
     add = plan_gain(values, p.blue_bank, amount)
     for c, k in zip(cards, add):
         if k:
@@ -383,14 +400,14 @@ def gain(p, kind: str, amount: int) -> int:
 
 def produce(p, kind: str) -> int:
     """T12.6 / T12.8: one token per worker on each farm (mine); with too few tokens in the bank the highest levels
-    are filled first. Returns the value produced."""
+    are filled first (Bill Gates' labs with the mines). Returns the value produced."""
     out = 0
-    for c in kind_cards(p, kind):
+    for c in kind_cards(p, kind, producing=True):
         k = min(p.workers.get(c, 0), p.blue_bank)
         if k:
             p.tokens[c] = p.tokens.get(c, 0) + k
             p.blue_bank -= k
-            out += k * TOKEN_VALUE[c]
+            out += k * VALUE[c]
     return out
 
 
@@ -419,11 +436,20 @@ def production_bonus(g, seat: int, kind: str) -> int:
 
 def output(g, seat: int, kind: str, bonuses: bool = True) -> int:
     """Food or resource production of one player now: workers, extra tokens and (with `bonuses`) production
-    bonuses."""
+    bonuses and Bill Gates' labs (T15.6: Impact of Industry counts mines only)."""
     p = g.s.players[seat]
     out = sum(p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == kind)
     out += sum(TOKEN_VALUE[c] for c in effects.extra_token_cards(g, p, kind))
-    return out + (production_bonus(g, seat, kind) if bonuses else 0)
+    if not bonuses:
+        return out
+    if kind == "mine" and gates(p):
+        out += gates_production(p, EFFECT[p.leader]["lab_resources_per_level"])
+    return out + production_bonus(g, seat, kind)
+
+
+def gates_production(p, per: int = 1) -> int:
+    """Resources Bill Gates' labs produce per production: their level per worker (Age A labs: 0)."""
+    return per * sum(VALUE[c] * k for c, k in p.workers.items() if k and KIND[c] == "lab")
 
 
 # ---------------------------------------------------------------------------------------------- points (T12.4)
