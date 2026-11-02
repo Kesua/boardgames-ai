@@ -1,0 +1,83 @@
+{
+  "slug": "through_the_ages",
+  "name": "Through the Ages: A New Story of Civilization",
+  "publisher": null,
+  "players": [
+    2,
+    3,
+    4
+  ],
+  "theme": {
+    "accent": "#4a5d6b"
+  },
+  "intro": {
+    "en": "A toy game used as the starting point for new games and for testing the platform."
+  },
+  "terms": {
+    "en": {
+      "item": "card",
+      "items": "cards",
+      "board": "hand",
+      "boards": "hands",
+      "archetype": "main colour",
+      "archetypes": "main colours",
+      "round": "round"
+    }
+  },
+  "tags": {
+    "colour": {
+      "en": "Colour"
+    }
+  },
+  "archetype": {
+    "tag": "colour",
+    "min_share": 0.0,
+    "rule": {
+      "en": "The colour a player holds most cards of."
+    }
+  },
+  "score_categories": {
+    "numbers": {
+      "en": "Numbers"
+    },
+    "sets": {
+      "en": "Colour sets"
+    }
+  },
+  "seat_extras": {
+    "cards": {
+      "en": "Cards"
+    }
+  },
+  "top_decision": "TAKE",
+  "actions": {
+    "MARKET": {
+      "en": "Take from the market"
+    },
+    "DECK": {
+      "en": "Take from the deck"
+    }
+  },
+  "fate": {
+    "taken": [
+      "MARKET"
+    ]
+  },
+  "fate_labels": {
+    "taken": {
+      "en": "Taken"
+    },
+    "left_in_hand": {
+      "en": "Left"
+    }
+  },
+  "length": {
+    "show": false
+  },
+  "item_attributes": [],
+  "featured": {},
+  "languages": [
+    "en"
+  ],
+  "rights": "RIGHTS.md"
+}
