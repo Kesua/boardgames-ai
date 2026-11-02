@@ -53,6 +53,11 @@
     return out;
   }
   const color = (i) => `var(--s${(i % 8) + 1})`;
+  // axis labels: whole-number ticks drop trailing zero decimals ("20.0" -> "20", "4,0 %" -> "4 %")
+  const tickText = (fmt, t, ticks) => {
+    const s = String(fmt ? fmt(t) : t);
+    return ticks.every((v) => Number.isInteger(v)) ? s.replace(/([.,]0+)(?=[^0-9]*$)/, "") : s;
+  };
 
   /* Horizontal bars around zero (polarity): rows [{label, value, tip, dim}]. Positive = --pos, negative = --neg.
      o.mag: plain magnitudes (shares, points) in one hue. The axis only covers the signs present. */
@@ -68,10 +73,11 @@
     const half = anyNeg && anyPos ? plotW / 2 : plotW;
     const clipX = (x) => Math.max(labelW + 4, Math.min(W - 4, x));
     const g = el("g", { class: "grid" }, svg);
-    niceTicks(anyNeg ? -max : 0, anyPos || !anyNeg ? max : 0, 4).forEach((t) => {
+    const dt = niceTicks(anyNeg ? -max : 0, anyPos || !anyNeg ? max : 0, 4);
+    dt.forEach((t) => {
       const x = x0 + (t / max) * half;
       el("line", { x1: x, x2: x, y1: top, y2: h - 22 }, g);
-      text(svg, x, h - 6, o.fmt ? o.fmt(t) : t, "lab", "middle");
+      text(svg, x, h - 6, tickText(o.fmt, t, dt), "lab", "middle");
     });
     rows.forEach((r, i) => {
       const y = top + i * rowH;
@@ -122,7 +128,7 @@
     lo = Math.min(lo, ticks[0]); hi = Math.max(hi, ticks[ticks.length - 1]);
     const y = (v) => T + (H - T - B) * (1 - (v - lo) / (hi - lo || 1));
     const g = el("g", { class: "grid" }, svg);
-    ticks.forEach((t) => { el("line", { x1: L, x2: W - R, y1: y(t), y2: y(t) }, g); text(svg, L - 6, y(t) + 4, spec.fmt ? spec.fmt(t) : t, "lab", "end"); });
+    ticks.forEach((t) => { el("line", { x1: L, x2: W - R, y1: y(t), y2: y(t) }, g); text(svg, L - 6, y(t) + 4, tickText(spec.fmt, t, ticks), "lab", "end"); });
     const n = spec.x.length, k = spec.series.length, band = (W - L - R) / n, gap = 2;
     const bw = Math.max(3, Math.min(42, (band - 10) / k - gap));
     spec.x.forEach((lab, i) => {
@@ -167,7 +173,7 @@
     const X = (v) => L + (W - L - R) * ((v - xlo) / (xhi - xlo || 1));
     const Y = (v) => T + (H - T - B) * (1 - (v - ylo) / (yhi - ylo || 1));
     const g = el("g", { class: "grid" }, svg);
-    yt.forEach((t) => { el("line", { x1: L, x2: W - R, y1: Y(t), y2: Y(t) }, g); text(svg, L - 6, Y(t) + 4, spec.yfmt ? spec.yfmt(t) : t, "lab", "end"); });
+    yt.forEach((t) => { el("line", { x1: L, x2: W - R, y1: Y(t), y2: Y(t) }, g); text(svg, L - 6, Y(t) + 4, tickText(spec.yfmt, t, yt), "lab", "end"); });
     xt.filter((t) => t >= xlo && t <= xhi).forEach((t) => text(svg, X(t), H - B + 16, spec.xfmt ? spec.xfmt(t) : t, "lab", "middle"));
     if (spec.xlabel) text(svg, (L + W - R) / 2, H - 4, spec.xlabel, "lab", "middle");
     if (spec.zero) el("line", { x1: L, x2: W - R, y1: Y(0), y2: Y(0), class: "zero" }, svg);
