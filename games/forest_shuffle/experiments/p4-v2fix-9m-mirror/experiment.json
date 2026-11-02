@@ -1,14 +1,16 @@
 {
-  "id": "p2-v1-7.2m-mirror",
+  "id": "p4-v2fix-9m-mirror",
   "game": "forest_shuffle",
   "kind": "mirror",
-  "players": 2,
+  "players": 4,
   "seats": [
-    "p2-v1-7.2m",
-    "p2-v1-7.2m"
+    "p4-v2fix-9m",
+    "p4-v2fix-9m",
+    "p4-v2fix-9m",
+    "p4-v2fix-9m"
   ],
   "games": 2000,
-  "seed": 1000,
+  "seed": 2000,
   "options": {
     "expansions": [
       "base",
@@ -18,12 +20,12 @@
   },
   "seat_rotation": "seat j of game k is played by seats[(k + j) % players]",
   "models": {
-    "p2-v1-7.2m": "2121261030f9034e191df037191bd4062793f26ad1b5e63c155f9fcea67a8b60"
+    "p4-v2fix-9m": "7b74ca8b59faaaf65ee5130d623ab23f2045d4b00b6786a491fdb4769e11978b"
   },
   "card_data_sha256": {
     "cards.json": "501c728f4a8a1ec35a825f9c71c48cf990a4933c1ed7e701f87937d894278db3"
   },
-  "code_commit": "6c296f1f75869a3161309cecad8aab93ceaf6ffa",
+  "code_commit": "5d682cc4d08f7d75106f9d8175ad0ceac855e207",
   "requirements_lock_sha256": "111a70644b1bdc5dc9b2e8f0cd85ffa0d592f217fde2cdaf4e3b2a4a125d8836",
   "environment": {
     "os": "Windows-10-10.0.26300-SP0",
@@ -31,8 +33,8 @@
     "numpy": "2.2.6",
     "torch": "2.14.0+cu126"
   },
-  "command": "python -m bgai.experiment --game forest_shuffle --id p2-v1-7.2m-mirror --players 2 --seats p2-v1-7.2m p2-v1-7.2m --games 2000 --seed 1000 --workers 4",
-  "seconds": 318.6,
+  "command": "python -m bgai.experiment --game forest_shuffle --id p4-v2fix-9m-mirror --players 4 --seats p4-v2fix-9m --games 2000 --seed 2000 --workers 16",
+  "seconds": 241.5,
   "schema_version": 1,
-  "created": "2026-11-02T01:29:32"
+  "created": "2026-11-02T11:47:52"
 }

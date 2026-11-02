@@ -1,0 +1,67 @@
+{
+  "id": "p4-v2fix-9m",
+  "game": "forest_shuffle",
+  "players": 4,
+  "sha256": "7b74ca8b59faaaf65ee5130d623ab23f2045d4b00b6786a491fdb4769e11978b",
+  "observation_size": 4396,
+  "action_count": 1164,
+  "checkpoint": "runs/v2fix/p4/ppo_9000000.zip (original forest-shuffle repository)",
+  "recipe": [
+    "anchored run from scratch (observation v2): python -m forest_shuffle.rl.train --players 4 --out runs/v2fix --fixed runs/p4/ppo_6800000.zip greedy --reference runs/p4/ppo_6800000.zip --lr 1e-4 --epochs 4 (frozen-opponent share 0.4, 16 workers x 4 tables)",
+    "restarted at 1M without greedy in the pool; reference moved to the 2M checkpoint at 0.786 (lr 5e-5)",
+    "stopped: 3 paired evaluations without a gain of 0.015 against the 2M reference; best = 9M (43.5 % against it, equal = 25 %)"
+  ],
+  "logs": [
+    "train_log.csv"
+  ],
+  "code_commit": "5d682cc4d08f7d75106f9d8175ad0ceac855e207",
+  "steps": 9000000,
+  "games": 30910,
+  "hours": 2.2,
+  "hardware": "22-core CPU (16 game workers), RTX 4070 Laptop GPU for the update",
+  "published": "2026-11-02",
+  "strength": {
+    "finished": true,
+    "games": [
+      {
+        "opponent": "runs/p4/ppo_6000000.zip",
+        "label": "checkpoint of an earlier 4-player run it never trained against",
+        "games": 3000,
+        "win": 0.8397,
+        "win_se": 0.0067,
+        "margin": 26.48,
+        "margin_se": 0.54,
+        "score": 125.1,
+        "other": 98.6,
+        "required": "beats"
+      },
+      {
+        "opponent": "runs/p4/ppo_6800000.zip",
+        "label": "earlier 4-player AI it trained against",
+        "games": 3000,
+        "win": 0.842,
+        "win_se": 0.0067,
+        "margin": 28.79,
+        "margin_se": 0.57,
+        "score": 127.7,
+        "other": 98.9,
+        "required": "beats"
+      },
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 2000,
+        "win": 0.9955,
+        "win_se": 0.0015,
+        "margin": 101.95,
+        "margin_se": 0.99,
+        "score": 206.0,
+        "other": 104.1,
+        "required": ">=0.95"
+      }
+    ],
+    "measured": "2026-11-02"
+  },
+  "source": "trained in the original forest-shuffle repository; checkpoint copied (re-saved without optimizer state; weights identical)",
+  "observation_version": 2
+}

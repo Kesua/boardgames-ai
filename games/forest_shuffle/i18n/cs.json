@@ -512,16 +512,5 @@
   "bonus": "bonusy",
   "trigger": "spouštěné efekty",
   "other": "jiné volby"
- },
- "models": {
-  "p2-v1-7.2m": {
-   "note": "Původní AI, ponechaná pro srovnání; učila se dřív, než vznikl dnešní recept tréninku. Zkouška proti její rané kopii měla 40 nepárových her."
-  },
-  "p4-v1-6.8m": {
-   "note": "Raná AI, neprošla zkouškou: svou kopii po 1 mil. kroků porazí jen těsně (27,5 %, kde 25 % = stejná síla). AI pro 4 hráče podle dnešního receptu se učí."
-  },
-  "p2-v2fix-15m": {
-   "note": "Dnešní recept tréninku vznikl z tohoto běhu."
-  }
  }
 }

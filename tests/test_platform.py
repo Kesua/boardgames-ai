@@ -58,5 +58,6 @@ def test_site_builds(tmp_path, monkeypatch):
     info = B.build_game("forest_shuffle", tmp_path)
     assert info["headline"]["2"]["games"] == 2000
     game = json.loads((tmp_path / "forest_shuffle" / "game.json").read_text(encoding="utf-8"))
-    assert "2" in game["compare"] and game["compare"]["2"]["items"]
-    assert (tmp_path / "forest_shuffle" / "exp" / "p2-v2fix-15m-mirror.json").exists()
+    assert game["compare"] == {}                     # no player count features an old-vs-new comparison
+    for e in ("p2-v2fix-15m-mirror", "p4-v2fix-9m-mirror"):
+        assert (tmp_path / "forest_shuffle" / "exp" / f"{e}.json").exists()

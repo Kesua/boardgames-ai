@@ -512,16 +512,5 @@
   "bonus": "bonuses",
   "trigger": "triggered effects",
   "other": "other choices"
- },
- "models": {
-  "p2-v1-7.2m": {
-   "note": "Original AI, kept for the comparison; trained before the current training recipe existed. Its test against its own early copy used 40 unpaired games."
-  },
-  "p4-v1-6.8m": {
-   "note": "Early AI, not finished: it barely beats its own copy after 1 M steps (27.5 % where 25 % means equal). A 4-player AI trained with the current recipe is in training."
-  },
-  "p2-v2fix-15m": {
-   "note": "The current training recipe was derived from this run."
-  }
  }
 }

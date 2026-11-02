@@ -25,8 +25,8 @@
     "measured": "2026-11-02",
     "games": [
       {
-        "opponent": "p2-v1-7.2m",
-        "label": "original AI (older training method, not finished)",
+        "opponent": "runs/p2/ppo_7200000.zip",
+        "label": "earlier 2-player AI it trained against",
         "games": 1500,
         "win": 0.986,
         "win_se": 0.003,
@@ -56,6 +56,5 @@
       }
     ]
   },
-  "notes": "The recipe this repository's train-model skill uses was derived from this run.",
   "sha256": "5c51cd473c7f3e853b07c17f0b26e22d7a83ac106b0f0ac2fb702de305791020"
 }

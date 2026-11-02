@@ -1,123 +1,182 @@
-"""Recompute every number cited in games/forest_shuffle/notes.json from the current stats.json files and print the
-English text each one should have. Run from the repository root after tools/build_site.py: python games/forest_shuffle/check_notes.py  (prints MISMATCH lines when notes differ)."""
-import json, sys, re
-
-sys.stdout.reconfigure(encoding="utf-8")
+"""Recompute every number cited in games/forest_shuffle/notes.json from the current stats.json files, rounded the way
+the site rounds, and print a MISMATCH line for each one the notes do not contain (English and Czech text), then check
+the claims in the text that depend on the data. Exit code 1 on any mismatch.
+Run from the repository root: python games/forest_shuffle/check_notes.py"""
+import json, sys
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8")
 R = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 G = R / "games" / "forest_shuffle"
-st = {e: json.loads((G / "experiments" / e / "stats.json").read_text(encoding="utf-8")) for e in
-      ["p2-v2fix-15m-mirror", "p2-v1-7.2m-mirror", "p4-v1-6.8m-mirror", "p2-v2fix-15m-vs-v1-7.2m"]}
-cat = None
-try:
-    cat = json.loads((R / "site" / "data" / "forest_shuffle" / "game.json").read_text(encoding="utf-8"))["catalog"]["items"]
-except Exception:
-    pass
-notes = (G / "notes.json").read_text(encoding="utf-8")
+E2, E4 = "p2-v2fix-15m-mirror", "p4-v2fix-9m-mirror"
+ST = {e: json.loads((G / "experiments" / e / "stats.json").read_text(encoding="utf-8")) for e in (E2, E4)}
+DATA = json.loads((G / "data" / "cards.json").read_text(encoding="utf-8"))
+CARDS = DATA["cards"]
+EXPANSION = {k: sp["expansion"] for k, sp in DATA["species"].items()}
 
-def r(v, d):  # JS Intl rounding (half away from zero) of v with d decimals
-    from decimal import Decimal, ROUND_HALF_UP
+
+def r(v, d, cs):  # JS Intl rounding (half away from zero); Czech uses a decimal comma and a space for thousands
     q = Decimal(repr(v)).quantize(Decimal(1).scaleb(-d), rounding=ROUND_HALF_UP)
-    return f"{q:,}" if d else f"{int(q):,}"
-P = lambda v, d=0: r(v * 100, d) + " %"
-PP = lambda v, d=1: ("+" if v > 0 else "−" if v < 0 else "") + r(abs(v * 100), d) + " pp"
-E = lambda v: ("+" if v > 0 else "−" if v < 0 else "") + r(abs(v), 2)
-def item(e, k): return next(x for x in st[e]["items"] if x["item"] == k)
-def arch(e, k): return next(x for x in st[e]["archetypes"] if x["archetype"] == k)
-def fact(e, sec, lab): return next(f["value"] for f in st[e]["game"][sec]["facts"] if f["label"] == lab)
-def row(e, sec, grp, key="win_rate"): return next(x[key] for x in st[e]["game"][sec]["rows"] if x["group"] == grp)
-def lenbin(e, k, b, kind="items", key="item"): return next(x["win_lift"] for x in st[e]["length"][kind] if x[key] == k and x["bin"] == b)
-def out(e): return st[e]["style"]["outcome"][0]
-def fate(e, k, f):
-    cards = {c["card"]: c for c in st[e]["cards"]}
-    return sum(cards.get(c, {}).get(f, 0) for c in cat[k]["cards"]) if cat else None
+    s = f"{q:,}" if d else f"{int(q):,}"
+    return s.replace(",", " ").replace(".", ",") if cs else s
 
-N, O, F, V = "p2-v2fix-15m-mirror", "p2-v1-7.2m-mirror", "p4-v1-6.8m-mirror", "p2-v2fix-15m-vs-v1-7.2m"
-checks = [
-    # --- 2p new AI
-    ("N Gentian lift", PP(item(N, "GENTIAN")["win_lift"])), ("N Gentian presence", P(item(N, "GENTIAN")["presence_rate"])),
-    ("N Gentian ppc", r(item(N, "GENTIAN")["points_per_copy"], 1)), ("N Gentian edge", E(item(N, "GENTIAN")["winner_edge"])),
-    ("N Phoebus", PP(item(N, "PHOEBUS_APOLLO")["win_lift"])), ("N SWF", PP(item(N, "SILVER_WASHED_FRITILLARY")["win_lift"])),
-    ("N Marten presence", P(item(N, "BEECH_MARTEN")["presence_rate"])), ("N Marten ppc", r(item(N, "BEECH_MARTEN")["points_per_copy"], 1)),
-    ("N Marten edge", E(item(N, "BEECH_MARTEN")["winner_edge"])),
-    ("N Fallow lift", PP(item(N, "FALLOW_DEER")["win_lift"])), ("N Fallow ppc", r(item(N, "FALLOW_DEER")["points_per_copy"], 1)),
-    ("N Fallow edge", E(item(N, "FALLOW_DEER")["winner_edge"])), ("N Bison", PP(item(N, "EUROPEAN_BISON")["win_lift"])),
-    ("N Steinbock", PP(item(N, "STEINBOCK")["win_lift"])), ("N Wolf", PP(item(N, "WOLF")["win_lift"])), ("N Wolf ppc", r(item(N, "WOLF")["points_per_copy"], 1)),
-    ("N StonePine symbol share", P(arch(N, "SWISS_PINE")["share"])), ("N StonePine symbol win", P(arch(N, "SWISS_PINE")["win_rate"])),
-    ("N Stone Pine presence", P(item(N, "STONE_PINE")["presence_rate"])), ("N Stone Pine edge", E(item(N, "STONE_PINE")["winner_edge"])),
-    ("N Stone Pine lift", PP(item(N, "STONE_PINE")["win_lift"])), ("N Stone Pine lift within chance (must be True)", str(abs(item(N, "STONE_PINE")["win_lift"]) <= 2 * item(N, "STONE_PINE")["win_lift_se"])),
-    ("N saplings/player", r(out(N)["x_saplings"], 1)), ("N sapling forests", P(arch(N, "SAPLING")["share"])),
-    ("N Beech presence", P(item(N, "BEECH")["presence_rate"])), ("N Beech edge", E(item(N, "BEECH")["winner_edge"])),
-    ("N Beech symbol share", P(arch(N, "BEECH")["share"])), ("N Beech symbol win", P(arch(N, "BEECH")["win_rate"])),
-    ("N Raccoon", PP(item(N, "RACCOON")["win_lift"])), ("N Raccoon presence", P(item(N, "RACCOON")["presence_rate"])), ("N Raccoon edge", E(item(N, "RACCOON")["winner_edge"])),
-    ("N Sycamore", PP(item(N, "SYCAMORE")["win_lift"]) + " " + P(item(N, "SYCAMORE")["presence_rate"])),
-    ("N Woodpecker", PP(item(N, "GREAT_SPOTTED_WOODPECKER")["win_lift"]) + " " + P(item(N, "GREAT_SPOTTED_WOODPECKER")["presence_rate"])),
-    ("N Jay", PP(item(N, "EURASIAN_JAY")["win_lift"]) + " " + P(item(N, "EURASIAN_JAY")["presence_rate"])),
-    ("N Oak paid / sapling / played", f"{fate(N, 'OAK', 'paid'):,} / {fate(N, 'OAK', 'as_sapling')} / {fate(N, 'OAK', 'played')}"),
-    ("N Oak forests (card)", str(item(N, "OAK")["boards_with"])), ("N Oak symbol share/win", P(arch(N, "OAK")["share"]) + " / " + P(arch(N, "OAK")["win_rate"])),
-    ("N seats", P(st[N]["seat_order"][0]["win_rate"], 1) + " : " + P(st[N]["seat_order"][1]["win_rate"], 1)),
-    ("N turns", r(st[N]["meta"]["rounds_min"], 0) + "–" + r(st[N]["meta"]["rounds_max"], 0)),
-    ("N winner by length", r(st[N]["length"]["bins"][0]["winner_score"], 0) + " → " + r(st[N]["length"]["bins"][-1]["winner_score"], 0)),
-    ("N r2 deck/clearing/both", " / ".join(P(fact(N, "drivers", k), 1) for k in ("r2_deck",))),
-    ("N clearing win:lose", P(fact(N, "clearing", "clearing_winners"), 1) + " : " + P(fact(N, "clearing", "clearing_losers"), 1)),
-    ("N clearing share of turns", P(next(a["share"] for a in st[N]["style"]["action_mix"] if a["action"] == "DRAW_CLEARING"))),
-    ("N wipes/game, win, lose", r(fact(N, "wipes", "wipes_per_game"), 1) + ", " + r(fact(N, "wipes", "wipes_winners"), 2) + ", " + r(fact(N, "wipes", "wipes_losers"), 2)),
-    ("N hand left", r(out(N)["hand_left"], 1)),
-    ("N 4p Beech edge", E(item(F, "BEECH")["winner_edge"])),
-    # --- 2p original AI
-    ("O saplings/player", r(out(O)["x_saplings"], 1)), ("O sapling forests / win", P(arch(O, "SAPLING")["share"]) + " / " + P(arch(O, "SAPLING")["win_rate"], 1)),
-    ("O Red Deer", PP(item(O, "RED_DEER")["win_lift"]) + " " + E(item(O, "RED_DEER")["winner_edge"])),
-    ("O Marten", PP(item(O, "BEECH_MARTEN")["win_lift"]) + " " + E(item(O, "BEECH_MARTEN")["winner_edge"])),
-    ("O Wood Ant / Moss", PP(item(O, "WOOD_ANT")["win_lift"]) + " / " + PP(item(O, "MOSS")["win_lift"])),
-    ("O Fallow / Wolf", PP(item(O, "FALLOW_DEER")["win_lift"]) + " " + E(item(O, "FALLOW_DEER")["winner_edge"]) + " / " + PP(item(O, "WOLF")["win_lift"])),
-    ("O MapB/Gentian/Digitalis/Blackberries", " / ".join(PP(item(O, k)["win_lift"]) for k in ("MAP_BUTTERFLY", "GENTIAN", "DIGITALIS", "BLACKBERRIES"))),
-    ("O Douglas symbol share/win", P(arch(O, "DOUGLAS_FIR")["share"]) + " / " + P(arch(O, "DOUGLAS_FIR")["win_rate"], 1)),
-    ("O Douglas/Birch/Larch", " / ".join(PP(item(O, k)["win_lift"]) for k in ("DOUGLAS_FIR", "BIRCH", "EUROPEAN_LARCH"))),
-    ("O VCB/Magpie/Fox/PennyBun/Hare", " / ".join(PP(item(O, k)["win_lift"]) for k in ("VIOLET_CARPENTER_BEE", "EURASIAN_MAGPIE", "RED_FOX", "PENNY_BUN", "EUROPEAN_HARE"))),
-    ("O hand left", r(out(O)["hand_left"], 1)), ("O seats", P(st[O]["seat_order"][0]["win_rate"], 1) + " : " + P(st[O]["seat_order"][1]["win_rate"], 1)),
-    ("O turns", r(st[O]["meta"]["rounds_min"], 0) + "–" + r(st[O]["meta"]["rounds_max"], 0)),
-    ("O winner by length", r(st[O]["length"]["bins"][0]["winner_score"], 0) + " → " + r(st[O]["length"]["bins"][-1]["winner_score"], 0)),
-    ("O r2", " / ".join(P(fact(O, "drivers", k), 1) for k in ("r2_deck", "r2_clearing", "r2_both"))),
-    ("O clearing", P(fact(O, "clearing", "clearing_winners"), 1) + " : " + P(fact(O, "clearing", "clearing_losers"), 1)),
-    ("O clearing 30-40 / <10 %", P(row(O, "clearing", 3), 1) + " / " + P(row(O, "clearing", 0), 1)),
-    ("O wipes", r(fact(O, "wipes", "wipes_per_game"), 1) + ", " + r(fact(O, "wipes", "wipes_winners"), 2) + ", " + r(fact(O, "wipes", "wipes_losers"), 2)),
-    ("O sapling by length", PP(lenbin(O, "SAPLING", 0, "archetypes", "archetype")) + " → " + PP(lenbin(O, "SAPLING", 4, "archetypes", "archetype"))),
-    ("O Map Butterfly by length", PP(lenbin(O, "MAP_BUTTERFLY", 0)) + " → " + PP(lenbin(O, "MAP_BUTTERFLY", 4))),
-    ("O Linden by length", PP(lenbin(O, "LINDEN", 0)) + " → " + PP(lenbin(O, "LINDEN", 4))),
-    ("O Oak forests (card)", str(item(O, "OAK")["boards_with"])), ("O Beech presence/edge", P(item(O, "BEECH")["presence_rate"]) + " " + E(item(O, "BEECH")["winner_edge"])),
-    ("O Gentian", PP(item(O, "GENTIAN")["win_lift"])),
-    # --- 4p early AI
-    ("F Fallow", PP(item(F, "FALLOW_DEER")["win_lift"]) + f" over {item(F, 'FALLOW_DEER')['boards_with']:,} edge " + E(item(F, "FALLOW_DEER")["winner_edge"])),
-    ("F Gentian", PP(item(F, "GENTIAN")["win_lift"])),
-    ("F max edge card", max(st[F]["items"], key=lambda x: x["winner_edge"] or -9)["item"]),
-    ("F Wolf/Roe/Red", " / ".join(PP(item(F, k)["win_lift"]) for k in ("WOLF", "ROE_DEER", "RED_DEER"))),
-    ("F LT/MapB/Camberwell/Gentian", " / ".join(PP(item(F, k)["win_lift"]) for k in ("LARGE_TORTOISESHELL", "MAP_BUTTERFLY", "CAMBERWELL_BEAUTY", "GENTIAN"))),
-    ("F StonePine symbol share/win", P(arch(F, "SWISS_PINE")["share"]) + " / " + P(arch(F, "SWISS_PINE")["win_rate"])),
-    ("F baseline", P(st[F]["meta"]["baseline_win_rate"])),
-    ("F Stone Pine card", P(item(F, "STONE_PINE")["presence_rate"]) + " " + PP(item(F, "STONE_PINE")["win_lift"]) + " " + E(item(F, "STONE_PINE")["winner_edge"])),
-    ("F Steinbock/Blackberries/Digitalis", " / ".join(PP(item(F, k)["win_lift"]) for k in ("STEINBOCK", "BLACKBERRIES", "DIGITALIS"))),
-    ("F sapling forests / win", P(arch(F, "SAPLING")["share"]) + " / " + P(arch(F, "SAPLING")["win_rate"], 1)), ("F saplings/player", r(out(F)["x_saplings"], 1)),
-    ("F Gnat/Bechstein/BlackTrumpet/Blackthorn/Woodpecker", " / ".join(PP(item(F, k)["win_lift"]) for k in ("GNAT", "BECHSTEINS_BAT", "BLACK_TRUMPET", "BLACKTHORN", "GREAT_SPOTTED_WOODPECKER"))),
-    ("F Oak/Douglas/HC symbol win", " / ".join(P(arch(F, k)["win_rate"]) + " (" + P(arch(F, k)["share"]) + ")" for k in ("OAK", "DOUGLAS_FIR", "HORSE_CHESTNUT"))),
-    ("F seats", P(st[F]["seat_order"][0]["win_rate"], 1) + " : " + P(st[F]["seat_order"][-1]["win_rate"], 1)),
-    ("F turns", r(st[F]["meta"]["rounds_min"], 0) + "–" + r(st[F]["meta"]["rounds_max"], 0)),
-    ("F winner by length", r(st[F]["length"]["bins"][0]["winner_score"], 0) + " → " + r(st[F]["length"]["bins"][-1]["winner_score"], 0)),
-    ("F r2", " / ".join(P(fact(F, "drivers", k), 1) for k in ("r2_deck", "r2_clearing", "r2_both"))),
-    ("F clearing", P(fact(F, "clearing", "clearing_winners"), 1) + " : " + P(fact(F, "clearing", "clearing_losers"), 1)),
-    ("F clearing groups 1/4/6/7", " / ".join(P(row(F, "clearing", k), 1) for k in (1, 4, 6, 7))),
-    ("F wipes 0 / 3+", P(row(F, "wipes", 0), 1) + " / " + P(row(F, "wipes", 3), 1)),
-    ("F Moss/Linden by length", PP(lenbin(F, "MOSS", 0)) + " → " + PP(lenbin(F, "MOSS", 4)) + " / " + PP(lenbin(F, "LINDEN", 0)) + " → " + PP(lenbin(F, "LINDEN", 4))),
-    ("F Fallow by length", PP(lenbin(F, "FALLOW_DEER", 0)) + " → " + PP(lenbin(F, "FALLOW_DEER", 4))),
-    ("F StonePine sym by length (min..max)", " .. ".join(PP(f(lenbin(F, "SWISS_PINE", b, "archetypes", "archetype") for b in range(5))) for f in (min, max))),
-    ("F sapling by length (max..min)", " .. ".join(PP(f(lenbin(F, "SAPLING", b, "archetypes", "archetype") for b in range(5))) for f in (max, min))),
-    # --- versus
-    #("V new AI wins", P(next(x["win_rate"] for x in st[V]["results"] if x["agent"] == "model:p2-v2fix-15m"), 1)),
-]
-for name, val in checks:
-    # a value counts as found when its numeric parts all appear in notes.json (English formatting)
-    parts = [x.strip() for x in re.split(r" / | : | → | \.\. |, | over | edge |\(|\)| (?=[+−]?\d)", val) if x.strip() and re.search(r"\d", x)]
-    # "+8.6 pp" must appear as such ("8.6 pp" after "+" or "(", or the bare number when it has no unit)
-    # accepted forms: "+8.6 pp", "8.6 pp", "+12.7" (as in "from +12.7 to +16.8 pp"), "0.29" (as in "0.29 fewer")
-    missing = [x for x in parts if not any(v in notes for v in (x, x.lstrip("+"), x.replace(" pp", ""), x.lstrip("+−").replace(" pp", "")))]
-    print(("MISMATCH " if missing else "ok       ") + f"{name}: {val}" + (f"   (not in notes: {missing})" if missing else ""))
+
+def fmt(v, kind, cs):
+    """n0/n1 number, i integer, p/p1 percent, pp percentage points (signed), e/ea copies (signed / without sign)."""
+    sign = lambda x: "+" if x > 0 else "−" if x < 0 else ""
+    return {"n0": lambda: r(v, 0, cs), "n1": lambda: r(v, 1, cs), "i": lambda: r(v, 0, cs),
+            "p": lambda: r(v * 100, 0, cs) + " %", "p1": lambda: r(v * 100, 1, cs) + " %",
+            "pp": lambda: sign(v) + r(abs(v * 100), 1, cs) + (" p. b." if cs else " pp"),
+            "e": lambda: sign(v) + r(abs(v), 2, cs), "ea": lambda: r(abs(v), 2, cs)}[kind]()
+
+
+item = lambda e, k: next(x for x in ST[e]["items"] if x["item"] == k)
+arch = lambda e, k: next(x for x in ST[e]["archetypes"] if x["archetype"] == k)
+fact = lambda e, sec, lab: next(f["value"] for f in ST[e]["game"][sec]["facts"] if f["label"] == lab)
+out = lambda e: ST[e]["style"]["outcome"][0]
+act = lambda e, a: next(x["share"] for x in ST[e]["style"]["action_mix"] if x["action"] == a)
+common = lambda e: [x for x in ST[e]["items"] if x["presence_rate"] >= 0.05]
+clear = lambda x: abs(x["win_lift"]) > 2 * x["win_lift_se"]
+lifts = lambda e: sorted(common(e), key=lambda x: -x["win_lift"])
+seat_clear = lambda e, s: abs(ST[e]["seat_order"][s]["win_rate"] - ST[e]["meta"]["baseline_win_rate"]) > 2 * (
+    ST[e]["seat_order"][s]["win_rate"] * (1 - ST[e]["seat_order"][s]["win_rate"]) / ST[e]["seat_order"][s]["seats"]) ** 0.5
+
+
+def fate(e, species, what):
+    """How often the tree cards of a species were played / played as a sapling / paid away in experiment e."""
+    rows = {c["card"]: c for c in ST[e]["cards"]}
+    return sum(rows.get(c["id"], {}).get(what, 0) for c in CARDS if c["layout"] == "WOODY_PLANT" and c["species"] == species)
+
+
+BUTTERFLY = {"GENTIAN", "STINGING_NETTLE", "PHOEBUS_APOLLO", "SILVER_WASHED_FRITILLARY", "MAP_BUTTERFLY",
+             "CAMBERWELL_BEAUTY", "LARGE_TORTOISESHELL", "PEACOCK_BUTTERFLY", "PURPLE_EMPEROR"}
+TREES = ("LINDEN", "OAK", "SILVER_FIR", "BIRCH", "BEECH", "SYCAMORE", "DOUGLAS_FIR", "HORSE_CHESTNUT",
+         "EUROPEAN_LARCH", "STONE_PINE")
+
+
+def values(e):
+    """name -> (value, format) for every number the notes cite from experiment e."""
+    it = lambda k: item(e, k)
+    pp = lambda k: (it(k)["win_lift"], "pp")
+    m, so = ST[e]["meta"], ST[e]["seat_order"]
+    v = {"gen": pp("GENTIAN"), "fd": pp("FALLOW_DEER"), "fd_ppc": (it("FALLOW_DEER")["points_per_copy"], "n1"),
+         "fd_e": (it("FALLOW_DEER")["winner_edge"], "ea"), "fd_es": (it("FALLOW_DEER")["winner_edge"], "e"),
+         "stb": pp("STEINBOCK"), "rav": pp("COMMON_RAVEN"), "edw": pp("EDELWEISS"), "df": pp("DOUGLAS_FIR"),
+         "be": pp("BEECH"), "be_s": (it("BEECH")["presence_rate"], "p"), "rac": pp("RACCOON"), "syc": pp("SYCAMORE"),
+         "wp": pp("GREAT_SPOTTED_WOODPECKER"),
+         "sp_s": (arch(e, "SWISS_PINE")["share"], "p"), "sp_w": (arch(e, "SWISS_PINE")["win_rate"], "p1"),
+         "oak_pl": (fate(e, "OAK", "played"), "i"), "hc_pl": (fate(e, "HORSE_CHESTNUT", "played"), "i"),
+         "sap": (out(e)["x_saplings"], "n1"), "games": (m["games"], "i"),
+         "s0": (so[0]["win_rate"], "p1"), "sl": (so[-1]["win_rate"], "p1"), "base": (m["baseline_win_rate"], "p1"),
+         "tmin": (m["rounds_min"], "n0"), "tmax": (m["rounds_max"], "n0"),
+         "w0": (ST[e]["length"]["bins"][0]["winner_score"], "n0"), "w4": (ST[e]["length"]["bins"][-1]["winner_score"], "n0"),
+         "r2d": (fact(e, "drivers", "r2_deck"), "p1"),
+         "cw": (fact(e, "clearing", "clearing_winners"), "p1"), "cl": (fact(e, "clearing", "clearing_losers"), "p1"),
+         "ct": (act(e, "DRAW_CLEARING"), "p"), "wipes": (fact(e, "wipes", "wipes_per_game"), "n1"),
+         "wc": (it("EUROPEAN_WILDCAT")["presence_rate"], "p1")}
+    if e == E2:
+        v.update({"gen_s": (it("GENTIAN")["presence_rate"], "p"), "gen_ppc": (it("GENTIAN")["points_per_copy"], "n1"),
+                  "net": pp("STINGING_NETTLE"), "pa": pp("PHOEBUS_APOLLO"), "swf": pp("SILVER_WASHED_FRITILLARY"),
+                  "mb": pp("MAP_BUTTERFLY"), "cb": pp("CAMBERWELL_BEAUTY"), "newt": pp("ALPINE_NEWT"),
+                  "eb": pp("EUROPEAN_BISON"), "wolf": pp("WOLF"),
+                  "bm": pp("BEECH_MARTEN"), "bm_s": (it("BEECH_MARTEN")["presence_rate"], "p"),
+                  "bm_ppb": (it("BEECH_MARTEN")["points_per_board"], "n1"), "bm_e": (it("BEECH_MARTEN")["winner_edge"], "ea"),
+                  "spc_s": (it("STONE_PINE")["presence_rate"], "p"),
+                  "be_ea": (it("BEECH")["winner_edge"], "ea"), "be_ppc": (it("BEECH")["points_per_copy"], "n1"),
+                  "bes_s": (arch(e, "BEECH")["share"], "p"), "bes_w": (arch(e, "BEECH")["win_rate"], "p"),
+                  "jay": pp("EURASIAN_JAY"), "owl": pp("TAWNY_OWL"), "lar": pp("EUROPEAN_LARCH"),
+                  "rac_s": (it("RACCOON")["presence_rate"], "p"), "rac_e": (it("RACCOON")["winner_edge"], "ea"),
+                  "sf_pl": (fate(e, "SILVER_FIR", "played"), "i"), "li_pl": (fate(e, "LINDEN", "played"), "i"),
+                  "pay4": (sum(fate(e, k, "paid") for k in ("SILVER_FIR", "OAK", "HORSE_CHESTNUT", "LINDEN")), "i"),
+                  "sp_pl": (fate(e, "STONE_PINE", "played"), "i"), "be_pl": (fate(e, "BEECH", "played"), "i")})
+    else:
+        clr = {x["group"]: x["win_rate"] for x in ST[e]["game"]["clearing"]["rows"]}
+        v.update({"stb_s": (it("STEINBOCK")["presence_rate"], "p"), "cha": pp("CHAMOIS"), "bb": pp("BLACKBERRIES"),
+                  "pt": pp("POND_TURTLE"), "gen_s": (it("GENTIAN")["presence_rate"], "p"),
+                  "bf_max": (max(it(k)["presence_rate"] for k in BUTTERFLY - {"GENTIAN", "STINGING_NETTLE"}), "p"),
+                  "c0": (clr[0], "p1"), "c3": (clr[3], "p1"),
+                  "pay2": (sum(fate(e, k, "paid") for k in ("OAK", "HORSE_CHESTNUT")), "i")})
+    return v
+
+
+def claims(e):
+    it = lambda k: item(e, k)
+    top = lifts(e)
+    pos = lambda *ks: all(clear(it(k)) and it(k)["win_lift"] > 0 for k in ks)
+    neg = lambda *ks: all(clear(it(k)) and it(k)["win_lift"] < 0 for k in ks)
+    rare = lambda *ks: all(fate(e, k, "played") < 0.01 * (fate(e, k, "played") + fate(e, k, "paid") + fate(e, k, "as_sapling")) for k in ks)
+    best_arch = max((a for a in ST[e]["archetypes"] if a["share"] >= 0.02), key=lambda a: a["win_rate"])["archetype"]
+    base = [("Stone Pine symbol forests clearly win more", arch(e, "SWISS_PINE")["win_lift"] > 2 * arch(e, "SWISS_PINE")["win_lift_se"]),
+            ("Stone Pine symbol forests have the highest win rate of the forest types in >= 2 % of forests", best_arch == "SWISS_PINE"),
+            ("Fallow Deer clearly goes with winning", pos("FALLOW_DEER")),
+            ("Beech, Raccoon, Sycamore, Douglas Fir and Great Spotted Woodpecker clearly go with losing",
+             neg("BEECH", "RACCOON", "SYCAMORE", "DOUGLAS_FIR", "GREAT_SPOTTED_WOODPECKER")),
+            ("Oak and Horse Chestnut are planted in under 1 % of their uses", rare("OAK", "HORSE_CHESTNUT")),
+            ("first seat clearly above the average player",
+             seat_clear(e, 0) and ST[e]["seat_order"][0]["win_rate"] > ST[e]["meta"]["baseline_win_rate"])]
+    if e == E2:
+        base += [("Gentian has the largest win-rate difference of the cards in >= 5 % of forests", top[0]["item"] == "GENTIAN"),
+                 ("6 of the 12 cards that go most with winning are butterflies or score per butterfly",
+                  sum(x["item"] in BUTTERFLY for x in top[:12]) == 6),
+                 ("Alpine Newt is among the top 12", "ALPINE_NEWT" in [x["item"] for x in top[:12]]),
+                 ("all butterfly cards cited clearly go with winning",
+                  pos("GENTIAN", "STINGING_NETTLE", "PHOEBUS_APOLLO", "SILVER_WASHED_FRITILLARY", "MAP_BUTTERFLY", "CAMBERWELL_BEAUTY", "ALPINE_NEWT")),
+                 ("European Bison, Steinbock, Wolf, Beech Marten clearly go with winning", pos("EUROPEAN_BISON", "STEINBOCK", "WOLF", "BEECH_MARTEN")),
+                 ("Beech Marten brings the most points per forest of any card",
+                  max(ST[e]["items"], key=lambda x: x["points_per_board"])["item"] == "BEECH_MARTEN"),
+                 ("Beech Marten has the largest winner edge", max(ST[e]["items"], key=lambda x: x["winner_edge"] or -9)["item"] == "BEECH_MARTEN"),
+                 ("Beech has the largest shortfall (most negative winner edge)", min(ST[e]["items"], key=lambda x: x["winner_edge"] or 9)["item"] == "BEECH"),
+                 ("Stone Pine is the tree in most forests",
+                  max((x for x in ST[e]["items"] if x["item"] in TREES), key=lambda x: x["presence_rate"])["item"] == "STONE_PINE"),
+                 ("Stone Pine and Beech are the two trees planted most", sorted(TREES, key=lambda k: -fate(e, k, "played"))[:2] == ["STONE_PINE", "BEECH"]),
+                 ("Silver Fir and Linden are planted in under 1 % of their uses", rare("SILVER_FIR", "LINDEN")),
+                 ("Beech symbol forests clearly win less", arch(e, "BEECH")["win_lift"] < -2 * arch(e, "BEECH")["win_lift_se"]),
+                 ("every fixed-point card cited clearly goes with losing (Common Raven and Edelweiss too)",
+                  neg("EURASIAN_JAY", "COMMON_RAVEN", "TAWNY_OWL", "DOUGLAS_FIR", "EUROPEAN_LARCH", "EDELWEISS")),
+                 ("clearing share of winners and losers within 1 point",
+                  abs(fact(e, "clearing", "clearing_winners") - fact(e, "clearing", "clearing_losers")) < 0.01)]
+    else:
+        clr = {x["group"]: x for x in ST[e]["game"]["clearing"]["rows"]}
+        p0, p3 = clr[0]["win_rate"], clr[3]["win_rate"]
+        so = [x["win_rate"] for x in ST[e]["seat_order"]]
+        base += [("Steinbock has the largest win-rate difference of the cards in >= 5 % of forests", top[0]["item"] == "STEINBOCK"),
+                 ("Fallow Deer has the largest winner edge", max(ST[e]["items"], key=lambda x: x["winner_edge"] or -9)["item"] == "FALLOW_DEER"),
+                 ("5 of the 7 cards that go most with winning are Alpine cards", sum(EXPANSION[x["item"]] == "alpine" for x in top[:7]) == 5),
+                 ("Steinbock, Common Raven, Edelweiss, Chamois and Blackberries clearly go with winning",
+                  pos("STEINBOCK", "COMMON_RAVEN", "EDELWEISS", "CHAMOIS", "BLACKBERRIES")),
+                 ("Pond Turtle clearly goes with losing", neg("POND_TURTLE")),
+                 ("Gentian does not clearly differ from the average", not clear(it("GENTIAN"))),
+                 ("every butterfly is in under 5 % of forests",
+                  max(it(k)["presence_rate"] for k in BUTTERFLY - {"GENTIAN", "STINGING_NETTLE"}) < 0.05),
+                 ("winners take a smaller share of their draws from the clearing",
+                  fact(e, "clearing", "clearing_winners") < fact(e, "clearing", "clearing_losers")),
+                 ("under 10 % of draws from the clearing clearly wins more than 30-40 %",
+                  p0 - p3 > 2 * (p0 * (1 - p0) / clr[0]["seats"] + p3 * (1 - p3) / clr[3]["seats"]) ** 0.5),
+                 ("the win rate falls with every seat", all(a > b for a, b in zip(so, so[1:]))),
+                 ("last seat clearly below the average player", seat_clear(e, len(so) - 1) and so[-1] < ST[e]["meta"]["baseline_win_rate"])]
+    return base
+
+
+def main():
+    notes = json.loads((G / "notes.json").read_text(encoding="utf-8"))
+    bad = 0
+    for e, n in ((E2, "n2"), (E4, "n4")):
+        V = values(e)
+        for lang in ("en", "cs"):
+            cs = lang == "cs"
+            # an experiment's numbers may appear in its own notes, in the findings or in the known limits
+            text = json.dumps([notes["experiments"][e][lang]] + [f[lang] for f in notes["findings"]] + [notes["limits"][lang]], ensure_ascii=False)
+            for name in V:
+                s = fmt(*V[name], cs)
+                ok = s in text
+                bad += not ok
+                print(("ok       " if ok else "MISMATCH ") + f"{e} {lang} {name}: {s}")
+        for name, ok in claims(e):
+            bad += not ok
+            print(("ok       " if ok else "MISMATCH ") + f"{e} claim: {name}")
+    sys.exit(1 if bad else 0)
+
+
+if __name__ == "__main__":
+    main()

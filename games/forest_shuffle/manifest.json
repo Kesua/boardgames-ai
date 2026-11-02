@@ -93,8 +93,8 @@
   "length": {"show": true},
   "item_attributes": ["kind", "position", "cost", "expansion", "types"],
   "featured": {
-    "2": {"main": "p2-v2fix-15m-mirror", "compare": "p2-v1-7.2m-mirror", "versus": "p2-v2fix-15m-vs-v1-7.2m"},
-    "4": {"main": "p4-v1-6.8m-mirror"}
+    "2": {"main": "p2-v2fix-15m-mirror"},
+    "4": {"main": "p4-v2fix-9m-mirror"}
   },
   "languages": ["en", "cs"]
 }
