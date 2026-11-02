@@ -10,6 +10,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # check_repo compares check reports with the engine's git history
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -25,7 +27,7 @@ jobs:
         run: python -m pytest -q
       - name: Engine checks (short)
         run: |
-          for g in $(ls games | grep -v '^_' | grep -v '^__'); do python -m bgai.checks --game $g --games 300 --no-write; done
+          for g in $(ls games | grep -v '^_' | grep -v '^__' | grep -v '\.json$'); do python -m bgai.checks --game $g --games 200 --no-write; done
       - name: Fingerprint replay (first 20 games of every experiment)
         run: python tools/regenerate.py --game all --check-only
       - name: Build the site

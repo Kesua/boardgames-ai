@@ -163,8 +163,8 @@ def run(slug, exp_id, players, seats, n_games, seed, options=None, workers=None,
              f"--games {n_games} --seed {seed}",
         "seconds": seconds, "schema_version": SCHEMA_VERSION, "created": time.strftime("%Y-%m-%dT%H:%M:%S"),
     }
-    (out_dir / "experiment.json").write_text(json.dumps(recipe, indent=2) + "\n", encoding="utf-8")
-    (out_dir / "stats.json").write_text(json.dumps(stats, separators=(",", ":")) + "\n", encoding="utf-8")
+    (out_dir / "experiment.json").write_text(json.dumps(recipe, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (out_dir / "stats.json").write_text(json.dumps(stats, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
     if not keep_raw:
         raw_path.unlink()
     return out_dir

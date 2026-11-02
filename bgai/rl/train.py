@@ -25,7 +25,7 @@ published into games/<slug>/models/ with python -m bgai.models). After each chun
                    steps older; 2p 200 deals, 4p 100 deals
   win_vs_ref, margin_vs_ref
                    every 1M steps with `--reference`: paired games against that fixed model on `--reference-deals`
-                   deals (seeds 20000.., as examples/h2h.py); a checkpoint that beats the best so far against the same
+                   deals (seeds 20000.., as bgai.rl.h2h); a checkpoint that beats the best so far against the same
                    reference (column `reference`) by at least `--min-gain` is copied to ppo_best.zip
 
 Progress rules (lessons of the Forest Shuffle 2p runs: pure self-play drifts, only an outside reference shows it):
@@ -308,7 +308,7 @@ if __name__ == "__main__":
     ap.add_argument("--options", default=None, help="JSON game options (default: the game's default options)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--eval-games", type=int, default=40)
-    ap.add_argument("--greedy-games", type=int, default=8)
+    ap.add_argument("--greedy-games", type=int, default=40)
     ap.add_argument("--anchor", default=None, help="checkpoint used as fixed evaluation opponent")
     ap.add_argument("--anchor-steps", type=int, default=1_000_000)
     ap.add_argument("--resume", action="store_true")

@@ -31,7 +31,7 @@ def read(slug: str, model_id: str) -> dict:
 
 
 def write(slug: str, model_id: str, meta: dict) -> None:
-    (model_dir(slug, model_id) / "model.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    (model_dir(slug, model_id) / "model.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 def publish(slug, model_id, players, checkpoint, logs, recipe, notes=None, hours=None, hardware=None):

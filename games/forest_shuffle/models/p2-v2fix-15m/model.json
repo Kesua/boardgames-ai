@@ -22,11 +22,11 @@
   ],
   "strength": {
     "finished": true,
-    "measured": "2026-11-01",
+    "measured": "2026-11-02",
     "games": [
       {
         "opponent": "p2-v1-7.2m",
-        "label": "previous finished model",
+        "label": "original AI (older training method, not finished)",
         "games": 1500,
         "win": 0.986,
         "win_se": 0.003,
@@ -45,11 +45,14 @@
       {
         "opponent": "greedy",
         "label": "greedy baseline",
-        "games": 8,
+        "games": 400,
         "win": 1.0,
-        "win_se": null,
-        "required": ">=0.95",
-        "note": "training-log evaluation"
+        "win_se": 0.0,
+        "margin": 294.58,
+        "margin_se": 5.13,
+        "score": 449.4,
+        "other": 154.8,
+        "required": ">=0.95"
       }
     ]
   },

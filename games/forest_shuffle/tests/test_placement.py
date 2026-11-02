@@ -17,6 +17,7 @@ def test_empty_slot_ok(db):
 
 
 @pytest.mark.rule("F4.4")
+@pytest.mark.card("EUROPEAN_HARE")
 def test_hares_stack_unlimited(db):
     w = make_sapling(0)
     for i in range(5):
@@ -25,6 +26,8 @@ def test_hares_stack_unlimited(db):
     assert not can_place(db, w, "MOUNTAIN_HARE", "LEFT")
 
 
+@pytest.mark.rule("F4.4")
+@pytest.mark.card("MOUNTAIN_HARE")
 def test_mountain_hare_never_shares(db):
     w = make_sapling(0)
     w.slots["LEFT"].append(dw(db, "MOUNTAIN_HARE", "LEFT"))
@@ -32,6 +35,7 @@ def test_mountain_hare_never_shares(db):
 
 
 @pytest.mark.rule("F4.4")
+@pytest.mark.card("COMMON_TOAD")
 def test_toads_max_two(db):
     w = make_sapling(0)
     w.slots["BOTTOM"].append(dw(db, "COMMON_TOAD", "BOTTOM", uid=1))
@@ -41,6 +45,7 @@ def test_toads_max_two(db):
 
 
 @pytest.mark.rule("F4.4")
+@pytest.mark.card("STINGING_NETTLE")
 def test_nettle_lets_butterflies_share_top(db):
     w = make_sapling(0)
     w.slots["TOP"].append(dw(db, "PEACOCK_BUTTERFLY", "TOP"))

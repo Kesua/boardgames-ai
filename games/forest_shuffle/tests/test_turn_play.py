@@ -20,6 +20,7 @@ def test_play_free_tree_reveals_clearing(game):
 
 @pytest.mark.rule("F4.1")
 @pytest.mark.rule("F4.5")
+@pytest.mark.card("OAK")
 def test_pay_cost_then_place_and_bonus(game):
     oak, pay1, pay2, other = hand_only(game, 0, ("OAK", None), ("EUROPEAN_HARE", "OAK"), ("SQUEAKER", "OAK"), ("BIRCH", None))
     game.step(Action(K.PLAY_WOODY, card=oak.def_id))
@@ -56,6 +57,7 @@ def test_sapling_costs_nothing_and_reveals(game):
 
 
 @pytest.mark.rule("F4.4")
+@pytest.mark.card("TAWNY_OWL")
 def test_split_card_needs_matching_empty_slot(game):
     hand_only(game, 0)
     t = plant(game, 0, "BIRCH")

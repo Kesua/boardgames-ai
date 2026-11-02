@@ -19,6 +19,7 @@ def pay_all(game):
 
 @pytest.mark.rule("F4.5")
 @pytest.mark.rule("F7.1")
+@pytest.mark.card("BIRCH")
 def test_birch_effect_draws_one_and_is_optional(game):
     birch, = hand_only(game, 0, ("BIRCH", None))
     game.step(Action(K.PLAY_WOODY, card=birch.def_id))
@@ -39,6 +40,7 @@ def test_draw_respects_hand_limit(game):
 
 @pytest.mark.rule("F5.1")
 @pytest.mark.rule("F4.5")
+@pytest.mark.card("WOLF")
 def test_wolf_draw_per_deer_and_extra_turn_bonus(game):
     t = plant(game, 0, "SILVER_FIR")
     attach(game, 0, t, "ROE_DEER")
@@ -55,6 +57,8 @@ def test_wolf_draw_per_deer_and_extra_turn_bonus(game):
 
 
 @pytest.mark.rule("F4.7")
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("EUROPEAN_BADGER")
 def test_place_free_skips_effect_and_bonus(game):
     t = plant(game, 0, "BIRCH")
     badger, jay, fox = hand_only(game, 0, ("EUROPEAN_BADGER", "HORSE_CHESTNUT"), ("EURASIAN_JAY", "HORSE_CHESTNUT"),
@@ -70,6 +74,8 @@ def test_place_free_skips_effect_and_bonus(game):
     assert game.state.decisions == [] and game.state.current == 1      # fox effect not offered
 
 
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("RACCOON")
 def test_raccoon_hand_to_cave(game):
     plant(game, 0, "BIRCH")
     rac, *_ = hand_only(game, 0, ("RACCOON", "BIRCH"), ("SQUEAKER", "OAK"), ("SQUEAKER", "OAK"), ("BIRCH", None))
@@ -83,6 +89,8 @@ def test_raccoon_hand_to_cave(game):
     assert len(p.cave) == 1 and len(p.hand) == 2      # 4 -1 played -1 paid -1 caved +1 drawn
 
 
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("EURASIAN_MAGPIE")
 def test_magpie_effect_and_bonus_from_clearing(game):
     plant(game, 0, "BIRCH")
     game.state.clearing = [game.state.deck.pop() for _ in range(3)]
@@ -97,6 +105,8 @@ def test_magpie_effect_and_bonus_from_clearing(game):
     assert len(game.state.players[0].cave) == 2 and len(game.state.clearing) == 1
 
 
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("FEMALE_WILD_BOAR")
 def test_female_boar_removes_clearing(game):
     plant(game, 0, "BIRCH")
     game.state.clearing = [game.state.deck.pop() for _ in range(4)]
@@ -107,6 +117,8 @@ def test_female_boar_removes_clearing(game):
     assert game.state.clearing == []
 
 
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("MOLE")
 def test_mole_plays_more_cards(game):
     plant(game, 0, "BIRCH")
     mole, *_ = hand_only(game, 0, ("MOLE", "OAK"), ("BIRCH", None), ("BIRCH", None), ("BIRCH", None))
@@ -121,6 +133,8 @@ def test_mole_plays_more_cards(game):
     assert game.state.current == 1
 
 
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("WATER_VOLE")
 def test_water_vole_saplings(game):
     plant(game, 0, "BIRCH")
     vole, *_ = hand_only(game, 0, ("WATER_VOLE", "SYCAMORE"), ("BIRCH", None), ("BIRCH", None), ("BIRCH", None))
@@ -134,6 +148,7 @@ def test_water_vole_saplings(game):
 
 
 @pytest.mark.rule("F4.6")
+@pytest.mark.card("PARASOL_MUSHROOM")
 def test_mushroom_triggers_from_next_turn(game):
     t = plant(game, 0, "BIRCH")
     attach(game, 0, t, "PARASOL_MUSHROOM")
@@ -152,6 +167,7 @@ def test_mushroom_triggers_from_next_turn(game):
 
 
 @pytest.mark.rule("F4.6")
+@pytest.mark.card("ELDERBERRY")
 def test_shrub_bonus_applies_permanent_effect_now(game):
     plant(game, 0, "BIRCH")
     elder, p1, p2, moss = hand_only(game, 0, ("ELDERBERRY", "BIRCH"), ("BIRCH", None), ("BIRCH", None), ("MOSS", "LINDEN"))
@@ -167,6 +183,7 @@ def test_shrub_bonus_applies_permanent_effect_now(game):
 
 
 @pytest.mark.rule("F5.1")
+@pytest.mark.card("BARN_OWL")
 def test_barn_owl_conditional_extra_turn(game):
     plant(game, 0, "BIRCH")
     owl, *_ = hand_only(game, 0, ("BARN_OWL", "BIRCH"), ("BIRCH", None), ("BIRCH", None))
@@ -176,6 +193,8 @@ def test_barn_owl_conditional_extra_turn(game):
     assert game.state.extra_turns == 0 and game.state.current == 1
 
 
+@pytest.mark.rule("F4.5")
+@pytest.mark.card("ALPINE_NEWT")
 def test_alpine_newt_bonus_sequence(game):
     plant(game, 0, "BIRCH")
     newt, pay, marmot, gnat = hand_only(game, 0, ("ALPINE_NEWT", "SWISS_PINE"), ("CHAMOIS", "SWISS_PINE"),

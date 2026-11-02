@@ -111,8 +111,8 @@ def main():
                    f"{run['seconds']} s); identical games, verified by replay",
         "seconds": run["seconds"], "schema_version": X.SCHEMA_VERSION, "created": run["finished"],
     }
-    (out / "experiment.json").write_text(json.dumps(recipe, indent=2) + "\n", encoding="utf-8")
-    (out / "stats.json").write_text(json.dumps(stats, separators=(",", ":")) + "\n", encoding="utf-8")
+    (out / "experiment.json").write_text(json.dumps(recipe, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (out / "stats.json").write_text(json.dumps(stats, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
     tmp.unlink()
     print(f"wrote {out} ({len(scores)} games)")
 

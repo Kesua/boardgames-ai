@@ -183,7 +183,7 @@ def main(argv=None):
     if not a.no_write:
         out = ROOT / "games" / a.game / "checks"
         out.mkdir(parents=True, exist_ok=True)
-        (out / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        (out / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in report.items() if k != "problems"}, indent=2))
     for p in report["problems"][:20]:
         print("PROBLEM:", p)

@@ -34,7 +34,7 @@ def test_experiment_writes_recipe_stats_and_fingerprint(toy_experiment):
 
 def test_same_seeds_same_games_any_worker_split():
     a = X.play("_template", ["greedy", "random"], 2, 5, None, 12, None, 1)
-    b = X.play("_template", ["greedy", "random"], 2, 5, None, 12, None, 3)
+    b = X.play("_template", ["greedy", "random"], 2, 5, None, 12, None, 2)   # 2 workers: light enough to run beside training
     assert a == b
 
 

@@ -29,5 +29,6 @@ def greedy(seed: int = None):
 
 
 SPEC = GameSpec(slug="_template", name="Template (toy market game)", players=(2, 3, 4), new_game=new_game,
-                action_count=lambda n: CODEC.size, encoder=encoder, greedy=greedy, rounds=lambda g: 1.0,
+                action_count=lambda n: CODEC.size, encoder=encoder, greedy=greedy,
+                rounds=lambda g: 1.0,            # fixed-length toy game; DELETE for a game whose length varies
                 invariants=invariants, max_steps=200)

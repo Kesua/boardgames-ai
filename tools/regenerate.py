@@ -31,12 +31,12 @@ def regenerate(slug: str, exp_id: str, workers: int, check_only: bool) -> bool:
     if new["fingerprint"]["all"] != old["fingerprint"]["all"]:
         print(f"{slug}/{exp_id}: FINGERPRINT CHANGED — the games differ; not replacing (see {out})")
         return False
-    (d / "stats.json").write_text((out / "stats.json").read_text(encoding="utf-8"), encoding="utf-8")
+    (d / "stats.json").write_text((out / "stats.json").read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
     rec2 = json.loads((out / "experiment.json").read_text(encoding="utf-8"))
     rec.update({k: rec2[k] for k in ("code_commit", "requirements_lock_sha256", "environment", "schema_version", "seconds")})
     rec["id"] = exp_id
     rec["replayed"] = {"games": rec["games"], "date": time.strftime("%Y-%m-%d"), "code_commit": rec2["code_commit"]}
-    (d / "experiment.json").write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8")
+    (d / "experiment.json").write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8", newline="\n")
     import shutil
     shutil.rmtree(out)
     print(f"{slug}/{exp_id}: regenerated, same games")
