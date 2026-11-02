@@ -30,7 +30,7 @@ evaluations in a row. The **open-run best** = the 3M-older checkpoint of the fir
 ```bash
 python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/anchored --start-from <open best ckpt> \
     --fixed <open best ckpt> greedy --keep-every 2000000 --lr 1e-4 --epochs 4 --reference <open best ckpt> \
-    --timesteps 30000000 --chunk 500000 --envs 10 --eval-workers 3 --hours 12     --patience 3 --min-gain 0.02 --min-steps 6000000 --rebase-at 0.8
+    --timesteps 30000000 --chunk 500000 --envs 10 --eval-workers 3 --hours 12 \n    --patience 3 --min-gain 0.02 --min-steps 6000000 --rebase-at 0.8
 ```
 Every 1M steps the log adds `win_vs_ref` (paired games against the reference on 750 deals); a checkpoint that
 beats the best result so far is copied to `ppo_best.zip`. When the win rate against the reference reaches 0.8
@@ -55,8 +55,17 @@ python -m bgai.models accept --game <slug> --id p2-<name> \
     --required ">=0.95" beats - beats --deals 750
 ```
 Paired games: each model plays every seat of each deal once. Finished = every `required` row passes
-(beats = more than 50 % + 2 standard errors). Not finished within budget → do not publish experiments as "finished";
-the dashboard marks unfinished models.
+(beats = more than 50 % + 2 standard errors). Keep the label wording: the dashboard reads "never trained against" or
+"trained against" from it to describe the opponent correctly.
+
+**Failed the greedy bar?** Look at `win_vs_3m` at the stop. Above 0.5 means the model still improves: start another
+anchored stage from the run's last checkpoint (`--start-from` and `--reference` = that checkpoint, `--lr 2.5e-5`,
+`--fixed` = open-run best, the previous reference and greedy, `--min-steps 4000000`, `--rebase-at 0.56`), publish
+that stage's `ppo_best.zip` and accept again. Pick the model by the run's own rule, never by its score against greedy
+on the acceptance deals (that would tune the model to the test). Wingspan: 91.9 % against greedy after 16M steps,
+two more stages (about an hour each) gave 95.1 % at 28M steps, where `win_vs_3m` reached 0.5. Stop when `win_vs_3m`
+stays at 0.5: the recipe is exhausted; publish as not finished and report it, or change the design (design-rl).
+Not finished within budget → do not publish experiments as "finished"; the dashboard marks unfinished models.
 
 ## Pitfalls
 - Watch `clipped` in the training printout: above ~0.3 for long means updates are too large (lower lr / epochs).

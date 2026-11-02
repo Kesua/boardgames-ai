@@ -17,11 +17,11 @@ player count and can come later, from you or anyone else.
 | Your time (estimate) | 15 minutes: start it, answer questions, review | a few hours over several days: decisions where sources differ, spot checks, review |
 | Agent time, rules to engine | under 1 hour, about 0.2M tokens (a dry run, not kept in the repository) | about a day across several agent sessions; tokens not measured |
 | Engine checks (10,000 games per player count) | 30 seconds | Wingspan 16 minutes, Forest Shuffle 53 minutes (4 player counts) |
-| Training, per player count | under an hour | the 2-player Forest Shuffle model: 10.7 hours (in the original project) |
-| Experiment (2,000 games) | seconds | Forest Shuffle 5–9 minutes with 4 worker processes |
+| Training, per player count | under an hour | Wingspan 2 players: 6.0 hours (28M steps); Forest Shuffle 2 players: 10.7 hours (in the original project) |
+| Experiment (2,000 games) | seconds | Wingspan 1.6 minutes with 16 worker processes; Forest Shuffle 5–9 minutes with 4 |
 
 Machine used for these numbers: a 22-core laptop CPU, 64 GB memory, an RTX 4070 Laptop GPU (8 GB). Training speed
-there: Wingspan about 4M steps per hour with 10 game workers. We have not measured smaller machines; plan for at
+there: Wingspan 4–8M steps per hour with 10 game workers (10 or 4 update epochs). We have not measured smaller machines; plan for at
 least 8 cores and 32 GB memory for training (each evaluation worker loads torch, about 1.7 GB). Without a GPU the
 update step runs on the CPU (not measured; expect slower training). Default to training 2 players first.
 

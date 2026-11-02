@@ -63,7 +63,6 @@
   "optional_decisions": {"decision": "USE_POWER", "use": "USE", "skip": "SKIP", "group_pattern": "^(.*)$"},
   "length": {"show": false},
   "item_attributes": ["points", "habitats", "nest", "egg_limit", "wingspan", "food_total", "power_color", "predator", "flocking"],
-  "ai_status": "training",
-  "featured": {},
+  "featured": {"2": {"main": "p2-28m-mirror"}},
   "languages": ["en", "cs"]
 }

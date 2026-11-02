@@ -1,0 +1,85 @@
+{
+  "id": "p2-28m",
+  "game": "wingspan",
+  "players": 2,
+  "sha256": "7ed201a04cab9ee83e67ab8ef491a0a2415f21853557123a374bba161c773b1f",
+  "observation_size": 1659,
+  "action_count": 251,
+  "checkpoint": "runs/wingspan/anchored3/p2/ppo_best.zip",
+  "recipe": [
+    "open run: python -m bgai.rl.train --game wingspan --players 2 --out runs/wingspan/open --timesteps 40000000 --chunk 500000 --envs 10 --eval-workers 3 --eval-games 40 --greedy-games 40 --hours 9 (defaults: lr 2.5e-4, 10 epochs, 20 % frozen-opponent games)",
+    "open run plateaued at 7M (win against the checkpoint 3M older within 0.05 of 50 % twice); best = 3M",
+    "anchored run from the 3M checkpoint: python -m bgai.rl.train --game wingspan --players 2 --out runs/wingspan/anchored --start-from runs/wingspan/open/p2/ppo_3000000.zip --fixed runs/wingspan/open/p2/ppo_3000000.zip greedy --keep-every 2000000 --lr 1e-4 --epochs 4 --reference runs/wingspan/open/p2/ppo_3000000.zip --timesteps 30000000 --chunk 500000 --envs 10 --eval-workers 3 --eval-games 40 --greedy-games 40 --hours 12 --patience 3 --min-gain 0.02 --min-steps 6000000; stopped at 8M, resumed with --rebase-at 0.8 --hours 6 --resume (reference -> its 5M checkpoint, lr 5e-5); stopped at 16M, best = 13M",
+    "13M checkpoint: 91.9 % against greedy (1,000 games), below the 95 % bar -> two more anchored stages, each starting from the previous one's end, lr 2.5e-5:",
+    "stage 3: --out runs/wingspan/anchored2 --start-from runs/wingspan/anchored/p2/ppo_13000000.zip --fixed <open 3M> <anchored 5M> greedy --reference runs/wingspan/anchored/p2/ppo_13000000.zip --lr 2.5e-5 --patience 3 --min-gain 0.02 --min-steps 4000000 --rebase-at 0.8 --hours 5 (other options as above); stopped at 8M (best 56.3 % against its reference)",
+    "stage 4: --out runs/wingspan/anchored3 --start-from runs/wingspan/anchored2/p2/ppo_8000000.zip --fixed <open 3M> <anchored 13M> greedy --reference runs/wingspan/anchored2/p2/ppo_8000000.zip --lr 2.5e-5 --lr-decay 1.0 --rebase-at 0.56 --patience 3 --min-gain 0.02 --min-steps 4000000 --hours 3; stopped at 7M (no checkpoint beat the 3M older one); best = 4M (53.7 % against its reference) = this model",
+    "stage 3 checkpoints were measured against greedy on the acceptance deals (seeds 20000+) before stage 4 started; this model was chosen by the run's own rule (ppo_best), not by that measurement"
+  ],
+  "logs": [
+    "train_log_1.csv",
+    "train_log_2.csv",
+    "train_log_3.csv",
+    "train_log_4.csv"
+  ],
+  "code_commit": "f7dd9d2c8cd3e3efb4822aa3a5382c72dab9fcbb",
+  "steps": 28000000,
+  "games": 114404,
+  "hours": 6.0,
+  "hardware": "22-core CPU (10 game workers), RTX 4070 Laptop GPU for the update",
+  "notes": null,
+  "published": "2026-11-02",
+  "strength": {
+    "finished": true,
+    "games": [
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 1000,
+        "win": 0.951,
+        "win_se": 0.0068,
+        "margin": 24.42,
+        "margin_se": 0.5,
+        "score": 72.6,
+        "other": 48.2,
+        "required": ">=0.95"
+      },
+      {
+        "opponent": "runs/wingspan/open/p2/ppo_7000000.zip",
+        "label": "open-run checkpoint it never trained against",
+        "games": 1500,
+        "win": 0.9087,
+        "win_se": 0.0074,
+        "margin": 21.75,
+        "margin_se": 0.43,
+        "score": 70.0,
+        "other": 48.2,
+        "required": "beats"
+      },
+      {
+        "opponent": "runs/wingspan/open/p2/ppo_3000000.zip",
+        "label": "open-run best (trained against)",
+        "games": 1500,
+        "win": 0.8967,
+        "win_se": 0.0079,
+        "margin": 21.66,
+        "margin_se": 0.44,
+        "score": 70.2,
+        "other": 48.6,
+        "required": "beats"
+      },
+      {
+        "opponent": "runs/wingspan/anchored/p2/ppo_13000000.zip",
+        "label": "earlier candidate after 16M steps (trained against)",
+        "games": 1500,
+        "win": 0.5973,
+        "win_se": 0.0127,
+        "margin": 2.78,
+        "margin_se": 0.33,
+        "score": 70.0,
+        "other": 67.3,
+        "required": "beats"
+      }
+    ],
+    "measured": "2026-11-02"
+  }
+}

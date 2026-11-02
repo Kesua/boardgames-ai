@@ -44,7 +44,7 @@
   "winners": "Vítězové",
   "others": "Ostatní",
   "bonus_title": "Bonusové karty",
-  "bonus_note": "O kolik častěji (nebo méně často) vyhrávají hráči, kteří mají na konci danou bonusovou kartu, a kolik bodů jim dala. Další bonusové karty hráči dobírají díky některým ptákům.",
+  "bonus_note": "O kolik častěji (nebo méně často) vyhrávají hráči, kteří mají na konci danou bonusovou kartu, a kolik bodů jim dala. Další bonusové karty hráči dobírají díky některým ptákům. Šedé řádky: rozdíl může být náhoda.",
   "bonus_card": "Bonusová karta",
   "holders": "Hráčů, kteří ji mají",
   "win_lift": "Rozdíl ve výhrách",

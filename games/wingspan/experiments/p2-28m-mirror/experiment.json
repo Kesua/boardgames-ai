@@ -1,0 +1,36 @@
+{
+  "id": "p2-28m-mirror",
+  "game": "wingspan",
+  "kind": "mirror",
+  "players": 2,
+  "seats": [
+    "p2-28m",
+    "p2-28m"
+  ],
+  "games": 2000,
+  "seed": 1000,
+  "options": {
+    "swift_start_birds": true,
+    "goal_side": "green"
+  },
+  "seat_rotation": "seat j of game k is played by seats[(k + j) % players]",
+  "models": {
+    "p2-28m": "7ed201a04cab9ee83e67ab8ef491a0a2415f21853557123a374bba161c773b1f"
+  },
+  "card_data_sha256": {
+    "birds.json": "3628bfa5c8cb78d43cee6bc1c2a6079e3e1450220e3a4d6db6b3a964b7188874",
+    "bonus_cards.json": "ec01359c370a1592a6af18562c70969c5b71345c6a945653323ba2547a9c09d6"
+  },
+  "code_commit": "f7dd9d2c8cd3e3efb4822aa3a5382c72dab9fcbb",
+  "requirements_lock_sha256": "111a70644b1bdc5dc9b2e8f0cd85ffa0d592f217fde2cdaf4e3b2a4a125d8836",
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.10.11",
+    "numpy": "2.2.6",
+    "torch": "2.14.0+cu126"
+  },
+  "command": "python -m bgai.experiment --game wingspan --id p2-28m-mirror --players 2 --seats p2-28m p2-28m --games 2000 --seed 1000 --workers 16",
+  "seconds": 95.2,
+  "schema_version": 1,
+  "created": "2026-11-02T06:30:42"
+}

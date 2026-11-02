@@ -1,0 +1,190 @@
+{
+ "written": "2026-11-02",
+ "experiments": {
+  "p2-28m-mirror": {
+   "games": 2000,
+   "written": "2026-11-02",
+   "en": {
+    "summary": "Score on round goals, eggs and tucked cards rather than on big birds: build in the grassland or the wetland, take birds that tuck cards from your hand, play eight or more birds and lay eggs in the last round.",
+    "do": [
+     "Fight for every round goal; that is where winners gain most.",
+     "Build your engine in the grassland or the wetland; do not put most of your birds in the forest.",
+     "Take birds that tuck cards from your hand (Barn Swallow, Purple Martin, American Robin, Bushtit).",
+     "Aim for eight or more birds.",
+     "In the last round, lay eggs on most turns."
+    ],
+    "dont": [
+     "Do not build mainly in the forest.",
+     "Do not gain food in the last round unless it lets you play a bird."
+    ],
+    "works": [
+     "Round goals. Winners score 15.8 points from round goals, the others 11.7: the biggest gap of any scoring category. Winners lead in every round, from 2.0 against 1.4 points in round 1 to 5.8 against 4.7 in round 4.",
+     "Eggs and tucked cards. Winners have 19.4 points of eggs (the others 16.8) and 8.7 points of tucked cards (the others 6.6). The birds' printed points barely differ: 25.8 against 25.2.",
+     "Birds that tuck cards from your hand. Barn Swallow (+14.7 pp; on 13 % of player mats), Purple Martin (+9.6 pp), American Robin (+8.4 pp) and Bushtit (+7.8 pp) all go with winning: each turn in their row turns a spare card into a point.",
+     "More birds. Winners end with 7.9 birds, the others with 7.6. Players with 5 birds win 32 % of games, with 8 birds 53 %, with 10 birds 58 %.",
+     "Two bonus cards stand out: Falconer (predator birds; +8.7 pp, 375 holders) and Omnivore Expert (+6.0 pp, 414 holders). Winners score 3.0 bonus points, the others 2.1."
+    ],
+    "avoid": [
+     "A forest-heavy mat. Players whose main habitat is the forest (16 % of mats) win only 43 % of games (−8.0 pp); grassland mats (38 %) win 52 %.",
+     "Gaining food late. In the last round winners gain food on 5 % of their turns, the others on 8 %; winners lay eggs on 67 %, the others on 62 %."
+    ],
+    "order": "The first player wins 52.1 % of games, the second 49.1 %: turn order hardly matters with 2 players."
+   },
+   "cs": {
+    "summary": "Body sbírej z cílů kol, vajec a zastrčených karet, ne z velkých ptáků: stav na louce nebo v mokřadu, ber ptáky, kteří zastrkávají karty z ruky, zahraj osm a víc ptáků a v posledním kole klaď vejce.",
+    "do": [
+     "Bojuj o každý cíl kola; tam vítězové získávají nejvíc.",
+     "Stav svůj motor na louce nebo v mokřadu; většinu ptáků nedávej do lesa.",
+     "Ber ptáky, kteří zastrkávají karty z ruky (Barn Swallow, Purple Martin, American Robin, Bushtit).",
+     "Měj na desce osm a víc ptáků.",
+     "V posledním kole většinou klaď vejce."
+    ],
+    "dont": [
+     "Nestav hlavně v lese.",
+     "V posledním kole neber potravu, pokud ti nepomůže zahrát ptáka."
+    ],
+    "works": [
+     "Cíle kol. Vítězové mají z cílů kol 15,8 bodu, ostatní 11,7: největší rozdíl ze všech kategorií bodování. Vítězové vedou v každém kole, od 2,0 proti 1,4 bodu v 1. kole po 5,8 proti 4,7 ve 4. kole.",
+     "Vejce a zastrčené karty. Vítězové mají za vejce 19,4 bodu (ostatní 16,8) a za zastrčené karty 8,7 bodu (ostatní 6,6). Tištěné body ptáků se skoro neliší: 25,8 proti 25,2.",
+     "Ptáci, kteří zastrkávají karty z ruky. Barn Swallow (+14,7 p. b.; na 13 % hracích desek), Purple Martin (+9,6 p. b.), American Robin (+8,4 p. b.) a Bushtit (+7,8 p. b.) jdou s výhrou: každý tah v jejich řadě promění kartu navíc v bod.",
+     "Víc ptáků. Vítězové končí s 7,9 ptáky, ostatní s 7,6. Hráči s 5 ptáky vyhrávají 32 % her, s 8 ptáky 53 %, s 10 ptáky 58 %.",
+     "Vynikají dvě bonusové karty: Falconer (dravci; +8,7 p. b., 375 hráčů) a Omnivore Expert (+6,0 p. b., 414 hráčů). Vítězové mají z bonusů 3,0 bodu, ostatní 2,1."
+    ],
+    "avoid": [
+     "Deska hlavně s lesními ptáky. Hráči, jejichž hlavní prostředí je les (16 % desek), vyhrávají jen 43 % her (−8,0 p. b.); desky s hlavním prostředím louka (38 %) vyhrávají 52 %.",
+     "Pozdní braní potravy. V posledním kole berou vítězové potravu v 5 % tahů, ostatní v 8 %; vejce kladou vítězové v 67 % tahů, ostatní v 62 %."
+    ],
+    "order": "Začínající hráč vyhrává 52,1 % her, druhý 49,1 %: ve 2 hráčích na pořadí skoro nezáleží."
+   }
+  }
+ },
+ "findings": [
+  {
+   "variant": "main",
+   "id": "goals",
+   "link": "strategy",
+   "en": {
+    "title": "Winners win the round goals",
+    "text": "The biggest scoring gap between winners and the others is in the round goals: 15.8 against 11.7 points. Eggs (19.4 against 16.8) and tucked cards (8.7 against 6.6) follow; the birds' printed points barely differ.",
+    "label": "points from round goals: winners vs others",
+    "n2": "15.8 vs 11.7"
+   },
+   "cs": {
+    "title": "Vítězové vyhrávají cíle kol",
+    "text": "Největší rozdíl v bodování mezi vítězi a ostatními je v cílech kol: 15,8 proti 11,7 bodu. Následují vejce (19,4 proti 16,8) a zastrčené karty (8,7 proti 6,6); tištěné body ptáků se skoro neliší.",
+    "label": "body z cílů kol: vítězové proti ostatním",
+    "n2": "15,8 proti 11,7"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "tuckers",
+   "link": "items/BARN_SWALLOW",
+   "en": {
+    "title": "Birds that tuck cards go with winning",
+    "text": "Barn Swallow has the largest win-rate difference of the birds found on at least 5 % of player mats (+14.7 pp). Purple Martin (+9.6 pp), American Robin (+8.4 pp) and Bushtit (+7.8 pp) have the same kind of power: tuck a card from your hand, then draw a card or lay an egg.",
+    "label": "win-rate difference: Barn Swallow",
+    "n2": "+14.7 pp"
+   },
+   "cs": {
+    "title": "Ptáci, kteří zastrkávají karty, jdou s výhrou",
+    "text": "Barn Swallow má největší rozdíl ve výhrách ze všech ptáků, kteří jsou aspoň na 5 % hracích desek (+14,7 p. b.). Purple Martin (+9,6 p. b.), American Robin (+8,4 p. b.) a Bushtit (+7,8 p. b.) mají stejný druh schopnosti: zastrč kartu z ruky, pak dober kartu nebo polož vejce.",
+    "label": "rozdíl ve výhrách: Barn Swallow",
+    "n2": "+14,7 p. b."
+   }
+  },
+  {
+   "variant": "main",
+   "id": "forest",
+   "link": "boards",
+   "en": {
+    "title": "A forest-heavy mat wins less",
+    "text": "Players whose main habitat (the row with the most birds) is the forest win 43 % of games; that is 16 % of player mats. Grassland mats win 52 %. A likely reason: the forest row gains food, while the AI's winners score with eggs and cards.",
+    "label": "wins of mats with mostly forest birds",
+    "n2": "43 %"
+   },
+   "cs": {
+    "title": "Deska hlavně s lesem vyhrává méně",
+    "text": "Hráči, jejichž hlavní prostředí (řada s nejvíce ptáky) je les, vyhrávají 43 % her; je to 16 % hracích desek. Desky s loukou vyhrávají 52 %. Pravděpodobný důvod: lesní řada dává potravu, zatímco vítězové AI bodují vejci a kartami.",
+    "label": "výhry desek hlavně s lesními ptáky",
+    "n2": "43 %"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "birds",
+   "link": "more",
+   "en": {
+    "title": "Eight birds or more",
+    "text": "Winners end with 7.9 birds on average, the others with 7.6. Players with 5 birds win 32 % of games, with 8 birds 53 %, with 10 birds 58 %.",
+    "label": "wins with 10 birds on the mat",
+    "n2": "58 %"
+   },
+   "cs": {
+    "title": "Osm ptáků a víc",
+    "text": "Vítězové končí v průměru s 7,9 ptáky, ostatní s 7,6. Hráči s 5 ptáky vyhrávají 32 % her, s 8 ptáky 53 %, s 10 ptáky 58 %.",
+    "label": "výhry s 10 ptáky na desce",
+    "n2": "58 %"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "eggs",
+   "link": "more",
+   "en": {
+    "title": "Last round: eggs, not food",
+    "text": "In the last round winners lay eggs on 67 % of their turns and gain food on 5 %; the others lay eggs on 62 % and gain food on 8 %. Food left at the end scores nothing; eggs are points.",
+    "label": "last-round turns spent laying eggs (winners)",
+    "n2": "67 %"
+   },
+   "cs": {
+    "title": "Poslední kolo: vejce, ne potrava",
+    "text": "V posledním kole kladou vítězové vejce v 67 % tahů a potravu berou v 5 %; ostatní kladou vejce v 62 % a potravu berou v 8 %. Potrava, která na konci zbude, nedá žádný bod; vejce jsou body.",
+    "label": "tahy posledního kola s kladením vajec (vítězové)",
+    "n2": "67 %"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "bonus",
+   "link": "more",
+   "en": {
+    "title": "Falconer is the strongest bonus card",
+    "text": "Players holding Falconer (points for predator birds) at the end have a win-rate difference of +8.7 pp (375 holders); Omnivore Expert follows (+6.0 pp). Winners score 3.0 bonus points, the others 2.1.",
+    "label": "win-rate difference: Falconer",
+    "n2": "+8.7 pp"
+   },
+   "cs": {
+    "title": "Falconer je nejsilnější bonusová karta",
+    "text": "Hráči, kteří mají na konci Falconer (body za dravce), mají rozdíl ve výhrách +8,7 p. b. (375 hráčů); následuje Omnivore Expert (+6,0 p. b.). Vítězové mají z bonusů 3,0 bodu, ostatní 2,1.",
+    "label": "rozdíl ve výhrách: Falconer",
+    "n2": "+8,7 p. b."
+   }
+  },
+  {
+   "variant": "main",
+   "id": "order",
+   "link": "strategy",
+   "en": {
+    "title": "Going first hardly matters",
+    "text": "The first player wins 52.1 % of games, the second 49.1 %. Both players get the same number of turns, so turn order matters little.",
+    "label": "wins from the first : second seat",
+    "n2": "52.1 % : 49.1 %"
+   },
+   "cs": {
+    "title": "Na pořadí skoro nezáleží",
+    "text": "Začínající hráč vyhrává 52,1 % her, druhý 49,1 %. Oba hráči mají stejně tahů, takže na pořadí záleží málo.",
+    "label": "výhry z prvního : druhého místa",
+    "n2": "52,1 % : 49,1 %"
+   }
+  }
+ ],
+ "limits": {
+  "en": [
+   "The AI averages 70 points a game. It passed its strength test only narrowly (95.1 % of games against the simple greedy player; 95 % is required), so treat it as a sound player, not an expert: its findings show what works at that level."
+  ],
+  "cs": [
+   "AI má v průměru 70 bodů na hru. Zkouškou síly prošla jen těsně (95,1 % her proti jednoduchému hladovému hráči; potřeba je 95 %), takže je to solidní hráč, ne expert: zjištění ukazují, co funguje na této úrovni."
+  ]
+ }
+}

@@ -849,8 +849,10 @@
         C.columns(plot, { x: sec.rows.map((r) => cell(xcol, r[sec.bars.x])), series: sec.bars.series.map((sk) => ({ name: lab(sk), values: sec.rows.map((r) => r[sk]) })), fmt: (v) => num(v, 1), height: 220 });
       }
       const sortable = sec.rows.length > 12;
+      // a row whose difference could be chance (its range crosses 0) is greyed, as in the bar charts
+      const unclearRow = (s, r) => s.columns.some((c) => c.format === "pp" && r[c.key + "_se"] !== undefined && Math.abs(r[c.key]) <= 2 * r[c.key + "_se"]);
       el.querySelector(".tbl").innerHTML = `<div class="table-wrap" style="margin-top:10px;max-height:${sortable ? "420px" : "none"}"><table><thead><tr>${sec.columns.map((c) => `<th class="${["text", "category", "label"].includes(c.format) ? "" : "num"}">${esc(lab(c.label))}</th>`).join("")}</tr></thead>
-        <tbody>${sec.rows.map((r) => `<tr>${sec.columns.map((c) => `<td class="${["text", "category", "label"].includes(c.format) ? "" : "num"}">${esc(cell(c, r[c.key]))}${c.format === "pp" && r[c.key + "_se"] ? ` <span class="muted">± ${esc(pp(2 * r[c.key + "_se"]).replace(/^[+−]/, ""))}</span>` : ""}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+        <tbody>${sec.rows.map((r) => `<tr class="${unclearRow(sec, r) ? "dim" : ""}">${sec.columns.map((c) => `<td class="${["text", "category", "label"].includes(c.format) ? "" : "num"}">${esc(cell(c, r[c.key]))}${c.format === "pp" && r[c.key + "_se"] ? ` <span class="muted">± ${esc(pp(2 * r[c.key + "_se"]).replace(/^[+−]/, ""))}</span>` : ""}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
     }
   }
 
@@ -902,7 +904,9 @@
     if (has("agent_" + x.opponent)) return t("agent_" + x.opponent);
     if (g.models[x.opponent]) return modelLabel(g, x.opponent);
     const m = /ppo_(\d+)(\.zip)?$/.exec(x.opponent || "");
-    if (m) return t(x.opponent.includes("/") ? "opp_other_run" : "opp_own_early", { steps: fmtSteps(+m[1]), even: pct(1 / players, 0) });
+    // the strength card's own label says whether the AI trained against that checkpoint ("never trained against")
+    const seen = x.label && /trained against/i.test(x.label) && !/never/i.test(x.label);
+    if (m) return t(seen ? "opp_trained" : x.opponent.includes("/") ? "opp_other_run" : "opp_own_early", { steps: fmtSteps(+m[1]), even: pct(1 / players, 0) });
     return x.label || x.opponent;
   }
   // by player count, the finished AI first

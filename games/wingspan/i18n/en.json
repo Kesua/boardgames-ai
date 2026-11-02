@@ -44,7 +44,7 @@
   "winners": "Winners",
   "others": "Others",
   "bonus_title": "Bonus cards",
-  "bonus_note": "How much more (or less) often players holding each bonus card at the end win, and the points it brought. Players draw extra bonus cards with some birds.",
+  "bonus_note": "How much more (or less) often players holding each bonus card at the end win, and the points it brought. Players draw extra bonus cards with some birds. Grey rows: the difference may be chance.",
   "bonus_card": "Bonus card",
   "holders": "Players holding it",
   "win_lift": "Win-rate difference",

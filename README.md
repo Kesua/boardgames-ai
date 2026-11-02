@@ -27,7 +27,7 @@ against an equally strong copy of itself — not a proven best strategy.
 | Game | State | Examples of what the AI's games show |
 |---|---|---|
 | Forest Shuffle (base + Woodland Edge + Alpine) | **2 players:** finished AI (15M training steps), 2,000 games. **4 players:** an early AI trained before the training recipe existed; its findings are tentative. | Winners draw from the deck far more than from the clearing; players with Gentian among their butterflies win more often; the strong AI almost never builds a forest mainly from saplings. |
-| Wingspan (base game) | Rules engine verified, all 180 birds tested; the AI is in training. | — |
+| Wingspan (base game) | **2 players:** finished AI (28M training steps), 2,000 games. 3–5 players: not trained yet. | Winners gain most on round goals, eggs and tucked cards, not on the birds' printed points; birds that tuck cards from your hand go with winning; mats built mainly in the forest win less often. |
 
 ## Why you can trust the numbers — and how far
 
@@ -38,7 +38,7 @@ against an equally strong copy of itself — not a proven best strategy.
 | A test for every card | all 92 species | all 180 birds |
 | Automated engine checks | 10,000 random games per player count (`checks/report.json`) | 10,000 random games per player count |
 | Independent review | card check, and the port replayed the original project's games identically (`checks/review.md`) | audit of code against rules: 5 findings, all fixed (`checks/review.md`) |
-| AI strength card: paired games against opponents it never trained against and a simple greedy player | 2 players: wins 98.6 % against the original AI and 95.9 % against a checkpoint from another training run (1,500 games each), 100 % against the greedy player (400 games) | after training |
+| AI strength card: paired games against opponents it never trained against and a simple greedy player | 2 players: wins 98.6 % against the original AI and 95.9 % against a checkpoint from another training run (1,500 games each), 100 % against the greedy player (400 games) | 2 players: wins 90.9 % against a checkpoint from another training run (1,500 games), 95.1 % against the greedy player (1,000 games; bar 95 %, passed narrowly) |
 | Reproducible | every experiment is a recipe (code, model, seeds); CI replays its first 20 games and compares their final scores | same |
 
 `tools/check_repo.py` (run by CI on every pull request) fails when a rule or card has no test, when the engine
@@ -47,6 +47,9 @@ changed after its check report, or when a pipeline file is missing.
 Known limit: the Forest Shuffle models were trained before an independent card check corrected one card's scoring
 (European Wildcat) on 2026-11-02. All experiments were re-run on the corrected engine; the models themselves were not
 retrained (the card is in 0.4 % of the 2-player forests and 6 % of the 4-player forests).
+
+The Wingspan AI averages 70 points a game and passed the greedy bar narrowly: a sound player, not an expert; its
+findings show what works at that level.
 
 ## Add a game
 Open a branch and ask your coding agent (Claude Code, Codex, Grok, Cursor …) to *"add the game <name>"*. The agent
