@@ -298,6 +298,17 @@
   const tentative = (g, s) => !srcInfo(g, s).finished;
   const srcHead = (g, s) => (tentative(g, s) ? esc(t("n_players", { n: s.players })) + tentPill(g, s) : esc(srcLabel(g, s)));
   function tentPill(g, s) { return tentative(g, s) ? ` <span class="pill warn">${esc(t(srcInfo(g, s).role === "original" ? "pill_original" : srcInfo(g, s).role === "baseline" ? "pill_baseline" : "pill_tentative"))}</span>` : ""; }
+  /* Why a model is not finished, from its strength card: the first required test it failed. */
+  function whyEarly(g, id) {
+    const m = g.models[id] || {}, st = m.strength || {};
+    if (st.legacy || m.legacy) return t("why_legacy");
+    const r = (st.games || []).find((x) => x.required && !(x.required === "beats" ? x.win - 2 * (x.win_se || 0) > 0.5
+      : x.win >= parseFloat(x.required.slice(2))));
+    if (!r) return t("why_untested");
+    if (r.required !== "beats") return t("why_min", { who: t(has("agent_" + r.opponent) ? "agent_" + r.opponent : "why_older").toLowerCase(),
+      win: pct(r.win, 1), need: pct(parseFloat(r.required.slice(2))) });
+    return t("why_beats", { win: pct(r.win, 1) });
+  }
   function tentNote(g, srcs) {
     const seen = new Set();
     const notes = srcs.filter((s) => tentative(g, s)).map((s) => {
@@ -305,7 +316,7 @@
       const key = who.role === "original" ? "tent_original" : who.role === "baseline" ? "tent_baseline" : "tent_early";
       if (seen.has(key + s.players)) return "";
       seen.add(key + s.players);
-      return `<div class="notice"><b>${esc(t(key + "_h", { players: t("n_players", { n: s.players }) }))}</b> ${esc(t(key, { players: t("n_players", { n: s.players }), agent: who.label.toLowerCase() }))}
+      return `<div class="notice"><b>${esc(t(key + "_h", { players: t("n_players", { n: s.players }) }))}</b> ${esc(t(key, { players: t("n_players", { n: s.players }), agent: who.label.toLowerCase(), why: key === "tent_early" ? whyEarly(g, who.id) : "" }))}
         <a href="${link(g.slug, who.role === "original" ? "compare" : "lab")}">${esc(t(who.role === "original" ? "tab_compare" : "tab_lab"))} →</a></div>`;
     }).join("");
     return notes;

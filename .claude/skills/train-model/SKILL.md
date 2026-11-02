@@ -48,7 +48,7 @@ replays the reference, best result and learning rate from the log. Use it also t
 ```bash
 python -m bgai.models publish --game <slug> --id p2-<name> --players 2 --checkpoint runs/<slug>/anchored/p2/ppo_best.zip \
     --logs runs/<slug>/open/p2/train_log.csv runs/<slug>/anchored/p2/train_log.csv --recipe "<open cmd>" "<anchored cmd>" \
-    --hours <h> --hardware "<cpu/gpu>"
+    --steps <steps> --games <games> --hours <h> --hardware "<cpu/gpu>"   # steps/games: all runs together, up to the checkpoint
 python -m bgai.models accept --game <slug> --id p2-<name> \
     --vs greedy <open-run last ckpt> <open-run best ckpt> [<previous finished model id>] \
     --labels "greedy baseline" "open-run checkpoint it never trained against" "open-run best (trained against)" ... \

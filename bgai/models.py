@@ -1,7 +1,7 @@
 """Publish a trained model into games/<slug>/models/<id>/ and measure its strength card.
 
 python -m bgai.models publish --game <slug> --id <model id> --players 2 --checkpoint runs/<slug>/anchored/p2/ppo_best.zip \
-    --logs runs/<slug>/open/p2/train_log.csv runs/<slug>/anchored/p2/train_log.csv --recipe "<command>" "<command>"
+    --logs runs/<slug>/open/p2/train_log.csv runs/<slug>/anchored/p2/train_log.csv --recipe "<command>" "<command>"     --steps <training steps of the checkpoint, all runs together> --games <self-play games, all runs together> --hours <h>
 python -m bgai.models accept --game <slug> --id <model id> --vs <checkpoint or model id> [--vs ...] --deals 750
 
 A model folder holds model.zip (the trainer checkpoint: the actor that picks moves plus the value network, so
@@ -34,7 +34,8 @@ def write(slug: str, model_id: str, meta: dict) -> None:
     (model_dir(slug, model_id) / "model.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
-def publish(slug, model_id, players, checkpoint, logs, recipe, notes=None, hours=None, hardware=None):
+def publish(slug, model_id, players, checkpoint, logs, recipe, notes=None, hours=None, hardware=None, steps=None,
+            games=None):
     from sb3_contrib import MaskablePPO
     d = model_dir(slug, model_id)
     d.mkdir(parents=True, exist_ok=True)
@@ -48,7 +49,8 @@ def publish(slug, model_id, players, checkpoint, logs, recipe, notes=None, hours
     meta = {"id": model_id, "game": slug, "players": players, "sha256": sha256_file(d / "model.zip"),
             "observation_size": int(m.observation_space.shape[0]), "action_count": int(m.action_space.n),
             "checkpoint": str(checkpoint), "recipe": recipe or [], "logs": sorted(p.name for p in d.glob("train_log*.csv")),
-            "code_commit": code_commit(), "hours": hours, "hardware": hardware, "notes": notes,
+            "code_commit": code_commit(), "steps": steps, "games": games, "hours": hours, "hardware": hardware,
+            "notes": notes,
             "published": time.strftime("%Y-%m-%d"), "strength": {"finished": False, "games": []}}
     write(slug, model_id, meta)
     return d
@@ -101,6 +103,8 @@ def main(argv=None):
     p.add_argument("--notes")
     p.add_argument("--hours", type=float)
     p.add_argument("--hardware")
+    p.add_argument("--steps", type=int, help="training steps of the checkpoint (shown on the dashboard)")
+    p.add_argument("--games", type=int, help="self-play games played until the checkpoint")
     q = sub.add_parser("accept")
     q.add_argument("--game", required=True)
     q.add_argument("--id", required=True)
@@ -111,7 +115,8 @@ def main(argv=None):
     q.add_argument("--workers", type=int, default=4)
     a = ap.parse_args(argv)
     if a.cmd == "publish":
-        print(publish(a.game, a.id, a.players, a.checkpoint, a.logs, a.recipe, a.notes, a.hours, a.hardware))
+        print(publish(a.game, a.id, a.players, a.checkpoint, a.logs, a.recipe, a.notes, a.hours, a.hardware,
+                      a.steps, a.games))
     else:
         req = [None if x == "-" else x for x in (a.required or [])] or None
         print(json.dumps(accept(a.game, a.id, a.vs, a.deals, a.workers, a.labels, req), indent=2))
