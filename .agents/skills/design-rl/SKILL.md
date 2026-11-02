@@ -15,6 +15,8 @@ observation and a sane greedy baseline make the difference between a strong AI i
   amounts left), own private state (hand as counts per card id, resources, own board as per-slot features), each
   other player's **public** state (clockwise from self), score breakdown and lead.
 - **Hide what is hidden:** other hands, secret cards, choices made in secret; scores that include secret points.
+  Information a player with perfect memory could rebuild from public events (chips taken in front of everyone, cards
+  revealed earlier) counts as public, even when table custom keeps it face down.
 - Static card features (cost, points, icons, effect type one-hot) precomputed once per card id.
 - Use `bgai.kit.add_counts` / `one_hot`. Typical sizes: 1,500–4,500 floats.
 - If you later extend the observation, append to the end and register older versions in `SPEC.encoder_versions` so
@@ -32,9 +34,16 @@ The default (win ±1, ties count as wins, + margin/100) works; change it only wi
 python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/smoke --timesteps 1000000 --chunk 200000 \
     --envs 8 --eval-workers 3
 ```
-Within 400k steps the model must beat random in > 90 % of games. If not: check the mask (illegal answers?), the
-reward sign, whether the observation contains the decision context.
+Use 2 players for the smoke run when the game allows it; otherwise its smallest player count. Pass rule:
+`win_vs_random` above 0.9 for 2 players (for n players: clearly above 1/n, e.g. ≥ 0.8) within 400k steps, AND a paired
+check against greedy shows learning:
+```bash
+python -m bgai.rl.h2h --game <slug> --players 2 --a runs/<slug>/smoke/p2/ppo_<last>.zip --b greedy --seeds 150
+```
+(the training log's greedy column uses only `--greedy-games` games and moves in coarse steps). If it does not learn:
+check the mask (illegal answers?), the reward sign (`scores()` higher-is-better?), whether the observation contains
+the decision context.
 
 ## Done when
-Encoder and greedy committed with tests (encoder size and range), the smoke run learns, throughput recorded in
-`STATUS.md` (steps per hour).
+Encoder and greedy committed with tests (encoder size; the [0, 1] range is also checked by `bgai.checks`), the
+smoke run learns, throughput recorded in `STATUS.md` (steps per hour).

@@ -21,10 +21,12 @@ each step leaves checkable files and an entry in `STATUS.md`.
    information, randomness, any real-time or dexterity element (not supported), any choice too large to number
    (e.g. free placement on a large grid — plan steps for it in plan-engine). If the game does not fit, stop and say why.
 2. **Slug:** lowercase with underscores (`ark_nova`). Branch: `game/<slug>`.
-3. **Scaffold:** `cp -r games/_template games/<slug>`; set `slug`/`name` in `__init__.py` and `manifest.json`;
-   delete the toy rules/tests content as you replace it. Add `RIGHTS.md` (copy the wording of
-   `games/wingspan/RIGHTS.md`, fill in publisher and designer).
-4. **Create `games/<slug>/STATUS.md`** with this checklist and keep it current:
+3. **Scaffold:** `python tools/new_game.py --slug <slug> --name "<Name>"` copies `games/_template` and points every
+   import and the manifest at the new slug (a plain copy would keep testing the template). It brings stubs for
+   `STATUS.md`, `PLAN.md`, `RIGHTS.md` (fill in publisher and designer), `data/SOURCES.md`, `checks/review.md` and
+   `i18n/en.json`; the manifest keys are explained in `bgai/manifest.schema.json`. Replace the toy rules, engine and
+   tests step by step; keep the tests passing.
+4. **Keep `games/<slug>/STATUS.md` current** (the stub has this checklist):
    ```
    - [ ] ingest-rules: rules.md with IDs, 2 sources, decisions listed
    - [ ] build-card-db: data/*.json, SOURCES.md, field-by-field check of 2 sources (+ 3rd for disputes)
@@ -37,11 +39,19 @@ each step leaves checkable files and an entry in `STATUS.md`.
    - [ ] write-notes: notes.json (en + other languages)
    - [ ] publish-game: check_repo passes, publisher notice drafted, PR opened
    ```
-5. Run the skills in that order. Never start training before verify-engine is done.
+5. Run the skills in that order. Never start training before verify-engine is done. Run every command from the
+   repository root with the project's `.venv` (the `bgai` package is not installed; imports work from the root).
 
 ## Done when
 All boxes are ticked, `python tools/check_repo.py` and `python -m pytest -q` pass, and the game shows on
 `python tools/build_site.py` output with its findings.
+
+## How big is the job? (measured on the games done so far)
+| Game | Size | Agent work | Machine time |
+|---|---|---|---|
+| No Thanks! (dry run) | 33 number cards, 1 decision kind | under 1 hour, ~0.2M tokens, rules to site | checks 30 s; smoke training minutes |
+| Wingspan | 180 birds, 30 power types, 31 decision kinds | about a day across several agents (2 rule researchers, card build + 3-source check, engine, audit) | checks ~15 min; training about a day per player count |
+| Forest Shuffle (+2 expansions) | 92 species on 230 cards | several days in the original project (1,800-line plan first) | training 10.7 h for the 2-player model on a 22-core CPU + laptop GPU |
 
 ## Lessons from earlier games
 - Forest Shuffle: the slow part was not code but understanding rules and cards precisely (an implementation plan of

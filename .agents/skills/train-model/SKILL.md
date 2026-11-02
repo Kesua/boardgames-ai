@@ -5,6 +5,11 @@ description: Train a finished AI model for one player count with the standard re
 
 # Train a model (the standard recipe)
 
+**Which player counts:** 2 players first — it is the one most players ask about and the cheapest to train. Every
+further player count is optional and gets its own model, experiments and featured entry; the dashboard shows only
+player counts that have a featured experiment. A pull request may stop before training (an engine-only pull request,
+review-game-pr skill).
+
 ## Goal
 The published statistics are only as meaningful as the AI that produced them. A model counts as **finished** when it
 clearly beats opponents it never trained against and the greedy baseline. The recipe comes from the Forest Shuffle
@@ -27,8 +32,13 @@ python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/anchored --s
     --fixed <open best ckpt> greedy --keep-every 2000000 --lr 1e-4 --epochs 4 --reference <open best ckpt> \
     --timesteps 30000000 --chunk 500000 --envs 10 --eval-workers 3 --hours 12
 ```
-Stop when the latest checkpoint wins ≤ 55 % in paired games against the one 2M steps older, twice in a row, or the
-budget ends. `ppo_best.zip` = best against the reference.
+Every 1M steps the log adds `win_vs_ref` (paired games against the reference on 750 deals); a checkpoint that
+beats the best result so far is copied to `ppo_best.zip`. Stop when `win_vs_ref` has brought no gain of 0.02 for three
+evaluations in a row — add `--patience 3 --min-gain 0.02 --min-steps 6000000` and the trainer stops by itself — or when
+the budget ends. The model to publish is `ppo_best.zip`.
+
+**Interrupted?** Run the same command again with `--resume`: it continues from the latest checkpoint in `--out` and
+replays the reference, best result and learning rate from the log. Use it also to extend a run that hit `--hours`.
 
 ## 3. Publish and accept
 ```bash

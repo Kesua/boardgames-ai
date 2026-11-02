@@ -12,8 +12,11 @@ source, and every disagreement settled and written down. Effects are stored as *
 never as copied card text.
 
 ## Steps
-1. **Find two sources**: community card databases (apps' data files, BoardGameGeek spreadsheets), fan wikis, the
-   requester's photos of their own cards. Prefer machine-readable files. Download to `inbox/`.
+1. **Find two sources**: community card databases (apps' data files, BoardGameGeek spreadsheets), fan wikis, open-source
+   implementations of the game on GitHub (their data files and scoring code are precise), the publisher's card
+   appendix, the requester's photos of their own cards. Prefer machine-readable files. Download to `inbox/`.
+   Two copies of one list are one source. A deck of plain number cards (no effects) needs no database: build it from
+   the rule that defines it, compare the range and counts with the second rules source, and give each card a test.
 2. **Design the schema** (`data/<things>.json`): stable integer `id`, `name`, every number and icon that rules refer to,
    and `effect`/`power` as a small dict with a `type` and parameters. List all distinct effect texts first
    (a script that groups identical texts); each group becomes one effect type. Wingspan: 180 birds → 30 types.
