@@ -1,8 +1,14 @@
 """Repository rules that CI enforces (python tools/check_repo.py; exit code 1 on any problem).
 
 - no rulebook PDFs and no file over 50 MB anywhere in git
-- every game has manifest.json (required keys), rules.md, RIGHTS.md and tests
+- every game has manifest.json (valid against bgai/manifest.schema.json), rules.md, RIGHTS.md and tests
+- every game (not the _template) has the pipeline files: STATUS.md, PLAN.md, data/SOURCES.md, checks/review.md
 - every rule ID in a game's rules.md has a test marked @pytest.mark.rule("<ID>")
+- every item of the game's catalog has a test marked @pytest.mark.card("<ID>") (or one test marked card("*") that
+  is parametrized over the whole catalog)
+- checks/report.json: 0 problems, at least 10,000 games for every supported player count, and no engine file changed
+  since the commit it was made on (rerun python -m bgai.checks --game <slug> after any engine change)
+- every experiment records the code commit that produced (or replayed) it
 - every experiment's models exist with the recorded sha256; every model is used by an experiment (or the game's
   featured list) or marked in training
 - featured experiments exist
@@ -19,7 +25,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX = 50 * 2 ** 20
-REQUIRED = ["slug", "name", "players", "terms", "score_categories", "top_decision", "featured", "languages"]
+SCHEMA = ROOT / "bgai" / "manifest.schema.json"
+PIPELINE_FILES = ["STATUS.md", "PLAN.md", "data/SOURCES.md", "checks/review.md"]
+MIN_CHECK_GAMES = 10000
+# files of a game folder that do not change how games are played (everything else is "engine")
+NOT_ENGINE = ("tests/", "checks/", "models/", "experiments/", "i18n/", "notes.json", "manifest.json", "summary.py")
 
 
 def tracked_files() -> list:
@@ -50,7 +60,51 @@ def tested_ids(test_dir: Path) -> set:
     return ids
 
 
+def tested_cards(test_dir: Path) -> set:
+    ids = set()
+    for f in test_dir.rglob("test_*.py"):
+        ids |= set(re.findall(r'card\("([^"]+)"\)', f.read_text(encoding="utf-8")))
+    return ids
+
+
+def engine_changed_since(slug: str, commit: str):
+    """Engine files (game folder minus NOT_ENGINE, plus the mechanics kit and game contract) changed since commit;
+    None when the commit is unknown (e.g. a shallow clone)."""
+    paths = [f"games/{slug}", "bgai/kit", "bgai/game.py"]
+    r = subprocess.run(["git", "diff", "--name-only", commit, "--", *paths], cwd=ROOT, capture_output=True, text=True)
+    if r.returncode:
+        return None
+    changed = [f for f in r.stdout.split() if f]
+    return [f for f in changed if not (f.startswith(f"games/{slug}/") and
+                                       (f[len(f"games/{slug}/"):].startswith(NOT_ENGINE) or f.endswith(".md")))]
+
+
+def check_report(g: Path, players: list) -> list:
+    name, rp = g.name, g / "checks" / "report.json"
+    if not rp.exists():
+        return [f"{name}: checks/report.json missing (python -m bgai.checks --game {name})"]
+    rep = json.loads(rp.read_text(encoding="utf-8"))
+    out = []
+    if rep.get("problem_count"):
+        out.append(f"{name}: checks/report.json reports {rep['problem_count']} problem(s)")
+    counts = rep.get("games_per_player_count", {})
+    short = [str(p) for p in players if counts.get(str(p), 0) < MIN_CHECK_GAMES]
+    if short:
+        out.append(f"{name}: checks/report.json has fewer than {MIN_CHECK_GAMES:,} games for player count(s) {', '.join(short)}")
+    if not rep.get("code_commit"):
+        out.append(f"{name}: checks/report.json lacks code_commit (rerun python -m bgai.checks)")
+    else:
+        changed = engine_changed_since(name, rep["code_commit"])
+        if changed is None:
+            out.append(f"{name}: cannot find commit {rep['code_commit'][:10]} of checks/report.json (full git history needed)")
+        elif changed:
+            out.append(f"{name}: engine changed since checks/report.json ({', '.join(changed[:3])}); rerun python -m bgai.checks")
+    return out
+
+
 def check() -> list:
+    import jsonschema
+    schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
     problems = []
     for f in tracked_files():
         if not f.exists():
@@ -71,9 +125,28 @@ def check() -> list:
         if not (g / "manifest.json").exists():
             continue
         m = json.loads((g / "manifest.json").read_text(encoding="utf-8"))
-        for k in REQUIRED:
-            if k not in m:
-                problems.append(f"{name}: manifest.json lacks '{k}'")
+        for err in sorted(jsonschema.Draft7Validator(schema).iter_errors(m), key=lambda e: list(e.path)):
+            where = "/".join(str(x) for x in err.path) or "(top)"
+            problems.append(f"{name}: manifest.json {where}: {err.message}")
+        if not name.startswith("_"):
+            for f in PIPELINE_FILES:
+                if not (g / f).exists():
+                    problems.append(f"{name}: missing {f} (see the new-game skill)")
+            problems += check_report(g, m.get("players", []))
+        try:
+            sys.path.insert(0, str(ROOT))
+            from bgai.game import load_spec
+            spec = load_spec(name)
+            items = list((spec.catalog() if callable(spec.catalog) else spec.catalog or {}).get("items", {}))
+        except Exception as e:                       # a game that does not import fails its tests anyway
+            items = []
+            problems.append(f"{name}: cannot load the game spec ({e})")
+        cards = tested_cards(g / "tests")
+        if items and "*" not in cards:
+            missing = [i for i in items if i not in cards]
+            if missing:
+                problems.append(f"{name}: {len(missing)} item(s) without a test marked card(\"<ID>\"): {', '.join(missing[:8])}"
+                                + (" ..." if len(missing) > 8 else ""))
         if (g / "rules.md").exists():
             missing = [i for i in rule_ids((g / "rules.md").read_text(encoding="utf-8")) if i not in tested_ids(g / "tests")]
             if missing:
@@ -84,6 +157,8 @@ def check() -> list:
                 problems.append(f"{name}/{e.name}: experiment.json and stats.json are both required")
                 continue
             rec = json.loads((e / "experiment.json").read_text(encoding="utf-8"))
+            if not rec.get("code_commit"):
+                problems.append(f"{name}/{e.name}: experiment.json lacks code_commit (replay it: tools/regenerate.py)")
             for mid, h in rec.get("models", {}).items():
                 used.add(mid)
                 mz = g / "models" / mid / "model.zip"

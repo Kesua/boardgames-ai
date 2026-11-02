@@ -2,13 +2,17 @@
 
 python -m bgai.checks --game <slug> [--games 10000] [--players 2 3 4]    # writes games/<slug>/checks/report.json
 
-For many random games with every supported player count:
+--games is the number of random games PER player count (default 10,000, the bar before training).
+For every supported player count:
   ends      every game ends within spec.max_steps decisions, never with an empty legal list
   seed      the same seed and the same answers give the same game (final scores and log)
   clone     a clone plays on independently: changing the clone never changes the original
   legal     legal_ids() are unique numbers inside [0, action_count); illegal numbers raise
   scores    scores() equals the sum of breakdowns(); tableau points are integers
   records   record_info() and seat_extra() return the fields the recorder needs
+  encoder   observations have the encoder's size, are finite and lie in [0, 1]
+  direction the greedy agent beats random players clearly (catches scores where lower is better: scores() must be
+            higher-is-better, negate them for lowest-score-wins games)
 Games may add their own invariants (card conservation, ...) as spec.invariants(game) -> list of problems.
 """
 from __future__ import annotations
@@ -100,6 +104,47 @@ def check_clone(spec, players: int, seed: int) -> list:
     return problems
 
 
+def check_encoder(spec, players: int, seed: int) -> list:
+    import numpy as np
+    enc = spec.encoder(players)
+    g = spec.new_game(players, seed, dict(spec.default_options))
+    rng = random.Random(seed)
+    steps = 0
+    while not g.game_over:
+        if steps % 5 == 0:
+            v = np.asarray(enc.encode(g, g.current_seat))
+            if v.shape != (enc.size,):
+                return [f"seed {seed}: observation shape {v.shape}, encoder size {enc.size}"]
+            if not np.isfinite(v).all():
+                return [f"seed {seed}: observation has NaN or infinity at step {steps}"]
+            if v.min() < 0 or v.max() > 1:
+                i = int(np.argmax((v < 0) | (v > 1)))
+                return [f"seed {seed}: observation value {float(v[i]):.3f} at index {i} outside [0, 1] (step {steps})"]
+        g.step_id(rng.choice(g.legal_ids()))
+        steps += 1
+    return []
+
+
+def check_direction(spec, players: int, games: int = 40) -> tuple:
+    """Greedy (one seat, rotating) against random players. Returns (win rate, problems)."""
+    from .agents import RandomAgent, play_game
+    from .kit.scores import winners
+    wins = 0
+    for k in range(games):
+        seat = k % players
+        agents = [RandomAgent(seed=k * 10 + j) for j in range(players)]
+        agents[seat] = spec.greedy(seed=k)
+        g = spec.new_game(players, 900000 + k, dict(spec.default_options))
+        play_game(g, agents, max_steps=spec.max_steps + 1)
+        wins += seat in winners(g.scores(), g.tiebreaks())
+    rate = wins / games
+    # 2 players: chance 50 %; a working greedy agent wins far more often
+    bar = min(0.9, 1 / players + 0.25)
+    problems = [] if rate >= bar else [f"greedy won only {rate:.0%} of {games} games against random players with "
+                                       f"{players} players (expected at least {bar:.0%}): are scores higher-is-better?"]
+    return rate, problems
+
+
 def run(slug: str, games: int, players: list) -> dict:
     from .game import load_spec
     spec = load_spec(slug)
@@ -108,16 +153,21 @@ def run(slug: str, games: int, players: list) -> dict:
     problems, counts = [], {}
     for p in players:
         n = 0
-        for seed in range(games // len(players)):
+        for seed in range(games):
             problems += check_game(spec, p, seed)
             if seed % 50 == 0:
                 problems += check_clone(spec, p, seed)
+            if seed % 100 == 0:
+                problems += check_encoder(spec, p, seed)
             n += 1
         counts[str(p)] = n
+    rate, direction = check_direction(spec, min(players))
+    problems += direction
     from .experiment import code_commit
     report = {"game": slug, "code_commit": code_commit(), "games_per_player_count": counts, "problems": problems[:200],
               "problem_count": len(problems), "seconds": round(time.time() - t0, 1),
-              "checks": ["ends", "legal", "seed", "clone", "scores", "records"]
+              "greedy_vs_random": {"players": min(players), "games": 40, "win": rate},
+              "checks": ["ends", "legal", "seed", "clone", "scores", "records", "encoder", "direction"]
               + (["invariants"] if getattr(spec, "invariants", None) else [])}
     return report
 
@@ -125,7 +175,7 @@ def run(slug: str, games: int, players: list) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--game", required=True)
-    ap.add_argument("--games", type=int, default=10000)
+    ap.add_argument("--games", type=int, default=10000, help="random games per player count")
     ap.add_argument("--players", type=int, nargs="*")
     ap.add_argument("--no-write", action="store_true")
     a = ap.parse_args(argv)

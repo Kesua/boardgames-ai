@@ -67,6 +67,7 @@ def setup(bird):
     return g, me, other
 
 
+@pytest.mark.card("*")                       # one case per bird of the catalog
 @pytest.mark.parametrize("bird", birds(), ids=lambda b: b.key)
 def test_card_power(bird):
     pw = bird.power
