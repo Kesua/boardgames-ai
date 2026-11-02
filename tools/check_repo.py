@@ -29,7 +29,8 @@ SCHEMA = ROOT / "bgai" / "manifest.schema.json"
 PIPELINE_FILES = ["STATUS.md", "PLAN.md", "data/SOURCES.md", "checks/review.md"]
 MIN_CHECK_GAMES = 10000
 # files of a game folder that do not change how games are played (everything else is "engine")
-NOT_ENGINE = ("tests/", "checks/", "models/", "experiments/", "i18n/", "notes.json", "manifest.json", "summary.py")
+NOT_ENGINE = ("tests/", "checks/", "models/", "experiments/", "i18n/", "notes.json", "manifest.json", "summary.py",
+              "check_")                # helper scripts such as check_notes.py
 
 
 def tracked_files() -> list:

@@ -154,7 +154,7 @@ def engine_commit(slug: str):
                        capture_output=True, text=True)
     changed = [l[3:] for l in r.stdout.splitlines()
                if not any(x in l for x in ("/tests/", "/checks/", "/models/", "/experiments/", "/i18n/", "notes.json",
-                                           "manifest.json", ".md"))]
+                                           "manifest.json", "summary.py", "/check_", ".md"))]
     return f"{commit}-dirty" if commit and changed else commit
 
 
