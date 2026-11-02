@@ -6,9 +6,13 @@ global   age, round, last-round info, seat offset to the starting player, decisi
 decision the cards the pending decision is about, its numbers (bid, force, strength needed, budget, advantage left),
          the other player it concerns (seat offset) and, only for the decider, a candidate vector (Kidnap's
          candidates from the rival's hand, Development of Planning's 3 shown cards)
-own      civil and military hand (counts per card id), the events I prepared that wait in either event deck
+own      civil and military hand (counts per card id), the events I prepared that wait in either event deck, the
+         events I know otherwise (Nostradamus: others' prepared events; Joan of Arc: the top current event) and the
+         military hand I looked at this turn (Ian Fleming)
 players  (decider first, then clockwise) cards in play (incl. tactic, colonies, pact, wars), workers, tokens, banks,
-         points, ratings, actions, armies, pact side and partner, war targets, hand sizes per age
+         points, ratings, actions, armies, pact side and partner, war targets, hand sizes per age, the civil hand of a
+         player with Ashoka in play (T16.2: open hand), civil card states (Hippocrates' reminders, Louvre tokens,
+         Saladin's mode, Sun Tzu's tactics, Homer's tuck, once-per-game abilities used)
 
 Hidden (T16.1, PLAN 8): other players' civil and military hands (only counts per age), deck orders, the current
 events deck and other players' prepared events (only counts per age), the Age A cards set aside.
@@ -19,7 +23,7 @@ import numpy as np
 
 from . import economy as E
 from . import military as M
-from .cards import AGE, AGES, HOLDS_WORKERS, KIND, MILITARY_KINDS, N_CARDS
+from .cards import AGE, AGES, EFFECT_TYPE, HOLDS_WORKERS, KIND, MILITARY_KINDS, N_CARDS
 from .state import LEADER_PROXY, WONDER_PROXY
 
 WORKER_CARDS = [c for c in range(N_CARDS) if HOLDS_WORKERS[c]]
@@ -29,7 +33,7 @@ T_INDEX = {c: i for i, c in enumerate(TOKEN_CARDS)}
 MIL_CARDS = [c for c in range(N_CARDS) if KIND[c] in MILITARY_KINDS]
 M_INDEX = {c: i for i, c in enumerate(MIL_CARDS)}
 N_MIL = len(MIL_CARDS)
-N_SCALARS = 44
+N_SCALARS = 51
 N_CONTEXT = 8
 
 
@@ -38,16 +42,16 @@ def _clip(x: float) -> float:
 
 
 class StateEncoder:
-    version = 1
+    version = 2
 
     def __init__(self, num_players: int):
         from .engine import DECISION_KINDS
         self.n = num_players
         self.kinds = {k: i for i, k in enumerate(DECISION_KINDS)}
-        self.global_size = 5 + 1 + 2 + 4 + len(DECISION_KINDS) + 3 * N_CARDS + 13 + 3 + 4 + 4 + N_CARDS + 2 * N_MIL
+        self.global_size = 5 + 1 + 2 + 4 + len(DECISION_KINDS) + 3 * N_CARDS + 13 + 3 + 4 + 4 + N_CARDS + 2 * N_MIL + 5
         self.context_size = N_CONTEXT + 4 + N_CARDS
-        self.own_size = 3 * N_CARDS + N_MIL
-        self.player_size = N_CARDS + len(WORKER_CARDS) + len(TOKEN_CARDS) + N_SCALARS
+        self.own_size = 4 * N_CARDS + 2 * N_MIL
+        self.player_size = 2 * N_CARDS + len(WORKER_CARDS) + len(TOKEN_CARDS) + N_SCALARS
         self.size = self.global_size + self.context_size + self.own_size + num_players * self.player_size
 
     def encode(self, g, seat: int) -> np.ndarray:
@@ -76,11 +80,11 @@ class StateEncoder:
         v[i + 1] = _clip(len(s.military_deck) / 60)
         v[i + 2] = _clip(len(s.military_discard) / 30)
         i += 3
-        for c, _ in s.current_events:                                       # counts per age only (T16.1)
-            v[i + AGES.index(AGE[c])] += 1 / 6
+        for e in s.current_events:                                          # counts per age only (T16.1)
+            v[i + AGES.index(AGE[e[0]])] += 1 / 6
         i += 4
-        for c, _ in s.future_events:
-            v[i + AGES.index(AGE[c])] += 1 / 6
+        for e in s.future_events:
+            v[i + AGES.index(AGE[e[0]])] += 1 / 6
         i += 4
         for c in s.civil_deck:                                               # still to come (public mix)
             if c >= WONDER_PROXY:
@@ -101,6 +105,10 @@ class StateEncoder:
         for c in s.past_events:
             v[i + M_INDEX[c]] += 0.5
         i += N_MIL
+        v[i] = 1.0 if s.nobel_prize is not None else 0.0                     # Alfred Nobel's prize running
+        if s.olympics is not None:                                           # Olympic Games: owner offset
+            v[i + 1 + (s.olympics[0] - seat) % self.n] = 1.0
+        i += 5
         # ---- decision context
         if d is not None:
             data = d.data
@@ -132,10 +140,19 @@ class StateEncoder:
                 if isinstance(c, int):
                     v[i + c] = 1.0
         i += N_CARDS
-        for c, prep in s.current_events + s.future_events:                  # my prepared events (I know them)
-            if prep == seat:
-                v[i + M_INDEX[c]] += 0.5
-        i += N_MIL
+        known = i + N_MIL
+        for e in s.current_events + s.future_events:                        # my prepared events (I know them)
+            if e[1] == seat:
+                v[i + M_INDEX[e[0]]] += 0.5
+            elif len(e) > 2 and seat in e[2]:                                # Nostradamus, Joan of Arc
+                v[known + M_INDEX[e[0]]] += 0.5
+        if s.current_events and len(s.current_events[0]) > 2 and seat in s.current_events[0][2]:
+            v[known + M_INDEX[s.current_events[0][0]]] = 1.0                # the top card (Joan of Arc)
+        i += 2 * N_MIL
+        if me.peek is not None:                                              # Ian Fleming's look this turn
+            for c in me.peek[1]:
+                v[i + c] += 1 / 3
+        i += N_CARDS
         for k in range(self.n):
             self._player(g, (seat + k) % self.n, seat, v, i)
             i += self.player_size
@@ -155,6 +172,10 @@ class StateEncoder:
             v[i + p.pact[0]] = 1.0
         for c, _ in p.wars:
             v[i + c] = 1.0
+        i += N_CARDS
+        if seat == viewer or (p.leader is not None and EFFECT_TYPE[p.leader] == "ashoka"):
+            for c in p.civil_hand:                                           # T16.2: Ashoka's hand is open
+                v[i + c] += 1 / 3
         i += N_CARDS
         for c, k in p.workers.items():
             v[i + W_INDEX[c]] = _clip(k / 6)
@@ -192,5 +213,8 @@ class StateEncoder:
                     1.0 if p.exclusive_tactic is not None else 0.0, pact_side, len(M.wars_on(g, seat)) / 3,
                     1.0 if p.forfeit_politics else 0.0]
         scalars += war_on + pact_partner
+        scalars += [p.reminders / 3, p.louvre_tokens / 3, 1.0 if p.saladin == 0 else 0.0,
+                    1.0 if p.saladin == 1 else 0.0, 1.0 if p.tactic_boost is not None else 0.0,
+                    len(p.kept_tactics) / 3, len(p.used) / 2 + (0.5 if p.homer_wonder is not None else 0.0)]
         for j, x in enumerate(scalars):
             v[i + j] = _clip(x)

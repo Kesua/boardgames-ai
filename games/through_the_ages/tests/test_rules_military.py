@@ -204,7 +204,7 @@ def test_prepare_scores_age_reveals_current_and_flips_future_by_age():
     g.s.current_events = [[cid("Development of Science"), None], [cid("Development of Crafts"), None]]
     politics(g)
     answer(g, "Prepare an event")
-    assert g.s.future_events[0] == [crusades, s] and p.culture == 1                # age I: 1 culture
+    assert g.s.future_events[0][:2] == [crusades, s] and p.culture == 1               # age I: 1 culture
     assert [g.p(x).science for x in range(2)] == [x + 2 for x in sci]              # Development of Science
     assert g.s.past_events[-1] == cid("Development of Science") and len(g.s.current_events) == 1
     # the last current event: afterwards the future deck becomes current, older ages on top
@@ -214,7 +214,7 @@ def test_prepare_scores_age_reveals_current_and_flips_future_by_age():
     answer(g, "Prepare an event")
     assert p.culture == 1                                                          # age A: 0 culture
     assert g.s.future_events == [] and len(g.s.current_events) == 5
-    assert [LEVEL[c] for c, _ in g.s.current_events] == sorted(LEVEL[c] for c, _ in g.s.current_events)
+    assert [LEVEL[e[0]] for e in g.s.current_events] == sorted(LEVEL[e[0]] for e in g.s.current_events)
     assert g.s.current_events[0][0] == cid("Development of Agriculture")
 
 
@@ -751,7 +751,8 @@ def hidden_variants(g, viewer):
 
     def hands(h):
         for x in other:
-            h.p(x).civil_hand = [swap(c) for c in h.p(x).civil_hand]
+            if h.p(x).leader is None or EFFECT_TYPE[h.p(x).leader] != "ashoka":   # Ashoka: open civil hand
+                h.p(x).civil_hand = [swap(c) for c in h.p(x).civil_hand]
             h.p(x).military_hand = [swap(c) for c in h.p(x).military_hand]
 
     def decks(h):
@@ -759,9 +760,12 @@ def hidden_variants(g, viewer):
         h.s.civil_deck.reverse()
         h.s.age_a_unused.reverse()
 
+    def known(e):
+        return e[1] == viewer or (len(e) > 2 and viewer in e[2])
+
     def events(h):
-        h.s.current_events = [[c if prep == viewer else swap(c), prep] for c, prep in h.s.current_events]
-        h.s.future_events = [[c if prep == viewer else swap(c), prep] for c, prep in h.s.future_events]
+        h.s.current_events = [e if known(e) else [swap(e[0])] + e[1:] for e in h.s.current_events]
+        h.s.future_events = [e if known(e) else [swap(e[0])] + e[1:] for e in h.s.future_events]
 
     return [hands, decks, events]
 
@@ -794,6 +798,36 @@ def test_changing_anything_hidden_from_a_seat_leaves_its_observation_unchanged()
     h = g.clone()
     h.s.decisions.top.data["candidates"] = [cid("Alchemy")]                        # what the aggressor sees
     assert not np.array_equal(v_me, enc.encode(h, s)) and np.array_equal(v_other, enc.encode(h, o))
+
+
+@rule("T16.2")
+def test_cards_that_reveal_information_reach_exactly_the_players_who_may_see_it():
+    """Joan of Arc's top event and Nostradamus' seen events reach their owner's observation only; Ian Fleming's look
+    only his owner's; Ashoka's open civil hand every player's."""
+    g, s, (o1, o2) = two(n=3)
+    enc = SPEC.encoder(3)
+
+    def seen_by(change):
+        h = g.clone()
+        change(h)
+        return [x for x in (s, o1, o2) if not np.array_equal(enc.encode(g, x), enc.encode(h, x))]
+
+    def swap_event(entry_list):
+        def change(h):
+            e = getattr(h.s, entry_list)[0]
+            e[0] = cid("Development of Science") if e[0] != cid("Development of Science") else cid("Rats")
+        return change
+
+    g.s.current_events.insert(0, [cid("Development of Crafts"), None, [s]])        # Joan of Arc's look
+    assert seen_by(swap_event("current_events")) == [s]
+    g.s.future_events.insert(0, [cid("Development of Crafts"), o1, [s]])            # o1's, seen by Nostradamus
+    assert seen_by(swap_event("future_events")) == [s, o1]
+    g.p(s).peek = [o1, [cid("Legion")]]                                             # Ian Fleming's look
+    assert seen_by(lambda h: setattr(h.p(s), "peek", [o1, [cid("Phalanx")]])) == [s]
+    g.p(o2).civil_hand = [cid("Iron")]
+    assert seen_by(lambda h: setattr(h.p(o2), "civil_hand", [cid("Alchemy")])) == [o2]   # same age: hidden
+    place(g, o2, "Ashoka")
+    assert seen_by(lambda h: setattr(h.p(o2), "civil_hand", [cid("Alchemy")])) == [s, o1, o2]
 
 
 # ===================================================================================================== whole games

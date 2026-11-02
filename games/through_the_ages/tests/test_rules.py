@@ -137,8 +137,8 @@ def test_current_events_deal_players_plus_two_age_a_cards():
     for n in (2, 3, 4):
         g = started(n, 7)
         s = g.s
-        assert len(s.current_events) == n + 2 and all(AGE[c] == "A" for c, _ in s.current_events)
-        assert sorted([c for c, _ in s.current_events] + s.age_a_unused) == sorted(military_deck_cards("A", n))
+        assert len(s.current_events) == n + 2 and all(AGE[e[0]] == "A" for e in s.current_events)
+        assert sorted([e[0] for e in s.current_events] + s.age_a_unused) == sorted(military_deck_cards("A", n))
         assert s.future_events == [] and s.past_events == []
 
 

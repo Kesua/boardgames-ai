@@ -41,26 +41,38 @@ def last_round(g) -> bool:
 
 
 # ===================================================================================================== legality (T7)
+def attack_cost(g, card: int, target: int) -> int:
+    """Military actions of an aggression or war: printed + Mahatma Gandhi's extra on the target (rebalanced: +3)."""
+    return MILITARY_ACTION_COST[card] + effects.gandhi_extra(g, target)
+
+
 def aggression_targets(g, seat: int, card: int) -> list:
-    """T9.1: rivals weaker than you (attack bonuses counted, ending pacts not), no pact forbidding the attack; you
-    must have the card's military actions."""
-    if E.military_available(g, seat) < MILITARY_ACTION_COST[card]:
+    """T9.1: rivals weaker than you (attack bonuses counted, ending pacts not; Himeji Castle's possible sacrifice
+    counted; Nostradamus' defense counted), no pact forbidding the attack; you must have the card's military actions
+    (Gandhi: more against him; a player with Gandhi may not attack)."""
+    if effects.cannot_attack(g, seat):
+        return []
+    have = E.military_available(g, seat)
+    if have < MILITARY_ACTION_COST[card]:
         return []
     out = []
+    sacrifice = effects.himeji_best(g, seat)
     for t in g.active_seats(seat)[1:]:
-        if M.forbids_attack(g, seat, t):
+        if M.forbids_attack(g, seat, t) or have < attack_cost(g, card, t):
             continue
-        a, d = M.attack_strengths(g, seat, t)
-        if a > d:
+        a, d = M.attack_strengths(g, seat, t, aggression=True)
+        if a + sacrifice > d:
             out.append(t)
     return out
 
 
 def war_targets(g, seat: int, card: int) -> list:
-    """T9.4: any rival a card does not protect; not in the last round."""
-    if last_round(g) or E.military_available(g, seat) < MILITARY_ACTION_COST[card]:
+    """T9.4: any rival a card does not protect; not in the last round (Gandhi as for aggressions)."""
+    if last_round(g) or effects.cannot_attack(g, seat) or E.military_available(g, seat) < MILITARY_ACTION_COST[card]:
         return []
-    return [t for t in g.active_seats(seat)[1:] if not M.forbids_attack(g, seat, t) and not M.forbids_war_on(g, t)]
+    have = E.military_available(g, seat)
+    return [t for t in g.active_seats(seat)[1:] if not M.forbids_attack(g, seat, t) and not M.forbids_war_on(g, t)
+            and have >= attack_cost(g, card, t)]
 
 
 def pact_targets(g, seat: int, card: int) -> list:
@@ -86,8 +98,9 @@ def card_targets(g, seat: int, verb: str, card: int) -> list:
 def verb_cards(g, seat: int, verb: str) -> list:
     """Cards of the military hand that complete the political verb."""
     hand = sorted(set(g.p(seat).military_hand))
-    if verb == "PREPARE":
-        return [c for c in hand if KIND[c] in PREPARABLE]
+    if verb == "PREPARE":                                               # Confucius: any military card
+        anything = effects.leader_type(g.p(seat)) == "confucius"
+        return [c for c in hand if anything or KIND[c] in PREPARABLE]
     return [c for c in hand if card_targets(g, seat, verb, c)]
 
 
@@ -100,7 +113,7 @@ def politics_legal(g, seat: int) -> list:
         legal.append(A_VERB + V["CANCEL_PACT"])
     if g.options.get("allow_resign") and g.s.age != "IV":
         legal.append(A_VERB + V["RESIGN"])
-    return legal
+    return legal + effects.ability_verbs(g, seat, "POLITICS")
 
 
 # ===================================================================================================== politics (T7)
@@ -116,11 +129,22 @@ def h_politics(g, t: dict, a):
         if a == A_END:
             g._finish(t)
             return
-        t["verb"] = VERBS[a - A_VERB]
-        if t["verb"] == "RESIGN":
+        verb = VERBS[a - A_VERB]
+        if verb == "OLYMPICS":                                          # before the political action, not one
+            effects.use_ability(g, seat, verb)
+            return
+        t["verb"] = verb
+        if t.get("left", 1) > 1:                                        # Julius Caesar: another one afterwards
+            s = g.s
+            s.tasks.insert(next(i for i in range(len(s.tasks) - 1, -1, -1) if s.tasks[i] is t),
+                           {"op": "politics", "seat": seat, "left": t["left"] - 1})
+        if verb == "RESIGN":
             resign(g, seat, t)
+        elif verb in ("ALEXANDER", "COLUMBUS", "CATHERINE"):
+            g._finish(t)
+            effects.use_ability(g, seat, verb)
         else:
-            t["stage"] = "cancel" if t["verb"] == "CANCEL_PACT" else "card"
+            t["stage"] = "cancel" if verb == "CANCEL_PACT" else "card"
         return
     if st == "card":
         if a is None:
@@ -185,15 +209,21 @@ def prepare(g, seat: int, card: int) -> None:
     of the current events deck and resolve it."""
     s, p = g.s, g.p(seat)
     p.military_hand.remove(card)
-    s.future_events.insert(0, [card, seat])
+    seers = [q.seat for q in s.players if q.seat != seat and effects.leader_type(q) == "nostradamus"]
+    s.future_events.insert(0, [card, seat, seers])                      # Nostradamus sees others' prepared events
     E.add_culture(p, LEVEL[card], "events", card)
     effects.fire(g, "on_prepare_event", seat, card=card, preparer=seat)
     reveal(g, seat)
 
 
+def known_by(entry) -> list:
+    """Seats that know an event deck entry besides its preparer (Nostradamus, Joan of Arc)."""
+    return entry[2] if len(entry) > 2 else []
+
+
 def reveal(g, seat: int) -> None:
     s = g.s
-    c, _ = s.current_events.pop(0)
+    c = s.current_events.pop(0)[0]
     s.resolving.append(c)
     s.log.add(seat, f"reveals the current event {g.card_name(c)}")
     forced_record(g, seat, "EVENT", "EVENT", c)
@@ -247,8 +277,20 @@ def h_auction(g, t: dict, a):
         return
 
 
+def send_potential(g, t: dict, add: int = 0) -> int:
+    """The force if every remaining unit, colonization bonus card and James Cook discard were added (+ add)."""
+    p = g.p(t["seat"])
+    units = {c: k for c, k in p.workers.items() if k and KIND[c] in UNITS}
+    bonus = list(t["bonus"]) + [c for c in p.military_hand if KIND[c] == "bonus" and BONUS[c]["colonization"]]
+    cook, _ = M.colonization_extras(g, t["seat"])
+    others = len(p.military_hand) - (len(bonus) - len(t["bonus"]))
+    cooked = len(t.get("cook", ())) + min(max(0, cook - len(t.get("cook", ()))), others)
+    return M.colonization_force(g, t["seat"], units, bonus, t.get("extra", 0) + cooked + add)
+
+
 def send_force(g, t: dict) -> int:
-    return M.colonization_force(g, t["seat"], t["sent"], t["bonus"])
+    """T8.5 + Isabella's purchase + James Cook's discards (+1 each)."""
+    return M.colonization_force(g, t["seat"], t["sent"], t["bonus"], t.get("extra", 0) + len(t.get("cook", ())))
 
 
 def h_send(g, t: dict, a):
@@ -259,33 +301,49 @@ def h_send(g, t: dict, a):
     if a is not None:
         if a == A_NO:
             g._finish(t)
-            colonize(g, seat, t["card"], t["sent"], t["bonus"])
+            colonize(g, seat, t["card"], t["sent"], t["bonus"], t.get("cook", ()))
             return
-        c = a - A_CARD
-        if KIND[c] == "bonus":
-            p.military_hand.remove(c)
-            g.s.resolving.append(c)
-            t["bonus"].append(c)
+        if a >= A_OPTION:                                               # Isabella of Castile: buy force (once)
+            res, f = M.colonization_extras(g, seat)[1][a - A_OPTION]
+            g.pay(seat, "mine", res)
+            t["extra"] = t.get("extra", 0) + f
+            t["bought"] = True
         else:
-            t["sent"][c] = t["sent"].get(c, 0) + 1
+            c = a - A_CARD
+            if KIND[c] in UNITS:
+                t["sent"][c] = t["sent"].get(c, 0) + 1
+            else:
+                p.military_hand.remove(c)
+                g.s.resolving.append(c)
+                if KIND[c] == "bonus" and BONUS[c]["colonization"]:
+                    t["bonus"].append(c)
+                else:                                                   # James Cook: discard for +1
+                    t.setdefault("cook", []).append(c)
     force = send_force(g, t)
     legal = [A_CARD + c for c, k in sorted(p.workers.items())
              if k > t["sent"].get(c, 0) and KIND[c] in UNITS]
     if force < t["bid"]:
         legal += [A_CARD + c for c in sorted(set(p.military_hand)) if KIND[c] == "bonus" and BONUS[c]["colonization"]]
+        cook, buys = M.colonization_extras(g, seat)
+        if len(t.get("cook", ())) < cook:
+            legal += [A_CARD + c for c in sorted(set(p.military_hand))
+                      if not (KIND[c] == "bonus" and BONUS[c]["colonization"])]
+        if buys and not t.get("bought"):                                # only purchases that keep the bid reachable
+            legal += [A_OPTION + i for i, (r, f) in enumerate(buys)
+                      if g.afford(seat, "mine", r) and send_potential(g, t, f) >= t["bid"]]
     if t["sent"] and force >= t["bid"]:
         legal.append(A_NO)
     g._ask("SEND", seat, legal, card=t["card"], bid=t["bid"], force=force)
 
 
-def colonize(g, seat: int, card: int, sent: dict, bonus: list) -> None:
-    """T8.6: sent units' workers go to the yellow bank, bonus cards are discarded, the territory enters play (its
-    permanent effect first), then its one-time effect."""
+def colonize(g, seat: int, card: int, sent: dict, bonus: list, discards=()) -> None:
+    """T8.6: sent units' workers go to the yellow bank, bonus cards (and James Cook's discards) are discarded, the
+    territory enters play (its permanent effect first), then its one-time effect."""
     s, p = g.s, g.p(seat)
     for c, k in sent.items():
         p.workers[c] -= k
         p.yellow_bank += k
-    for c in bonus:
+    for c in list(bonus) + list(discards):
         s.resolving.remove(c)
         M.discard(g, c)
     s.resolving.remove(card)
@@ -293,7 +351,7 @@ def colonize(g, seat: int, card: int, sent: dict, bonus: list) -> None:
     p.colonies.append(card)
     g.enter_play(seat, card)
     E.settle_totals(g, seat, before)
-    s.log.add(seat, f"colonizes {g.card_name(card)} (force {M.colonization_force(g, seat, sent, bonus)})")
+    s.log.add(seat, f"colonizes {g.card_name(card)}" + (" without units" if not sent else ""))
     effects.fire_card(g, "colonize", seat, card)
     effects.fire(g, "on_colonize", seat, card=card, colonizer=seat)
 
@@ -314,34 +372,63 @@ def defend_reachable(values: list, cap: int, need: int) -> bool:
 
 
 def defend_legal(g, t: dict) -> list:
-    """DEFEND (T9.2, D4): NO only before the first card; a card only if a tie stays reachable within the card cap."""
+    """DEFEND (T9.2, D4): NO only before the first card; a card only if a tie stays reachable within the card cap.
+    Himeji Castle: one unit may be sacrificed (its strength + 3; not counted in the card cap)."""
     q = g.p(t["target"])
     cap = E.stats(g, t["target"]).military - t["played"]
     need = t["att"] - t["def"] - t["added"]
     hand = q.military_hand
+    vals = [defense_value(x) for x in hand]
     legal = []
+    units = [] if t.get("sacrificed") else effects.himeji_units(g, t["target"], defending=True)
+    best_unit = max((x for _, x in units), default=0)
     for c in sorted(set(hand)):
         rest = list(hand)
         rest.remove(c)
-        if cap >= 1 and defend_reachable([defense_value(x) for x in rest], cap - 1, need - defense_value(c)):
+        rv = [defense_value(x) for x in rest]
+        if cap >= 1 and (defend_reachable(rv, cap - 1, need - defense_value(c)) or
+                         (best_unit and defend_reachable(rv, cap - 1, need - defense_value(c) - best_unit))):
             legal.append(A_CARD + c)
-    if not t["played"]:
+    for c, x in units:
+        if defend_reachable(vals, cap, need - x):
+            legal.append(A_CARD + c)
+    if not t["played"] and not t.get("sacrificed"):
         legal.append(A_NO)
     return legal
 
 
+def olympics_penalty(g, seat: int) -> None:
+    """Pierre de Coubertin's Olympic Games: whoever plays a war or aggression while they run loses 8 culture."""
+    o = g.s.olympics
+    if o is not None:
+        E.add_culture(g.p(seat), -EFFECT[o[1]]["olympics_attack_penalty"], "leaders", o[1])
+
+
 def h_aggress(g, t: dict, a):
-    """T9.1-T9.2: pay, remove pacts that end on attack, the rival defends (or not), resolve as printed; the card is
-    discarded either way."""
+    """T9.1-T9.2: pay, remove pacts that end on attack, (Himeji Castle: the aggressor may sacrifice a unit), the rival
+    defends (or not), resolve as printed; the card is discarded either way."""
     s, seat, card, target = g.s, t["seat"], t["card"], t["target"]
     if t["stage"] == "start":
         p = g.p(seat)
-        E.spend_military(p, MILITARY_ACTION_COST[card])
+        E.spend_military(p, attack_cost(g, card, target))
         p.military_hand.remove(card)
         s.resolving.append(card)
+        olympics_penalty(g, seat)
         remove_ending_pacts(g, seat, target)
-        t["att"], t["def"] = M.attack_strengths(g, seat, target)
+        t["att"], t["def"] = M.attack_strengths(g, seat, target, aggression=True)
         t["played"], t["added"] = 0, 0
+        t["stage"] = "himeji"
+        return
+    if t["stage"] == "himeji":                                          # Himeji Castle: named when playing
+        units = effects.himeji_units(g, seat, defending=False)
+        if units and a is None:
+            legal = [A_CARD + c for c, x in units if t["att"] + x > t["def"]]
+            if t["att"] > t["def"]:
+                legal.append(A_NO)
+            g._ask("ABILITY", seat, legal, what="himeji", card=card, victim=target)
+            return
+        if a is not None and a != A_NO:
+            t["att"] += effects.himeji_sacrifice(g, seat, a - A_CARD, defending=False)
         t["stage"] = "defend"
         s.log.add(seat, f"plays {g.card_name(card)} against P{target} (strength {t['att']} vs {t['def']})")
         if t["def"] >= t["att"]:
@@ -355,10 +442,14 @@ def h_aggress(g, t: dict, a):
             t["stage"] = "success"
             return
         c = a - A_CARD
-        g.p(target).military_hand.remove(c)
-        M.discard(g, c)
-        t["played"] += 1
-        t["added"] += defense_value(c)
+        if KIND[c] in UNITS:                                            # Himeji Castle sacrifice
+            t["sacrificed"] = True
+            t["added"] += effects.himeji_sacrifice(g, target, c, defending=True)
+        else:
+            g.p(target).military_hand.remove(c)
+            M.discard(g, c)
+            t["played"] += 1
+            t["added"] += defense_value(c)
         if t["def"] + t["added"] >= t["att"]:
             t["stage"] = "failed"
         return
@@ -376,8 +467,9 @@ def h_aggress(g, t: dict, a):
 # ===================================================================================================== wars (T9.4-T9.6)
 def declare_war(g, seat: int, card: int, target: int) -> None:
     p = g.p(seat)
-    E.spend_military(p, MILITARY_ACTION_COST[card])
+    E.spend_military(p, attack_cost(g, card, target))
     p.military_hand.remove(card)
+    olympics_penalty(g, seat)
     remove_ending_pacts(g, seat, target)
     p.wars.append([card, target])
     g.touch(seat)
@@ -395,12 +487,35 @@ def resolve_wars(g, seat: int) -> None:
         s.resolving.append(card)
         g.touch(seat)
         g.touch(target)
-        att, dfn = M.attack_strengths(g, seat, target)
-        forced_record(g, seat, "WAR_RESOLUTION", "WAR_RESOLVED", card, attacker=att, defender=dfn)
-        tasks.append({"op": "call", "fn": "war_effect", "kw": {"seat": seat, "card": card, "target": target,
-                                                               "att": att, "dfn": dfn}})
+        tasks.append({"op": "war_resolve", "seat": seat, "card": card, "target": target, "stage": 0, "bonus": [0, 0]})
         tasks.append({"op": "call", "fn": "discard_resolving", "kw": {"card": card}})
     push(g, *tasks)
+
+
+def h_war_resolve(g, t: dict, a):
+    """T9.5 with Himeji Castle: at evaluation the declarer, then the rival, may sacrifice a unit (strength again; the
+    declarer also scores 3 culture, the rival gets +3 strength); then the strengths are compared."""
+    seat, card, target = t["seat"], t["card"], t["target"]
+    if "base" not in t:                                                 # strengths before any sacrifice
+        t["base"] = list(M.attack_strengths(g, seat, target))
+    while t["stage"] < 2:
+        who = (seat, target)[t["stage"]]
+        if a is not None:
+            if a != A_NO:
+                t["bonus"][t["stage"]] += effects.himeji_sacrifice(g, who, a - A_CARD, defending=t["stage"] == 1)
+            t["stage"] += 1
+            a = None
+            continue
+        units = effects.himeji_units(g, who, defending=t["stage"] == 1)
+        if units:
+            g._ask("ABILITY", who, [A_CARD + c for c, _ in units] + [A_NO], what="himeji", card=card,
+                   victim=target if who == seat else seat)
+            return
+        t["stage"] += 1
+    g._finish(t)
+    att, dfn = t["base"][0] + t["bonus"][0], t["base"][1] + t["bonus"][1]
+    forced_record(g, seat, "WAR_RESOLUTION", "WAR_RESOLVED", card, attacker=att, defender=dfn)
+    war_effect(g, seat, card, target, att, dfn)
 
 
 def war_effect(g, seat: int, card: int, target: int, att: int, dfn: int) -> None:
@@ -471,7 +586,12 @@ def resign(g, seat: int, t: dict) -> None:
     if p.exclusive_tactic is not None:
         M.discard(g, p.exclusive_tactic)
         p.exclusive_tactic = None
+    for c in p.kept_tactics:                            # Sun Tzu's kept tactics
+        M.discard(g, c)
+    p.kept_tactics = []
     p.tactic = None
+    if s.olympics is not None and s.olympics[0] == seat:
+        s.olympics = None
     for card, target in p.wars:
         M.discard(g, card)
         g.touch(target)
@@ -524,7 +644,9 @@ CALLS["war_effect"] = war_effect
 
 @call
 def raid_gain(g, seat: int, cost: int, card: int) -> None:
-    g.apply_gain(seat, {"resources": (cost + 1) // 2}, "military", card)
+    """Aggression: Raid: printed costs of the destroyed buildings / the card's divisor, rounded up."""
+    div = EFFECT[card]["aggressor_gains_cost_divisor"]
+    g.apply_gain(seat, {"resources": -(-cost // div)}, "military", card)
 
 
 def h_call(g, t: dict, a):
@@ -912,5 +1034,5 @@ for _name, _fn in {"politics": h_politics, "event_done": h_event_done, "auction"
                    "lose_pop": h_lose_pop, "destroy_bld": h_destroy_bld, "mix": h_mix, "free_build": h_free_build,
                    "dev_civ": h_dev_civ, "planning": h_planning, "discard_n": h_discard_n,
                    "move_worker": h_move_worker, "take_loop": h_take_loop, "negotiate": h_negotiate, "pick": h_pick,
-                   "kidnap": h_kidnap, "steal_tech": h_steal_tech}.items():
+                   "kidnap": h_kidnap, "steal_tech": h_steal_tech, "war_resolve": h_war_resolve}.items():
     En.HANDLERS[_name] = _fn

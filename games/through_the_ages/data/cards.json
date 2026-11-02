@@ -3053,7 +3053,8 @@
   "bonus": null,
   "effect": {
    "type": "robespierre",
-   "revolution_culture": 3
+   "revolution_culture": 3,
+   "revolution_spends_military_actions": true
   }
  },
  {
@@ -6159,7 +6160,8 @@
    "type": "raid",
    "destroy_urban_max_ages": [
     "I"
-   ]
+   ],
+   "aggressor_gains_cost_divisor": 2
   }
  },
  {
@@ -6250,7 +6252,8 @@
   "effect": {
    "type": "pact_trade_routes",
    "a_food_as_resource": 1,
-   "b_resource_as_food": 1
+   "b_resource_as_food": 1,
+   "uses_per_turn": 1
   }
  },
  {
@@ -7301,7 +7304,8 @@
    "destroy_urban_max_ages": [
     "II",
     "I"
-   ]
+   ],
+   "aggressor_gains_cost_divisor": 2
   }
  },
  {
@@ -8415,7 +8419,8 @@
    "destroy_urban_max_ages": [
     "III",
     "II"
-   ]
+   ],
+   "aggressor_gains_cost_divisor": 2
   }
  },
  {

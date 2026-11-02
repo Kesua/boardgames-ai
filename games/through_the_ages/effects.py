@@ -12,22 +12,83 @@ within a player the card that entered play first):
   colonize                a territory's one-time effect after colonizing (T8.6)
   aggression / war        a successful aggression (T9.2) / a resolved war (T9.5)
   pact                    a pact's lasting effect for one party (economy.compute_stats)
-  rank_bonus / tie_priority   card overrides in the T8.3 ranking helper (stage 3: Nostradamus, Genghis Khan)
+  rank_bonus / tie_priority   card overrides in the T8.3 ranking helper (Nostradamus)
+  defend_bonus            strength added when defending against an aggression (Nostradamus)
+  take_cost               civil actions added to taking this card from the row (Taj Mahal, Nelson Mandela)
   final_events            game end: evaluate Age III events left in the event decks (T14.2, D8, D19)
 
-A card whose effect type has no handler simply has no effect yet; it is still takeable and playable (T4, T5).
-`UNIMPLEMENTED_EFFECT_TYPES` lists those types for the next build stages.
+Civil card effects (leaders, wonders, special technologies, action cards) are registered by civil.py, which engine.py
+imports at its end; `unimplemented_effect_types()` lists effect types without any handler (empty: tested).
 """
 from __future__ import annotations
 
 from .cards import (AGE, EFFECT, EFFECT_TYPE, IS_URBAN, KIND, LEVEL, S_COLON, S_CULT, S_FOODB, S_MIL, S_RESB, S_STR,
-                    S_UNHAPPY, SPECIALS, TOKEN_VALUE, URBAN)
+                    S_UNHAPPY, SPECIALS, STAT_YIELDS, TOKEN_VALUE, UNITS, URBAN)
 
 HOOKS = ("passive", "on_enter_play", "on_leave_play", "start_of_turn", "start_of_politics", "start_of_action_phase",
          "on_take_card", "on_develop", "on_prepare_event", "on_colonize", "on_wonder_stage", "on_wonder_complete",
          "on_leader_replaced", "end_of_turn", "age_start", "game_end", "play_action", "can_play_action",
-         "event", "colonize", "aggression", "war", "pact", "army", "rank_bonus", "tie_priority")
+         "event", "colonize", "aggression", "war", "pact", "army", "rank_bonus", "tie_priority", "defend_bonus",
+         "take_cost", "ability", "rules")
+# "ability": activated abilities (VERB answers, civil.ABILITIES); "rules": effects that change a rule where the rule
+# is applied (engine/politics/military read them by type), registered for the bookkeeping only.
 REGISTRY = {h: {} for h in HOOKS}
+# passive effects that read the happy faces other cards give, run after all other cards, in this order
+LATE_ORDER = ("darwin", "steve_jobs", "marlene_dietrich", "st_peters_basilica", "michelangelo", "joan_of_arc")
+
+
+def leader_type(p):
+    return EFFECT_TYPE[p.leader] if p.leader is not None else None
+
+
+def after_armies(g, p, st) -> None:
+    """Jan Zizka: each army produces culture (needs the army count, so it runs after army forming)."""
+    if leader_type(p) == "zizka":
+        k = EFFECT[p.leader]["culture_per_army"] * st.army_count
+        st.v[S_CULT] += k
+        st.culture_parts[p.leader] = st.culture_parts.get(p.leader, 0) + k
+
+
+HAND_COLOUR = {"farm": 0, "mine": 0, "lab": 1, "temple": 1, "library": 1, "theater": 1, "arena": 1, "infantry": 2,
+               "cavalry": 2, "artillery": 2, "air_force": 2, "special_civil": 3, "special_military": 3,
+               "special_colonization": 3, "special_construction": 3, "government": 4, "leader": 5, "action": 6}
+
+
+def hand_bonus(g, seat: int, kind: str) -> int:
+    """Ashoka: production bonus by the number of colours among the civil cards in hand (brown production, grey
+    urban, red military, blue special, orange government, green leader, yellow action)."""
+    p = g.s.players[seat]
+    if leader_type(p) != "ashoka":
+        return 0
+    n = len({HAND_COLOUR[KIND[c]] for c in p.civil_hand})
+    eff = EFFECT[p.leader]
+    gain = eff["three_plus_colors"] if n >= 3 else eff["two_colors"] if n == 2 else {}
+    return gain.get("food" if kind == "farm" else "resources", 0)
+
+
+def best_worker_card(p, kinds, ages=None):
+    """T11.10 'best X': the highest-level card of these kinds with a worker (optionally only these ages)."""
+    best = None
+    for c in p.techs:
+        if KIND[c] in kinds and p.workers.get(c, 0) and (ages is None or AGE[c] in ages):
+            if best is None or LEVEL[c] > LEVEL[best]:
+                best = c
+    return best
+
+
+def extra_token_cards(g, p, kind: str) -> list:
+    """Farms/mines producing one extra blue token in production: Transcontinental Railroad (best mine), Machu Picchu
+    (best Age A/I farm and best Age A/I mine)."""
+    out = []
+    for w in p.wonders:
+        t = EFFECT_TYPE[w]
+        if t == "best_mine_extra_token" and kind == "mine":
+            c = best_worker_card(p, ("mine",))
+            out += [c] * EFFECT[w]["extra_tokens"] if c is not None else []
+        elif t == "machu_picchu":
+            c = best_worker_card(p, (kind,), EFFECT[w]["ages"])
+            out += [c] * EFFECT[w]["extra_tokens"] if c is not None else []
+    return out
 
 
 def handler(hook: str, *types):
@@ -70,13 +131,155 @@ def fire_card(g, hook: str, seat: int, card: int, **kw) -> None:
 
 def can_play_action(g, seat: int, card: int) -> bool:
     fn = REGISTRY["can_play_action"].get(EFFECT_TYPE[card])
-    return True if fn is None else fn(g, seat, card, EFFECT[card])
+    return True if fn is None else fn(g, seat, card, action_effect(g, seat, card))
 
 
-def play_action(g, seat: int, card: int) -> None:
+def play_action(g, seat: int, card: int, eff: dict = None) -> None:
     fn = REGISTRY["play_action"].get(EFFECT_TYPE[card])
     if fn is not None:
-        fn(g, seat, card, EFFECT[card])
+        fn(g, seat, card, EFFECT[card] if eff is None else eff)
+
+
+SILK_KEYS = ("gain", "then_gain", "discount", "resources", "military_actions")
+
+
+def silk_bump(eff: dict) -> dict:
+    """Silk Road: each benefit of the action card +1 (food, resources incl. special-purpose ones, science, culture,
+    military actions, discounts; benefits 'per other civilization' +1 in total: `bonus_total`)."""
+    out = dict(eff)
+    for k in SILK_KEYS:
+        if isinstance(out.get(k), dict):
+            out[k] = {x: v + 1 for x, v in out[k].items()}
+        elif isinstance(out.get(k), int):
+            out[k] = out[k] + 1
+    if "options" in out:
+        out["options"] = [{x: v + 1 for x, v in o.items()} for o in out["options"]]
+    if "per_player" in out:
+        out["bonus_total"] = 1
+    return out
+
+
+def action_effect(g, seat: int, card: int) -> dict:
+    """The effect an action card would have if played now (bumped by Silk Road for the first card of the turn)."""
+    if not g.p(seat).flags.get("silk_road_used") and g.silk_road_active(seat):
+        return silk_bump(EFFECT[card])
+    return EFFECT[card]
+
+
+# ================================================================================================= civil card glue
+def replace_refund(g, seat: int, old: int) -> int:
+    """Civil actions back when a leader is replaced (T5.6): 1; Eleanor of Aquitaine up to 3; Alfred Nobel none."""
+    eff = EFFECT[old] or {}
+    if eff.get("no_civil_action_back"):
+        return 0
+    return eff.get("regain_on_replace", 1)
+
+
+def political_actions(g, seat: int) -> int:
+    """Political actions per Politics Phase: 1; Julius Caesar (rebalanced) 2."""
+    p = g.s.players[seat]
+    if leader_type(p) == "julius_caesar":
+        return EFFECT[p.leader].get("political_actions_per_turn", 1)
+    return 1
+
+
+def extra_draw(g, seat: int) -> int:
+    """Sun Tzu: military cards drawn at the end of turn on top of those for unused military actions."""
+    p = g.s.players[seat]
+    return EFFECT[p.leader]["extra_military_draw"] if leader_type(p) == "sun_tzu" else 0
+
+
+def excess_discarded(g, seat: int) -> None:
+    """Eleanor of Aquitaine: culture per military card discarded at the end of turn for exceeding the hand limit."""
+    p = g.s.players[seat]
+    if leader_type(p) == "eleanor":
+        score(g, seat, EFFECT[p.leader]["culture_per_excess_discard"], p.leader, "leaders")
+
+
+def nobel_prize(g, seat: int) -> None:
+    """Alfred Nobel beside the culture track: a civilization that developed at least 2 technologies this turn scores
+    4 culture at the end of the turn (once per turn)."""
+    c = g.s.nobel_prize
+    if c is not None and g.s.players[seat].flags.get("developed", 0) >= EFFECT[c]["prize_min_developments"]:
+        score(g, seat, EFFECT[c]["prize_culture"], c, "leaders")
+
+
+HIPPOCRATES = next((c for c in range(len(EFFECT_TYPE)) if EFFECT_TYPE[c] == "hippocrates"), None)
+
+
+def hippocrates_age_end(g, seat: int) -> None:
+    """Hippocrates' reminders (they stay after he leaves play): at the end of Age I, II and III, after the age
+    change's yellow loss, one of them goes into the yellow bank."""
+    p = g.s.players[seat]
+    eff = EFFECT[HIPPOCRATES]
+    ended = {"II": "I", "III": "II", "IV": "III"}.get(g.s.age)
+    if p.reminders > 0 and ended in eff["age_ends"]:
+        k = min(p.reminders, eff["yellow_tokens_per_age_end"])
+        p.reminders -= k
+        g.change_tokens(seat, 0, k)
+
+
+def gandhi_extra(g, target: int) -> int:
+    """Mahatma Gandhi (rebalanced): aggressions and wars against him cost 3 more military actions."""
+    p = g.s.players[target]
+    return EFFECT[p.leader].get("attack_extra_military_actions", 0) if leader_type(p) == "gandhi" else 0
+
+
+def cannot_attack(g, seat: int) -> bool:
+    p = g.s.players[seat]
+    return leader_type(p) == "gandhi" and EFFECT[p.leader]["cannot_attack"]
+
+
+def himeji(p):
+    return next((w for w in p.wonders if EFFECT_TYPE[w] == "himeji_castle"), None)
+
+
+def himeji_units(g, seat: int, defending: bool) -> list:
+    """Himeji Castle: [(unit technology with a worker, strength it adds)] (printed strength, +3 when defending)."""
+    p = g.s.players[seat]
+    w = himeji(p)
+    if w is None:
+        return []
+    extra = EFFECT[w]["defender_strength"] if defending else 0
+    out = []
+    for c in p.techs:
+        if KIND[c] in UNITS and p.workers.get(c, 0):
+            out.append((c, sum(x for k, x in STAT_YIELDS[c] if k == S_STR) + extra))
+    return out
+
+
+def himeji_best(g, seat: int) -> int:
+    return max((x for _, x in himeji_units(g, seat, False)), default=0)
+
+
+def himeji_sacrifice(g, seat: int, unit: int, defending: bool) -> int:
+    """The unit adds its strength once more for this fight and is sacrificed (worker to the yellow bank); the
+    aggressor scores 3 culture. Returns the strength added."""
+    p = g.s.players[seat]
+    w = himeji(p)
+    add = dict(himeji_units(g, seat, defending))[unit]
+    p.workers[unit] -= 1
+    p.yellow_bank += 1
+    g.touch(seat)
+    if not defending:
+        score(g, seat, EFFECT[w]["attacker_culture"], w, "wonders")
+    g.s.log.add(seat, f"sacrifices a unit from {g.card_name(unit)} (Himeji Castle, +{add})")
+    return add
+
+
+def ability_verbs(g, seat: int, where: str) -> list:
+    from . import civil
+    return civil.ability_verbs(g, seat, where)
+
+
+def use_ability(g, seat: int, verb: str) -> None:
+    from . import civil
+    civil.use_ability(g, seat, verb)
+
+
+def leader_replaced(g, seat: int, old: int, refunded: int) -> None:
+    from . import civil
+    civil.leader_replaced(g, seat, old, refunded)
 
 
 def query(g, hook: str, seat: int, **kw) -> int:
@@ -111,7 +314,7 @@ def final_events(g) -> None:
     for ties. Every Age III event resolves without decisions."""
     s = g.s
     s.game_end_eval = True
-    for c, _ in list(s.current_events) + list(s.future_events):
+    for c in [e[0] for e in list(s.current_events) + list(s.future_events)]:
         if AGE[c] == "III" and KIND[c] == "event":
             s.log.add(None, f"Final evaluation: {g.card_name(c)}")
             resolve_event(g, s.start_seat, c)
@@ -152,8 +355,12 @@ def _hand_limits(g, p, card, eff, st):
     st.military_limit_bonus += eff["military"]
 
 
-def urban_discount(st, card: int) -> int:
-    return st.urban_discount.get(AGE[card], 0) if IS_URBAN[card] else 0
+def build_discount(st, card: int) -> int:
+    """Resource discount on building this card (T5.2, T5.4 'after modifiers'): construction technologies for urban
+    buildings by age, James Watt (farms/mines), William Shakespeare (theaters/libraries)."""
+    d = st.urban_discount.get(AGE[card], 0) if IS_URBAN[card] else 0
+    x = st.build_disc.get(KIND[card])
+    return d + x.get(AGE[card], 0) if x else d
 
 
 # ================================================================================================= wonders
@@ -261,19 +468,19 @@ def clockwise(g, first: int, seats) -> list:
 
 def food_production(g, seat: int) -> int:
     from . import economy as E
-    p = g.s.players[seat]
-    return sum(p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == "farm") + E.stats(g, seat).food_bonus
+    return E.output(g, seat, "farm")
 
 
 def mine_production(g, seat: int) -> int:
-    p = g.s.players[seat]
-    return sum(p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == "mine")
+    """Impact of Industry: mine production only (T15.6), extra tokens on mines included."""
+    from . import economy as E
+    return E.output(g, seat, "mine", bonuses=False)
 
 
 def resource_production(g, seat: int) -> int:
     """T15.6: mine production plus all resource production bonuses."""
     from . import economy as E
-    return mine_production(g, seat) + E.stats(g, seat).resource_bonus
+    return E.output(g, seat, "mine")
 
 
 def take_points(g, frm: int, to: int, kind: str, amount: int, card: int, cat: str = "military") -> int:
@@ -414,17 +621,11 @@ def _ev_each_produce(g, rev, card, eff, order):
     from . import economy as E
     for seat in order:
         p = g.s.players[seat]
-        st = E.stats(g, seat)
         for step in eff["steps"]:
             if step == "food":
-                E.produce(p, "farm")
-                if st.food_bonus:
-                    E.gain(p, "farm", st.food_bonus) if st.food_bonus > 0 else E.lose(p, "farm", -st.food_bonus)
+                E.produce_step(g, seat, "farm")
             elif step == "resources":
-                E.produce(p, "mine")
-                if st.resource_bonus:
-                    (E.gain(p, "mine", st.resource_bonus) if st.resource_bonus > 0
-                     else E.lose(p, "mine", -st.resource_bonus))
+                E.produce_step(g, seat, "mine")
             elif step == "corruption":
                 missing = E.lose(p, "mine", E.corruption(p.blue_bank))
                 if missing:
@@ -793,7 +994,7 @@ AGE_LEVEL = {"A": 0, "I": 1, "II": 2, "III": 3}
 @handler("aggression", "raid")
 def _ag_raid(g, att, card, eff, target):
     """Destroy urban buildings (one per listed age or older, the aggressor chooses); the aggressor gains resources
-    equal to half their printed costs, rounded up (printed card text; not in the card data's parameters)."""
+    equal to their printed costs divided by `aggressor_gains_cost_divisor`, rounded up."""
     push(g, {"op": "destroy_bld", "owner": target, "chooser": att, "kinds": URBAN,
              "slots": [AGE_LEVEL[a] for a in eff["destroy_urban_max_ages"]], "card": card, "decision": "LOSE_WORKER",
              "raid": True, "costs": []})
@@ -913,5 +1114,9 @@ def _air_force(g, p, card, eff, st):
 
 # ================================================================================================= bookkeeping
 ALL_EFFECT_TYPES = sorted({t for t in EFFECT_TYPE if t is not None})
-IMPLEMENTED_EFFECT_TYPES = sorted({t for table in REGISTRY.values() for t in table} & set(ALL_EFFECT_TYPES))
-UNIMPLEMENTED_EFFECT_TYPES = [t for t in ALL_EFFECT_TYPES if t not in IMPLEMENTED_EFFECT_TYPES]
+
+
+def unimplemented_effect_types() -> list:
+    """Effect types of cards.json with no handler in any hook (civil.py registers when engine.py is imported)."""
+    done = {t for table in REGISTRY.values() for t in table}
+    return [t for t in ALL_EFFECT_TYPES if t not in done]

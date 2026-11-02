@@ -42,7 +42,7 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
 - [x] plan-engine: `PLAN.md` (state, 27 decision kinds, 479 action numbers, effects, scoring, encoder, risks);
       independent review (51 findings) worked in; design choices C1–C5 confirmed (round 3: automatic payment,
       two-step actions, culture per card, bids up to 128, resigning off by default in checks).
-- [ ] build-engine: engine + tests (every rule ID, every card)
+- [x] build-engine: engine + tests (every rule ID, every card)
   - [x] stage 1 (PLAN 13 steps 1-3, 2026-11-02): a complete peaceful game. Modules `cards.py`, `state.py`,
         `economy.py`, `effects.py` (hook registry; 10 of 150 effect types: `effects.UNIMPLEMENTED_EFFECT_TYPES`),
         `military.py` (draw, discard by age, strength without armies), `engine.py`, `describe.py`, first `encoder.py`
@@ -68,7 +68,26 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
         ~16 / 28 / 45 ms for 2 / 3 / 4 players (231 / 409 / 664 decisions). Hook points left for stage 3: Isabella,
         James Cook, Columbus (colonization), Himeji Castle, Gandhi, Julius Caesar's extra political action, Sun Tzu,
         Confucius (prepare any military card), Joan of Arc / Ian Fleming / Nostradamus (seen events, `known`).
-  - [ ] stage 3: civil card effects family by family (74 effect types left), civil card tests, expansion details
+  - [x] stage 3 (PLAN 13 steps 6-7, 2026-11-02): every civil card effect. New module `civil.py` (74 effect types:
+        passive statistics incl. the happy-face chain `effects.LATE_ORDER`, hooks, ABILITY decisions, activated
+        abilities as VERB 15-25: ALEXANDER, COLUMBUS, CATHERINE, OLYMPICS in POLITICS; HAMMURABI, BARBAROSSA,
+        OCEAN_LINER, BACH, CHURCHILL, LOUVRE, RED_CROSS in ACTION; numbering still 479). Rule-level effects live where
+        the rule is computed: Gutenberg's action, Darwin/Michelangelo/Taj Mahal/Mandela take costs, Moses, science
+        and build discounts (`Stats.sci_disc`, `build_disc`, Gaudi, Acropolis), temporary resources by purpose
+        ('unit', 'civic', 'unit_science'), Robespierre's revolution, Harvard, Silk Road, Louvre tokens, Red Cross food
+        stages, Machu Picchu / Transcontinental extra tokens (`economy.produce_step`), Ashoka's hand bonus, Genghis
+        Khan / Jan Zizka / Marlene Dietrich army forming (`military.army_forming`, exact flow solver), Sun Tzu's
+        tactics and boost, Julius Caesar's second political action, Nostradamus (events' weakest checks, aggression
+        defense), Himeji Castle (aggressor, DEFEND, war resolution), Gandhi, Isabella / James Cook in SEND, Coubertin's
+        Olympics, Nobel's prize, Hippocrates' reminders. Seen information: event deck entries carry `known_by`
+        (Nostradamus, Joan of Arc), `Player.peek` (Ian Fleming), Ashoka's open hand; encoder version 2 shows each
+        only to the players who may see it (test). `effects.unimplemented_effect_types()` is empty (test). Data: Raid's
+        resource gain, Trade Routes' uses per turn, Robespierre's military-action revolution moved into the card data
+        (SOURCES.md). Tests: `tests/test_cards_civil.py` (167 civil cards, 244 cases), hiding test for revealing
+        cards. `bgai.checks --games 1000`: 0 problems for 2/3/4 players; own stress run 1,000 games per player count
+        with resigning off and on, invariants every 4 steps: 0 problems (with resigning on random players resign within
+        ~10-30 decisions, choice C5). Random game ~19 / 32 / 55 ms for 2 / 3 / 4 players (238 / 411 / 668 decisions;
+        a quiet-machine run; stage 2 measured 16 / 28 / 45). Greedy beats random 40/40.
 - [ ] verify-engine: checks/report.json 0 problems (10,000 games per player count), independent review in checks/review.md
 - [ ] design-rl: encoder, greedy, smoke training learns
 - [ ] train-model: open run, anchored run, acceptance -> finished model
@@ -140,3 +159,51 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     revealer thus have fewer on their next turn. Politics of Strength's "game-ending age" is read as Age IV.
   - Q21 SEND: military bonus cards are offered only while the force is below the bid; units may still be sent after
     it (T8.5 overpaying).
+- Build-engine stage 3 readings (card texts in the sources leave these open; the lead decides):
+  - Q22 Johannes Gutenberg: his extra civil action is used automatically for the first lab/library take, develop,
+    build or upgrade of the turn (never worse than a normal civil action, choice C1; PLAN 3 had also listed it as a
+    verb), with its 1 science / 1 resource discount and 2 culture. Not modelled: paying for an action card with it
+    (the engine cannot restrict the card's later choice to a lab/library).
+  - Q23 Maximilien Robespierre: a revolution spends all military actions instead of all civil actions (data flag);
+    the new government's added military actions arrive spent, added civil actions arrive available (T5.9 mirrored).
+  - Q24 "Produces culture" of other cards: Charlie Chaplin doubles the best theater's printed culture; Hollywood and
+    Internet count the printed symbols of the buildings (bonuses of leaders, booked to the leaders, not included).
+  - Q25 Bill Gates: lab resources are a resource production bonus (gained with the other bonuses after mine
+    production, T15.6), not tokens on the labs; Impact of Industry does not count them; culture on leaving / at game
+    end = that bonus.
+  - Q26 Sun Tzu tucked under a tactic: +1 per army formed with that tactic (air forces double it) for its owner while
+    the marker is on that tactic card; other players copying the common card do not get it (no separate card
+    identity for the boosted tactic). Kept tactics become common on the first turn without him.
+  - Q27 Himeji Castle: the sacrificed unit adds its printed strength once more (+3 when defending); the aggressor
+    decides after naming the target (the T9.1 check counts the best sacrifice; lost even if repelled; +3 culture);
+    the defender's sacrifice is a DEFEND answer outside the card cap (D4 still applies); in a war the declarer then
+    the rival decide at resolution, strengths taken before any sacrifice.
+  - Q28 Genghis Khan's "ties go to you" applies to his own end-of-turn check only.
+  - Q29 Nostradamus: +3 also in the T9.1 legality check of an aggression against him, not in wars; events other
+    players prepare while he is in play stay known to his owner while they lie in an event deck (also after he
+    leaves).
+  - Q30 Silk Road: active from the first stage (unfinished) and when completed; +1 to each benefit of the first action
+    card of the turn, Patriotism's military action included; "per civilization" totals +1 only when not zero.
+  - Q31 Louvre's token exchange is an ACTION verb (own action phase only), not "at any time".
+  - Q32 Ian Fleming's look is optional (NO), the snapshot lasts until the end of his owner's turn; a turn without a
+    look lifts the "not the same player twice in a row" limit. Joan of Arc's look is automatic (free information).
+  - Q33 Winston Churchill's choice is an ACTION verb once per turn (no forced choice); Saladin's mode is chosen at
+    every end of turn (keeping it is one of the two answers).
+  - Q34 Happy-face chain: Darwin, Steve Jobs, Marlene Dietrich and Homer's tuck change cards' happy faces first, then
+    St. Peter's Basilica (+1 per worker on a building), then Michelangelo and Joan of Arc read the result.
+  - Q35 International Red Cross for other players: 1 civil action + 3 food, once per turn; the stage token comes from
+    the owner's blue bank, else a farm/mine token of the owner's choice (LOSE_BLUE asked to the owner), else none
+    (Q4).
+  - Q36 Catherine the Great: the gain needs that many tokens actually lost (a weaker player with an empty yellow bank
+    does not count); legal even when nobody is weaker (once per game).
+  - Q37 Isabella / James Cook in SEND: offered only while the force is below the bid (as Q21); Isabella buys once and
+    only purchases that keep the bid reachable are offered; Cook discards any military card that is not a
+    colonization bonus card, at most 2. The bid limit counts Cook's discards and Isabella's best affordable purchase.
+  - Q38 Nelson Mandela: the take surcharge counts discontent after Forbidden City; surplus = happiness − faces
+    required. James Watt on leaving: best farm/mine production = workers × token value (extra tokens not counted).
+  - Q39 Julius Caesar with International Agreement: the forfeit takes one of his two political actions. Coubertin's
+    Olympic Games also cost their owner 8 culture for an attack and end at the owner's next Politics Phase (forfeited
+    or not) or when he resigns.
+  - Q40 Ashoka's colours by card kind: farm/mine brown, urban grey, unit red, special blue, government orange, leader
+    green, action yellow. Frederick Barbarossa is legal only when both steps can be paid (with a Trade Routes pact
+    the check simulates the food payment first).

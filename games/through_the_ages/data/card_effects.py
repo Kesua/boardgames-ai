@@ -45,7 +45,8 @@ BASE = {
                            "first_colony_culture": 2, "later_colony_culture": 1},
     ("J. S. Bach", "II"): {"type": "bach", "theater_culture": 1, "theater_science_discount": 2,
                           "upgrade_to_theater_once_per_turn": True, "upgrade_civil_actions": 1},
-    ("Maximilien Robespierre", "II"): {"type": "robespierre", "revolution_culture": 3},
+    ("Maximilien Robespierre", "II"): {"type": "robespierre", "revolution_culture": 3,
+                                       "revolution_spends_military_actions": True},
     ("Napoleon Bonaparte", "II"): {"type": "napoleon", "strength_per_unit_type": 2},
     ("Winston Churchill", "III"): {"type": "churchill", "culture": 3,
                                    "military_science": 3, "military_resources": 3},
@@ -193,9 +194,13 @@ BASE = {
     **{(n, a): {"type": "plunder", "amount": d}
        for n, a, d in [("Aggression: Plunder", "I", 3), ("Aggression: Plunder", "II", 5),
                        ("Aggression: Plunder", "III", 7)]},
-    ("Aggression: Raid", "I"): {"type": "raid", "destroy_urban_max_ages": ["I"]},  # one urban building per entry
-    ("Aggression: Raid", "II"): {"type": "raid", "destroy_urban_max_ages": ["II", "I"]},
-    ("Aggression: Raid", "III"): {"type": "raid", "destroy_urban_max_ages": ["III", "II"]},
+    # one urban building per entry; the aggressor gains resources = printed costs of the destroyed buildings / 2,
+    # rounded up (stage 3 data fix, SOURCES.md)
+    ("Aggression: Raid", "I"): {"type": "raid", "destroy_urban_max_ages": ["I"], "aggressor_gains_cost_divisor": 2},
+    ("Aggression: Raid", "II"): {"type": "raid", "destroy_urban_max_ages": ["II", "I"],
+                                 "aggressor_gains_cost_divisor": 2},
+    ("Aggression: Raid", "III"): {"type": "raid", "destroy_urban_max_ages": ["III", "II"],
+                                  "aggressor_gains_cost_divisor": 2},
     ("Aggression: Annex", "II"): {"type": "annex"},
     ("Aggression: Infiltrate", "II"): {"type": "infiltrate", "culture_per_level": 3},
     ("Aggression: Spy", "II"): {"type": "steal", "what": "science", "amount": 5},
@@ -208,7 +213,7 @@ BASE = {
     ("Open Borders Agreement", "I"): {"type": "pact_symmetric", "both": {"military_actions": 1},
                                       "attack_bonus": 2},
     ("Trade Routes Agreement", "I"): {"type": "pact_trade_routes", "a_food_as_resource": 1,
-                                      "b_resource_as_food": 1},
+                                      "b_resource_as_food": 1, "uses_per_turn": 1},  # per party, any turn (Q10)
     ("Acceptance of Supremacy", "II"): {"type": "pact_ab", "a": {"resource_production": 1},
                                         "b": {"resource_production": -1}, "no_attack": True},
     ("International Trade Agreement", "II"): {"type": "pact_ab", "a": {"resource_production": 1},

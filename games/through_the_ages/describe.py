@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from . import economy as E
-from .cards import AGE, BONUS, IS_TECH, KEY, KIND, NAME, SET, STAGE_COSTS
+from .cards import AGE, BONUS, EFFECT_TYPE, IS_TECH, KEY, KIND, NAME, SET, STAGE_COSTS, UNITS
 
 
 def _name(c) -> str:
@@ -30,10 +30,16 @@ def describe(g, a: int) -> str:
             return f"Accept {_name(data['card'])} from P{data['offerer']}"
         if kind == "EVENT_CHOICE" and data.get("what") == "free_build":
             return f"Build {_name(data['target'])} for free"
+        if kind == "ABILITY" and data.get("what") == "jobs":
+            return "Pay 1 resource for 4 culture (Steve Jobs)"
         return "Yes"
     if seg == "NO":
         if kind == "REVOLT":
             return f"Peaceful change to {_name(data['card'])}"
+        if kind == "ABILITY":
+            return {"fleming": "Look at nobody", "jobs": "Do not pay", "colonize": "Do not colonize",
+                    "un_event": "Evaluate no event", "homer": "Do not tuck Homer (civil action back)",
+                    "himeji": "Sacrifice no unit"}.get(data.get("what"), "No")
         return {"PACT_ANSWER": "Refuse the pact", "DEFEND": "Do not defend", "BID": "Pass (no bid)",
                 "SEND": "Stop sending", "MIX": "Stop taking", "TAKE_LOOP": "Stop taking cards",
                 "KIDNAP": "Take no card", "STEAL_TECH": "Take the rest as science",
@@ -69,11 +75,14 @@ def describe(g, a: int) -> str:
             verb = data.get("verb", "")
             text = {"BUILD": "Build on", "BUILD_UNIT": "Build a unit on", "UPGRADE": "Upgrade from",
                     "UPGRADE_UNIT": "Upgrade a unit from", "DESTROY": "Destroy a building on",
-                    "DISBAND": "Disband a unit on", "MOVE_FROM": "Move a worker from"}.get(verb, verb)
+                    "DISBAND": "Disband a unit on", "MOVE_FROM": "Move a worker from",
+                    "BACH_FROM": "Bach: upgrade to a theater from"}.get(verb, verb)
             return f"{text} {_name(c)}"
         if kind == "UPGRADE_TO":
             if data.get("verb") == "MOVE_TO":
                 return f"Move the worker from {_name(data['frm'])} to {_name(c)}"
+            if data.get("verb") == "BACH_TO":
+                return f"Bach: upgrade {_name(data['frm'])} to {_name(c)}"
             return f"Upgrade {_name(data['frm'])} to {_name(c)}"
         if kind == "SUB_ACTION":
             return f"Develop {_name(c)} (action card)"
@@ -89,11 +98,20 @@ def describe(g, a: int) -> str:
         if kind == "CANCEL_WHICH":
             return f"Cancel {_name(c)}"
         if kind == "DEFEND":
+            if KIND[c] in UNITS:
+                return f"Sacrifice a unit from {_name(c)} (Himeji Castle)"
             return f"Defend with {_name(c)} (+{BONUS[c]['defense'] if KIND[c] == 'bonus' else 1})"
         if kind == "SEND":
-            if KIND[c] == "bonus":
+            if KIND[c] == "bonus" and BONUS[c]["colonization"]:
                 return f"Play {_name(c)} (+{BONUS[c]['colonization']} colonization)"
+            if KIND[c] not in UNITS:
+                return f"Discard {_name(c)} for +1 colonization (James Cook)"
             return f"Send a unit from {_name(c)}"
+        if kind == "ABILITY":
+            what = data.get("what")
+            return {"colonize": f"Colonize {_name(c)} from hand", "un_event": f"Evaluate {_name(c)} from hand",
+                    "homer": f"Tuck Homer under {_name(c)}",
+                    "himeji": f"Sacrifice a unit from {_name(c)} (Himeji Castle)"}.get(what, _name(c))
         if kind in ("LOSE_WORKER", "TERRORISM"):
             if data.get("what") == "destroy":
                 return f"Destroy a building on {_name(c)} of P{data['victim']}"
@@ -136,11 +154,25 @@ def describe(g, a: int) -> str:
         if kind == "MIX":
             verb = {"gain": "Gain", "lose": "Lose", "take": "Take"}[data["mode"]]
             return f"{verb} 1 {MIX_TEXT[off]}"
+        if kind == "ABILITY":
+            what = data.get("what")
+            if what == "gain":
+                return "Gain " + ", ".join(f"{v} {k}" for k, v in data["options"][off].items())
+            if what == "churchill":
+                return ("Score 3 culture (Churchill)", "3 science and 3 resources for military units (Churchill)")[off]
+            if what == "saladin":
+                return ("Saladin: +2 strength", "Saladin: +1 civil action")[off]
+        if kind == "SEND":
+            from .military import colonization_extras
+            r, f = colonization_extras(g, d.seat)[1][off]
+            return f"Isabella: pay {r} resources for +{f} colonization"
         return f"Option {off + 1}"
     if seg == "SEAT":
         target = (d.seat + 1 + off) % g.num_players
         if kind == "TARGET":
             return f"{_name(data['card'])} on P{target}"
+        if kind == "ABILITY" and data.get("what") == "fleming":
+            return f"Look at the military cards of P{target}"
         return f"Player P{target}"
     return f"{seg} {off}"
 
@@ -162,6 +194,8 @@ def record_info(g, a: int) -> dict:
     label, action, card, extra = None, seg, None, {}
     if kind == "POLITICS":
         action = "PASS" if seg == "END" else VERBS[off]
+        if seg == "VERB":
+            card = ability_card(g, d.seat, VERBS[off])
     elif kind == "ACTION":
         if seg == "END":
             action = "END"
@@ -170,8 +204,9 @@ def record_info(g, a: int) -> dict:
             extra = {"slot": off + 1, "cost": g.take_cost(d.seat, off) if card is not None else ROW_COST[off]}
         elif seg == "VERB":
             action = VERBS[off]
+            card = ability_card(g, d.seat, action)
             if action == "INCREASE_POP":
-                extra = {"cost": E.pop_cost(g.p(d.seat).yellow_bank) or 0}
+                extra = {"cost": E.pop_cost_for(g, d.seat) or 0}
         elif seg == "CARD":
             card = off
             action = {"leader": "PLAY_LEADER", "action": "PLAY_ACTION", "tactic": "PLAY_TACTIC",
@@ -232,6 +267,10 @@ def record_info(g, a: int) -> dict:
         else:
             action = "SEND_BONUS" if KIND[off] == "bonus" else "SEND_UNIT"
             card = off if KIND[off] == "bonus" else None
+    elif kind == "ABILITY":
+        label = data.get("what")
+        action = f"ABILITY_{label.upper()}" if seg != "NO" else f"ABILITY_{label.upper()}_NONE"
+        card = data.get("card")
     elif kind in ("MIX", "TAKE_LOOP", "STEAL_TECH", "KIDNAP", "INFILTRATE", "ANNEX", "LOSE_WORKER", "TERRORISM",
                   "EVENT_CHOICE"):
         action = kind if seg != "NO" else kind + "_NONE"
@@ -248,6 +287,22 @@ def record_info(g, a: int) -> dict:
             "tags": tags, "extra": extra}
 
 
+def ability_card(g, seat: int, verb: str):
+    """The card in play whose ability a VERB answer uses (recorded as the step's card), or None."""
+    from .civil import ABILITIES, red_cross_owner
+    if verb not in ABILITIES:
+        return None
+    if verb == "RED_CROSS":
+        rc = red_cross_owner(g, seat)
+        return rc[1] if rc else None
+    p = g.p(seat)
+    types = ABILITIES[verb][1]
+    for c in ([p.leader] if p.leader is not None else []) + p.wonders:
+        if EFFECT_TYPE[c] in types:
+            return c
+    return None
+
+
 def text_state(g) -> str:
     """Full deterministic dump (hidden hands included) for logs and the clone check."""
     s = g.s
@@ -255,9 +310,11 @@ def text_state(g) -> str:
              + (f", last round {s.last_round}" if s.last_round else "") + (" GAME OVER" if s.game_over else ""),
              "Row: " + " | ".join("-" if c is None else NAME[c] for c in s.row),
              f"Civil deck {len(s.civil_deck)}, military deck {len(s.military_deck)}, military discard "
-             f"{len(s.military_discard)}, current events {[_name(c) for c, _ in s.current_events]}, future events "
-             f"{[_name(c) for c, _ in s.future_events]}, past events {len(s.past_events)}",
-             "Common tactics: " + (", ".join(_name(c) for c in s.common_tactics) or "-")]
+             f"{len(s.military_discard)}, current events {[_name(e[0]) for e in s.current_events]}, future events "
+             f"{[_name(e[0]) for e in s.future_events]}, past events {len(s.past_events)}",
+             "Common tactics: " + (", ".join(_name(c) for c in s.common_tactics) or "-")
+             + (f"; Nobel prize running" if s.nobel_prize is not None else "")
+             + (f"; Olympic Games of P{s.olympics[0]}" if s.olympics else "")]
     for p in s.players:
         st = E.compute_stats(g, p)
         lines.append(
@@ -282,4 +339,14 @@ def text_state(g) -> str:
                      + (f"; wars {', '.join(f'{_name(c)} on P{t}' for c, t in p.wars)}" if p.wars else ""))
         lines.append(f"    civil hand: {', '.join(NAME[c] for c in p.civil_hand) or '-'}; military hand: "
                      f"{', '.join(NAME[c] for c in p.military_hand) or '-'}")
+        extra = [f"Hippocrates reminders {p.reminders}" if p.reminders else "",
+                 f"Louvre tokens {p.louvre_tokens}" if p.louvre_tokens else "",
+                 f"Saladin {('+2 strength', '+1 civil action')[p.saladin]}" if p.saladin is not None else "",
+                 f"Homer under {NAME[p.homer_wonder]}" if p.homer_wonder is not None else "",
+                 f"Sun Tzu under {NAME[p.tactic_boost]}" if p.tactic_boost is not None else "",
+                 f"kept tactics {', '.join(NAME[c] for c in p.kept_tactics)}" if p.kept_tactics else "",
+                 f"used {', '.join(p.used)}" if p.used else "",
+                 f"looked at P{p.peek[0]}" if p.peek else ""]
+        if any(extra):
+            lines.append("    " + "; ".join(x for x in extra if x))
     return "\n".join(lines)

@@ -70,8 +70,10 @@ def happy_required(yellow_bank: int) -> int:
 class Stats:
     """One player's statistics. `v` holds the raw sums by stat index (cards.S_*)."""
     __slots__ = ("v", "civil", "military", "culture", "science", "happiness", "strength", "strength_raw", "army",
-                 "colonization", "resource_bonus", "food_bonus", "urban_limit", "civil_limit_bonus",
-                 "military_limit_bonus", "wonder_stages", "urban_discount", "culture_parts")
+                 "army_count", "colonization", "resource_bonus", "food_bonus", "urban_limit", "civil_limit_bonus",
+                 "military_limit_bonus", "wonder_stages", "urban_discount", "culture_parts", "happy_parts",
+                 "build_disc", "sci_disc", "gaudi", "gov_disc", "pop_discount", "ignore_discontent", "take_disc",
+                 "no_wonder_surcharge")
 
     def __init__(self):
         self.v = [0] * N_STATS
@@ -81,6 +83,16 @@ class Stats:
         self.wonder_stages = 1                 # stages per wonder action (T5.7; construction technologies)
         self.urban_discount = {}               # age -> resource discount on urban buildings of that age
         self.culture_parts = {}                # card -> signed culture contribution (PLAN C3)
+        self.happy_parts = {}                  # card -> happy faces it gives (St. Peter's, Michelangelo, Joan)
+        self.build_disc = {}                   # kind -> {age: resource discount} (Watt, Shakespeare)
+        self.sci_disc = {}                     # kind -> {age: science discount} (Bach, Shakespeare, Watt, Colosseum)
+        self.gaudi = None                      # Gaudi: urban kinds with a building (science discount per other kind)
+        self.gov_disc = 0                      # Acropolis: science discount of a peaceful government change
+        self.pop_discount = 0                  # Moses: food discount of a population increase
+        self.ignore_discontent = 0             # Forbidden City: discontent workers counted 2 fewer
+        self.take_disc = 0                     # Darwin: technology cards from the row cost 1 less (minimum 1)
+        self.no_wonder_surcharge = False       # Michelangelo: no extra civil actions for completed wonders
+        self.army_count = 0
 
 
 def touch(p) -> None:
@@ -91,7 +103,9 @@ def compute_stats(g, p) -> Stats:
     st = Stats()
     v = st.v
     parts = st.culture_parts
+    happy = st.happy_parts
     workers = p.workers
+    late = []
     for c in p.play_order:
         mult = workers.get(c, 0) if HOLDS_WORKERS[c] else 1
         if mult:
@@ -99,13 +113,28 @@ def compute_stats(g, p) -> Stats:
                 v[k] += x * mult
                 if k == S_CULT:
                     parts[c] = parts.get(c, 0) + x * mult
-        if EFFECT_TYPE[c] is not None:
-            effects.passive(g, p, c, st)
+                elif k == S_HAPPY:
+                    happy[c] = happy.get(c, 0) + x * mult
+        t = EFFECT_TYPE[c]
+        if t is not None:
+            if t in effects.LATE_ORDER:
+                late.append(c)
+            else:
+                effects.passive(g, p, c, st)
     for c in p.ruined:                                   # Ravages of Time: a ruined wonder produces 2 culture
         v[S_CULT] += 2
         parts[c] = parts.get(c, 0) + 2
+    if p.homer_wonder is not None and p.homer_wonder in p.wonders:   # Homer tucked under a wonder: +1 happy face
+        v[S_HAPPY] += 1
+        happy[p.homer_wonder] = happy.get(p.homer_wonder, 0) + 1
+    if late:                                             # effects that read other cards' happy faces, in order
+        late.sort(key=lambda c: effects.LATE_ORDER.index(EFFECT_TYPE[c]))
+        for c in late:
+            effects.passive(g, p, c, st)
     effects.pact_and_war_passives(g, p, st)              # pacts the player is party to, wars it is in (T10)
-    st.army = military.armies(p)                         # T11.4
+    st.army, st.army_count = military.armies(p)          # T11.4
+    if st.army_count:
+        effects.after_armies(g, p, st)                   # Jan Zizka: culture per army
     st.urban_limit += URBAN_LIMIT[p.government] or 0
     st.civil = max(0, v[S_CIVIL])
     st.military = max(0, v[S_MIL])
@@ -175,7 +204,14 @@ def totals(g, seat: int) -> tuple:
 def discontent(g, seat: int) -> int:
     """T11.8: happy faces required minus happiness, if positive."""
     p = g.s.players[seat]
-    return max(0, happy_required(p.yellow_bank) - stats(g, seat).happiness)
+    st = stats(g, seat)
+    return max(0, happy_required(p.yellow_bank) - st.happiness - st.ignore_discontent)
+
+
+def pop_cost_for(g, seat: int, discount: int = 0):
+    """Food cost of one population increase now (T1.8, Moses), None with an empty yellow bank."""
+    cost = pop_cost(g.s.players[seat].yellow_bank)
+    return None if cost is None else max(0, cost - stats(g, seat).pop_discount - discount)
 
 
 def urban_workers(p, kind: str) -> int:
@@ -356,6 +392,38 @@ def produce(p, kind: str) -> int:
             p.blue_bank -= k
             out += k * TOKEN_VALUE[c]
     return out
+
+
+def produce_step(g, seat: int, kind: str) -> None:
+    """Food ('farm') or resource ('mine') production of one player (T12.6, T12.8, T15.6): one token per worker, the
+    extra tokens of Machu Picchu / Transcontinental Railroad on their farms and mines, then all production bonuses
+    summed (gained, or lost if negative)."""
+    p = g.s.players[seat]
+    produce(p, kind)
+    for c in effects.extra_token_cards(g, p, kind):
+        if p.blue_bank > 0:
+            p.tokens[c] = p.tokens.get(c, 0) + 1
+            p.blue_bank -= 1
+    bonus = production_bonus(g, seat, kind)
+    if bonus > 0:
+        gain(p, kind, bonus)
+    elif bonus < 0:
+        lose(p, kind, -bonus)
+
+
+def production_bonus(g, seat: int, kind: str) -> int:
+    """T15.6 production bonuses (symbols, texts, pacts) + Ashoka's bonus for the colours in the civil hand."""
+    st = stats(g, seat)
+    return (st.food_bonus if kind == "farm" else st.resource_bonus) + effects.hand_bonus(g, seat, kind)
+
+
+def output(g, seat: int, kind: str, bonuses: bool = True) -> int:
+    """Food or resource production of one player now: workers, extra tokens and (with `bonuses`) production
+    bonuses."""
+    p = g.s.players[seat]
+    out = sum(p.workers.get(c, 0) * TOKEN_VALUE[c] for c in p.techs if KIND[c] == kind)
+    out += sum(TOKEN_VALUE[c] for c in effects.extra_token_cards(g, p, kind))
+    return out + (production_bonus(g, seat, kind) if bonuses else 0)
 
 
 # ---------------------------------------------------------------------------------------------- points (T12.4)

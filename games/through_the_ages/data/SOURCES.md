@@ -82,6 +82,19 @@ effects against P and the official rulebook clarifications in the same way.
   **left out** by the maintainer's decision (2026-11-02): 3–4 player civil decks are one card (Age I, III) or two cards
   (Age II) short of the official count; 2-player games are unaffected (3+ cards are removed there).
 
+## Data changes during build-engine
+
+Stage 3 (2026-11-02; `card_effects.py` edited, `cards.json` rebuilt with `build_cards.py` from the inbox sources —
+only these three entries changed):
+- **Aggression: Raid I/II/III:** new parameter `aggressor_gains_cost_divisor: 2` — the aggressor gains resources equal
+  to the printed costs of the destroyed buildings divided by 2, rounded up. Printed on the card (B; T) but missing
+  from the structured effect; stage 2 had it hard-coded in the handler (STATUS Q12), which now reads the parameter.
+- **Trade Routes Agreement:** new parameter `uses_per_turn: 1` — each party may convert once per turn (any player's
+  turn), the stage-2 reading (STATUS Q10); the engine reads it.
+- **Maximilien Robespierre:** new parameter `revolution_spends_military_actions: True` — a revolution costs all
+  military actions instead of all civil actions (B's reading of the base card); the structured effect had only the
+  3 culture (STATUS Q23).
+
 ## Open
 
 - Identify the four missing 3+ action cards (a photo of the cards or an official card list would settle it).
