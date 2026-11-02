@@ -88,7 +88,8 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
         with resigning off and on, invariants every 4 steps: 0 problems (with resigning on random players resign within
         ~10-30 decisions, choice C5). Random game ~19 / 32 / 55 ms for 2 / 3 / 4 players (238 / 411 / 668 decisions;
         a quiet-machine run; stage 2 measured 16 / 28 / 45). Greedy beats random 40/40.
-- [ ] verify-engine: checks/report.json 0 problems (10,000 games per player count), independent review in checks/review.md
+- [x] verify-engine: `checks/report.json` 0 problems over 10,000 random games per player count (2/3/4, 52 min, code
+      964aca4); independent review in `checks/review.md` (20 findings: 18 fixed with tests, 2 notes; rules D20–D33).
   - [x] independent review (2026-11-02, an agent that did not write the engine): 20 findings (1 bug-high, 12 bug-low,
         5 doubtful, 2 info); every bug and all five doubtful findings fixed the reviewer's way (lead's decision: the
         official rulebooks support them), each with a test in `tests/test_review_fixes.py` that failed before;

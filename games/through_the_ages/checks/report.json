@@ -1,0 +1,28 @@
+{
+  "game": "through_the_ages",
+  "code_commit": "964aca48a35828f4c337469270745705869c1062",
+  "games_per_player_count": {
+    "2": 10000,
+    "3": 10000,
+    "4": 10000
+  },
+  "problems": [],
+  "problem_count": 0,
+  "seconds": 3094.2,
+  "greedy_vs_random": {
+    "players": 2,
+    "games": 40,
+    "win": 1.0
+  },
+  "checks": [
+    "ends",
+    "legal",
+    "seed",
+    "clone",
+    "scores",
+    "records",
+    "encoder",
+    "direction",
+    "invariants"
+  ]
+}
