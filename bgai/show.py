@@ -35,8 +35,12 @@ def show(slug: str, players: int, seed: int, agents: list, max_lines: int) -> li
         if len(lines) < max_lines:
             lines.append(f"[turn {g.turns}] P{seat}: {g.describe(a)}")
         g.step_id(a)
+        for info in (g.drain_forced() if hasattr(g, "drain_forced") else []):   # moves the game applied by itself
+            if len(lines) < max_lines:
+                what = " ".join(str(x) for x in (info.get("action"), info.get("item") or info.get("card")) if x)
+                lines.append(f"[turn {g.turns}] P{info['seat']}: (only option) {what}")
     if len(lines) >= max_lines:
-        lines.append(f"... (cut at {max_lines} lines; --max-lines to see more)")
+        lines.append(f"... (cut at {max_lines} lines)")
     lines += ["", "Final state:", g.text_state(), "",
               "Scores: " + ", ".join(f"P{i} {s} {g.breakdowns()[i]}" for i, s in enumerate(g.scores()))]
     return lines

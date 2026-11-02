@@ -46,6 +46,8 @@ def main(argv=None) -> int:
     print(f"created {dst.relative_to(ROOT)}" + (f"; still mentions _template: {left}" if left else ""))
     print(f"next: fill STATUS.md (fit check), then the ingest-rules skill. Check: python -m pytest -q games/{a.slug}")
     print("note: tools/check_repo.py reports this game until verify-engine writes checks/report.json; that is expected")
+    print("replace the template's: rules.md, engine.py (toy Market game), encoder.py, agents.py, tests/, manifest.json "
+          "(players, theme, intro, terms, tags, archetype, score_categories, actions, fate) and the stubs' <placeholders>")
     return 0
 
 

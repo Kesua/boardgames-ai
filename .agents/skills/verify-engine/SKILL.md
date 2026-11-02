@@ -16,8 +16,9 @@ independent reviewer who did not write the code.
    replays the same game, clones are independent, scores equal the breakdown sums, record fields exist, observations
    lie in [0, 1], the greedy agent clearly beats random players (catches inverted scores: `scores()` must be
    higher-is-better) and the game's `invariants` hold (write some: card conservation, limits). Writes
-   `games/<slug>/checks/report.json` with the code commit; commit it. Must report 0 problems. Any later engine change
-   makes the report stale (`tools/check_repo.py` says so): run it again.
+   `games/<slug>/checks/report.json` with the code commit. Order: commit the engine first, then run the checks, then
+   commit `report.json` (a report made on uncommitted engine code is marked "-dirty" and rejected). Must report 0
+   problems. Any later engine change makes the report stale (`tools/check_repo.py` says so): run it again.
 2. **Coverage:** `python tools/check_repo.py` — every rule ID has a test marked `rule("<ID>")`, every catalog item a
    test marked `card("<ID>")` (or one test parametrized over the whole catalog marked `card("*")`), and the
    pipeline files exist.

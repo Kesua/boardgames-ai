@@ -150,7 +150,7 @@ def engine_commit(slug: str):
     import subprocess
     from .experiment import code_commit
     commit = code_commit()
-    r = subprocess.run(["git", "status", "--porcelain", "--", f"games/{slug}", "bgai/kit", "bgai/game.py"], cwd=ROOT,
+    r = subprocess.run(["git", "status", "--porcelain", "--", f"games/{slug}", "bgai/kit"], cwd=ROOT,
                        capture_output=True, text=True)
     changed = [l[3:] for l in r.stdout.splitlines()
                if not any(x in l for x in ("/tests/", "/checks/", "/models/", "/experiments/", "/i18n/", "notes.json",

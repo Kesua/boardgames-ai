@@ -23,6 +23,13 @@ public rely on.
 4. **One test per card** (parametrised over the card list) that runs its effect through the real flow and checks the
    change by effect type: `games/wingspan/tests/test_cards.py`.
 5. `invariants(game)` in the SPEC: conservation of cards/tokens/dice, limits never exceeded. `bgai.checks` calls it.
+6. **A first encoder and greedy agent** (simple versions; design-rl improves them later): `bgai.checks` needs both —
+   it checks the observation range and that greedy clearly beats random. Make the greedy agent actually score: in
+   games where starting something costs points (an expedition, a loan), a greedy agent that never starts anything
+   scores 0 and can still "beat" random players who lose points. Look at its average score in a few games.
+7. **Every game must end.** If the rules allow endless play (both players can keep discarding and redrawing), add an
+   end condition the rules or common practice support and record it as a decision in `rules.md`. A game that reaches
+   `SPEC.max_steps` is an error in experiments and checks; training cuts it off and scores it as it stands.
 6. Keep the engine fast: no logging of large strings on hot paths, no deep copies outside `clone`, precompute static
    card data. Measure: `python -m bgai.checks --game <slug> --games 400` should take seconds.
 

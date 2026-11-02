@@ -91,7 +91,8 @@ Keeping the repository healthy: `reproduce-experiment`, `add-metric`, `upgrade-p
 ## 5. Commands
 
 Run every command from the repository root with the project's `.venv` (`bgai` is not installed as a package; on
-Windows `.venv/Scripts/python`, elsewhere `.venv/bin/python`).
+Windows `.venv/Scripts/python`, elsewhere `.venv/bin/python`). Call that Python directly, one command at a time —
+agent tools often refuse shell variables and `cd … &&` chains.
 ```bash
 python tools/new_game.py --slug <slug> --name "<Name>"   # scaffold a game folder from the template
 python -m pytest -q                                   # all tests (add -m slow for long checks)

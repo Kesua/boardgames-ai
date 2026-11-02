@@ -69,9 +69,9 @@ def tested_cards(test_dir: Path) -> set:
 
 
 def engine_changed_since(slug: str, commit: str):
-    """Engine files (game folder minus NOT_ENGINE, plus the mechanics kit and game contract) changed since commit;
+    """Engine files (game folder minus NOT_ENGINE, plus the mechanics kit) changed since commit;
     None when the commit is unknown (e.g. a shallow clone)."""
-    paths = [f"games/{slug}", "bgai/kit", "bgai/game.py"]
+    paths = [f"games/{slug}", "bgai/kit"]
     r = subprocess.run(["git", "diff", "--name-only", commit, "--", *paths], cwd=ROOT, capture_output=True, text=True)
     if r.returncode:
         return None

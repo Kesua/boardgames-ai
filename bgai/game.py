@@ -25,6 +25,9 @@ Recorded fields (bgai/records.py turns them into rows; bgai/summary into statist
           (bonus cards, goals and leftovers are breakdown categories without a tableau row)
   tags    {tag name: value} (tag names from the manifest), e.g. {"habitat": "FOREST"}; become tag_<name> columns
   extra   {key: number} per action, become x_<key> columns
+
+Catalog: identical copies of a card share one card id with a "count"; a card whose value depends on the board
+(multipliers, sets) reports its own points per copy in tableau() ("points"), so per-card statistics stay additive.
 """
 from __future__ import annotations
 
