@@ -39,7 +39,9 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
       52 leaders/wonders (P, all agree). Structured effects in `data/card_effects.py`, reviewed card by card against
       the printed readings. `data/SOURCES.md`; `tests/test_data.py` pins the totals. Four new 3+ action cards left out
       (rules D18).
-- [ ] plan-engine: PLAN.md (state, decisions, action numbering, effects, scoring)
+- [x] plan-engine: `PLAN.md` (state, 27 decision kinds, 479 action numbers, effects, scoring, encoder, risks);
+      independent review (51 findings) worked in; design choices C1–C5 confirmed (round 3: automatic payment,
+      two-step actions, culture per card, bids up to 128, resigning off by default in checks).
 - [ ] build-engine: engine + tests (every rule ID, every card)
 - [ ] verify-engine: checks/report.json 0 problems (10,000 games per player count), independent review in checks/review.md
 - [ ] design-rl: encoder, greedy, smoke training learns
