@@ -35,6 +35,12 @@ class Player:
     ruined: list = field(default_factory=list)      # ruined wonders (Ravages of Time, stage 2)
     unfinished: Optional[list] = None               # [card, stages paid, blue tokens on it]
     colonies: list = field(default_factory=list)
+    tactic: Optional[int] = None                    # the tactic the marker is on (own exclusive or common), T6.4
+    exclusive_tactic: Optional[int] = None          # tactic played on this or the previous turn, in own area (T3.3)
+    pact: Optional[list] = None                     # own-area pact [card, partner seat, owner side "A"/"B"/None]
+    wars: list = field(default_factory=list)        # declared wars [card, target seat] (T9.4)
+    forfeit_politics: int = 0                       # political actions given up (International Agreement)
+    hand_at_resign: Optional[list] = None           # civil + military hand when resigning (seat_extra)
     play_order: list = field(default_factory=list)  # every card in play that has symbols or effects, entry order
     left_play: list = field(default_factory=list)   # leaders and wonders that left play (kept for the tableau)
     # hands
@@ -81,10 +87,12 @@ class State:
     military_deck: Deck = field(default_factory=Deck)
     military_discard: list = field(default_factory=list)     # current age only (T6.5, D7)
     age_a_unused: list = field(default_factory=list)          # Age A military cards set aside (T2.5)
-    current_events: list = field(default_factory=list)        # [card, preparer|None]
+    current_events: list = field(default_factory=list)        # [card, preparer|None], index 0 = top
     future_events: list = field(default_factory=list)
     past_events: list = field(default_factory=list)
     common_tactics: list = field(default_factory=list)
+    resolving: list = field(default_factory=list)             # military cards being resolved (events, attacks)
+    game_end_eval: bool = False                               # T14.2 evaluation running (ties: starting player)
     selection: dict = field(default_factory=dict)             # age -> {"leaders": [...], "wonders": [...]} (T15.4)
     removed_civil: list = field(default_factory=list)         # civil cards that left the game
     removed_military: list = field(default_factory=list)

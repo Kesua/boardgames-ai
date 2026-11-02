@@ -1,8 +1,9 @@
 """Through the Ages engine: the bgai.game.Game contract, the task stack and the turn flow (PLAN.md sections 3-5, 7, 9).
 
-Rule IDs refer to rules.md. Stage 1 (PLAN section 13, steps 1-3): a complete peaceful game. Politics offers only END,
-military cards are drawn and discarded but not played (stage 2), card effects beyond printed symbols are partly
-implemented (effects.UNIMPLEMENTED_EFFECT_TYPES).
+Rule IDs refer to rules.md. Stage 1 (PLAN section 13, steps 1-3): a complete peaceful game. Stage 2 (steps 4-5):
+tactics and armies, the politics phase, events, colonization, aggressions, wars, pacts, resignation and every
+military card (politics.py, military.py, effects.py). Civil card effects are partly implemented
+(effects.UNIMPLEMENTED_EFFECT_TYPES, stage 3).
 
 All logic runs as tasks (dicts with "op") on `State.tasks`; `_run()` works on the top task until one needs a choice
 (`_ask` makes a Decision pending); `step_id` hands the answer to the top task. A decision with one legal answer is
@@ -17,10 +18,10 @@ from bgai.kit import CodecBuilder, Decision, Deck, Rng
 
 from . import economy as E
 from . import effects, military
-from .cards import (AGE, BUILDINGS, IS_STARTING, IS_TECH, IS_UNIT, KEY, KIND, LEADERS_BY_AGE, LEVEL,
-                    N_CARDS, NAME, NEXT_AGE, RESOURCE_COST, REVOLUTION_COST, SCIENCE_COST, SET, SPECIALS,
-                    STAGE_COSTS, TOKEN_SYMBOLS, TOKEN_VALUE, UNITS, URBAN, WONDERS_BY_AGE, civil_deck_cards,
-                    military_deck_cards)
+from .cards import (AGE, BUILDINGS, EFFECT, EFFECT_TYPE, IS_STARTING, IS_TECH, IS_UNIT, KEY, KIND,
+                    LEADERS_BY_AGE, LEVEL, N_CARDS, NAME, NEXT_AGE, RESOURCE_COST, REVOLUTION_COST,
+                    SCIENCE_COST, SET, SPECIALS, STAGE_COSTS, TOKEN_SYMBOLS, TOKEN_VALUE, UNITS, URBAN,
+                    WONDERS_BY_AGE, civil_deck_cards, military_deck_cards)
 from .state import LEADER_PROXY, ROW_SIZE, WONDER_PROXY, Player, State
 
 # ---------------------------------------------------------------------------------------------- action numbers
@@ -201,6 +202,165 @@ class Game:
         if not IS_STARTING[card]:
             self.s.removed_civil.append(card)
 
+    def card_name(self, c: int) -> str:
+        return f"{NAME[c]} ({AGE[c]})"
+
+    def remove_leader(self, seat: int) -> None:
+        """The leader leaves play (Iconoclasm, Infiltrate, antiquated); kept in left_play for the tableau."""
+        p = self.p(seat)
+        before = E.totals(self, seat)
+        old = p.leader
+        p.leader = None
+        self.leave_play(seat, old)
+        p.left_play.append(old)
+        E.settle_totals(self, seat, before)
+
+    def ruin_wonder(self, seat: int, c: int) -> None:
+        """Ravages of Time: the wonder is turned face down: no effects, 2 culture instead (economy.compute_stats)."""
+        p = self.p(seat)
+        before = E.totals(self, seat)
+        p.wonders.remove(c)
+        p.ruined.append(c)
+        self.leave_play(seat, c)
+        E.settle_totals(self, seat, before)
+        for q in self.s.players:                                            # International Tourism counts wonders
+            E.touch(q)
+
+    def steal_special(self, seat: int, victim: int, c: int) -> None:
+        """T9.6: a special technology moves from the loser to the victor; of two of the same type only the higher
+        level stays (an equal or lower stolen card leaves the game)."""
+        v, p = self.p(victim), self.p(seat)
+        k = KIND[c]
+        b0, b1 = E.totals(self, victim), E.totals(self, seat)
+        del v.specials[k]
+        self.leave_play(victim, c)
+        E.settle_totals(self, victim, b0)
+        old = p.specials.get(k)
+        if old is not None and LEVEL[old] >= LEVEL[c]:
+            self._remove_civil(c)
+        else:
+            if old is not None:
+                self.leave_play(seat, old)
+                self._remove_civil(old)
+            p.specials[k] = c
+            self.enter_play(seat, c)
+        E.settle_totals(self, seat, b1)
+
+    # ================================================================================= paying (T12.3, T12.9, pacts)
+    def trade_conversion(self, seat: int, kind: str) -> int:
+        """Trade Routes Agreement: side A may use 1 food as 1 resource, side B 1 resource as 1 food (once per turn,
+        used automatically when needed to pay, choice C1)."""
+        p = self.p(seat)
+        if p.flags.get("trade_routes_used"):
+            return 0
+        for owner, card, partner, side in military.pacts_in_play(self):
+            if EFFECT_TYPE[card] != "pact_trade_routes":
+                continue
+            sd = military.side_of(owner, partner, side, seat)
+            if (sd == "A" and kind == "mine") or (sd == "B" and kind == "farm"):
+                return 1 if E.total(p, "farm" if kind == "mine" else "mine") >= 1 else 0
+        return 0
+
+    def afford(self, seat: int, kind: str, amount: int, purpose: str = None) -> bool:
+        """Can pay `amount` food ('farm') or resources ('mine'): tokens + temporary ones for this purpose (T12.9) +
+        a Trade Routes conversion."""
+        if amount <= 0:
+            return True
+        p = self.p(seat)
+        have = E.total(p, kind) + (p.temp.get(purpose, 0) if purpose else 0)
+        return have >= amount or have + self.trade_conversion(seat, kind) >= amount
+
+    def pay(self, seat: int, kind: str, amount: int, purpose: str = None) -> None:
+        """T12.9: temporary food/resources for this purpose are spent first; then tokens (C1); Trade Routes only
+        when the tokens are not enough."""
+        p = self.p(seat)
+        if purpose and p.temp.get(purpose):
+            use = min(p.temp[purpose], amount)
+            p.temp[purpose] -= use
+            amount -= use
+        if amount <= 0:
+            return
+        if E.total(p, kind) < amount and self.trade_conversion(seat, kind):
+            E.pay(p, "farm" if kind == "mine" else "mine", 1)
+            p.flags["trade_routes_used"] = True
+            amount -= 1
+        E.pay(p, kind, amount)
+
+    def move_cost(self, seat: int, frm: int, to: int) -> int:
+        """Freedom of Movement: the cost difference as for upgrading (both after modifiers), if positive."""
+        return max(0, self.build_cost(seat, to) - self.build_cost(seat, frm))
+
+    # ================================================================================= science (T5.8, pacts)
+    def sci_coop_partner(self, seat: int):
+        """(partner, discount, partner pays) of a Scientific Cooperation pact the player is party to, or None."""
+        for q in self.s.players:
+            if q.pact is not None and EFFECT_TYPE[q.pact[0]] == "pact_scientific_cooperation" and                     seat in (q.seat, q.pact[1]):
+                eff = EFFECT[q.pact[0]]
+                return (q.pact[1] if seat == q.seat else q.seat), eff["discount"], eff["partner_pays"]
+        return None
+
+    def science_cost(self, seat: int, c: int, revolution: bool = False, discount: int = 0) -> int:
+        base = REVOLUTION_COST[c] if revolution else SCIENCE_COST[c]
+        coop = self.sci_coop_partner(seat)
+        return max(0, base - discount - (coop[1] if coop else 0))
+
+    def can_pay_science(self, seat: int, c: int, revolution: bool = False, discount: int = 0) -> bool:
+        coop = self.sci_coop_partner(seat)
+        if coop is not None and self.p(coop[0]).science < coop[2]:
+            return False
+        base = REVOLUTION_COST[c] if revolution else SCIENCE_COST[c]
+        return self.p(seat).science >= max(0, base - discount - (coop[1] if coop else 0))
+
+    def pay_science(self, seat: int, c: int, revolution: bool = False, discount: int = 0) -> None:
+        coop = self.sci_coop_partner(seat)
+        E.add_science(self.p(seat), -self.science_cost(seat, c, revolution, discount))
+        if coop is not None:
+            E.add_science(self.p(coop[0]), -coop[2])
+
+    # ================================================================================= tactics (T6.4, T3.3)
+    def copy_options(self, seat: int) -> list:
+        p = self.p(seat)
+        return sorted(c for c in set(self.s.common_tactics) if c != p.tactic)
+
+    def play_tactic(self, seat: int, c: int) -> None:
+        """T6.4: 1 military action; the tactic becomes your exclusive tactic and your marker moves onto it."""
+        p = self.p(seat)
+        E.spend_military(p, 1)
+        p.military_hand.remove(c)
+        if p.exclusive_tactic is not None:
+            self.s.common_tactics.append(p.exclusive_tactic)
+        p.exclusive_tactic = c
+        p.tactic = c
+        p.flags["tactic_done"] = True
+        E.touch(p)
+
+    def copy_tactic(self, seat: int, c: int) -> None:
+        """T6.4: 2 military actions; the marker moves onto a common tactic."""
+        p = self.p(seat)
+        E.spend_military(p, 2)
+        p.tactic = c
+        p.flags["tactic_done"] = True
+        E.touch(p)
+
+    def share_tactic(self, seat: int) -> None:
+        """T3.3 (3): the exclusive tactic of the previous turn moves to the common area; the marker stays on it."""
+        p = self.p(seat)
+        if p.exclusive_tactic is not None:
+            self.s.common_tactics.append(p.exclusive_tactic)
+            self.s.log.add(seat, f"{self.card_name(p.exclusive_tactic)} becomes a common tactic")
+            p.exclusive_tactic = None
+
+    # ================================================================================= game end (T14, T7.2)
+    def end_game(self, evaluate: bool = True) -> None:
+        s = self.s
+        if evaluate:
+            effects.final_events(self)                                      # T14.2
+            effects.fire(self, "game_end", s.start_seat)
+        s.game_over = True
+        s.phase = "over"
+        s.decisions.clear()
+        s.log.add(None, "Game over: " + ", ".join(f"P{i} {x}" for i, x in enumerate(self.scores())))
+
     # ================================================================================= cards in play (T11.6, T11.9)
     def enter_play(self, seat: int, card: int) -> None:
         p = self.p(seat)
@@ -257,10 +417,8 @@ class Game:
                     k2 = min(v, p.yellow_bank)
                     p.yellow_bank -= k2
                     p.pool += k2
-                else:                                                       # TODO stage 2: LOSE_WORKER choice
-                    k2 = min(-v, p.pool)
-                    p.pool -= k2
-                    p.yellow_bank += k2
+                else:                                                       # T11.7: LOSE_WORKER if no pool
+                    self.s.tasks.append({"op": "lose_pop", "seat": seat, "n": -v, "card": card})
                 E.touch(p)
             elif k == "military_cards":
                 military.draw(self, seat, v)
@@ -274,7 +432,8 @@ class Game:
             cost += len(p.wonders) + len(p.ruined)                          # T4.6
         return cost
 
-    def can_take(self, seat: int, slot: int) -> bool:
+    def can_take(self, seat: int, slot: int, budget: int = None) -> bool:
+        """T4.2-T4.6; with `budget` (International Agreement) the cost is checked against it, not civil actions."""
         c = self.s.row[slot]
         if c is None:
             return False
@@ -289,12 +448,42 @@ class Game:
                 return False
             if KIND[c] == "leader" and AGE[c] in p.leaders_taken:           # T4.5
                 return False
-        return E.civil_available(self, seat) >= self.take_cost(seat, slot)  # T4.2
+        have = E.civil_available(self, seat) if budget is None else budget
+        return have >= self.take_cost(seat, slot)                           # T4.2
 
-    def take(self, seat: int, slot: int) -> None:
+    def take_slots(self, seat: int, budget: int = None) -> list:
+        """Row slots can_take() allows, computed in one pass (hot path of action_legal)."""
+        p = self.p(seat)
+        have = E.civil_available(self, seat) if budget is None else budget
+        hand_ok = len(p.civil_hand) < E.civil_hand_limit(self, seat)
+        surcharge = len(p.wonders) + len(p.ruined)
+        names = None
+        out = []
+        for i, c in enumerate(self.s.row):
+            if c is None:
+                continue
+            k = KIND[c]
+            if k == "wonder":
+                if p.unfinished is not None or ROW_COST[i] + surcharge > have:
+                    continue
+            else:
+                if not hand_ok or ROW_COST[i] > have:
+                    continue
+                if IS_TECH[c]:
+                    if names is None:
+                        names = self.names_owned(seat)
+                    if NAME[c] in names:
+                        continue
+                if k == "leader" and AGE[c] in p.leaders_taken:
+                    continue
+            out.append(i)
+        return out
+
+    def take(self, seat: int, slot: int, pay: bool = True) -> None:
         s, p = self.s, self.p(seat)
         c = s.row[slot]
-        E.spend_civil(p, self.take_cost(seat, slot))
+        if pay:
+            E.spend_civil(p, self.take_cost(seat, slot))
         s.row[slot] = None
         if KIND[c] == "wonder":
             p.unfinished = [c, 0, 0]                                        # T4.6: straight into play, unfinished
@@ -328,12 +517,12 @@ class Game:
         unit = kinds[0] in UNITS
         if p.pool < 1 or not self._action_ok(seat, unit, free):
             return []
-        res = E.resources(p)
+        purpose = "unit" if unit else None
         limit = self.stats(seat).urban_limit
         out = []
         for c in p.techs:
             k = KIND[c]
-            if k not in kinds or self.build_cost(seat, c, discount) > res:
+            if k not in kinds or not self.afford(seat, "mine", self.build_cost(seat, c, discount), purpose):
                 continue
             if k in URBAN and E.urban_workers(p, k) >= limit:                  # T5.3
                 continue
@@ -342,9 +531,9 @@ class Game:
 
     def upgrade_to_options(self, seat: int, frm: int, discount: int = 0) -> list:
         p = self.p(seat)
-        res = E.resources(p)
+        purpose = "unit" if IS_UNIT[frm] else None
         return [c for c in p.techs if KIND[c] == KIND[frm] and LEVEL[c] > LEVEL[frm]
-                and self.upgrade_cost(seat, frm, c, discount) <= res]
+                and self.afford(seat, "mine", self.upgrade_cost(seat, frm, c, discount), purpose)]
 
     def upgrade_from_options(self, seat: int, kinds: tuple = BUILDINGS, discount: int = 0, free: bool = False) -> list:
         p = self.p(seat)
@@ -369,31 +558,32 @@ class Game:
         card, paid, _ = p.unfinished
         costs = STAGE_COSTS[card][paid:]
         allowed = min(len(costs), self.stats(seat).wonder_stages)
-        res = E.resources(p)
         k = 0
         for i in range(1, allowed + 1):
-            if max(0, sum(costs[:i]) - discount) <= res:
+            if self.afford(seat, "mine", max(0, sum(costs[:i]) - discount)):
                 k = i
         return k
 
-    def can_increase_population(self, seat: int, free_action: bool = False) -> bool:
+    def can_increase_population(self, seat: int, free_action: bool = False, discount: int = 0) -> bool:
         p = self.p(seat)
         cost = E.pop_cost(p.yellow_bank)                                       # T5.1, T1.8
-        return cost is not None and (free_action or E.civil_available(self, seat) >= 1) and E.food(p) >= cost
+        return cost is not None and (free_action or E.civil_available(self, seat) >= 1) and \
+            self.afford(seat, "farm", max(0, cost - discount))
 
-    def can_peaceful(self, seat: int, card: int, free: bool = False) -> bool:
-        return (free or E.civil_available(self, seat) >= 1) and self.p(seat).science >= SCIENCE_COST[card]
+    def can_peaceful(self, seat: int, card: int, free: bool = False, sci_discount: int = 0) -> bool:
+        return (free or E.civil_available(self, seat) >= 1) and self.can_pay_science(seat, card, False, sci_discount)
 
     def can_revolution(self, seat: int, card: int, free: bool = False, revolution_ok: bool = False) -> bool:
         """T5.9: all civil actions still available (a develop action card: they were before it was played)."""
         p = self.p(seat)
-        if p.science < REVOLUTION_COST[card]:
+        if not self.can_pay_science(seat, card, True):
             return False
         if free:
             return revolution_ok
         return p.civil_spent == 0 and self.stats(seat).civil >= 1
 
-    def develop_options(self, seat: int, free: bool = False, exclude: int = None, revolution_ok: bool = None) -> list:
+    def develop_options(self, seat: int, free: bool = False, exclude: int = None, revolution_ok: bool = None,
+                        sci_discount: int = 0) -> list:
         """Technologies in hand that can be developed now. With a develop action card (free), a revolution needs all
         civil actions available before the card was played (revolution_ok; None = now, before playing it)."""
         p = self.p(seat)
@@ -404,9 +594,11 @@ class Game:
             if c == exclude or not IS_TECH[c]:
                 continue
             if KIND[c] == "government":
-                ok = self.can_peaceful(seat, c, free) or self.can_revolution(seat, c, free, bool(revolution_ok))
+                ok = self.can_peaceful(seat, c, free, sci_discount) or \
+                    (not sci_discount and self.can_revolution(seat, c, free, bool(revolution_ok)))
             else:
-                ok = (free or E.civil_available(self, seat) >= 1) and p.science >= SCIENCE_COST[c]
+                ok = (free or E.civil_available(self, seat) >= 1) and self.can_pay_science(seat, c, False,
+                                                                                          sci_discount)
             if ok:
                 out.append(c)
         return out
@@ -425,12 +617,12 @@ class Game:
         return False
 
     # ================================================================================= civil actions (T5, T6)
-    def increase_population(self, seat: int, free_action: bool = False) -> None:
+    def increase_population(self, seat: int, free_action: bool = False, discount: int = 0) -> None:
         p = self.p(seat)
-        cost = E.pop_cost(p.yellow_bank)
+        cost = max(0, E.pop_cost(p.yellow_bank) - discount)
         if not free_action:
             E.spend_civil(p, 1)
-        E.pay(p, "farm", cost)
+        self.pay(seat, "farm", cost)
         p.yellow_bank -= 1                                                      # rightmost yellow token -> pool
         p.pool += 1
         E.touch(p)
@@ -440,7 +632,7 @@ class Game:
         cost = self.build_cost(seat, card, discount)
         if not free:
             (E.spend_military if IS_UNIT[card] else E.spend_civil)(p, 1)
-        E.pay(p, "mine", cost)
+        self.pay(seat, "mine", cost, "unit" if IS_UNIT[card] else None)
         p.pool -= 1
         p.workers[card] = p.workers.get(card, 0) + 1
         E.touch(p)
@@ -450,7 +642,7 @@ class Game:
         cost = self.upgrade_cost(seat, frm, to, discount)
         if not free:
             (E.spend_military if IS_UNIT[frm] else E.spend_civil)(p, 1)
-        E.pay(p, "mine", cost)
+        self.pay(seat, "mine", cost, "unit" if IS_UNIT[frm] else None)
         p.workers[frm] -= 1
         p.workers[to] = p.workers.get(to, 0) + 1
         E.touch(p)
@@ -462,7 +654,7 @@ class Game:
         p.pool += 1
         E.touch(p)
 
-    def develop(self, seat: int, c: int, free: bool = False, revolution: bool = False) -> None:
+    def develop(self, seat: int, c: int, free: bool = False, revolution: bool = False, sci_discount: int = 0) -> None:
         """T5.8 develop a technology; T5.9 revolution."""
         p = self.p(seat)
         p.civil_hand.remove(c)
@@ -470,11 +662,11 @@ class Game:
         if revolution:
             p.civil_spent = before[0]
             p.temp_civil = 0
-            E.add_science(p, -REVOLUTION_COST[c])
+            self.pay_science(seat, c, True)
         else:
             if not free:
                 E.spend_civil(p, 1)
-            E.add_science(p, -SCIENCE_COST[c])
+            self.pay_science(seat, c, False, sci_discount)
         k = KIND[c]
         if k == "government":
             old = p.government
@@ -496,7 +688,16 @@ class Game:
             p.techs.append(c)
             self.enter_play(seat, c)
         E.settle_totals(self, seat, before, revolution=revolution)
+        self.used_kidnapped(seat, c)
         effects.fire(self, "on_develop", seat, card=c, developer=seat, revolution=revolution)
+
+    def used_kidnapped(self, seat: int, c: int) -> None:
+        """Aggression: Kidnap: culture when the taken card is used in the same turn."""
+        p = self.p(seat)
+        k = p.flags.get("kidnapped")
+        if k and k[0] == c:
+            E.add_culture(p, k[2], "military", k[1])
+            p.flags["kidnapped"] = None
 
     def play_leader(self, seat: int, c: int) -> None:
         """T5.6."""
@@ -514,6 +715,7 @@ class Game:
         if old is not None:
             p.civil_spent = max(0, p.civil_spent - 1)                           # one civil action back
             effects.fire(self, "on_leader_replaced", seat, old=old, new=c, owner=seat)
+        self.used_kidnapped(seat, c)
 
     def play_action_card(self, seat: int, c: int) -> None:
         """T5.10."""
@@ -522,6 +724,7 @@ class Game:
         E.spend_civil(p, 1)
         p.civil_hand.remove(c)
         self.s.removed_civil.append(c)
+        self.used_kidnapped(seat, c)
         effects.play_action(self, seat, c)
 
     def complete_wonder(self, seat: int) -> None:
@@ -534,6 +737,8 @@ class Game:
         p.wonders.append(card)
         self.enter_play(seat, card)
         E.settle_totals(self, seat, before)
+        for q in self.s.players:                                            # International Tourism counts wonders
+            E.touch(q)
         effects.fire_card(self, "on_wonder_complete", seat, card)
 
     # ================================================================================= card row and ages (T4.1, T13)
@@ -548,6 +753,13 @@ class Game:
         if s.age == "A":                                                        # T13.1
             self._deal()
             self.begin_age("I")
+        self._deal()
+
+    def slide_and_deal(self) -> None:
+        """International Agreement: slide the row left and refill it without discards (may change the age)."""
+        s = self.s
+        rest = [c for c in s.row if c is not None]
+        s.row = rest + [None] * (ROW_SIZE - len(rest))
         self._deal()
 
     def _deal(self) -> None:
@@ -618,12 +830,10 @@ class Game:
             (s.removed_military.append(c) if AGE[c] == age else keep.append(c))
         p.military_hand = keep
         if p.leader is not None and AGE[p.leader] == age:
-            before = E.totals(self, seat)
-            old = p.leader
-            p.leader = None
-            self.leave_play(seat, old)
-            p.left_play.append(old)
-            E.settle_totals(self, seat, before)
+            self.remove_leader(seat)
+        if p.pact is not None and AGE[p.pact[0]] == age:                       # T13.3: antiquated pacts leave
+            from .politics import remove_pact
+            remove_pact(self, seat, "antiquated")
         if p.unfinished is not None and AGE[p.unfinished[0]] == age:
             card, _, tok = p.unfinished
             p.blue_bank += tok
@@ -697,9 +907,10 @@ class Game:
     def seat_extra(self, seat: int) -> dict:
         p = self.p(seat)
         st = self.stats(seat)
+        hand = p.hand_at_resign if p.hand_at_resign is not None else p.civil_hand + p.military_hand
         return {"science": p.science, "strength": military.strength(self, seat), "culture_rating": st.culture,
                 "science_rating": st.science, "rounds": self.s.round, "workers": self.workers_total(seat),
-                "hand_left": [KEY[c] for c in p.civil_hand + p.military_hand]}
+                "colonies": len(p.colonies), "hand_left": [KEY[c] for c in hand]}
 
     def workers_total(self, seat: int) -> int:
         p = self.p(seat)
@@ -732,12 +943,7 @@ def h_game(g: Game, t: dict, a):
             return
     active = g.active_seats()
     if s.round and (s.last_round == s.round or len(active) <= 1):               # T14.1, T7.2
-        effects.final_events(g)                                                 # T14.2
-        effects.fire(g, "game_end", s.start_seat)
-        s.game_over = True
-        s.phase = "over"
-        s.decisions.clear()
-        s.log.add(None, "Game over: " + ", ".join(f"P{i} {x}" for i, x in enumerate(g.scores())))
+        g.end_game(evaluate=len(active) > 1)
         return
     s.round += 1
     s.round_first = active[0]
@@ -748,17 +954,26 @@ def h_game(g: Game, t: dict, a):
 def h_turn(g: Game, t: dict, a):
     s, seat = g.s, t["seat"]
     st = t["stage"]
-    if st == "start":                                                           # T3.3
+    if st == "start":                                                           # T3.3, D3
         s.turn_seat = seat
         s.phase = "start"
         if s.round > 1:
-            g.refill()
-        # TODO stage 2: resolve this player's war (T9.5), move the exclusive tactic to the common area
+            g.refill()                                                          # (1)
+        t["stage"] = "start2"
+        if g.p(seat).wars:
+            from .politics import resolve_wars
+            resolve_wars(g, seat)                                               # (2) T9.5
+    elif st == "start2":
+        g.share_tactic(seat)                                                    # (3)
         effects.fire(g, "start_of_turn", seat, owner=seat)
         t["stage"] = "politics"
     elif st == "politics":                                                      # T3.4 (skipped in round 1, T3.2)
         t["stage"] = "actions"
-        if s.round > 1:
+        p = g.p(seat)
+        if s.round > 1 and p.forfeit_politics:                                  # International Agreement
+            p.forfeit_politics -= 1
+            s.log.add(seat, "gives up this political action (International Agreement)")
+        elif s.round > 1:
             s.phase = "politics"
             s.tasks.append({"op": "politics", "seat": seat})
     elif st == "actions":                                                       # T3.5
@@ -776,19 +991,11 @@ def h_turn(g: Game, t: dict, a):
         g._finish(t)
 
 
-def h_politics(g: Game, t: dict, a):
-    """T3.4 / T7: stage 1 offers only END (political actions come in stage 2)."""
-    if a is None:
-        g._ask("POLITICS", t["seat"], [A_END])
-        return
-    g._finish(t)
-
-
 def action_legal(g: Game, seat: int) -> list:
     """ACTION answers that have a legal completion (PLAN 3, 5)."""
     s, p = g.s, g.p(seat)
     legal = [A_END]
-    legal += [A_ROW + i for i in range(ROW_SIZE) if g.can_take(seat, i)]
+    legal += [A_ROW + i for i in g.take_slots(seat)]
     if s.round == 1:                                                            # T3.2: only take cards
         return legal
     if E.civil_available(g, seat) >= 1:
@@ -803,6 +1010,10 @@ def action_legal(g: Game, seat: int) -> list:
         if g.wonder_max_stages(seat):
             legal.append(A_VERB + V["WONDER_STAGE"])
     if E.military_available(g, seat) >= 1:
+        if not p.flags.get("tactic_done"):                                      # T6.4: one play or copy per turn
+            legal += [A_CARD + c for c in sorted(set(p.military_hand)) if KIND[c] == "tactic"]
+            if E.military_available(g, seat) >= 2 and g.copy_options(seat):
+                legal.append(A_VERB + V["COPY_TACTIC"])
         if g.build_options(seat, UNITS):
             legal.append(A_VERB + V["BUILD_UNIT"])
         if g.upgrade_from_options(seat, UNITS):
@@ -839,9 +1050,13 @@ def h_actions(g: Game, t: dict, a):
             s.tasks.append({"op": "destroy", "seat": seat, "unit": verb == "DISBAND"})
         elif verb == "WONDER_STAGE":
             s.tasks.append({"op": "wonder", "seat": seat, "discount": 0, "free": False, "card": None})
-    else:                                                                       # CARD from the civil hand
+        elif verb == "COPY_TACTIC":
+            s.tasks.append({"op": "copy_tactic", "seat": seat})
+    else:                                                                       # CARD from a hand
         k = KIND[off]
-        if IS_TECH[off]:
+        if k == "tactic":
+            g.play_tactic(seat, off)
+        elif IS_TECH[off]:
             s.tasks.append({"op": "develop", "seat": seat, "card": off, "free": False, "then_gain": None,
                             "source": None, "revolution_ok": False})
         elif k == "leader":
@@ -856,6 +1071,15 @@ def g_upgrade_task(seat, kinds, discount, free, source) -> dict:
 
 
 Game.upgrade_task = staticmethod(g_upgrade_task)
+
+
+def h_copy_tactic(g: Game, t: dict, a):
+    seat = t["seat"]
+    if a is None:
+        g._ask("CHOOSE_TACTIC", seat, [A_CARD + c for c in g.copy_options(seat)])
+        return
+    g._finish(t)
+    g.copy_tactic(seat, a - A_CARD)
 
 
 def h_build(g: Game, t: dict, a):
@@ -915,7 +1139,7 @@ def h_wonder(g: Game, t: dict, a):
         cost = max(0, sum(STAGE_COSTS[card][paid:paid + t["stages"]]) - t["discount"])
         if not t["free"]:
             E.spend_civil(p, 1)
-        E.pay(p, "mine", cost)
+        g.pay(seat, "mine", cost)
         t["left"] = t["stages"]
     if a is not None:                                                           # LOSE_BLUE answer
         p.tokens[a - A_CARD] -= 1
@@ -946,15 +1170,15 @@ def h_develop(g: Game, t: dict, a):
     seat = t["seat"]
     if t["card"] is None:                                                       # develop action card: which card
         if a is None:
-            g._ask("SUB_ACTION", seat, [A_CARD + c for c in g.develop_options(seat, True, t["source"], t["revolution_ok"])],
-                   verb="DEVELOP", source=t["source"])
+            opts = g.develop_options(seat, True, t["source"], t["revolution_ok"], t.get("sci_discount", 0))
+            g._ask("SUB_ACTION", seat, [A_CARD + c for c in opts], verb="DEVELOP", source=t["source"])
             return
         t["card"] = a - A_CARD
         a = None
     c = t["card"]
     if KIND[c] == "government" and "revolution" not in t:
-        peace = g.can_peaceful(seat, c, t["free"])
-        rev = g.can_revolution(seat, c, t["free"], t["revolution_ok"])
+        peace = g.can_peaceful(seat, c, t["free"], t.get("sci_discount", 0))
+        rev = g.can_revolution(seat, c, t["free"], t["revolution_ok"]) and not t.get("sci_discount", 0)
         if peace and rev:
             if a is None:
                 g._ask("REVOLT", seat, [A_YES, A_NO], card=c)
@@ -963,7 +1187,7 @@ def h_develop(g: Game, t: dict, a):
         else:
             t["revolution"] = rev
     g._finish(t)
-    g.develop(seat, c, t["free"], t.get("revolution", False))
+    g.develop(seat, c, t["free"], t.get("revolution", False), t.get("sci_discount", 0))
     if t["then_gain"]:
         g.apply_gain(seat, t["then_gain"], "actions", t["source"])
 
@@ -1036,7 +1260,7 @@ def h_end_turn(g: Game, t: dict, a):
     p.flags = {}
 
 
-HANDLERS = {"game": h_game, "turn": h_turn, "politics": h_politics, "actions": h_actions, "build": h_build,
+HANDLERS = {"game": h_game, "turn": h_turn, "actions": h_actions, "build": h_build, "copy_tactic": h_copy_tactic,
             "upgrade": h_upgrade, "destroy": h_destroy, "wonder": h_wonder, "develop": h_develop,
             "sub_action": h_sub_action, "choose_gain": h_choose_gain, "lose_blue": h_lose_blue,
             "end_turn": h_end_turn}
@@ -1055,13 +1279,20 @@ def invariants(g) -> list:
         else:
             civil += 1
     mil = len(s.military_deck) + len(s.military_discard) + len(s.age_a_unused) + len(s.current_events) + \
-        len(s.future_events) + len(s.past_events) + len(s.removed_military) + len(s.common_tactics)
+        len(s.future_events) + len(s.past_events) + len(s.removed_military) + len(s.common_tactics) + len(s.resolving)
     for p in s.players:
         civil += len(p.civil_hand) + len(p.wonders) + len(p.ruined) + len(p.left_play)
         civil += sum(not IS_STARTING[c] for c in p.techs) + sum(1 for c in p.specials.values())
         civil += (not IS_STARTING[p.government]) + (p.leader is not None) + (p.unfinished is not None)
-        mil += len(p.military_hand) + len(p.colonies)
+        mil += len(p.military_hand) + len(p.colonies) + len(p.wars) + (p.exclusive_tactic is not None) + \
+            (p.pact is not None)
         tag = f"P{p.seat}"
+        if p.tactic is not None and p.tactic != p.exclusive_tactic and p.tactic not in s.common_tactics:
+            out.append(f"{tag} tactic marker on a tactic that is not in play")
+        if p.resigned_order is None and military.max_colonization_force(g, p.seat) > 128:
+            out.append(f"{tag} colonization force above the 128 bid cap (choice C4)")
+        if p.pact is not None and (p.pact[1] == p.seat or s.players[p.pact[1]].resigned_order is not None):
+            out.append(f"{tag} pact with itself or a resigned player")
         on_cards = sum(p.tokens.values()) + (p.unfinished[2] if p.unfinished else 0)
         if p.blue_bank < 0 or any(k < 0 for k in p.tokens.values()):
             out.append(f"{tag} negative blue tokens")
@@ -1098,3 +1329,6 @@ def invariants(g) -> list:
     if any(AGE[c] != s.age for c in s.military_discard):
         out.append("military discard holds a card of another age")
     return out
+
+
+from . import politics  # noqa: E402,F401  (registers the politics task handlers)

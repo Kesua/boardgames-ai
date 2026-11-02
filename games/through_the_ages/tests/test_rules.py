@@ -1,4 +1,5 @@
-"""Rule tests (one or more per rule ID of rules.md implemented in stage 1: a complete peaceful game)."""
+"""Rule tests (one or more per rule ID of rules.md implemented in stage 1: a complete peaceful game; stage 2 rules are
+in test_rules_military.py)."""
 import random
 
 import numpy as np
@@ -202,7 +203,7 @@ def test_round_one_only_takes_no_refill_no_military_draw():
 
 
 @rule("T3.4")
-def test_politics_phase_offered_from_round_two_pass_only_in_stage_1():
+def test_politics_phase_offered_from_round_two_nothing_to_do_passes():
     g = started(2, 6)
     forced_round1 = [r for r in g.drain_forced() if r["decision"] == "POLITICS"]
     assert not forced_round1

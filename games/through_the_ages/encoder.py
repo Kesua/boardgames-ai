@@ -2,24 +2,35 @@
 
 global   age, round, last-round info, seat offset to the starting player, decision kind, card row (per cost group a
          card-count vector), occupied slots, deck sizes, event-deck counts per age, leaders/wonders still to come and
-         the public Age A deck (T15.8, T15.9)
-own      civil and military hand (counts per card id), the cards the pending decision is about
-players  (decider first, then clockwise) cards in play, workers, tokens, banks, points, ratings, actions, hand
-         sizes per age (T16.1: other players' hands are hidden; only counts per age are public)
+         the public Age A deck (T15.8, T15.9), common tactics, past events
+decision the cards the pending decision is about, its numbers (bid, force, strength needed, budget, advantage left),
+         the other player it concerns (seat offset) and, only for the decider, a candidate vector (Kidnap's
+         candidates from the rival's hand, Development of Planning's 3 shown cards)
+own      civil and military hand (counts per card id), the events I prepared that wait in either event deck
+players  (decider first, then clockwise) cards in play (incl. tactic, colonies, pact, wars), workers, tokens, banks,
+         points, ratings, actions, armies, pact side and partner, war targets, hand sizes per age
+
+Hidden (T16.1, PLAN 8): other players' civil and military hands (only counts per age), deck orders, the current
+events deck and other players' prepared events (only counts per age), the Age A cards set aside.
 """
 from __future__ import annotations
 
 import numpy as np
 
 from . import economy as E
-from .cards import AGE, AGES, HOLDS_WORKERS, KIND, N_CARDS
+from . import military as M
+from .cards import AGE, AGES, HOLDS_WORKERS, KIND, MILITARY_KINDS, N_CARDS
 from .state import LEADER_PROXY, WONDER_PROXY
 
 WORKER_CARDS = [c for c in range(N_CARDS) if HOLDS_WORKERS[c]]
 W_INDEX = {c: i for i, c in enumerate(WORKER_CARDS)}
 TOKEN_CARDS = [c for c in range(N_CARDS) if KIND[c] in ("farm", "mine")]
 T_INDEX = {c: i for i, c in enumerate(TOKEN_CARDS)}
-N_SCALARS = 31
+MIL_CARDS = [c for c in range(N_CARDS) if KIND[c] in MILITARY_KINDS]
+M_INDEX = {c: i for i, c in enumerate(MIL_CARDS)}
+N_MIL = len(MIL_CARDS)
+N_SCALARS = 44
+N_CONTEXT = 8
 
 
 def _clip(x: float) -> float:
@@ -33,10 +44,11 @@ class StateEncoder:
         from .engine import DECISION_KINDS
         self.n = num_players
         self.kinds = {k: i for i, k in enumerate(DECISION_KINDS)}
-        self.global_size = 5 + 1 + 2 + 4 + len(DECISION_KINDS) + 3 * N_CARDS + 13 + 3 + 4 + 4 + N_CARDS
-        self.own_size = 3 * N_CARDS
+        self.global_size = 5 + 1 + 2 + 4 + len(DECISION_KINDS) + 3 * N_CARDS + 13 + 3 + 4 + 4 + N_CARDS + 2 * N_MIL
+        self.context_size = N_CONTEXT + 4 + N_CARDS
+        self.own_size = 3 * N_CARDS + N_MIL
         self.player_size = N_CARDS + len(WORKER_CARDS) + len(TOKEN_CARDS) + N_SCALARS
-        self.size = self.global_size + self.own_size + num_players * self.player_size
+        self.size = self.global_size + self.context_size + self.own_size + num_players * self.player_size
 
     def encode(self, g, seat: int) -> np.ndarray:
         from .engine import ROW_COST
@@ -83,6 +95,30 @@ class StateEncoder:
             for c in s.selection[age]["leaders"] + s.selection[age]["wonders"]:
                 v[i + c] = 1.0
         i += N_CARDS
+        for c in s.common_tactics:
+            v[i + M_INDEX[c]] = 1.0
+        i += N_MIL
+        for c in s.past_events:
+            v[i + M_INDEX[c]] += 0.5
+        i += N_MIL
+        # ---- decision context
+        if d is not None:
+            data = d.data
+            nums = [data.get("bid", 0) / 40, data.get("force", 0) / 40, data.get("need", 0) / 30,
+                    data.get("left", 0) / 20, data.get("budget", 0) / 5, len(data.get("legal", ())) / 30,
+                    1.0 if d.seat == seat else 0.0, 1.0 if data.get("side") == "A" else 0.0]
+            for j, x in enumerate(nums):
+                v[i + j] = _clip(x)
+            other = next((data[k] for k in ("victim", "attacker", "offerer") if isinstance(data.get(k), int)), None)
+            if other is None and d.kind == "PACT_SIDE":
+                other = data["target"]
+            if other is not None and 0 <= other < self.n:
+                v[i + N_CONTEXT + (other - seat) % self.n] = 1
+            if d.seat == seat:                                               # only the decider sees candidates
+                for c in data.get("candidates", ()) or data.get("shown", ()):
+                    v[i + N_CONTEXT + 4 + c] = 1.0
+        i += self.context_size
+        # ---- own private
         me = s.players[seat]
         for c in me.civil_hand:
             v[i + c] += 1 / 3
@@ -91,24 +127,34 @@ class StateEncoder:
             v[i + c] += 1 / 3
         i += N_CARDS
         if d is not None:
-            for key in ("card", "frm", "source"):
+            for key in ("card", "frm", "source") + (("target",) if d.kind == "EVENT_CHOICE" else ()):
                 c = d.data.get(key)
-                if c is not None:
+                if isinstance(c, int):
                     v[i + c] = 1.0
         i += N_CARDS
+        for c, prep in s.current_events + s.future_events:                  # my prepared events (I know them)
+            if prep == seat:
+                v[i + M_INDEX[c]] += 0.5
+        i += N_MIL
         for k in range(self.n):
-            self._player(g, (seat + k) % self.n, v, i)
+            self._player(g, (seat + k) % self.n, seat, v, i)
             i += self.player_size
         np.clip(v, 0.0, 1.0, out=v)
         return v
 
-    def _player(self, g, seat: int, v, i: int) -> None:
+    def _player(self, g, seat: int, viewer: int, v, i: int) -> None:
         p = g.s.players[seat]
         st = E.stats(g, seat)
         for c in p.play_order:
             v[i + c] = 1.0
         if p.unfinished is not None:
             v[i + p.unfinished[0]] = 0.5
+        if p.tactic is not None:
+            v[i + p.tactic] = 1.0
+        if p.pact is not None:
+            v[i + p.pact[0]] = 1.0
+        for c, _ in p.wars:
+            v[i + c] = 1.0
         i += N_CARDS
         for c, k in p.workers.items():
             v[i + W_INDEX[c]] = _clip(k / 6)
@@ -122,6 +168,18 @@ class StateEncoder:
         for c in p.military_hand:
             hand_ages[4 + AGES.index(AGE[c])] += 1
         unf = p.unfinished
+        n = self.n
+        pact_partner = [0.0] * 3
+        pact_side = 0.0
+        for owner, card, partner, side in M.pacts_in_play(g):
+            sd = M.side_of(owner, partner, side, seat)
+            if sd is not False:
+                other = partner if seat == owner else owner
+                pact_partner[(other - seat - 1) % n] = 1.0
+                pact_side = 1.0 if sd == "A" else 0.5 if sd == "B" else 0.25
+        war_on = [0.0] * 3
+        for _, t in p.wars:
+            war_on[(t - seat - 1) % n] = 1.0
         scalars = [p.blue_bank / 18, p.yellow_bank / 24, p.pool / 10, E.food(p) / 30, E.resources(p) / 30,
                    p.science / 60, p.culture / 250, st.culture / 30, st.science / 30, st.happiness / 8,
                    E.discontent(g, seat) / 8, st.strength / 60, st.civil / 10, E.civil_available(g, seat) / 10,
@@ -130,5 +188,9 @@ class StateEncoder:
                    1.0 if p.resigned_order is not None else 0.0, st.resource_bonus / 5 + 0.5]
         scalars += [x / 6 for x in hand_ages]
         scalars.append(len(p.leaders_taken) / 4)
+        scalars += [st.army / 40, st.colonization / 10 + 0.3, len(p.colonies) / 6,
+                    1.0 if p.exclusive_tactic is not None else 0.0, pact_side, len(M.wars_on(g, seat)) / 3,
+                    1.0 if p.forfeit_politics else 0.0]
+        scalars += war_on + pact_partner
         for j, x in enumerate(scalars):
             v[i + j] = _clip(x)

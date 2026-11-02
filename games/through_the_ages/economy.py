@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 
-from . import effects
+from . import effects, military
 from .cards import (EFFECT_TYPE, HOLDS_WORKERS, KIND, N_STATS, S_CIVIL, S_COLON, S_CULT, S_FOODB, S_HAPPY, S_MIL,
                     S_RESB, S_SCI, S_STR, S_UNHAPPY, STAT_YIELDS, TOKEN_VALUE, URBAN_LIMIT)
 
@@ -69,9 +69,9 @@ def happy_required(yellow_bank: int) -> int:
 # ---------------------------------------------------------------------------------------------- statistics (T11)
 class Stats:
     """One player's statistics. `v` holds the raw sums by stat index (cards.S_*)."""
-    __slots__ = ("v", "civil", "military", "culture", "science", "happiness", "strength", "colonization",
-                 "resource_bonus", "food_bonus", "urban_limit", "civil_limit_bonus", "military_limit_bonus",
-                 "wonder_stages", "urban_discount", "culture_parts")
+    __slots__ = ("v", "civil", "military", "culture", "science", "happiness", "strength", "strength_raw", "army",
+                 "colonization", "resource_bonus", "food_bonus", "urban_limit", "civil_limit_bonus",
+                 "military_limit_bonus", "wonder_stages", "urban_discount", "culture_parts")
 
     def __init__(self):
         self.v = [0] * N_STATS
@@ -101,13 +101,19 @@ def compute_stats(g, p) -> Stats:
                     parts[c] = parts.get(c, 0) + x * mult
         if EFFECT_TYPE[c] is not None:
             effects.passive(g, p, c, st)
+    for c in p.ruined:                                   # Ravages of Time: a ruined wonder produces 2 culture
+        v[S_CULT] += 2
+        parts[c] = parts.get(c, 0) + 2
+    effects.pact_and_war_passives(g, p, st)              # pacts the player is party to, wars it is in (T10)
+    st.army = military.armies(p)                         # T11.4
     st.urban_limit += URBAN_LIMIT[p.government] or 0
     st.civil = max(0, v[S_CIVIL])
     st.military = max(0, v[S_MIL])
     st.culture = max(0, v[S_CULT])                       # T11.2
     st.science = max(0, v[S_SCI])
     st.happiness = min(8, max(0, v[S_HAPPY] - v[S_UNHAPPY]))   # T11.5
-    st.strength = max(0, v[S_STR])                       # T11.3 (armies: stage 2, military.py)
+    st.strength_raw = v[S_STR] + st.army
+    st.strength = max(0, st.strength_raw)                # T11.3
     st.colonization = v[S_COLON]
     st.resource_bonus = v[S_RESB]
     st.food_bonus = v[S_FOODB]
@@ -240,25 +246,34 @@ def _feasible(orig: tuple, final: tuple, values: tuple) -> bool:
 
 @lru_cache(maxsize=100000)
 def plan_payment(values: tuple, orig: tuple, bank: int, amount: int):
-    """Choice C1. Final token counts after paying `amount`: the exact amount if possible, returning the most tokens
-    to the bank, ties keeping higher-value tokens; otherwise the smallest overpayment the bank allows. None when the
-    total is too low."""
+    """T12.3, choice C1. Final token counts after paying `amount`. Tokens are returned to the bank, moved to a
+    lower-value card (the token itself moves, paying the difference: no bank token needed) or broken into smaller
+    tokens with change taken from the blue bank (each extra token comes from the bank).
+    - Exact payment when possible, returning the most tokens to the bank, ties keeping higher-value tokens.
+    - Otherwise paying more is allowed only if the payment leaves the blue bank empty (all bank tokens taken as
+      change); the smallest such overpayment. None when the total is too low."""
     have = sum(v * c for v, c in zip(values, orig))
     if have < amount:
         return None
     n = sum(orig)
-    bank = min(bank, have)
-    for target in range(have - amount, -1, -1):
-        best = None
+    best = None
+    for f in _configs(values, have - amount):                     # exact payments
+        nf = sum(f)
+        if nf > n + bank or not _feasible(orig, f, values):
+            continue
+        key = (nf, tuple(-x for x in f))
+        if best is None or key < best[0]:
+            best = (key, f)
+    if best is not None:
+        return best[1]
+    for target in range(have - amount - 1, -1, -1):              # overpay: bank must end empty (nf = n + bank)
         for f in _configs(values, target):
-            nf = sum(f)
-            if nf > n + bank or not _feasible(orig, f, values):
-                continue
-            key = (nf, tuple(-x for x in f))
-            if best is None or key < best[0]:
-                best = (key, f)
-        if best is not None:
-            return best[1]
+            if sum(f) == n + bank and _feasible(orig, f, values):
+                return f
+    for target in range(have - amount - 1, -1, -1):              # defensive (not reachable with a value-1 card)
+        for f in _configs(values, target):
+            if sum(f) <= n + bank and _feasible(orig, f, values):
+                return f
     return tuple(0 for _ in values)
 
 

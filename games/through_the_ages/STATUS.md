@@ -52,8 +52,23 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
         ~20 rounds), 4p ~32 ms. Rule IDs still untested (later stages): T6.4, T7.x, T8.x, T9.x, T10.x, T11.3
         (armies part; unit strength works), T11.4, T12.9, T14.2 (stub `effects.final_events`), T15.1, T15.5,
         T15.7, T15.10, T16.2. No card tests yet (stage 6).
-  - [ ] stage 2: military (tactics, armies, strength T11.3-T11.4, T6.4), politics (T7-T10), resignation
-  - [ ] stage 3: card effects family by family (140 effect types left), card tests, expansion details
+  - [x] stage 2 (PLAN 13 steps 4-5, 2026-11-02): military and politics. New module `politics.py` (the politics
+        phase and every military decision as tasks: POLITICS verbs PREPARE / AGGRESSION / WAR / PACT / CANCEL_PACT /
+        RESIGN, events with the T8.1 flip, colonization auction BID/SEND, DEFEND, war resolution at the start of the
+        declarer's turn, pacts with sides and answers, resignation, MIX, EVENT_CHOICE, LOSE_WORKER, TERRORISM,
+        STEAL_TECH, KIDNAP, INFILTRATE, ANNEX, TAKE_LOOP); `military.py` now holds armies (T11.4, memoised, checked
+        against a brute force), strength, colonization force, attack strengths with pact rules and the T8.3 ranking
+        helper `rank_players` (hook points `rank_bonus` / `tie_priority` for Nostradamus / Genghis Khan, stage 3);
+        tactics play/copy/sharing (T6.4, T3.3) in `engine.py`; all 125 military-deck cards' effects in `effects.py`
+        (hooks `event`, `colonize`, `aggression`, `war`, `pact`, `army`) incl. the final Age III evaluation (T14.2).
+        Also Patriotism (`military_boost`, the T12.9 example) and the Q1 payment fix. 76 of 150 effect types
+        implemented (74 left in `effects.UNIMPLEMENTED_EFFECT_TYPES`, all civil: leaders, wonders, a few action
+        cards). Tests: `tests/test_rules_military.py` (every stage-2 rule ID), `tests/test_cards_military.py` (125
+        card tests). `bgai.checks --games 300`: 0 problems for 2/3/4 players, greedy beats random 95 %. Random game
+        ~16 / 28 / 45 ms for 2 / 3 / 4 players (231 / 409 / 664 decisions). Hook points left for stage 3: Isabella,
+        James Cook, Columbus (colonization), Himeji Castle, Gandhi, Julius Caesar's extra political action, Sun Tzu,
+        Confucius (prepare any military card), Joan of Arc / Ian Fleming / Nostradamus (seen events, `known`).
+  - [ ] stage 3: civil card effects family by family (74 effect types left), civil card tests, expansion details
 - [ ] verify-engine: checks/report.json 0 problems (10,000 games per player count), independent review in checks/review.md
 - [ ] design-rl: encoder, greedy, smoke training learns
 - [ ] train-model: open run, anchored run, acceptance -> finished model
@@ -74,10 +89,11 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
 - Missing: the four unidentified 3+ action cards; pictures of the rebalanced Republic, Communism,
   Fundamentalism, Professional Sports, Military Theory (text-only values, data/SOURCES.md).
 - Build-engine stage 1 readings (rules.md silent or unclear; the lead decides, then rules.md T17 gets a row):
-  - Q1 Payment change (T12.3, C1): the engine lets change come from the blue bank as new smaller tokens (a 2-token
-    paying 1 becomes a 1-token; a 5-token paying 1 can become 3+1), limited by the bank's tokens; with too few bank
-    tokens for exact change it pays the smallest possible overpayment. rules.md only names returning tokens and
-    moving a token to a lower-value card; its "paying more empties your blue bank" clause implies bank change.
+  - Q1 Payment change (T12.3, C1) — RESOLVED (lead's review, fixed in stage 2): moving a token to a lower-value card
+    moves the token itself (pays the difference, needs no bank token, works with an empty bank); breaking a token
+    into several smaller ones takes the extra tokens from the blue bank (rulebook "pay and take change back").
+    Paying more is allowed only when no exact payment exists AND the payment leaves the blue bank empty; the
+    smallest such overpayment is chosen (`economy.plan_payment`, test T12.3 in test_rules_military.py).
   - Q2 Frugality (`increase_population` + `then_gain` food): implemented literally from card data: the player must
     afford the full food cost, then gains the food. If the printed card is a discount, the data should say so.
   - Q3 Engineering Genius (`wonder_stage` discount): with a construction technology it may build several stages in
@@ -91,3 +107,36 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
   - Q7 T13.3: antiquated cards are discarded from both hands (civil and military).
   - Q8 Each age's civil and military decks are built when the age begins, for the players still in the game
     (T7.2); proxy counts follow the setup selection (6/4 or 7/5) even after a resignation.
+- Build-engine stage 2 readings (rules.md and card data silent or unclear; the lead decides):
+  - Q9 Development of Planning: after every player picked, the 3 shown cards go back to the Age A cards set aside
+    (rulebooks silent); while shown they are in `State.resolving`.
+  - Q10 Trade Routes Agreement: side A may use 1 food as 1 resource, side B 1 resource as 1 food, once per turn
+    (any player's turn; flag cleared at the end of the owner's turn), used automatically only when the tokens are
+    not enough (C1). Card data says only "a_food_as_resource: 1".
+  - Q11 Arms Industry: a player with no technology of a unit type gets nothing for that type (nobody "ties at none").
+  - Q12 Aggression: Raid: the aggressor chooses the buildings, mandatory as far as possible; Raid II/III fill the
+    "Age II (III) or older" slot first, then the "Age I (II) or older" slot; the aggressor gains half the printed
+    costs of the destroyed buildings rounded up. That gain is printed on the card (sources B and T) but missing in
+    `card_effects.py` (only `destroy_urban_max_ages`): implemented in the `raid` handler — suspected card-data gap.
+  - Q13 Counting: Impact of Variety counts unit and urban types with at least one worker plus each special
+    technology; Impact of Wonders and Knowledge of the Ancestors count ruined wonders (Ravages of Time) as completed
+    wonders of their age; Impact of Technology counts Age III technology cards in play (unit/building technologies,
+    specials, government); Impact of Population: content workers = all workers − discontent workers.
+  - Q14 Taking food/resources/points (Plunder, Spy, Occupy, wars): the taker gains what the victim actually lost, at
+    most the amount named (change a victim loses by overpaying is not gained).
+  - Q15 Resignation: the resigned player's technologies, government and wonders stay frozen in its area (nothing
+    reads them; the tableau shows them); hands, colonies, own pact, wars and exclusive tactic leave play. When one
+    player is left the game ends at once without the final Age III evaluation (T14.2 is "after the last round").
+  - Q16 Scientific Cooperation applies to every development incl. revolutions; if the partner has no science to
+    pay, the party cannot develop at all (literal reading of "is possible only if").
+  - Q17 Development of Religion / Warfare: the free build respects the urban building limit; Development of
+    Civilization's "develop a technology" is a peaceful development (no revolution).
+  - Q18 Defense (T9.2, D4): the card cap is the defender's military action total; the defense ends automatically
+    when the tie is reached; an aggression is legal even when its effect would find nothing to take (Annex without
+    colonies, Infiltrate without leader or unfinished wonder): rules.md gives only the strength and pact conditions.
+  - Q19 Freedom of Movement: from any farm/mine/urban building/unit to any other such card in play, paying
+    max(0, cost difference after modifiers), urban limit on the destination; optional, clockwise from the revealer.
+  - Q20 Rebellion / Call to Arms: lost civil actions are spent from the available ones now; players other than the
+    revealer thus have fewer on their next turn. Politics of Strength's "game-ending age" is read as Age IV.
+  - Q21 SEND: military bonus cards are offered only while the force is below the bid; units may still be sent after
+    it (T8.5 overpaying).

@@ -137,3 +137,66 @@ def play_to_round(g, r: int) -> None:
     while not g.game_over and (g.s.round < r or g.s.decisions.top.kind != "ACTION"):
         legal = g.legal_ids()
         g.step_id(En.A_END if En.A_END in legal else legal[0])
+
+
+# ----------------------------------------------------------------------------------------------- stage 2 helpers
+def politics(g, s: int = None) -> None:
+    """Open a politics phase for seat s now (test harness): the pending decision is put aside and asked again when
+    the political action is over."""
+    refresh(g)
+    s = g.current_seat if s is None else s
+    g.s.decisions.pop()
+    g.s.tasks.append({"op": "politics", "seat": s})
+    g._run()
+
+
+def run_now(g, fn, *args, **kw) -> None:
+    """Call fn (which may push tasks) with the pending decision put aside, then run the task loop."""
+    refresh(g)
+    g.s.decisions.pop()
+    fn(*args, **kw)
+    g._run()
+
+
+def reveal_now(g, name, age: str = None, seat: int = None) -> int:
+    """Put an event on top of the current events deck and reveal it now as if seat prepared (T8.1)."""
+    from games.through_the_ages import politics as P
+    c = cid(name, age) if not isinstance(name, int) else name
+    seat = g.current_seat if seat is None else seat
+    g.s.current_events.insert(0, [c, None])
+    run_now(g, P.reveal, g, seat)
+    return c
+
+
+def mil(g, s: int, name: str, age: str = None, k: int = 1) -> int:
+    """k units of the military unit technology `name` for seat s (put into play if needed)."""
+    c = cid(name, age)
+    p = g.p(s)
+    if c not in p.techs:
+        place(g, s, name, age)
+    p.workers[c] = p.workers.get(c, 0) + k
+    p.yellow_bank -= k
+    touch(g, s)
+    return c
+
+
+def strength(g, s: int) -> int:
+    return E.stats(g, s).strength
+
+
+def answer_all(g, text: str) -> None:
+    """Answer with `text` while such an answer is legal."""
+    while not g.game_over and has(g, text):
+        answer(g, text)
+
+
+def to_action(g) -> None:
+    """Pass political actions until the current player is at ACTION."""
+    while not g.game_over and kind(g) == "POLITICS":
+        answer(g, "Pass the political action")
+
+
+def next_turn(g) -> None:
+    """End the current turn and bring the next player to its action phase (political action passed)."""
+    end_turn(g)
+    to_action(g)
