@@ -14,9 +14,9 @@ what developing it would add and how near its science cost is; others' hands by 
 developed technologies can still add, leader, wonders (an unfinished one by stages paid), colonies; discontent beyond
 the unused workers (uprising) costs 8.
 
-Information: the look-ahead runs on a copy of the full state; hidden things can still shape its result in two small
-ways: the next current event (preparing reveals it in the copy) and which military cards the end-of-turn draw brings.
-Other players' hands never enter the value. Defending is judged by a public bound: an aggression is played only when
+Information: the look-ahead runs on a copy whose hidden order is reshuffled first (civil and military decks, the
+current events deck, the copy's random source), so the next current event and the end-of-turn military draw are
+guesses, not knowledge. Other players' hands never enter the value. Defending is judged by a public bound: an aggression is played only when
 the attacker's margin beats what the rival could add with its military hand size and military actions.
 It never resigns (a resigned position is worth -1000). Ties at random (seeded).
 """
@@ -233,6 +233,16 @@ class GreedyAgent(Agent):
             steps += 1
         return relative(g, seat, r)                 # the same horizon for every answer of one decision
 
+    def _hidden_shuffled(self, game):
+        """A copy with every hidden order reshuffled, so the look-ahead cannot read the decks."""
+        g = game.clone()
+        s = g.s
+        self.rng.shuffle(s.civil_deck)
+        self.rng.shuffle(s.military_deck)
+        self.rng.shuffle(s.current_events)
+        g.rng.seed(self.rng.getrandbits(64))
+        return g
+
     def _eval(self, game, a: int, seat: int, t0: int, r: float, depth: int) -> float:
         g = game.clone()
         g.step_id(a)
@@ -256,6 +266,7 @@ class GreedyAgent(Agent):
             return min(legal, key=lambda a: (_military_card_value(a - A_CARD), a))
         t0 = game.s.turns
         r = rounds_left(game)
+        game = self._hidden_shuffled(game)          # one shuffled copy per decision: the same guess for every answer
         best, best_v = [], None
         for a in self._candidates(game, d):
             v = self._eval(game, a, seat, t0, r, self.depth)

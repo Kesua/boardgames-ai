@@ -110,6 +110,9 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     (120 games, 398 vs 238). Mirror scores: new 166 (2p), old 105. Speed (one process): 1.6 s per 2p greedy-mirror
     game (old 1.1 s), 8.4 s per 4p mirror game (~2 s of thinking per seat). `bgai.checks --games 300 --no-write`:
     0 problems, greedy beats random 40/40.
+    Lead's change after merge: the look-ahead copy reshuffles the hidden orders first (civil, military and current
+    events decks, the copy's random source), so greedy no longer reads the next event or its military draw; the
+    strength numbers above were measured before this change.
   - Smoke run (2p, `--timesteps 1000000 --chunk 200000 --envs 8 --eval-workers 3`, runs/through_the_ages/smoke):
 
     | steps | games | win_vs_random | win_vs_greedy (40 g) | win_vs_anchor |
