@@ -23,8 +23,10 @@ python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/open --times
 ```
 All seats learn; 20 % of games include a frozen older snapshot; random leaves the pool once beaten 95 %. Every 1M
 steps the log (`runs/<slug>/open/p2/train_log.csv`) has paired results against the checkpoints 1M and 3M older.
-**Plateau:** `win_vs_3m` within 2 standard errors of 50 % (|x − 0.5| ≤ 2·sqrt(0.25/400) ≈ 0.05 for 2p) at two
-evaluations in a row. The **open-run best** = the 3M-older checkpoint of the first of those two evaluations.
+**Plateau:** `win_vs_3m` within 2 standard errors of even play at two evaluations in a row. The model takes one seat
+against players − 1 older copies, so even play is e = 1/players and the band is |x − e| ≤ 2·sqrt(e(1 − e)/n) with
+n = deals × players games: 2p 0.5 ± 0.05 (200 deals), 3p 0.333 ± 0.054, 4p 0.25 ± 0.043 (100 deals). Comparing a 4p
+run against 50 % never ends the run (Through the Ages 4p, 2026-11-03). The **open-run best** = the 3M-older checkpoint of the first of those two evaluations.
 
 ## 2. Anchored run (from the open-run best)
 ```bash
