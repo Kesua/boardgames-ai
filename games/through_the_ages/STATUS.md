@@ -136,6 +136,19 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     `--greedy-games 8 --reference-deals 250` ~5.7M/h open and ~4M/h anchored -> ~100M steps in 24 h (40M open ~7 h,
     30M anchored ~7.5 h).
 - [ ] train-model: open run, anchored run, acceptance -> finished model
+  - 2p (2026-11-03): **`models/p2-29m` finished.** Open run plateaued at 12M (win against 3M older 0.510, 0.527),
+    best = 8M. Anchored run from it rebased at 7M (0.806) and stopped at 24M (3 evaluations without a 0.02 gain;
+    `win_vs_3m` 0.55 at the stop); best = 21M = the model (29M steps, 105,808 games, 5.5 h on 16 game workers +
+    RTX 4070 Laptop). Acceptance (paired, 750 deals): greedy 0.971 (1,000 games, bar 0.95), open 12M never
+    trained against 0.917, open 8M 0.921. `clipped` 0.41-0.43 through the open run (lr 2.5e-4, 10 epochs),
+    0.07-0.13 anchored.
+  - Engine fix during training (8b6c859): the anchored run crashed at 22M on a misrouted answer (War over
+    Technology took Justice System from a loser with an empty blue bank; the loser's LOSE_BLUE sat above the steal
+    task and received the victor's next STEAL_TECH answer). Decisions now remember the asking task; the loser's
+    LOSE_BLUE resolves after the victor's steal choices (nothing in them touches the loser's farms and mines).
+    Random play never reaches the path (0 misrouted questions in 3,000 games), so the open-run and earlier
+    anchored checkpoints were kept; the run resumed with `--resume`.
+  - 4p: open run started 2026-11-03 (`--greedy-games 8`).
 - [ ] run-experiment: mirror (+ versus) per player count, --verify passes
 - [ ] write-notes: notes.json (en + other languages)
 - [ ] publish-game: check_repo passes, publisher notice drafted, PR opened

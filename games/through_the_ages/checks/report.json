@@ -1,6 +1,6 @@
 {
   "game": "through_the_ages",
-  "code_commit": "6efd2dba6ae16663a20f79b89cf2b5680fd08a56",
+  "code_commit": "8b6c8594bed66a5308d3b7ea6ff5b02c4f8e0f4a",
   "games_per_player_count": {
     "2": 10000,
     "3": 10000,
@@ -8,7 +8,7 @@
   },
   "problems": [],
   "problem_count": 0,
-  "seconds": 2717.2,
+  "seconds": 2906.7,
   "greedy_vs_random": {
     "players": 2,
     "games": 40,
