@@ -150,7 +150,11 @@
     "age",
     "set"
   ],
-  "featured": {},
+  "featured": {
+    "2": {
+      "main": "p2-29m-mirror"
+    }
+  },
   "languages": [
     "en"
   ],

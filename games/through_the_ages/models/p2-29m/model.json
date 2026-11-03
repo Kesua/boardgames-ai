@@ -1,0 +1,68 @@
+{
+  "id": "p2-29m",
+  "game": "through_the_ages",
+  "players": 2,
+  "sha256": "e33973d2dfddccb246012cd1d804387c7990974273fb3803c3db6b52dca1f970",
+  "observation_size": 3385,
+  "action_count": 479,
+  "checkpoint": "runs/through_the_ages/anchored/p2/ppo_best.zip",
+  "recipe": [
+    "open run: python -m bgai.rl.train --game through_the_ages --players 2 --out runs/through_the_ages/open --timesteps 40000000 --chunk 500000 --envs 16 --eval-workers 4 --hours 9 (defaults: lr 2.5e-4, 10 epochs, 20 % frozen-opponent games)",
+    "open run plateaued at 12M (win against the checkpoint 3M older 0.510 at 11M and 0.527 at 12M); best = 8M",
+    "anchored run from the 8M checkpoint: python -m bgai.rl.train --game through_the_ages --players 2 --out runs/through_the_ages/anchored --start-from runs/through_the_ages/open/p2/ppo_8000000.zip --fixed runs/through_the_ages/open/p2/ppo_8000000.zip greedy --keep-every 2000000 --lr 1e-4 --epochs 4 --reference runs/through_the_ages/open/p2/ppo_8000000.zip --timesteps 30000000 --chunk 500000 --envs 16 --eval-workers 4 --hours 12 --patience 3 --min-gain 0.02 --min-steps 6000000 --rebase-at 0.8; rebased at 7M (0.806 against the open 8M) to its 5M checkpoint, lr 5e-5",
+    "the anchored run crashed at 22M on an engine bug (fixed in 8b6c859, a path random play never reaches; game rules elsewhere unchanged) and was resumed with --resume; stopped at 24M (3 evaluations without a gain of 0.02); best = 21M (0.754 against its reference) = this model"
+  ],
+  "logs": [
+    "train_log_1.csv",
+    "train_log_2.csv"
+  ],
+  "code_commit": "8b6c8594bed66a5308d3b7ea6ff5b02c4f8e0f4a",
+  "steps": 29000000,
+  "games": 105808,
+  "hours": 5.5,
+  "hardware": "22-core CPU (16 game workers), RTX 4070 Laptop GPU for the update",
+  "notes": null,
+  "published": "2026-11-03",
+  "strength": {
+    "finished": true,
+    "games": [
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 1000,
+        "win": 0.971,
+        "win_se": 0.0053,
+        "margin": 122.58,
+        "margin_se": 2.12,
+        "score": 221.3,
+        "other": 98.7,
+        "required": ">=0.95"
+      },
+      {
+        "opponent": "runs/through_the_ages/open/p2/ppo_12000000.zip",
+        "label": "open-run checkpoint it never trained against",
+        "games": 1500,
+        "win": 0.9167,
+        "win_se": 0.0071,
+        "margin": 104.75,
+        "margin_se": 1.86,
+        "score": 199.5,
+        "other": 94.8,
+        "required": "beats"
+      },
+      {
+        "opponent": "runs/through_the_ages/open/p2/ppo_8000000.zip",
+        "label": "open-run best (trained against)",
+        "games": 1500,
+        "win": 0.9213,
+        "win_se": 0.007,
+        "margin": 107.86,
+        "margin_se": 1.9,
+        "score": 204.0,
+        "other": 96.1,
+        "required": null
+      }
+    ],
+    "measured": "2026-11-03"
+  }
+}
