@@ -40,7 +40,7 @@ beats the best result so far is copied to `ppo_best.zip`. When the win rate agai
 this, gains against a weak reference become too small to measure while the model still improves (Wingspan: stopped
 at 8M steps although 8M still beat 5M 59 %). The trainer stops by itself after three evaluations in a row without a
 gain of 0.02 against the current reference (`--patience 3 --min-gain 0.02`, not before `--min-steps`), or when the
-budget ends. Check `win_vs_3m` at the stop: clearly above 0.5 means the model was still improving — resume with a
+budget ends. Check `win_vs_3m` at the stop: clearly above even play (the plateau band) means the model was still improving — resume with a
 larger budget. The model to publish is `ppo_best.zip`.
 
 **Interrupted?** Run the same command again with `--resume`: it continues from the latest checkpoint in `--out` and
@@ -57,16 +57,17 @@ python -m bgai.models accept --game <slug> --id p2-<name> \
     --required ">=0.95" beats - beats --deals 750
 ```
 Paired games: each model plays every seat of each deal once. Finished = every `required` row passes
-(beats = more than 50 % + 2 standard errors). Keep the label wording: the dashboard reads "never trained against" or
+(beats = more than 50 % + 2 standard errors, for every player count: with 3+ players this is stricter than even
+play, by choice; Forest Shuffle and Through the Ages 4p keep it, as they keep `--rebase-at 0.8` and `>=0.95`). Keep the label wording: the dashboard reads "never trained against" or
 "trained against" from it to describe the opponent correctly.
 
-**Failed the greedy bar?** Look at `win_vs_3m` at the stop. Above 0.5 means the model still improves: start another
+**Failed the greedy bar?** Look at `win_vs_3m` at the stop. Above the plateau band means the model still improves: start another
 anchored stage from the run's last checkpoint (`--start-from` and `--reference` = that checkpoint, `--lr 2.5e-5`,
 `--fixed` = open-run best, the previous reference and greedy, `--min-steps 4000000`, `--rebase-at 0.56`), publish
 that stage's `ppo_best.zip` and accept again. Pick the model by the run's own rule, never by its score against greedy
 on the acceptance deals (that would tune the model to the test). Wingspan: 91.9 % against greedy after 16M steps,
 two more stages (about an hour each) gave 95.1 % at 28M steps, where `win_vs_3m` reached 0.5. Stop when `win_vs_3m`
-stays at 0.5: the recipe is exhausted; publish as not finished and report it, or change the design (design-rl).
+stays at even play: the recipe is exhausted; publish as not finished and report it, or change the design (design-rl).
 Not finished within budget → do not publish experiments as "finished"; the dashboard marks unfinished models.
 
 ## Pitfalls

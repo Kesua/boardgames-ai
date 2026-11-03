@@ -148,7 +148,10 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     LOSE_BLUE resolves after the victor's steal choices (nothing in them touches the loser's farms and mines).
     Random play never reaches the path (0 misrouted questions in 3,000 games), so the open-run and earlier
     anchored checkpoints were kept; the run resumed with `--resume`.
-  - 4p: open run started 2026-11-03 (`--greedy-games 8`).
+  - 4p: open run 2026-11-03 06:58 (`--greedy-games 8`), ~4.3 min per 0.5M steps. Plateau at 10M/11M
+    (`win_vs_3m` 0.273, 0.278; even play = 1/4, band ± 0.043) → open best = ppo_7000000. The run went on to 16.5M
+    before it was stopped; 11M–16.5M never trained against. Bars kept as for 2p (decided 2026-11-03):
+    beats = 50 % + 2 SE, greedy >= 0.95, `--rebase-at 0.8`. Anchored run started 10:20 (`--reference-deals 250`).
 - [ ] run-experiment: mirror (+ versus) per player count, --verify passes
 - [ ] write-notes: notes.json (en + other languages)
 - [ ] publish-game: check_repo passes, publisher notice drafted, PR opened
