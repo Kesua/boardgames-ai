@@ -96,8 +96,6 @@ def refresh(g) -> None:
     if getattr(g, "_dirty", False):
         g._dirty = False
         g.s.decisions.pop()
-        task = g.s.tasks[-1]
-        En.HANDLERS[task["op"]](g, task, None)
         g._run()
 
 

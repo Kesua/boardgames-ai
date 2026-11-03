@@ -494,6 +494,29 @@ def test_war_over_technology_steals_specials_by_cost_identity_and_level_rules():
     assert q.science == 10 and kind(g) != "STEAL_TECH"                             # 0 left: no science
 
 
+@rule("T11.9")
+def test_stolen_token_card_with_empty_blue_bank_keeps_answers_with_the_question():
+    """Training crash: taking Justice System (3 blue tokens) from a loser with an empty blue bank queues the loser's
+    LOSE_BLUE; the victor's next STEAL_TECH answer must still reach the steal, and the loser then loses 3 tokens."""
+    g, s, (o,) = two()
+    mil(g, s, "Swordsmen", k=6)                                                    # advantage >= 7 + 4
+    q = g.p(o)
+    place(g, o, "Justice System")
+    place(g, o, "Cartography")
+    agri = cid("Agriculture")
+    tokens(g, o, "Agriculture", q.tokens.get(agri, 0) + q.blue_bank)              # empty blue bank
+    owned, on_farms = q.blue_owned, sum(q.tokens.values())
+    g.p(s).wars = [[cid("War over Technology"), o]]
+    next_turn(g)
+    next_turn(g)
+    answer(g, "Take Justice System")
+    answer(g, "Take Cartography")
+    assert g.p(s).specials == {"special_civil": cid("Justice System"), "special_colonization": cid("Cartography")}
+    while kind(g) == "LOSE_BLUE":
+        answer(g, "")
+    assert q.blue_bank == 0 and q.blue_owned == owned - 3 and sum(q.tokens.values()) == on_farms - 3
+
+
 # ===================================================================================================== T10 pacts
 @rule("T10.1")
 def test_offer_pact_sides_accept_or_refuse():

@@ -79,6 +79,8 @@ class IllegalActionError(Exception):
 
 
 class Game:
+    _running = None                        # the task whose handler runs now; not part of the state
+
     def __init__(self, num_players: int = 2, seed: Optional[int] = None, options: dict = None):
         assert 2 <= num_players <= 4
         self.num_players = num_players
@@ -157,30 +159,34 @@ class Game:
             raise IllegalActionError(a)
         self.s.log.add(d.seat, self.describe(a))
         self.s.decisions.pop()
-        task = self.s.tasks[-1]
-        HANDLERS[task["op"]](self, task, a)
+        self._dispatch(d.data["asker"], a)
         self._run()
 
     def _run(self) -> None:
         s = self.s
         while not s.decisions and not s.game_over:
-            task = s.tasks[-1]
-            HANDLERS[task["op"]](self, task, None)
+            self._dispatch(s.tasks[-1], None)
+
+    def _dispatch(self, task: dict, a) -> None:
+        outer, self._running = self._running, task
+        HANDLERS[task["op"]](self, task, a)
+        self._running = outer
 
     def _ask(self, kind: str, seat: int, legal: list, **data) -> None:
         """Make a decision pending; with one legal answer apply it at once (recorded as forced). Handlers return
-        right after calling this."""
+        right after calling this. The answer goes to the asking task even when the handler pushed tasks above it
+        before asking (a LOSE_BLUE queued by a stolen token card, then the next STEAL_TECH question)."""
         if not legal:
             raise RuntimeError(f"{kind} for P{seat} has no legal answer")
         legal = sorted(set(legal))
-        d = Decision(kind, dict(data, legal=legal), seat)
+        asker = self._running if self._running is not None else self.s.tasks[-1]
+        d = Decision(kind, dict(data, legal=legal, asker=asker), seat)
         self.s.decisions.push(d)
         if len(legal) == 1:
             self.s.forced.append(dict(self.record_info(legal[0]), seat=seat, forced=True))
             self.s.log.add(seat, self.describe(legal[0]) + " (only option)")
             self.s.decisions.pop()
-            task = self.s.tasks[-1]
-            HANDLERS[task["op"]](self, task, legal[0])
+            self._dispatch(asker, legal[0])
 
     def _finish(self, t: dict) -> None:
         """Remove task t from the stack (by identity: sub-tasks it pushed stay)."""
