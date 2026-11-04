@@ -745,6 +745,11 @@
           <div class="c-host">${host ? `<div class="bitem"><span>${esc(itemName(g, host.item))}</span><b>${int(host.points)}</b></div>` : `<div class="bitem"><span>${esc(t("sapling"))}</span><b>0</b></div>`}</div>
           <div class="c-right">${at("RIGHT")}</div><div class="c-bottom">${at("BOTTOM")}</div></div>`;
       }).join("")}</div>`;
+    } else if (![...slots].every((x) => Number.isInteger(x) && x >= 0 && x < 5)) {
+      // any other board: every card of a group in a list, the group named by the tag that carries its value
+      const groupName = (gk, its) => { const k = Object.keys(its[0].tags || {}).find((kk) => String(its[0].tags[kk]) === gk); return k ? tagName(g, k, gk) : gk; };
+      body = `<div class="board-groups">${Object.keys(byGroup).sort().map((gk) => `<div class="bgroup"><div class="gh">${esc(groupName(gk, byGroup[gk]))}</div>
+        ${byGroup[gk].map((x) => `<div class="bitem" title="${esc(itemName(g, x.item))}"><span>${esc(itemName(g, x.item))}</span><b>${int(x.points)}</b></div>`).join("")}</div>`).join("")}</div>`;
     } else {
       body = Object.keys(byGroup).map((gk) => `<div class="mat-row" style="margin-top:6px"><div class="rh">${esc(tagName(g, "habitat", gk))}</div>
         ${[0, 1, 2, 3, 4].map((c) => { const x = byGroup[gk].find((y) => y.slot === c); return x ? `<div class="slot filled"><div class="sn"${(gi18n(g).items || {})[x.item] ? "" : ' lang="en"'}>${esc(itemName(g, x.item))}</div>

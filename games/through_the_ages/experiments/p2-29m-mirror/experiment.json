@@ -1,0 +1,34 @@
+{
+  "id": "p2-29m-mirror",
+  "game": "through_the_ages",
+  "kind": "mirror",
+  "players": 2,
+  "seats": [
+    "p2-29m",
+    "p2-29m"
+  ],
+  "games": 2000,
+  "seed": 1000,
+  "options": {
+    "allow_resign": false
+  },
+  "seat_rotation": "seat j of game k is played by seats[(k + j) % players]",
+  "models": {
+    "p2-29m": "e33973d2dfddccb246012cd1d804387c7990974273fb3803c3db6b52dca1f970"
+  },
+  "card_data_sha256": {
+    "cards.json": "3a47620555b4ab1fa3854885bccf11299bd7d3d58b581984637cfd54a1a2bdfc"
+  },
+  "code_commit": "6ef60d504c579ae07eb9c0c9b3e226abea277711",
+  "requirements_lock_sha256": "111a70644b1bdc5dc9b2e8f0cd85ffa0d592f217fde2cdaf4e3b2a4a125d8836",
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.10.11",
+    "numpy": "2.2.6",
+    "torch": "2.14.0+cu126"
+  },
+  "command": "python -m bgai.experiment --game through_the_ages --id p2-29m-mirror --players 2 --seats p2-29m --games 2000 --seed 1000 --workers 6",
+  "seconds": 282.8,
+  "schema_version": 1,
+  "created": "2026-11-03T07:24:43"
+}

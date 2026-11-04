@@ -1,0 +1,36 @@
+{
+  "id": "p4-24m-mirror",
+  "game": "through_the_ages",
+  "kind": "mirror",
+  "players": 4,
+  "seats": [
+    "p4-24m",
+    "p4-24m",
+    "p4-24m",
+    "p4-24m"
+  ],
+  "games": 2000,
+  "seed": 1000,
+  "options": {
+    "allow_resign": false
+  },
+  "seat_rotation": "seat j of game k is played by seats[(k + j) % players]",
+  "models": {
+    "p4-24m": "4cfb2020e0d20166b90f54b34ad50794a04d1c6533ca7c76cea2c2f8c24a0dd7"
+  },
+  "card_data_sha256": {
+    "cards.json": "3a47620555b4ab1fa3854885bccf11299bd7d3d58b581984637cfd54a1a2bdfc"
+  },
+  "code_commit": "4173fef5580145ddf13b8d7ead8df2023023c263",
+  "requirements_lock_sha256": "111a70644b1bdc5dc9b2e8f0cd85ffa0d592f217fde2cdaf4e3b2a4a125d8836",
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.10.11",
+    "numpy": "2.2.6",
+    "torch": "2.14.0+cu126"
+  },
+  "command": "python -m bgai.experiment --game through_the_ages --id p4-24m-mirror --players 4 --seats p4-24m --games 2000 --seed 1000 --workers 18",
+  "seconds": 5873.3,
+  "schema_version": 1,
+  "created": "2026-11-04T05:58:13"
+}

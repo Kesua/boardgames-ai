@@ -1,0 +1,198 @@
+{
+ "written": "2026-11-04",
+ "headline": {
+  "en": "Leave Despotism, build culture: with this AI, winners end in Democracy or Theocracy and play culture leaders and wonders."
+ },
+ "experiments": {
+  "p2-29m-mirror": {
+   "games": 2000,
+   "written": "2026-11-04",
+   "en": {
+    "summary": "Leave Despotism for Theocracy or Democracy, build culture with theaters, Johann Sebastian Bach and wonders such as Himeji Castle, and take colonies; this AI wins with very little science.",
+    "do": [
+     "Change your government: winners end in Theocracy (+8.6 pp) or Democracy (+8.0 pp).",
+     "Build Himeji Castle when you can (+14.1 pp, the largest win-rate difference of the common cards).",
+     "Take colonies: Strategic Territory (II) +10.6 pp, Vast Territory (I) +9.2 pp, Historic Territory (II) +7.3 pp.",
+     "Develop Military Theory (+7.9 pp), Strategy (+5.8 pp) and Navigation (+5.6 pp).",
+     "Play Johann Sebastian Bach when he comes (+10.0 pp)."
+    ],
+    "dont": [
+     "Do not stay in Despotism (−12.4 pp); Republic (−17.0 pp) and Communism (−21.3 pp) as the final government go with losing too.",
+     "Libraries (−15.5 pp) and science leaders (Isaac Newton −10.9 pp, Bill Gates −12.2 pp) go with losing in this AI's games.",
+     "Colosseum (−8.1 pp) and Pyramids (−8.2 pp) go with losing."
+    ],
+    "works": [
+     "Government. A government counts when it is in play at the end. Theocracy (in 25 % of civilizations) +8.6 pp, Democracy (15 %) +8.0 pp, Fundamentalism (26 %) +6.0 pp.",
+     "Wonders. Himeji Castle +14.1 pp (in 16 % of civilizations, 28.2 points per copy), Eiffel Tower +8.8 pp, Louvre Museum +8.5 pp, Statue of Liberty +7.9 pp, Great Wall +7.0 pp.",
+     "Colonies. Strategic Territory (II) +10.6 pp, Vast Territory (I) +9.2 pp, Historic Territory (II) +7.3 pp, Inhabited Territory (I) +6.1 pp.",
+     "Culture. Theaters go with winning (+2.3 pp; in 81 % of civilizations): Movies +7.3 pp, Opera +4.9 pp. Leaders Johann Sebastian Bach +10.0 pp, Alfred Nobel +8.9 pp.",
+     "Where the points come from: culture production gives 109.0 of the average 179.7 points, events 61.1, aggressions and wars only 0.1."
+    ],
+    "avoid": [
+     "Staying in Despotism: −12.4 pp (10 % of civilizations). As the final government Republic −17.0 pp, Communism −21.3 pp and Monarchy −9.7 pp go with losing too.",
+     "Science. Libraries −15.5 pp, Printing Press −14.3 pp; Bill Gates −12.2 pp, Isaac Newton −10.9 pp, Johannes Gutenberg −10.8 pp. This AI ends with a science rating of 1.6 on average: read this as how this AI wins, not as proof that science is weak.",
+     "Wonders Pyramids −8.2 pp, Colosseum −8.1 pp, Forbidden City −7.7 pp and Suez Canal −6.1 pp. Taj Mahal brings the most points per copy of the common wonders (36.4) and still does not go with winning (−2.1 pp)."
+    ],
+    "order": "Turn order barely matters: the first player wins 51.0 % of games and the second 49.7 %, where an equal share is 50.3 % (a tie counts as a win for each tied player).",
+    "length": [
+     "A game lasts 18–22 rounds. The winner's average score rises from 191 in the shortest fifth of games to 219 in the longest, so compare scores only between games of similar length."
+    ]
+   }
+  },
+  "p4-24m-mirror": {
+   "games": 2000,
+   "written": "2026-11-04",
+   "en": {
+    "summary": "Leave Despotism for Democracy, play the culture leaders Michelangelo, Johann Sebastian Bach and Nelson Mandela, build Acropolis, and add Printing Press, Computers and Military Theory.",
+    "do": [
+     "End the game in Democracy (+7.4 pp; the final government of 28 % of civilizations).",
+     "Play Michelangelo (+12.8 pp), Johann Sebastian Bach (+11.8 pp) or Nelson Mandela (+9.4 pp).",
+     "Build Acropolis (+10.2 pp).",
+     "Develop Computers (+8.3 pp), Civil Service (+8.0 pp) and Military Theory (+7.1 pp).",
+     "Build Drama, the Age I theater (+5.6 pp; 45.2 points per copy)."
+    ],
+    "dont": [
+     "Do not stay in Despotism (−10.6 pp).",
+     "Colosseum (−7.4 pp), Great Wall (−5.7 pp) and Suez Canal (−5.6 pp) go with losing.",
+     "Leonardo da Vinci goes with losing (−7.2 pp)."
+    ],
+    "works": [
+     "Government. Democracy +7.4 pp, Theocracy +4.3 pp; every other final government goes with losing or does not clearly differ from the average.",
+     "Culture leaders. Michelangelo has the largest win-rate difference of the cards in at least 5 % of civilizations (+12.8 pp; 23.2 points per copy); Johann Sebastian Bach +11.8 pp, Nelson Mandela +9.4 pp.",
+     "Wonders. Acropolis +10.2 pp, International Red Cross +8.1 pp, Himeji Castle +5.5 pp, Taj Mahal +5.4 pp (37.5 points per copy), Eiffel Tower +5.1 pp.",
+     "Science and technology. Printing Press +4.7 pp (in 35 % of civilizations), Computers +8.3 pp, Civil Service +8.0 pp, Military Theory +7.1 pp, Mechanized Agriculture +6.7 pp, Satellites +6.6 pp.",
+     "Where the points come from: culture production gives 138.4 of the average 273.7 points, events 124.2, aggressions and wars 0.0."
+    ],
+    "avoid": [
+     "Staying in Despotism: −10.6 pp. Constitutional Monarchy −3.5 pp, Republic and Monarchy −3.2 pp each.",
+     "Wonders Colosseum −7.4 pp, Great Wall −5.7 pp, Suez Canal −5.6 pp, Forbidden City and Hanging Gardens −3.9 pp each.",
+     "Leaders Leonardo da Vinci −7.2 pp, Jan Žižka −5.6 pp, Napoleon Bonaparte −4.9 pp."
+    ],
+    "order": "Turn order barely matters: the first player wins 25.0 % of games and the last 25.1 %, where an equal share is 25.3 % (a tie counts as a win for each tied player).",
+    "length": [
+     "A game lasts 17–23 rounds. The winner's average score rises from 294 in the shortest fifth of games to 355 in the longest, so compare scores only between games of similar length."
+    ]
+   }
+  }
+ },
+ "findings": [
+  {
+   "variant": "main",
+   "id": "government",
+   "link": "items/democracy_iii",
+   "en": {
+    "title": "Leave Despotism; winners end in Democracy",
+    "text": "A government counts here only when it is in play at the end. Players who never leave Despotism lose more often: −12.4 pp with 2 players and −10.6 pp with 4. Democracy goes with winning with both player counts, and so does Theocracy (+8.6 pp and +4.3 pp).",
+    "label": "win-rate difference: Democracy",
+    "n2": "+8.0 pp",
+    "n4": "+7.4 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "leaders",
+   "link": "items/johann_sebastian_bach_ii",
+   "chart": {"p": 4, "top": 12, "focus": ["michelangelo_i", "johann_sebastian_bach_ii", "nelson_mandela_iii"]},
+   "en": {
+    "title": "Culture leaders go with winning",
+    "text": "Johann Sebastian Bach goes with winning with 2 and 4 players and brings 23.7 points per copy with 2 players. With 4 players Michelangelo has the largest win-rate difference of the cards in at least 5 % of civilizations (+12.8 pp; 23.2 points per copy), and Nelson Mandela has +9.4 pp.",
+    "label": "win-rate difference: Johann Sebastian Bach",
+    "n2": "+10.0 pp",
+    "n4": "+11.8 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "wonders",
+   "link": "items/himeji_castle_i",
+   "chart": {"p": 2, "top": 12, "focus": ["himeji_castle_i", "eiffel_tower_ii", "louvre_museum_ii"]},
+   "en": {
+    "title": "Himeji Castle, Eiffel Tower and Louvre Museum go with winning",
+    "text": "With 2 players Himeji Castle has the largest win-rate difference of the cards in at least 5 % of civilizations; Eiffel Tower (+8.8 pp and +5.1 pp) and Louvre Museum (+8.5 pp and +4.2 pp) go with winning with both player counts. Colosseum (−8.1 pp and −7.4 pp) and Suez Canal (−6.1 pp and −5.6 pp) go with losing with both.",
+    "label": "win-rate difference: Himeji Castle",
+    "n2": "+14.1 pp",
+    "n4": "+5.5 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "science",
+   "link": "items/printing_press_i",
+   "en": {
+    "title": "Science: this AI avoids it with 2 players",
+    "text": "With 2 players this AI ends with a science rating of only 1.6 on average, and players with a library lose more often (−15.5 pp). With 4 players it ends with 4.1, and Printing Press (in 35 % of civilizations) and Computers (+8.3 pp) go with winning. Read this as this AI's style, not as a rule about science.",
+    "label": "win-rate difference: Printing Press",
+    "n2": "−14.3 pp",
+    "n4": "+4.7 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "colonies",
+   "link": "items/historic_territory_ii",
+   "en": {
+    "title": "Colonies go with winning, Historic Territory most reliably",
+    "text": "Historic Territory (II) goes with winning with 2 and 4 players and brings 12.0 points per copy with 2 players. Vast Territory (I) has +9.2 pp with 2 players and +4.4 pp with 4; Strategic Territory (II) +10.6 pp and +3.4 pp.",
+    "label": "win-rate difference: Historic Territory (II)",
+    "n2": "+7.3 pp",
+    "n4": "+6.6 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "military-theory",
+   "link": "items/military_theory_iii",
+   "en": {
+    "title": "Military Theory goes with winning, although nobody fights",
+    "text": "Military Theory (Age III) goes with winning with both player counts. This AI almost never attacks or goes to war: aggressions and wars bring 0.1 points per player with 2 players and 0.0 with 4.",
+    "label": "win-rate difference: Military Theory",
+    "n2": "+7.9 pp",
+    "n4": "+7.1 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "theaters",
+   "link": "items/drama_i",
+   "en": {
+    "title": "Theaters pay; Drama brings many points",
+    "text": "Theaters are in 81 % of civilizations with both player counts and go with winning (+2.3 pp and +2.4 pp). Drama, the Age I theater, brings 33.2 points per copy with 2 players and 45.2 with 4.",
+    "label": "win-rate difference: Drama",
+    "n2": "+2.4 pp",
+    "n4": "+5.6 pp"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "points",
+   "link": "style",
+   "en": {
+    "title": "Points come from culture production and events",
+    "text": "Culture production each turn gives 109.0 of the average 179.7 points with 2 players and 138.4 of 273.7 with 4. Events, including the Age III events scored at the end, give most of the rest.",
+    "label": "points per player from events",
+    "n2": "61.1",
+    "n4": "124.2"
+   }
+  },
+  {
+   "variant": "main",
+   "id": "length",
+   "link": "length",
+   "en": {
+    "title": "Longer games, higher scores",
+    "text": "A game lasts 18–22 rounds with 2 players and 17–23 with 4. The winner's average score rises from 191 to 219 points with 2 players and from 294 to 355 with 4, from the shortest to the longest fifth of games. Compare scores only between games of similar length.",
+    "label": "winner's average score: shortest fifth → longest fifth",
+    "n2": "191 → 219",
+    "n4": "294 → 355"
+   }
+  }
+ ],
+ "limits": {
+  "en": [
+   "The 4-player AI is not finished: it wins 64.4 % of paired games against three greedy players, below the 95 % bar (the 2-player AI: 97.1 %). Its numbers describe a weaker player.",
+   "This AI uses little science (average science rating at the end: 1.6 with 2 players, 4.1 with 4) and almost never attacks or goes to war; findings about science and military cards describe this style.",
+   "All numbers are correlations from one AI playing against copies of itself: a win-rate difference shows what winners have, not what makes them win.",
+   "The engine allows Louvre Museum's token exchange only as an action in its owner's own turn, a small simplification of the card."
+  ]
+ }
+}

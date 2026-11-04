@@ -1,0 +1,168 @@
+{
+  "slug": "through_the_ages",
+  "name": "Through the Ages: A New Story of Civilization",
+  "publisher": "Czech Games Edition",
+  "designer": "Vlaada Chvátil",
+  "year": 2015,
+  "edition": "Second edition (2015) with the New Leaders and Wonders expansion (2019): full game, ages A to III, 292 cards",
+  "players": [
+    2,
+    3,
+    4
+  ],
+  "theme": {
+    "accent": "#4a5d6b"
+  },
+  "intro": {
+    "en": "A civilization-building card game: take cards from a shared row, develop technologies, build farms, mines and cities, choose leaders and wonders, and score culture from antiquity to the modern age. Played here with the New Leaders and Wonders expansion."
+  },
+  "terms": {
+    "en": {
+      "item": "card",
+      "items": "cards",
+      "board": "civilization",
+      "boards": "civilizations",
+      "archetype": "main card kind",
+      "archetypes": "main card kinds",
+      "round": "round"
+    }
+  },
+  "tags": {
+    "kind": {
+      "en": "Card kind"
+    },
+    "age": {
+      "en": "Age"
+    },
+    "set": {
+      "en": "Card set"
+    }
+  },
+  "score_categories": {
+    "production": {
+      "en": "Culture production"
+    },
+    "leaders": {
+      "en": "Leader abilities"
+    },
+    "wonders": {
+      "en": "Wonder abilities"
+    },
+    "events": {
+      "en": "Events"
+    },
+    "military": {
+      "en": "Aggressions and wars"
+    },
+    "colonies": {
+      "en": "Colonies"
+    },
+    "actions": {
+      "en": "Action cards"
+    },
+    "famine": {
+      "en": "Famine"
+    },
+    "resigned": {
+      "en": "Resigned"
+    }
+  },
+  "seat_extras": {
+    "science": {
+      "en": "Science points"
+    },
+    "culture_rating": {
+      "en": "Culture rating"
+    },
+    "science_rating": {
+      "en": "Science rating"
+    },
+    "strength": {
+      "en": "Military strength"
+    },
+    "workers": {
+      "en": "Population"
+    }
+  },
+  "top_decision": "ACTION",
+  "actions": {
+    "TAKE": {
+      "en": "Take a card"
+    },
+    "DEVELOP": {
+      "en": "Develop a technology"
+    },
+    "GOVERNMENT": {
+      "en": "Change government"
+    },
+    "PLAY_LEADER": {
+      "en": "Play a leader"
+    },
+    "PLAY_ACTION": {
+      "en": "Play an action card"
+    },
+    "INCREASE_POP": {
+      "en": "Increase population"
+    },
+    "BUILD": {
+      "en": "Build"
+    },
+    "UPGRADE": {
+      "en": "Upgrade"
+    },
+    "DESTROY": {
+      "en": "Destroy"
+    },
+    "WONDER_STAGE": {
+      "en": "Build a wonder stage"
+    },
+    "BUILD_UNIT": {
+      "en": "Build a military unit"
+    },
+    "UPGRADE_UNIT": {
+      "en": "Upgrade a military unit"
+    },
+    "DISBAND": {
+      "en": "Disband a military unit"
+    },
+    "END": {
+      "en": "End the action phase"
+    }
+  },
+  "fate": {
+    "played": [
+      "DEVELOP",
+      "GOVERNMENT",
+      "PLAY_LEADER",
+      "PLAY_ACTION"
+    ]
+  },
+  "fate_labels": {
+    "played": {
+      "en": "Played"
+    },
+    "left_in_hand": {
+      "en": "Left in hand"
+    }
+  },
+  "length": {
+    "show": true
+  },
+  "item_attributes": [
+    "kind",
+    "age",
+    "set"
+  ],
+  "featured": {
+    "2": {
+      "main": "p2-29m-mirror"
+    },
+    "4": {
+      "main": "p4-24m-mirror"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "rights": "RIGHTS.md"
+}

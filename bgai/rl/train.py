@@ -5,7 +5,8 @@ python -m bgai.rl.train --game <slug> --players 2 --out runs/<slug>/open --times
 The standard recipe (open run, then anchored run, then acceptance) is in .agents/skills/train-model/SKILL.md.
 
 Every seat at the table plays the current policy and learns (bgai/rl/selfplay.py); in `--frozen-share`
-of the games one seat is a frozen opponent from the pool: `--fixed` opponents ("greedy" or any checkpoint, also of
+of the games one seat (`--frozen-seats` seats; players - 1 = one learner against copies of one opponent, as in
+acceptance games) is a frozen opponent from the pool: `--fixed` opponents ("greedy" or any checkpoint, also of
 observation version 1), the anchor, every checkpoint at a multiple of `--keep-every` steps, the last `--pool-size`
 checkpoints, and a random agent until the model beats it in 95 % of evaluation games. "steps" counts learned decisions of all seats; the log
 also counts games. The PPO update runs on the GPU when torch sees one.
@@ -146,7 +147,7 @@ def train(slug: str, players: int, total_timesteps: int, out_dir: str, workers: 
           lr: float = 2.5e-4, epochs: int = 10, fixed: tuple = (), keep_every: int = 2_000_000, reference: str = None,
           reference_deals: int = 750, min_gain: float = 0.0, patience: int = None, min_steps: int = 0,
           rebase_at: float = None, lr_decay: float = 0.5, start_from: str = None, net: tuple = (512, 512, 256),
-          options: dict = None, eval_workers: int = 4):
+          options: dict = None, eval_workers: int = 4, frozen_seats: int = 1):
     import torch
     from sb3_contrib import MaskablePPO
 
@@ -194,11 +195,11 @@ def train(slug: str, players: int, total_timesteps: int, out_dir: str, workers: 
         return list(dict.fromkeys(list(fixed) + ([anchor_path] if anchor_path else []) + kept + recent))
 
     trainer = AllSeatTrainer(model, slug, players, workers=workers, tables=tables, reward=reward, seed=seed + done,
-                             frozen_share=frozen_share, rollout=rollout, device=device, lr=lr, epochs=epochs,
+                             frozen_share=frozen_share, frozen_seats=frozen_seats, rollout=rollout, device=device, lr=lr, epochs=epochs,
                              options=options, max_steps=spec.max_steps)
     pool = pool_paths() if done else list(fixed)
     trainer.set_pool(pool, random_in_pool)
-    print(f"p{players}: update on {device}, {workers} workers x {tables} tables, frozen share {frozen_share}, "
+    print(f"p{players}: update on {device}, {workers} workers x {tables} tables, frozen share {frozen_share} x {frozen_seats} seat(s), "
           f"lr {lr}, epochs {epochs}, pool {[os.path.basename(p) for p in pool]}, reference {ref['reference']} "
           f"(best {ref['best']:.3f}, {ref['stale']} without gain)", flush=True)
 
@@ -301,6 +302,8 @@ if __name__ == "__main__":
     ap.add_argument("--pool-size", type=int, default=4)
     ap.add_argument("--reward", choices=["win", "margin", "mixed"], default="mixed")
     ap.add_argument("--frozen-share", type=float, default=0.2)
+    ap.add_argument("--frozen-seats", type=int, default=1, help="seats the frozen opponent takes in those games "
+                    "(at most players - 1)")
     ap.add_argument("--rollout", type=int, default=16384, help="learned decisions per PPO update")
     ap.add_argument("--out", required=True, help="run folder, e.g. runs/<slug>/open (checkpoints go to <out>/p<players>)")
     ap.add_argument("--start-from", default=None, help="checkpoint whose weights a new run starts from (anchored run)")
@@ -330,4 +333,5 @@ if __name__ == "__main__":
     train(a.game, a.players, a.timesteps, a.out, a.envs, a.tables, a.chunk, a.snapshot_every, a.pool_size, a.reward, a.seed,
           a.frozen_share, a.rollout, a.eval_games, a.greedy_games, a.anchor, a.anchor_steps, a.resume, a.hours,
           a.lr, a.epochs, tuple(a.fixed), a.keep_every, a.reference, a.reference_deals, a.min_gain, a.patience,
-          a.min_steps, a.rebase_at, a.lr_decay, a.start_from, tuple(a.net), json.loads(a.options) if a.options else None, a.eval_workers)
+          a.min_steps, a.rebase_at, a.lr_decay, a.start_from, tuple(a.net), json.loads(a.options) if a.options else None, a.eval_workers,
+          a.frozen_seats)

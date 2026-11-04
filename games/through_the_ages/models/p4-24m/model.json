@@ -1,0 +1,69 @@
+{
+  "id": "p4-24m",
+  "game": "through_the_ages",
+  "players": 4,
+  "sha256": "4cfb2020e0d20166b90f54b34ad50794a04d1c6533ca7c76cea2c2f8c24a0dd7",
+  "observation_size": 4025,
+  "action_count": 479,
+  "checkpoint": "runs/through_the_ages/stage2/p4/ppo_best.zip",
+  "recipe": [
+    "open run: python -m bgai.rl.train --game through_the_ages --players 4 --out runs/through_the_ages/open --timesteps 40000000 --chunk 500000 --envs 16 --eval-workers 4 --greedy-games 8 --hours 9 (defaults: lr 2.5e-4, 10 epochs, 20 % frozen-opponent games)",
+    "open run plateaued at 11M (win against the checkpoint 3M older 0.273 at 10M and 0.278 at 11M; even play 0.25, band 0.043); best = 7M; the run went on to 16.5M before it was stopped",
+    "anchored run from the 7M checkpoint: python -m bgai.rl.train --game through_the_ages --players 4 --out runs/through_the_ages/anchored --start-from runs/through_the_ages/open/p4/ppo_7000000.zip --fixed runs/through_the_ages/open/p4/ppo_7000000.zip greedy --keep-every 2000000 --lr 1e-4 --epochs 4 --reference runs/through_the_ages/open/p4/ppo_7000000.zip --timesteps 30000000 --chunk 500000 --envs 16 --eval-workers 4 --greedy-games 8 --reference-deals 250 --hours 12 --patience 3 --min-gain 0.02 --min-steps 6000000 --rebase-at 0.8; never rebased; stopped at 13M, best = 10M (0.694 against the open 7M); that model won 0.5995 against greedy (bar 0.95)",
+    "extra stage from the anchored 10M best: python -m bgai.rl.train --game through_the_ages --players 4 --out runs/through_the_ages/stage2 --start-from runs/through_the_ages/anchored/p4/ppo_10000000.zip --fixed runs/through_the_ages/open/p4/ppo_7000000.zip greedy --keep-every 2000000 --lr 2.5e-5 --epochs 4 --frozen-share 0.4 --reference runs/through_the_ages/anchored/p4/ppo_10000000.zip --timesteps 30000000 --chunk 500000 --envs 16 --eval-workers 4 --greedy-games 8 --reference-deals 250 --hours 6 --patience 3 --min-gain 0.02 --min-steps 4000000 --rebase-at 0.56; never rebased; stopped at 10M, best = 7M (0.403 against the anchored 10M, even play 0.25) = this model"
+  ],
+  "logs": [
+    "train_log_1.csv",
+    "train_log_2.csv",
+    "train_log_3.csv"
+  ],
+  "code_commit": "657ed0779313743a93ac660dd1bd3599d052249f",
+  "steps": 24000000,
+  "games": 33268,
+  "hours": 8.1,
+  "hardware": "22-core CPU (16 game workers), RTX 4070 Laptop GPU for the update",
+  "notes": null,
+  "published": "2026-11-03",
+  "strength": {
+    "finished": false,
+    "games": [
+      {
+        "opponent": "greedy",
+        "label": "greedy baseline",
+        "games": 2000,
+        "win": 0.6435,
+        "win_se": 0.0107,
+        "margin": 20.6,
+        "margin_se": 1.51,
+        "score": 307.0,
+        "other": 286.4,
+        "required": ">=0.95"
+      },
+      {
+        "opponent": "runs/through_the_ages/open/p4/ppo_16500000.zip",
+        "label": "open-run checkpoint it never trained against",
+        "games": 3000,
+        "win": 0.666,
+        "win_se": 0.0086,
+        "margin": 29.24,
+        "margin_se": 1.36,
+        "score": 283.2,
+        "other": 254.0,
+        "required": "beats"
+      },
+      {
+        "opponent": "runs/through_the_ages/open/p4/ppo_7000000.zip",
+        "label": "open-run best (trained against)",
+        "games": 3000,
+        "win": 0.751,
+        "win_se": 0.0079,
+        "margin": 49.08,
+        "margin_se": 1.37,
+        "score": 291.8,
+        "other": 242.8,
+        "required": null
+      }
+    ],
+    "measured": "2026-11-03"
+  }
+}

@@ -1,9 +1,9 @@
 """All-seat self-play PPO for any game (bgai.game.GameSpec). Proven on Forest Shuffle (the 15M model).
 
 Every seat at a table plays the current policy and every one of its decisions is a training sample. In a share of
-games one seat is a frozen opponent from the pool (an older snapshot, or the random agent until it is retired); its
-moves are played but not learned. Pool entries: "random", "greedy" (played inside the game worker) or a
-checkpoint of any observation version of the game (an older model reads the prefix of the newer vector). Game workers run the engine and the encoder without torch; the main process does
+games one seat (`frozen_seats` seats, at most players - 1) is a frozen opponent from the pool (an older snapshot, or
+the random agent until it is retired); its moves are played but not learned. Pool entries: "random", "greedy" (played
+inside the game worker) or a checkpoint of any observation version of the game (an older model reads the prefix of the newer vector). Game workers run the engine and the encoder without torch; the main process does
 batched inference on CPU and the PPO update (GPU when available). Each seat's decisions form its own trajectory:
 reward at the end of the game, GAE over that seat's decisions only.
 """
@@ -90,7 +90,7 @@ def _worker(conn, slug: str, players: int, tables: int, seed: int, options, max_
 
 class AllSeatTrainer:
     def __init__(self, model, slug: str, players: int, workers: int = 16, tables: int = 4, reward: str = "mixed",
-                 seed: int = 0, frozen_share: float = 0.2, rollout: int = 16384, device: str = "cpu",
+                 seed: int = 0, frozen_share: float = 0.2, frozen_seats: int = 1, rollout: int = 16384, device: str = "cpu",
                  options: dict = None, max_steps: int = 3000, gamma: float = 0.995, lam: float = 0.95,
                  lr: float = 2.5e-4, epochs: int = 10, batch_size: int = 1024, clip: float = 0.2,
                  ent_coef: float = 0.01, vf_coef: float = 0.5, max_grad_norm: float = 0.5):
@@ -102,6 +102,7 @@ class AllSeatTrainer:
         self.optimizer = torch.optim.Adam(self.learner.parameters(), lr=lr, eps=1e-5)
         self.device = device
         self.players, self.reward, self.frozen_share, self.rollout = players, reward, frozen_share, rollout
+        self.frozen_seats = max(1, min(frozen_seats, players - 1))
         self.gamma, self.lam, self.epochs, self.batch_size = gamma, lam, epochs, batch_size
         self.clip, self.ent_coef, self.vf_coef, self.max_grad_norm = clip, ent_coef, vf_coef, max_grad_norm
         self.rng = random.Random(seed)
@@ -117,7 +118,7 @@ class AllSeatTrainer:
             self.procs.append(p)
         self.tables = tables
         self.n = workers * tables
-        self.frozen = [None] * self.n          # per table: (seat, agent) or None
+        self.frozen = [None] * self.n          # per table: (frozen seats, agent) or None
         self.traj = [{} for _ in range(self.n)]  # per table: seat -> {"obs","mask","act","logp","val"}
         self.games = 0
         self.scores: list = []
@@ -143,7 +144,9 @@ class AllSeatTrainer:
     def _new_game(self, t: int) -> None:
         self.traj[t] = {}
         if self.pool and self.rng.random() < self.frozen_share:
-            self.frozen[t] = (self.rng.randrange(self.players), self.rng.choice(self.pool))
+            k = self.frozen_seats
+            seats = (self.rng.randrange(self.players),) if k == 1 else tuple(self.rng.sample(range(self.players), k))
+            self.frozen[t] = (seats, self.rng.choice(self.pool))
         else:
             self.frozen[t] = None
 
@@ -183,7 +186,7 @@ class AllSeatTrainer:
         while n < self.rollout:
             obs, masks, seats, _ = self._view
             actions = np.zeros(self.n, dtype=np.int64)
-            learn = [t for t in range(self.n) if self.frozen[t] is None or self.frozen[t][0] != seats[t]]
+            learn = [t for t in range(self.n) if self.frozen[t] is None or seats[t] not in self.frozen[t][0]]
             if learn:
                 a, v, lp = self._forward(self.policy, obs[learn], masks[learn])
                 for j, t in enumerate(learn):

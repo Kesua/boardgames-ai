@@ -1,0 +1,8787 @@
+[
+ {
+  "id": 0,
+  "name": "Agriculture",
+  "age": "A",
+  "deck": "civil",
+  "kind": "farm",
+  "set": "base",
+  "starting": true,
+  "copies": null,
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": 2,
+  "stage_costs": null,
+  "yields": {
+   "food": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 1,
+  "name": "Bronze",
+  "age": "A",
+  "deck": "civil",
+  "kind": "mine",
+  "set": "base",
+  "starting": true,
+  "copies": null,
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": 2,
+  "stage_costs": null,
+  "yields": {
+   "resources": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 2,
+  "name": "Philosophy",
+  "age": "A",
+  "deck": "civil",
+  "kind": "lab",
+  "set": "base",
+  "starting": true,
+  "copies": null,
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": 3,
+  "stage_costs": null,
+  "yields": {
+   "science": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 3,
+  "name": "Religion",
+  "age": "A",
+  "deck": "civil",
+  "kind": "temple",
+  "set": "base",
+  "starting": true,
+  "copies": null,
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": 3,
+  "stage_costs": null,
+  "yields": {
+   "culture": 1,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 4,
+  "name": "Warriors",
+  "age": "A",
+  "deck": "civil",
+  "kind": "infantry",
+  "set": "base",
+  "starting": true,
+  "copies": null,
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": 2,
+  "stage_costs": null,
+  "yields": {
+   "strength": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 5,
+  "name": "Despotism",
+  "age": "A",
+  "deck": "civil",
+  "kind": "government",
+  "set": "base",
+  "starting": true,
+  "copies": null,
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 4,
+   "military_actions": 2
+  },
+  "urban_limit": 2,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 6,
+  "name": "Alexander the Great",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "alexander",
+   "strength_per_unit": 1,
+   "political_remove_gain": {
+    "yellow_tokens": 1
+   }
+  }
+ },
+ {
+  "id": 7,
+  "name": "Aristotle",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "aristotle",
+   "on_take_technology": {
+    "science": 1
+   }
+  }
+ },
+ {
+  "id": 8,
+  "name": "Ashoka",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "ashoka",
+   "two_colors": {
+    "resources": 1
+   },
+   "three_plus_colors": {
+    "food": 1,
+    "resources": 1
+   }
+  }
+ },
+ {
+  "id": 9,
+  "name": "Boudica",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "boudica",
+   "if_two_weakest": {
+    "military_build_resources": 2
+   },
+   "otherwise_choice": [
+    {
+     "food": 1
+    },
+    {
+     "resources": 1
+    },
+    {
+     "science": 1
+    }
+   ]
+  }
+ },
+ {
+  "id": 10,
+  "name": "Cleopatra",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "cleopatra",
+   "wonder_or_urban_resources_per_turn": 1
+  }
+ },
+ {
+  "id": 11,
+  "name": "Confucius",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "confucius",
+   "on_prepare_event": {
+    "science": 1
+   },
+   "on_leave": {
+    "science": 1
+   },
+   "any_military_card_as_event": true
+  }
+ },
+ {
+  "id": 12,
+  "name": "Hammurabi",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "hammurabi",
+   "military_as_civil_per_turn": 1,
+   "leader_take_discount": 0
+  }
+ },
+ {
+  "id": 13,
+  "name": "Hippocrates",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "hippocrates",
+   "reminders_per_turn": 1,
+   "max_reminders": 3,
+   "yellow_tokens_per_age_end": 1,
+   "age_ends": [
+    "I",
+    "II",
+    "III"
+   ],
+   "reminders_stay_after_leaving": true
+  }
+ },
+ {
+  "id": 14,
+  "name": "Homer",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "homer",
+   "military_build_resources_per_turn": 1,
+   "wonder_happy_on_replace": 1,
+   "tuck_forfeits_civil_action_back": true
+  }
+ },
+ {
+  "id": 15,
+  "name": "Julius Caesar",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 1,
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "julius_caesar",
+   "political_actions_per_turn": 2
+  }
+ },
+ {
+  "id": 16,
+  "name": "Moses",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "moses",
+   "population_food_discount": 1
+  }
+ },
+ {
+  "id": 17,
+  "name": "Sun Tzu",
+  "age": "A",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "sun_tzu",
+   "extra_military_draw": 2,
+   "tactic_bonus_on_leave": 1,
+   "exclusive_tactic_stays": true
+  }
+ },
+ {
+  "id": 18,
+  "name": "Acropolis",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   3
+  ],
+  "yields": {
+   "strength": 1,
+   "culture": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "acropolis",
+   "urban_limit": 1,
+   "peaceful_government_discount_per_urban": 1
+  }
+ },
+ {
+  "id": 19,
+  "name": "Colosseum",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   1,
+   3
+  ],
+  "yields": {
+   "happy": 1,
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "colosseum",
+   "kinds": [
+    "infantry",
+    "cavalry"
+   ],
+   "science_discount_per_level": 1,
+   "on_develop_culture": 2
+  }
+ },
+ {
+  "id": 20,
+  "name": "Colossus",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   3
+  ],
+  "yields": {
+   "strength": 2,
+   "colonization": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "colossus",
+   "military_cards_at_age_start": 3,
+   "ages": [
+    "II",
+    "III"
+   ]
+  }
+ },
+ {
+  "id": 21,
+  "name": "Hanging Gardens",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   2,
+   2
+  ],
+  "yields": {
+   "culture": 1,
+   "happy": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "on_complete_gain",
+   "gain": {
+    "food": 2
+   }
+  }
+ },
+ {
+  "id": 22,
+  "name": "Library of Alexandria",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   1,
+   4,
+   1
+  ],
+  "yields": {
+   "science": 1,
+   "culture": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "hand_limits",
+   "civil": 1,
+   "military": 1
+  }
+ },
+ {
+  "id": 23,
+  "name": "Pyramids",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   2,
+   1
+  ],
+  "yields": {
+   "civil_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 24,
+  "name": "Roman Roads",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   1,
+   1,
+   1
+  ],
+  "yields": {
+   "yellow_tokens": 1,
+   "blue_tokens": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "roman_roads",
+   "by_age": {
+    "I": {
+     "resource_production": 1
+    },
+    "II": {
+     "science": 1
+    },
+    "III": {
+     "culture": 2
+    },
+    "IV": {
+     "culture": 2
+    }
+   }
+  }
+ },
+ {
+  "id": 25,
+  "name": "Stonehenge",
+  "age": "A",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   1,
+   2,
+   2,
+   1
+  ],
+  "yields": {
+   "happy": 1,
+   "culture": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "stonehenge"
+  }
+ },
+ {
+  "id": 26,
+  "name": "Cultural Heritage",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain",
+   "gain": {
+    "science": 1,
+    "culture": 4
+   }
+  }
+ },
+ {
+  "id": 27,
+  "name": "Engineering Genius",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "wonder_stage",
+   "discount": 2
+  }
+ },
+ {
+  "id": 28,
+  "name": "Frugality",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "increase_population",
+   "then_gain": {
+    "food": 1
+   }
+  }
+ },
+ {
+  "id": 29,
+  "name": "Patriotism",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "military_boost",
+   "resources": 1,
+   "military_actions": 1
+  }
+ },
+ {
+  "id": 30,
+  "name": "Rich Land",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "farm",
+    "mine"
+   ],
+   "discount": 1
+  }
+ },
+ {
+  "id": 31,
+  "name": "Stockpile",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain",
+   "gain": {
+    "resources": 1,
+    "food": 1
+   }
+  }
+ },
+ {
+  "id": 32,
+  "name": "Urban Growth",
+  "age": "A",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "urban"
+   ],
+   "discount": 1
+  }
+ },
+ {
+  "id": 33,
+  "name": "Irrigation",
+  "age": "I",
+  "deck": "civil",
+  "kind": "farm",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 3,
+  "revolution_cost": null,
+  "resource_cost": 4,
+  "stage_costs": null,
+  "yields": {
+   "food": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 34,
+  "name": "Iron",
+  "age": "I",
+  "deck": "civil",
+  "kind": "mine",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 3
+  },
+  "science_cost": 5,
+  "revolution_cost": null,
+  "resource_cost": 5,
+  "stage_costs": null,
+  "yields": {
+   "resources": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 35,
+  "name": "Alchemy",
+  "age": "I",
+  "deck": "civil",
+  "kind": "lab",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 3
+  },
+  "science_cost": 4,
+  "revolution_cost": null,
+  "resource_cost": 6,
+  "stage_costs": null,
+  "yields": {
+   "science": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 36,
+  "name": "Theology",
+  "age": "I",
+  "deck": "civil",
+  "kind": "temple",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 2,
+  "revolution_cost": null,
+  "resource_cost": 5,
+  "stage_costs": null,
+  "yields": {
+   "culture": 1,
+   "happy": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 37,
+  "name": "Printing Press",
+  "age": "I",
+  "deck": "civil",
+  "kind": "library",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 3,
+  "revolution_cost": null,
+  "resource_cost": 3,
+  "stage_costs": null,
+  "yields": {
+   "science": 1,
+   "culture": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 38,
+  "name": "Drama",
+  "age": "I",
+  "deck": "civil",
+  "kind": "theater",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 3,
+  "revolution_cost": null,
+  "resource_cost": 4,
+  "stage_costs": null,
+  "yields": {
+   "culture": 2,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 39,
+  "name": "Bread and Circuses",
+  "age": "I",
+  "deck": "civil",
+  "kind": "arena",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 3,
+  "revolution_cost": null,
+  "resource_cost": 3,
+  "stage_costs": null,
+  "yields": {
+   "strength": 1,
+   "happy": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 40,
+  "name": "Swordsmen",
+  "age": "I",
+  "deck": "civil",
+  "kind": "infantry",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 4,
+  "revolution_cost": null,
+  "resource_cost": 3,
+  "stage_costs": null,
+  "yields": {
+   "strength": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 41,
+  "name": "Knights",
+  "age": "I",
+  "deck": "civil",
+  "kind": "cavalry",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 3
+  },
+  "science_cost": 5,
+  "revolution_cost": null,
+  "resource_cost": 3,
+  "stage_costs": null,
+  "yields": {
+   "strength": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 42,
+  "name": "Monarchy",
+  "age": "I",
+  "deck": "civil",
+  "kind": "government",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 8,
+  "revolution_cost": 2,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 5,
+   "military_actions": 3
+  },
+  "urban_limit": 3,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 43,
+  "name": "Theocracy",
+  "age": "I",
+  "deck": "civil",
+  "kind": "government",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 6,
+  "revolution_cost": 1,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "culture": 1,
+   "strength": 1,
+   "civil_actions": 4,
+   "military_actions": 3,
+   "happy": 1
+  },
+  "urban_limit": 3,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 44,
+  "name": "Code of Laws",
+  "age": "I",
+  "deck": "civil",
+  "kind": "special_civil",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 45,
+  "name": "Warfare",
+  "age": "I",
+  "deck": "civil",
+  "kind": "special_military",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 5,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 1,
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 46,
+  "name": "Cartography",
+  "age": "I",
+  "deck": "civil",
+  "kind": "special_colonization",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 4,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 1,
+   "colonization": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 47,
+  "name": "Masonry",
+  "age": "I",
+  "deck": "civil",
+  "kind": "special_construction",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 3,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "construction",
+   "urban_discount_by_age": {
+    "I": 1,
+    "II": 1,
+    "III": 1
+   },
+   "wonder_stages_per_action": 2
+  }
+ },
+ {
+  "id": 48,
+  "name": "Christopher Columbus",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "columbus"
+  }
+ },
+ {
+  "id": 49,
+  "name": "Eleanor of Aquitaine",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "eleanor",
+   "on_prepare_event": {
+    "military_cards": 2
+   },
+   "culture_per_excess_discard": 1,
+   "regain_on_replace": 3
+  }
+ },
+ {
+  "id": 50,
+  "name": "Frederick Barbarossa",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "barbarossa",
+   "military_actions": 1,
+   "food_discount": 1,
+   "resource_discount": 1
+  }
+ },
+ {
+  "id": 51,
+  "name": "Genghis Khan",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "genghis_khan",
+   "infantry_may_count_as_cavalry_for_tactics": true,
+   "end_turn_culture_if_top2_strength": 3,
+   "wins_ties": true
+  }
+ },
+ {
+  "id": 52,
+  "name": "Isabella of Castile",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "resources": 1,
+   "blue_tokens": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "isabella",
+   "colonization_purchases": [
+    {
+     "resources": 1,
+     "colonization": 1
+    },
+    {
+     "resources": 3,
+     "colonization": 2
+    },
+    {
+     "resources": 6,
+     "colonization": 3
+    }
+   ]
+  }
+ },
+ {
+  "id": 53,
+  "name": "Jan Žižka",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "zizka",
+   "farms_count_as": [
+    "infantry",
+    "artillery"
+   ],
+   "farm_unit_age": "A",
+   "culture_per_army": 1
+  }
+ },
+ {
+  "id": 54,
+  "name": "Joan of Arc",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "culture": 1,
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "joan_of_arc",
+   "strength_per_happy_face_on_temples_and_government": 1,
+   "peek_current_event": true
+  }
+ },
+ {
+  "id": 55,
+  "name": "Johannes Gutenberg",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gutenberg",
+   "extra_civil_action_for": [
+    "lab",
+    "library"
+   ],
+   "discount": 1,
+   "culture_per_use": 2
+  }
+ },
+ {
+  "id": 56,
+  "name": "Leonardo da Vinci",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "best_lab_or_library_bonus_science",
+   "on_develop": {
+    "resources": 1
+   }
+  }
+ },
+ {
+  "id": 57,
+  "name": "Michelangelo",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "michelangelo",
+   "culture_per_happy_on": [
+    "urban",
+    "wonder"
+   ],
+   "no_wonder_surcharge": true,
+   "on_take_wonder": {
+    "resources": 1
+   }
+  }
+ },
+ {
+  "id": 58,
+  "name": "Nostradamus",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "nostradamus",
+   "on_prepare_event": {
+    "culture": 3
+   },
+   "see_prepared_events": true,
+   "strength_when_weakest_checked_or_defending_aggression": 3
+  }
+ },
+ {
+  "id": 59,
+  "name": "Saladin",
+  "age": "I",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "saladin",
+   "at": "end_of_turn",
+   "choice_each_turn": [
+    {
+     "strength": 2
+    },
+    {
+     "civil_actions": 1
+    }
+   ]
+  }
+ },
+ {
+  "id": 60,
+  "name": "Forbidden City",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   1,
+   3,
+   3,
+   1
+  ],
+  "yields": {
+   "civil_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "forbidden_city",
+   "ignore_discontent": 2
+  }
+ },
+ {
+  "id": 61,
+  "name": "Great Wall",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   2,
+   3,
+   2
+  ],
+  "yields": {
+   "culture": 1,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "strength_per_unit_kind",
+   "kinds": [
+    "infantry",
+    "artillery"
+   ],
+   "per_unit": 1
+  }
+ },
+ {
+  "id": 62,
+  "name": "Himeji Castle",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   5
+  ],
+  "yields": {
+   "strength": 2,
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "himeji_castle",
+   "attacker_culture": 3,
+   "defender_strength": 3
+  }
+ },
+ {
+  "id": 63,
+  "name": "Machu Picchu",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   3,
+   4
+  ],
+  "yields": {
+   "blue_tokens": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "machu_picchu",
+   "ages": [
+    "A",
+    "I"
+   ],
+   "extra_tokens": 1
+  }
+ },
+ {
+  "id": 64,
+  "name": "Silk Road",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   1,
+   1,
+   1,
+   2
+  ],
+  "yields": {
+   "culture": 2,
+   "science": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "silk_road",
+   "first_action_card_bonus": 1,
+   "active_from_first_stage": true
+  }
+ },
+ {
+  "id": 65,
+  "name": "St. Peter's Basilica",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   1,
+   6,
+   1
+  ],
+  "yields": {
+   "culture": 2,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "st_peters_basilica",
+   "extra_happy": 1
+  }
+ },
+ {
+  "id": 66,
+  "name": "Taj Mahal",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   4,
+   2
+  ],
+  "yields": {
+   "culture": 3,
+   "blue_tokens": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "taj_mahal",
+   "take_discount_after_leader_replace": 2
+  }
+ },
+ {
+  "id": 67,
+  "name": "Universitas Carolina",
+  "age": "I",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   3,
+   3
+  ],
+  "yields": {
+   "science": 2,
+   "culture": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 68,
+  "name": "Breakthrough",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "develop",
+   "then_gain": {
+    "science": 2
+   }
+  }
+ },
+ {
+  "id": 69,
+  "name": "Cultural Heritage",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain",
+   "gain": {
+    "science": 2,
+    "culture": 2
+   }
+  }
+ },
+ {
+  "id": 70,
+  "name": "Engineering Genius",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "wonder_stage",
+   "discount": 3
+  }
+ },
+ {
+  "id": 71,
+  "name": "Frugality",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "increase_population",
+   "then_gain": {
+    "food": 2
+   }
+  }
+ },
+ {
+  "id": 72,
+  "name": "Patriotism",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "military_boost",
+   "resources": 2,
+   "military_actions": 1
+  }
+ },
+ {
+  "id": 73,
+  "name": "Reserves",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain_choice",
+   "options": [
+    {
+     "resources": 2
+    },
+    {
+     "food": 2
+    }
+   ]
+  }
+ },
+ {
+  "id": 74,
+  "name": "Rich Land",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "farm",
+    "mine"
+   ],
+   "discount": 2
+  }
+ },
+ {
+  "id": 75,
+  "name": "Urban Growth",
+  "age": "I",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "urban"
+   ],
+   "discount": 2
+  }
+ },
+ {
+  "id": 76,
+  "name": "Selective Breeding",
+  "age": "II",
+  "deck": "civil",
+  "kind": "farm",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 3
+  },
+  "science_cost": 5,
+  "revolution_cost": null,
+  "resource_cost": 6,
+  "stage_costs": null,
+  "yields": {
+   "food": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 77,
+  "name": "Coal",
+  "age": "II",
+  "deck": "civil",
+  "kind": "mine",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 7,
+  "revolution_cost": null,
+  "resource_cost": 8,
+  "stage_costs": null,
+  "yields": {
+   "resources": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 78,
+  "name": "Scientific Method",
+  "age": "II",
+  "deck": "civil",
+  "kind": "lab",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": 8,
+  "stage_costs": null,
+  "yields": {
+   "science": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 79,
+  "name": "Organized Religion",
+  "age": "II",
+  "deck": "civil",
+  "kind": "temple",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 4,
+  "revolution_cost": null,
+  "resource_cost": 7,
+  "stage_costs": null,
+  "yields": {
+   "culture": 1,
+   "happy": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 80,
+  "name": "Journalism",
+  "age": "II",
+  "deck": "civil",
+  "kind": "library",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": 8,
+  "stage_costs": null,
+  "yields": {
+   "science": 2,
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 81,
+  "name": "Opera",
+  "age": "II",
+  "deck": "civil",
+  "kind": "theater",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 7,
+  "revolution_cost": null,
+  "resource_cost": 8,
+  "stage_costs": null,
+  "yields": {
+   "culture": 3,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 82,
+  "name": "Team Sports",
+  "age": "II",
+  "deck": "civil",
+  "kind": "arena",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 5,
+  "revolution_cost": null,
+  "resource_cost": 5,
+  "stage_costs": null,
+  "yields": {
+   "strength": 2,
+   "happy": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 83,
+  "name": "Riflemen",
+  "age": "II",
+  "deck": "civil",
+  "kind": "infantry",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": 5,
+  "stage_costs": null,
+  "yields": {
+   "strength": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 84,
+  "name": "Cavalrymen",
+  "age": "II",
+  "deck": "civil",
+  "kind": "cavalry",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": 5,
+  "stage_costs": null,
+  "yields": {
+   "strength": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 85,
+  "name": "Cannon",
+  "age": "II",
+  "deck": "civil",
+  "kind": "artillery",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 3
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": 5,
+  "stage_costs": null,
+  "yields": {
+   "strength": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 86,
+  "name": "Constitutional Monarchy",
+  "age": "II",
+  "deck": "civil",
+  "kind": "government",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 12,
+  "revolution_cost": 6,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 6,
+   "military_actions": 4
+  },
+  "urban_limit": 3,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 87,
+  "name": "Republic",
+  "age": "II",
+  "deck": "civil",
+  "kind": "government",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 11,
+  "revolution_cost": 2,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 7,
+   "military_actions": 2
+  },
+  "urban_limit": 3,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 88,
+  "name": "Justice System",
+  "age": "II",
+  "deck": "civil",
+  "kind": "special_civil",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 7,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 1,
+   "blue_tokens": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 89,
+  "name": "Strategy",
+  "age": "II",
+  "deck": "civil",
+  "kind": "special_military",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 8,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 3,
+   "military_actions": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 90,
+  "name": "Navigation",
+  "age": "II",
+  "deck": "civil",
+  "kind": "special_colonization",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 2,
+   "colonization": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 91,
+  "name": "Architecture",
+  "age": "II",
+  "deck": "civil",
+  "kind": "special_construction",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 6,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "construction",
+   "urban_discount_by_age": {
+    "I": 1,
+    "II": 2,
+    "III": 2
+   },
+   "wonder_stages_per_action": 3
+  }
+ },
+ {
+  "id": 92,
+  "name": "Alfred Nobel",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 2,
+   "science": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "nobel",
+   "prize_starts_when_replaced": true,
+   "no_civil_action_back": true,
+   "prize_culture": 4,
+   "prize_min_developments": 2,
+   "prize_once_per_turn": true
+  }
+ },
+ {
+  "id": 93,
+  "name": "Antoni Gaudí",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gaudi",
+   "science_discount_per_other_urban_type": 1,
+   "best_urban_each_type_culture": 1
+  }
+ },
+ {
+  "id": 94,
+  "name": "Catherine the Great",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "military_actions": 1,
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "catherine",
+   "once_per_game": true,
+   "political_action": true,
+   "weaker_lose_yellow": 1,
+   "gain_yellow": 1,
+   "gain_needs_lost": {
+    "2": 1,
+    "3": 1,
+    "4": 2
+   }
+  }
+ },
+ {
+  "id": 95,
+  "name": "Charles Darwin",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "darwin",
+   "temple_happy_change": -1,
+   "lab_library_culture": 1,
+   "technology_take_discount": 1,
+   "min_take_cost": 1
+  }
+ },
+ {
+  "id": 96,
+  "name": "Isaac Newton",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "best_lab_or_library_bonus_science",
+   "on_develop_regain_civil_action": 1
+  }
+ },
+ {
+  "id": 97,
+  "name": "James Cook",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "james_cook",
+   "colonize_discard_max": 2,
+   "colonize_per_discard": 1,
+   "first_colony_culture": 2,
+   "later_colony_culture": 1
+  }
+ },
+ {
+  "id": 98,
+  "name": "James Watt",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "watt",
+   "farm_mine_resource_and_science_discount_by_age": {
+    "II": 2,
+    "III": 4
+   },
+   "on_leave_culture": "highest_farm_or_mine_production"
+  }
+ },
+ {
+  "id": 99,
+  "name": "Johann Sebastian Bach",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "bach",
+   "theater_culture": 1,
+   "theater_science_discount": 2,
+   "upgrade_to_theater_once_per_turn": true,
+   "upgrade_civil_actions": 1
+  }
+ },
+ {
+  "id": 100,
+  "name": "Maria Theresa",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "maria_theresa",
+   "per_population": {
+    "science": 1,
+    "culture": 1
+   },
+   "military_build_resources": 1,
+   "military_build_resources_if_two_weakest": 3
+  }
+ },
+ {
+  "id": 101,
+  "name": "Maximilien Robespierre",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "robespierre",
+   "revolution_culture": 3,
+   "revolution_spends_military_actions": true
+  }
+ },
+ {
+  "id": 102,
+  "name": "Napoleon Bonaparte",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "military_actions": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "napoleon",
+   "strength_per_unit_type": 2
+  }
+ },
+ {
+  "id": 103,
+  "name": "William Shakespeare",
+  "age": "II",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "shakespeare",
+   "requires_other_kind": true,
+   "theater_library_discount_resources": 2,
+   "theater_library_discount_science": 3,
+   "culture_per_pair": 2
+  }
+ },
+ {
+  "id": 104,
+  "name": "Eiffel Tower",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   7,
+   3
+  ],
+  "yields": {
+   "culture": 4,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 105,
+  "name": "Harvard College",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   3,
+   5
+  ],
+  "yields": {
+   "science": 3,
+   "culture": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "harvard",
+   "same_turn_action_cards_per_turn": 1
+  }
+ },
+ {
+  "id": 106,
+  "name": "Kremlin",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   4,
+   4
+  ],
+  "yields": {
+   "culture": 2,
+   "civil_actions": 1,
+   "military_actions": 1,
+   "unhappy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 107,
+  "name": "Louvre Museum",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   5,
+   4
+  ],
+  "yields": {
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "louvre",
+   "culture_per_token": 1,
+   "resources_per_token": 2
+  }
+ },
+ {
+  "id": 108,
+  "name": "Ocean Liner Service",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   1,
+   1,
+   4
+  ],
+  "yields": {
+   "yellow_tokens": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "free_increase_population_per_turn",
+   "population": 1
+  }
+ },
+ {
+  "id": 109,
+  "name": "Statue of Liberty",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   7,
+   5
+  ],
+  "yields": {
+   "yellow_tokens": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "statue_of_liberty",
+   "government_culture_per_level": 1
+  }
+ },
+ {
+  "id": 110,
+  "name": "Suez Canal",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   3,
+   2,
+   2
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "suez_canal",
+   "colonize_on_complete": true,
+   "resource_production_per_colony": 1
+  }
+ },
+ {
+  "id": 111,
+  "name": "Transcontinental Railroad",
+  "age": "II",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   3,
+   3,
+   3
+  ],
+  "yields": {
+   "strength": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "best_mine_extra_token",
+   "extra_tokens": 1
+  }
+ },
+ {
+  "id": 112,
+  "name": "Breakthrough",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "develop",
+   "then_gain": {
+    "science": 3
+   }
+  }
+ },
+ {
+  "id": 113,
+  "name": "Efficient Upgrade",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "upgrade",
+   "targets": [
+    "farm",
+    "mine",
+    "urban"
+   ],
+   "discount": 3
+  }
+ },
+ {
+  "id": 114,
+  "name": "Engineering Genius",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "wonder_stage",
+   "discount": 4
+  }
+ },
+ {
+  "id": 115,
+  "name": "Frugality",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "increase_population",
+   "then_gain": {
+    "food": 3
+   }
+  }
+ },
+ {
+  "id": 116,
+  "name": "Patriotism",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "military_boost",
+   "resources": 3,
+   "military_actions": 1
+  }
+ },
+ {
+  "id": 117,
+  "name": "Reserves",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain_choice",
+   "options": [
+    {
+     "resources": 3
+    },
+    {
+     "food": 3
+    }
+   ]
+  }
+ },
+ {
+  "id": 118,
+  "name": "Revolutionary Idea",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain",
+   "gain": {
+    "science": 4
+   }
+  }
+ },
+ {
+  "id": 119,
+  "name": "Rich Land",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "farm",
+    "mine"
+   ],
+   "discount": 3
+  }
+ },
+ {
+  "id": 120,
+  "name": "Urban Growth",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "urban"
+   ],
+   "discount": 3
+  }
+ },
+ {
+  "id": 121,
+  "name": "Wave of Nationalism",
+  "age": "II",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "military_resources_per_stronger",
+   "per_player": {
+    "2": 6,
+    "3": 3,
+    "4": 2
+   }
+  }
+ },
+ {
+  "id": 122,
+  "name": "Mechanized Agriculture",
+  "age": "III",
+  "deck": "civil",
+  "kind": "farm",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 7,
+  "revolution_cost": null,
+  "resource_cost": 8,
+  "stage_costs": null,
+  "yields": {
+   "food": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 123,
+  "name": "Oil",
+  "age": "III",
+  "deck": "civil",
+  "kind": "mine",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 9,
+  "revolution_cost": null,
+  "resource_cost": 11,
+  "stage_costs": null,
+  "yields": {
+   "resources": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 124,
+  "name": "Computers",
+  "age": "III",
+  "deck": "civil",
+  "kind": "lab",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 8,
+  "revolution_cost": null,
+  "resource_cost": 11,
+  "stage_costs": null,
+  "yields": {
+   "science": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 125,
+  "name": "Multimedia",
+  "age": "III",
+  "deck": "civil",
+  "kind": "library",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 9,
+  "revolution_cost": null,
+  "resource_cost": 11,
+  "stage_costs": null,
+  "yields": {
+   "science": 3,
+   "culture": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 126,
+  "name": "Movies",
+  "age": "III",
+  "deck": "civil",
+  "kind": "theater",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 10,
+  "revolution_cost": null,
+  "resource_cost": 11,
+  "stage_costs": null,
+  "yields": {
+   "culture": 4,
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 127,
+  "name": "Professional Sports",
+  "age": "III",
+  "deck": "civil",
+  "kind": "arena",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 7,
+  "revolution_cost": null,
+  "resource_cost": 8,
+  "stage_costs": null,
+  "yields": {
+   "happy": 4,
+   "strength": 4
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 128,
+  "name": "Modern Infantry",
+  "age": "III",
+  "deck": "civil",
+  "kind": "infantry",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 10,
+  "revolution_cost": null,
+  "resource_cost": 7,
+  "stage_costs": null,
+  "yields": {
+   "strength": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 129,
+  "name": "Tanks",
+  "age": "III",
+  "deck": "civil",
+  "kind": "cavalry",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 9,
+  "revolution_cost": null,
+  "resource_cost": 7,
+  "stage_costs": null,
+  "yields": {
+   "strength": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 130,
+  "name": "Rockets",
+  "age": "III",
+  "deck": "civil",
+  "kind": "artillery",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 8,
+  "revolution_cost": null,
+  "resource_cost": 7,
+  "stage_costs": null,
+  "yields": {
+   "strength": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 131,
+  "name": "Air Forces",
+  "age": "III",
+  "deck": "civil",
+  "kind": "air_force",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 3
+  },
+  "science_cost": 12,
+  "revolution_cost": null,
+  "resource_cost": 7,
+  "stage_costs": null,
+  "yields": {
+   "strength": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "air_force"
+  }
+ },
+ {
+  "id": 132,
+  "name": "Communism",
+  "age": "III",
+  "deck": "civil",
+  "kind": "government",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 18,
+  "revolution_cost": 1,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 7,
+   "military_actions": 5,
+   "unhappy": 1,
+   "resources": 1
+  },
+  "urban_limit": 4,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 133,
+  "name": "Democracy",
+  "age": "III",
+  "deck": "civil",
+  "kind": "government",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 17,
+  "revolution_cost": 9,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "culture": 3,
+   "civil_actions": 7,
+   "military_actions": 3
+  },
+  "urban_limit": 4,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 134,
+  "name": "Fundamentalism",
+  "age": "III",
+  "deck": "civil",
+  "kind": "government",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 16,
+  "revolution_cost": 5,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 6,
+   "military_actions": 5,
+   "strength": 6,
+   "science": -2
+  },
+  "urban_limit": 4,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 135,
+  "name": "Civil Service",
+  "age": "III",
+  "deck": "civil",
+  "kind": "special_civil",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 10,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 2,
+   "blue_tokens": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 136,
+  "name": "Military Theory",
+  "age": "III",
+  "deck": "civil",
+  "kind": "special_military",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": 11,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "military_actions": 3,
+   "strength": 5
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 137,
+  "name": "Satellites",
+  "age": "III",
+  "deck": "civil",
+  "kind": "special_colonization",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 8,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 3,
+   "colonization": 4
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 138,
+  "name": "Engineering",
+  "age": "III",
+  "deck": "civil",
+  "kind": "special_construction",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": 9,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "construction",
+   "urban_discount_by_age": {
+    "I": 1,
+    "II": 2,
+    "III": 3
+   },
+   "wonder_stages_per_action": 4
+  }
+ },
+ {
+  "id": 139,
+  "name": "Albert Einstein",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "best_lab_or_library_bonus_science",
+   "on_develop": {
+    "culture": 3
+   }
+  }
+ },
+ {
+  "id": 140,
+  "name": "Bill Gates",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "bill_gates",
+   "lab_resources_per_level": 1,
+   "culture_for_that_production_on_leave_or_game_end": true
+  }
+ },
+ {
+  "id": 141,
+  "name": "Charlie Chaplin",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "happy": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "chaplin",
+   "best_theater_culture_multiplier": 2
+  }
+ },
+ {
+  "id": 142,
+  "name": "Ian Fleming",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "ian_fleming",
+   "best_library_and_theater_culture_per_level": 1,
+   "peek_military_hand_at_politics_start": true,
+   "not_same_player_twice_in_a_row": true
+  }
+ },
+ {
+  "id": 143,
+  "name": "Mahatma Gandhi",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gandhi",
+   "cannot_attack": true,
+   "attack_extra_military_actions": 3
+  }
+ },
+ {
+  "id": 144,
+  "name": "Marie Curie Sklodowska",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "marie_curie"
+  }
+ },
+ {
+  "id": 145,
+  "name": "Marlene Dietrich",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "marlene_dietrich",
+   "top_theaters": {
+    "culture": 1,
+    "happy": 1
+   },
+   "one_unit_counts_twice_for_tactics": [
+    "infantry",
+    "cavalry",
+    "artillery"
+   ]
+  }
+ },
+ {
+  "id": 146,
+  "name": "Nelson Mandela",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 1,
+   "culture": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "mandela",
+   "take_surcharge_without_discontent": 3,
+   "culture_per_surplus_happy": 1
+  }
+ },
+ {
+  "id": 147,
+  "name": "Pierre de Coubertin",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "coubertin",
+   "arena_culture": 2,
+   "olympics_once_per_game": true,
+   "olympics_before_political_action": true,
+   "olympics_culture": 8,
+   "olympics_attack_penalty": 8
+  }
+ },
+ {
+  "id": 148,
+  "name": "Sid Meier",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "sid_meier",
+   "lab_culture_per_level": 1,
+   "lab_science_change": -1
+  }
+ },
+ {
+  "id": 149,
+  "name": "Steve Jobs",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "steve_jobs",
+   "best_lab_happy_per_level": 1,
+   "on_develop_may_pay": {
+    "resources": 1
+   },
+   "then_gain": {
+    "culture": 4
+   }
+  }
+ },
+ {
+  "id": 150,
+  "name": "Winston Churchill",
+  "age": "III",
+  "deck": "civil",
+  "kind": "leader",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "churchill",
+   "culture": 3,
+   "military_science": 3,
+   "military_resources": 3
+  }
+ },
+ {
+  "id": 151,
+  "name": "Empire State Building",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   17
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "empire_state_building",
+   "on_complete": true,
+   "culture_per_category": {
+    "2": 7,
+    "3": 8,
+    "4": 9
+   }
+  }
+ },
+ {
+  "id": 152,
+  "name": "Fast Food Chains",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   4,
+   4,
+   4
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "fast_food_chains",
+   "on_complete": true,
+   "culture_per_military_or_urban_worker": 1,
+   "culture_per_farmer_or_miner": 2
+  }
+ },
+ {
+  "id": 153,
+  "name": "First Space Flight",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   1,
+   2,
+   4,
+   9
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "first_space_flight",
+   "on_complete": true,
+   "culture_per_technology_level": 1
+  }
+ },
+ {
+  "id": 154,
+  "name": "Hollywood",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   5,
+   6,
+   5
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "hollywood",
+   "on_complete": true,
+   "of": [
+    "theater",
+    "library"
+   ],
+   "culture_multiplier": 2
+  }
+ },
+ {
+  "id": 155,
+  "name": "International Red Cross",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   3,
+   3,
+   3,
+   3,
+   3
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "red_cross",
+   "stage_paid_in": "food",
+   "culture_per_stage": 6,
+   "others_stage_cost": {
+    "civil_actions": 1,
+    "food": 3
+   },
+   "others_stages_per_turn": 1,
+   "token_from_owner_bank": true,
+   "on_complete_culture_per_colony_in_play": 1
+  }
+ },
+ {
+  "id": 156,
+  "name": "Internet",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   2,
+   3,
+   4,
+   3,
+   2
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "internet",
+   "on_complete": true
+  }
+ },
+ {
+  "id": 157,
+  "name": "Manhattan Project",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   4,
+   6,
+   4
+  ],
+  "yields": {
+   "strength": 13
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "manhattan_project",
+   "on_complete": true
+  }
+ },
+ {
+  "id": 158,
+  "name": "United Nations",
+  "age": "III",
+  "deck": "civil",
+  "kind": "wonder",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": [
+   8,
+   8
+  ],
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "united_nations",
+   "on_complete": true,
+   "culture_multiplier": 4,
+   "max_of": [
+    "wonders_including_itself",
+    "special_technologies",
+    "urban_types"
+   ],
+   "may_evaluate_age_iii_event_from_hand": true
+  }
+ },
+ {
+  "id": 159,
+  "name": "Efficient Upgrade",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "upgrade",
+   "targets": [
+    "farm",
+    "mine",
+    "urban"
+   ],
+   "discount": 4
+  }
+ },
+ {
+  "id": 160,
+  "name": "Endowment for the Arts",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_more_cultured",
+   "per_player": {
+    "2": 6,
+    "3": 3,
+    "4": 2
+   }
+  }
+ },
+ {
+  "id": 161,
+  "name": "Engineering Genius",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "wonder_stage",
+   "discount": 5
+  }
+ },
+ {
+  "id": 162,
+  "name": "Military Build-Up",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "military_resources_per_stronger",
+   "per_player": {
+    "2": 8,
+    "3": 5,
+    "4": 3
+   }
+  }
+ },
+ {
+  "id": 163,
+  "name": "Patriotism",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "military_boost",
+   "resources": 4,
+   "military_actions": 1
+  }
+ },
+ {
+  "id": 164,
+  "name": "Reserves",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 3,
+   "3": 3,
+   "4": 3
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain_choice",
+   "options": [
+    {
+     "resources": 4
+    },
+    {
+     "food": 4
+    }
+   ]
+  }
+ },
+ {
+  "id": 165,
+  "name": "Revolutionary Idea",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 3,
+   "4": 3
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "gain",
+   "gain": {
+    "science": 6
+   }
+  }
+ },
+ {
+  "id": 166,
+  "name": "Urban Growth",
+  "age": "III",
+  "deck": "civil",
+  "kind": "action",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "build_or_upgrade",
+   "targets": [
+    "urban"
+   ],
+   "discount": 4
+  }
+ },
+ {
+  "id": 167,
+  "name": "Development of Agriculture",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "food": 2
+   }
+  }
+ },
+ {
+  "id": 168,
+  "name": "Development of Civilization",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "development_of_civilization",
+   "discount": 1
+  }
+ },
+ {
+  "id": 169,
+  "name": "Development of Crafts",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "resources": 2
+   }
+  }
+ },
+ {
+  "id": 170,
+  "name": "Development of Markets",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_produce_choice",
+   "options": [
+    {
+     "food": 2
+    },
+    {
+     "resources": 2
+    }
+   ]
+  }
+ },
+ {
+  "id": 171,
+  "name": "Development of Planning",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "development_of_planning",
+   "draw_unused_age_a": 3
+  }
+ },
+ {
+  "id": 172,
+  "name": "Development of Politics",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "military_cards": 3
+   }
+  }
+ },
+ {
+  "id": 173,
+  "name": "Development of Religion",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_free_build",
+   "kind": "temple",
+   "age": "A"
+  }
+ },
+ {
+  "id": 174,
+  "name": "Development of Science",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "science": 2
+   }
+  }
+ },
+ {
+  "id": 175,
+  "name": "Development of Settlement",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "population": 1
+   }
+  }
+ },
+ {
+  "id": 176,
+  "name": "Development of Trade Routes",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "science": 1,
+    "food": 1,
+    "resources": 1
+   }
+  }
+ },
+ {
+  "id": 177,
+  "name": "Development of Warfare",
+  "age": "A",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_free_build",
+   "kind": "infantry",
+   "age": "A"
+  }
+ },
+ {
+  "id": 178,
+  "name": "Barbarians",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "barbarians",
+   "population_loss": 1
+  }
+ },
+ {
+  "id": 179,
+  "name": "Border Conflict",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "border_conflict",
+   "strongest_gain": {
+    "resources": 3
+   }
+  }
+ },
+ {
+  "id": 180,
+  "name": "Call to Arms",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "call_to_arms",
+   "weakest_lose_civil_draw_military": 2,
+   "second_weakest_lose_civil_draw_military": 1
+  }
+ },
+ {
+  "id": 181,
+  "name": "Crusades",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "strongest_weakest",
+   "strongest": {
+    "culture": 4
+   },
+   "weakest": {
+    "culture": -4
+   }
+  }
+ },
+ {
+  "id": 182,
+  "name": "Cultural Influence",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_score_own_rating",
+   "rating": "culture"
+  }
+ },
+ {
+  "id": 183,
+  "name": "Dark Ages",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "dark_ages",
+   "lose_half_rounded_up_of_science_above": 4
+  }
+ },
+ {
+  "id": 184,
+  "name": "Foray",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "top_two_gain_mix",
+   "strongest": true,
+   "food_or_resources": 3
+  }
+ },
+ {
+  "id": 185,
+  "name": "Good Harvest",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_produce",
+   "steps": [
+    "food"
+   ]
+  }
+ },
+ {
+  "id": 186,
+  "name": "Immigration",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "most_happy_gain",
+   "gain": {
+    "population": 1
+   }
+  }
+ },
+ {
+  "id": 187,
+  "name": "Knowledge of the Ancestors",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "knowledge_of_the_ancestors",
+   "per_completed_wonder": {
+    "science": 1
+   },
+   "per_unfinished_wonder": {
+    "resources": 1
+   },
+   "age_a_counts": 2
+  }
+ },
+ {
+  "id": 188,
+  "name": "New Deposits",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_produce",
+   "steps": [
+    "resources"
+   ]
+  }
+ },
+ {
+  "id": 189,
+  "name": "Pestilence",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_gain",
+   "gain": {
+    "population": -1
+   }
+  }
+ },
+ {
+  "id": 190,
+  "name": "Raiders",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "top_two_gain_mix",
+   "strongest": false,
+   "food_or_resources": -2
+  }
+ },
+ {
+  "id": 191,
+  "name": "Rats",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_lose_all_food"
+  }
+ },
+ {
+  "id": 192,
+  "name": "Rebellion",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "rebellion",
+   "civil_actions_per_discontent": 2
+  }
+ },
+ {
+  "id": 193,
+  "name": "Reign of Terror",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "strongest_weakest",
+   "weakest": {
+    "population": -1
+   }
+  }
+ },
+ {
+  "id": 194,
+  "name": "Scientific Breakthrough",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_score_own_rating",
+   "rating": "science"
+  }
+ },
+ {
+  "id": 195,
+  "name": "Uncertain Borders",
+  "age": "I",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "uncertain_borders",
+   "yellow_tokens": 1
+  }
+ },
+ {
+  "id": 196,
+  "name": "Developed Territory",
+  "age": "I",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "blue_tokens": 1,
+   "yellow_tokens": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "science": 3
+   }
+  }
+ },
+ {
+  "id": 197,
+  "name": "Historic Territory",
+  "age": "I",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "happy": 1
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "culture": 6
+   }
+  }
+ },
+ {
+  "id": 198,
+  "name": "Inhabited Territory",
+  "age": "I",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "yellow_tokens": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "population": 1
+   }
+  }
+ },
+ {
+  "id": 199,
+  "name": "Strategic Territory",
+  "age": "I",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "military_cards": 3
+   }
+  }
+ },
+ {
+  "id": 200,
+  "name": "Vast Territory",
+  "age": "I",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "blue_tokens": -1,
+   "yellow_tokens": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "food": 3
+   }
+  }
+ },
+ {
+  "id": 201,
+  "name": "Wealthy Territory",
+  "age": "I",
+  "deck": "military",
+  "kind": "territory",
+  "set": "rebalanced",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "blue_tokens": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "resources": 6
+   }
+  }
+ },
+ {
+  "id": 202,
+  "name": "Aggression: Enslave",
+  "age": "I",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "aggression_trade",
+   "rival": {
+    "population": -1
+   },
+   "aggressor": {
+    "resources": 2,
+    "food": 2
+   }
+  }
+ },
+ {
+  "id": 203,
+  "name": "Aggression: Kidnap",
+  "age": "I",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 1,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "kidnap",
+   "culture_if_used_this_turn": 3
+  }
+ },
+ {
+  "id": 204,
+  "name": "Aggression: Plunder",
+  "age": "I",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 1,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "plunder",
+   "amount": 3
+  }
+ },
+ {
+  "id": 205,
+  "name": "Aggression: Raid",
+  "age": "I",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 1,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "raid",
+   "destroy_urban_max_ages": [
+    "I"
+   ],
+   "aggressor_gains_cost_divisor": 2
+  }
+ },
+ {
+  "id": 206,
+  "name": "Naval Trade Agreement",
+  "age": "I",
+  "deck": "military",
+  "kind": "pact",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_ab",
+   "a": {
+    "blue_tokens": -1,
+    "colonization": 1
+   },
+   "b": {
+    "blue_tokens": 2
+   }
+  }
+ },
+ {
+  "id": 207,
+  "name": "Open Borders Agreement",
+  "age": "I",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_symmetric",
+   "both": {
+    "military_actions": 1
+   },
+   "attack_bonus": 2
+  }
+ },
+ {
+  "id": 208,
+  "name": "Trade Routes Agreement",
+  "age": "I",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_trade_routes",
+   "a_food_as_resource": 1,
+   "b_resource_as_food": 1
+  }
+ },
+ {
+  "id": 209,
+  "name": "Fighting Band",
+  "age": "I",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 2,
+    "cavalry": 0,
+    "artillery": 0
+   },
+   "strength": 1,
+   "outdated_strength": null
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 210,
+  "name": "Heavy Cavalry",
+  "age": "I",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 0,
+    "cavalry": 3,
+    "artillery": 0
+   },
+   "strength": 4,
+   "outdated_strength": null
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 211,
+  "name": "Legion",
+  "age": "I",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 3,
+    "cavalry": 0,
+    "artillery": 0
+   },
+   "strength": 2,
+   "outdated_strength": null
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 212,
+  "name": "Medieval Army",
+  "age": "I",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 1,
+    "cavalry": 1,
+    "artillery": 0
+   },
+   "strength": 2,
+   "outdated_strength": null
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 213,
+  "name": "Phalanx",
+  "age": "I",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 2,
+    "cavalry": 1,
+    "artillery": 0
+   },
+   "strength": 3,
+   "outdated_strength": null
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 214,
+  "name": "Military Bonus",
+  "age": "I",
+  "deck": "military",
+  "kind": "bonus",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 7,
+   "3": 7,
+   "4": 7
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": {
+   "defense": 2,
+   "colonization": 1
+  },
+  "effect": null
+ },
+ {
+  "id": 215,
+  "name": "Arms Industry",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "arms_industry",
+   "resources_per_type": 2,
+   "ties_count": true,
+   "kinds": [
+    "infantry",
+    "cavalry",
+    "artillery"
+   ]
+  }
+ },
+ {
+  "id": 216,
+  "name": "Civil Unrest",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "civil_unrest",
+   "culture_lost_per_discontent": 4,
+   "most_discontent_blue_tokens_lost": 1
+  }
+ },
+ {
+  "id": 217,
+  "name": "Cold War",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "top_two_gain",
+   "strongest": true,
+   "gain": {
+    "science": 6
+   }
+  }
+ },
+ {
+  "id": 218,
+  "name": "Crime Wave",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "top_two_gain",
+   "strongest": false,
+   "gain": {
+    "culture": -3
+   },
+   "blue_tokens_lost": 1
+  }
+ },
+ {
+  "id": 219,
+  "name": "Economic Progress",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_produce",
+   "steps": [
+    "corruption",
+    "food",
+    "consumption",
+    "resources"
+   ]
+  }
+ },
+ {
+  "id": 220,
+  "name": "Emigration",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "emigration"
+  }
+ },
+ {
+  "id": 221,
+  "name": "Freedom of Movement",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "freedom_of_movement"
+  }
+ },
+ {
+  "id": 222,
+  "name": "Iconoclasm",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "iconoclasm"
+  }
+ },
+ {
+  "id": 223,
+  "name": "Independence Declaration",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "strongest_weakest",
+   "weakest_loses_colony": true
+  }
+ },
+ {
+  "id": 224,
+  "name": "International Agreement",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "international_agreement",
+   "civil_actions": 5
+  }
+ },
+ {
+  "id": 225,
+  "name": "International Negotiations",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "international_negotiations",
+   "amount": 3,
+   "options": [
+    "science",
+    "resources",
+    "food"
+   ]
+  }
+ },
+ {
+  "id": 226,
+  "name": "National Pride",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "most_culture_points_gain",
+   "gain": {
+    "culture": 5
+   }
+  }
+ },
+ {
+  "id": 227,
+  "name": "Politics of Strength",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "politics_of_strength",
+   "strongest_cards": 5,
+   "weakest_discard": 3,
+   "age_iv_culture_instead": true
+  }
+ },
+ {
+  "id": 228,
+  "name": "Popularization of Science",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "each_score_other_rating",
+   "score": "culture",
+   "rating": "science"
+  }
+ },
+ {
+  "id": 229,
+  "name": "Prosperity",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "food_per_happy",
+   "max_happy": 8
+  }
+ },
+ {
+  "id": 230,
+  "name": "Ravages of Time",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "ravages_of_time",
+   "ages": [
+    "A",
+    "I"
+   ],
+   "ruin_culture": 2
+  }
+ },
+ {
+  "id": 231,
+  "name": "Refugees",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "strongest_weakest",
+   "strongest": {
+    "culture": 3,
+    "population": 1
+   },
+   "weakest": {
+    "culture": -3,
+    "population": -1
+   }
+  }
+ },
+ {
+  "id": 232,
+  "name": "Terrorism",
+  "age": "II",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "terrorism"
+  }
+ },
+ {
+  "id": 233,
+  "name": "Autonomous Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "civil_actions": 1,
+   "military_actions": 1,
+   "blue_tokens": -2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory_choice",
+   "once_options": [
+    {
+     "science": 4
+    },
+    {
+     "food": 6
+    },
+    {
+     "resources": 5
+    },
+    {
+     "culture": 7
+    }
+   ]
+  }
+ },
+ {
+  "id": 234,
+  "name": "Developed Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "blue_tokens": 2,
+   "yellow_tokens": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "science": 5
+   }
+  }
+ },
+ {
+  "id": 235,
+  "name": "Historic Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "happy": 2
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "culture": 11
+   }
+  }
+ },
+ {
+  "id": 236,
+  "name": "Inhabited Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "yellow_tokens": 3
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "population": 2
+   }
+  }
+ },
+ {
+  "id": 237,
+  "name": "Strategic Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "strength": 4
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "military_cards": 5
+   }
+  }
+ },
+ {
+  "id": 238,
+  "name": "Vast Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "blue_tokens": -1,
+   "yellow_tokens": 4
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "food": 4
+   }
+  }
+ },
+ {
+  "id": 239,
+  "name": "Wealthy Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "territory",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {
+   "blue_tokens": 4
+  },
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "territory",
+   "once": {
+    "resources": 9
+   }
+  }
+ },
+ {
+  "id": 240,
+  "name": "Aggression: Annex",
+  "age": "II",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "annex"
+  }
+ },
+ {
+  "id": 241,
+  "name": "Aggression: Infiltrate",
+  "age": "II",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "infiltrate",
+   "culture_per_level": 3
+  }
+ },
+ {
+  "id": 242,
+  "name": "Aggression: Plunder",
+  "age": "II",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 1,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "plunder",
+   "amount": 5
+  }
+ },
+ {
+  "id": 243,
+  "name": "Aggression: Raid",
+  "age": "II",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "raid",
+   "destroy_urban_max_ages": [
+    "II",
+    "I"
+   ],
+   "aggressor_gains_cost_divisor": 2
+  }
+ },
+ {
+  "id": 244,
+  "name": "Aggression: Spy",
+  "age": "II",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 1,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "steal",
+   "what": "science",
+   "amount": 5
+  }
+ },
+ {
+  "id": 245,
+  "name": "War over Technology",
+  "age": "II",
+  "deck": "military",
+  "kind": "war",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "war_over_technology"
+  }
+ },
+ {
+  "id": 246,
+  "name": "War over Territory",
+  "age": "II",
+  "deck": "military",
+  "kind": "war",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "war_over_territory",
+   "base": 1,
+   "extra_per_full_advantage_of": 5
+  }
+ },
+ {
+  "id": 247,
+  "name": "Acceptance of Supremacy",
+  "age": "II",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_ab",
+   "a": {
+    "resource_production": 1
+   },
+   "b": {
+    "resource_production": -1
+   },
+   "no_attack": true
+  }
+ },
+ {
+  "id": 248,
+  "name": "International Trade Agreement",
+  "age": "II",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_ab",
+   "a": {
+    "resource_production": 1
+   },
+   "b": {
+    "food_production": 1
+   }
+  }
+ },
+ {
+  "id": 249,
+  "name": "Promise of Military Protection",
+  "age": "II",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_ab",
+   "a": {
+    "culture": 1
+   },
+   "b": {
+    "strength": 4,
+    "culture": -1
+   },
+   "ends_on_attack": true
+  }
+ },
+ {
+  "id": 250,
+  "name": "Scientific Cooperation",
+  "age": "II",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_scientific_cooperation",
+   "discount": 2,
+   "partner_pays": 1
+  }
+ },
+ {
+  "id": 251,
+  "name": "Classic Army",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 2,
+    "cavalry": 2,
+    "artillery": 0
+   },
+   "strength": 8,
+   "outdated_strength": 4
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 252,
+  "name": "Conquistadors",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 1,
+    "cavalry": 2,
+    "artillery": 0
+   },
+   "strength": 5,
+   "outdated_strength": 3
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 253,
+  "name": "Defensive Army",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 2,
+    "cavalry": 0,
+    "artillery": 1
+   },
+   "strength": 6,
+   "outdated_strength": 3
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 254,
+  "name": "Fortifications",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 0,
+    "cavalry": 0,
+    "artillery": 2
+   },
+   "strength": 5,
+   "outdated_strength": 3
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 255,
+  "name": "Hussars",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 0,
+    "cavalry": 2,
+    "artillery": 0
+   },
+   "strength": null,
+   "outdated_strength": null
+  },
+  "bonus": null,
+  "effect": {
+   "type": "hussars",
+   "base": 2
+  }
+ },
+ {
+  "id": 256,
+  "name": "Mobile Artillery",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 0,
+    "cavalry": 1,
+    "artillery": 1
+   },
+   "strength": 5,
+   "outdated_strength": 3
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 257,
+  "name": "Napoleonic Army",
+  "age": "II",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 1,
+    "cavalry": 1,
+    "artillery": 1
+   },
+   "strength": 7,
+   "outdated_strength": 4
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 258,
+  "name": "Military Bonus",
+  "age": "II",
+  "deck": "military",
+  "kind": "bonus",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 7,
+   "3": 7,
+   "4": 7
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": {
+   "defense": 4,
+   "colonization": 2
+  },
+  "effect": null
+ },
+ {
+  "id": 259,
+  "name": "Impact of Agriculture",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_agriculture",
+   "bonus_if_above_consumption": 4
+  }
+ },
+ {
+  "id": 260,
+  "name": "Impact of Architecture",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_level",
+   "of": [
+    "urban"
+   ],
+   "per_level": 1
+  }
+ },
+ {
+  "id": 261,
+  "name": "Impact of Balance",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_balance",
+   "multiplier": 2
+  }
+ },
+ {
+  "id": 262,
+  "name": "Impact of Colonies",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_count",
+   "of": "colony",
+   "per": 3
+  }
+ },
+ {
+  "id": 263,
+  "name": "Impact of Competition",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_level",
+   "of": [
+    "infantry",
+    "cavalry",
+    "artillery",
+    "air_force",
+    "arena"
+   ],
+   "per_level": 1
+  }
+ },
+ {
+  "id": 264,
+  "name": "Impact of Culture",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "ranked_culture",
+   "by": "culture_rating",
+   "table": {
+    "2": [
+     10,
+     0
+    ],
+    "3": [
+     14,
+     7,
+     0
+    ],
+    "4": [
+     15,
+     10,
+     5,
+     0
+    ]
+   }
+  }
+ },
+ {
+  "id": 265,
+  "name": "Impact of Government",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_government",
+   "per_civil_action": 2,
+   "per_military_action": 1
+  }
+ },
+ {
+  "id": 266,
+  "name": "Impact of Happiness",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_happiness",
+   "per_happy": 2,
+   "max_happy": 8,
+   "per_discontent": -2
+  }
+ },
+ {
+  "id": 267,
+  "name": "Impact of Harmony",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_harmony",
+   "culture_per_worker": 4
+  }
+ },
+ {
+  "id": 268,
+  "name": "Impact of Industry",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_industry"
+  }
+ },
+ {
+  "id": 269,
+  "name": "Impact of Population",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_population",
+   "culture_per_content_worker_above": 2,
+   "threshold": 10
+  }
+ },
+ {
+  "id": 270,
+  "name": "Impact of Progress",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_level",
+   "of": [
+    "government",
+    "special"
+   ],
+   "per_level": 2
+  }
+ },
+ {
+  "id": 271,
+  "name": "Impact of Science",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "ranked_culture",
+   "by": "science_rating",
+   "table": {
+    "2": [
+     10,
+     0
+    ],
+    "3": [
+     14,
+     7,
+     0
+    ],
+    "4": [
+     15,
+     10,
+     5,
+     0
+    ]
+   }
+  }
+ },
+ {
+  "id": 272,
+  "name": "Impact of Strength",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "ranked_culture",
+   "by": "strength",
+   "table": {
+    "2": [
+     10,
+     0
+    ],
+    "3": [
+     14,
+     7,
+     0
+    ],
+    "4": [
+     15,
+     10,
+     5,
+     0
+    ]
+   }
+  }
+ },
+ {
+  "id": 273,
+  "name": "Impact of Technology",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_count",
+   "of": "level_iii_technology",
+   "per": 4
+  }
+ },
+ {
+  "id": 274,
+  "name": "Impact of Variety",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "impact_of_variety",
+   "culture_per_type": 2
+  }
+ },
+ {
+  "id": 275,
+  "name": "Impact of Wonders",
+  "age": "III",
+  "deck": "military",
+  "kind": "event",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "culture_per_wonder_age",
+   "by_age": {
+    "A": 5,
+    "I": 4,
+    "II": 3,
+    "III": 2
+   }
+  }
+ },
+ {
+  "id": 276,
+  "name": "Aggression: Armed Intervention",
+  "age": "III",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 4,
+   "3": 4,
+   "4": 4
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "steal",
+   "what": "culture",
+   "amount": 7
+  }
+ },
+ {
+  "id": 277,
+  "name": "Aggression: Occupy",
+  "age": "III",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 3,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "steal_bundle",
+   "amounts": {
+    "resources": 3,
+    "science": 3,
+    "food": 3,
+    "culture": 3
+   }
+  }
+ },
+ {
+  "id": 278,
+  "name": "Aggression: Plunder",
+  "age": "III",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 1,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "plunder",
+   "amount": 7
+  }
+ },
+ {
+  "id": 279,
+  "name": "Aggression: Raid",
+  "age": "III",
+  "deck": "military",
+  "kind": "aggression",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 3,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "raid",
+   "destroy_urban_max_ages": [
+    "III",
+    "II"
+   ],
+   "aggressor_gains_cost_divisor": 2
+  }
+ },
+ {
+  "id": 280,
+  "name": "Hybrid War",
+  "age": "III",
+  "deck": "military",
+  "kind": "war",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 2,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "hybrid_war",
+   "unhappy_while_pending": 2
+  }
+ },
+ {
+  "id": 281,
+  "name": "War over Culture",
+  "age": "III",
+  "deck": "military",
+  "kind": "war",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 6,
+   "3": 6,
+   "4": 6
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": 3,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "war_over_culture",
+   "base": 5
+  }
+ },
+ {
+  "id": 282,
+  "name": "International Tourism",
+  "age": "III",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_international_tourism",
+   "culture_per_partner_wonder": 1
+  }
+ },
+ {
+  "id": 283,
+  "name": "Loss of Sovereignty",
+  "age": "III",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_ab",
+   "a": {
+    "culture": 2
+   },
+   "b": {
+    "culture": -2
+   },
+   "no_attack": true,
+   "no_war_on_b": true
+  }
+ },
+ {
+  "id": 284,
+  "name": "Military Pact",
+  "age": "III",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_symmetric",
+   "both": {
+    "strength": 3
+   },
+   "ends_on_attack": true
+  }
+ },
+ {
+  "id": 285,
+  "name": "Peace Treaty",
+  "age": "III",
+  "deck": "military",
+  "kind": "pact",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 0,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": null,
+  "effect": {
+   "type": "pact_symmetric",
+   "both": {
+    "culture": 1
+   },
+   "no_attack": true
+  }
+ },
+ {
+  "id": 286,
+  "name": "Entrenchments",
+  "age": "III",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 1,
+    "cavalry": 0,
+    "artillery": 2
+   },
+   "strength": 9,
+   "outdated_strength": 5
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 287,
+  "name": "Mechanized Army",
+  "age": "III",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 0,
+    "cavalry": 1,
+    "artillery": 2
+   },
+   "strength": 10,
+   "outdated_strength": 5
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 288,
+  "name": "Modern Army",
+  "age": "III",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 2,
+   "3": 2,
+   "4": 2
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 2,
+    "cavalry": 1,
+    "artillery": 1
+   },
+   "strength": 13,
+   "outdated_strength": 7
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 289,
+  "name": "Positional Army",
+  "age": "III",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "new",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 2,
+    "cavalry": 0,
+    "artillery": 2
+   },
+   "strength": 12,
+   "outdated_strength": 6
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 290,
+  "name": "Shock Troops",
+  "age": "III",
+  "deck": "military",
+  "kind": "tactic",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 1,
+   "3": 1,
+   "4": 1
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": {
+   "units": {
+    "infantry": 1,
+    "cavalry": 3,
+    "artillery": 0
+   },
+   "strength": 11,
+   "outdated_strength": 6
+  },
+  "bonus": null,
+  "effect": null
+ },
+ {
+  "id": 291,
+  "name": "Military Bonus",
+  "age": "III",
+  "deck": "military",
+  "kind": "bonus",
+  "set": "base",
+  "starting": false,
+  "copies": {
+   "2": 7,
+   "3": 7,
+   "4": 7
+  },
+  "science_cost": null,
+  "revolution_cost": null,
+  "resource_cost": null,
+  "stage_costs": null,
+  "yields": {},
+  "urban_limit": null,
+  "military_action_cost": null,
+  "tactic": null,
+  "bonus": {
+   "defense": 6,
+   "colonization": 3
+  },
+  "effect": null
+ }
+]
