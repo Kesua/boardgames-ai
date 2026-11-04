@@ -1,7 +1,10 @@
 {
   "slug": "through_the_ages",
   "name": "Through the Ages: A New Story of Civilization",
-  "publisher": null,
+  "publisher": "Czech Games Edition",
+  "designer": "Vlaada Chvátil",
+  "year": 2015,
+  "edition": "Second edition (2015) with the New Leaders and Wonders expansion (2019): full game, ages A to III, 292 cards",
   "players": [
     2,
     3,
@@ -153,6 +156,9 @@
   "featured": {
     "2": {
       "main": "p2-29m-mirror"
+    },
+    "4": {
+      "main": "p4-24m-mirror"
     }
   },
   "languages": [

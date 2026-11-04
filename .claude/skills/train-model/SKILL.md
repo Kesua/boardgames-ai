@@ -68,6 +68,10 @@ that stage's `ppo_best.zip` and accept again. Pick the model by the run's own ru
 on the acceptance deals (that would tune the model to the test). Wingspan: 91.9 % against greedy after 16M steps,
 two more stages (about an hour each) gave 95.1 % at 28M steps, where `win_vs_3m` reached 0.5. Stop when `win_vs_3m`
 stays at even play: the recipe is exhausted; publish as not finished and report it, or change the design (design-rl).
+With 3+ players the acceptance test seats greedy at every other seat, while training puts a frozen opponent at one
+seat only; `--frozen-seats <players − 1>` lets it take every other seat at frozen tables. Through the Ages 4p
+(2026-11-04): two stages with `--frozen-seats 3` stayed at even play against their start (64.4 % against greedy
+before), so it is no cure for a recipe that is exhausted.
 Not finished within budget → do not publish experiments as "finished"; the dashboard marks unfinished models.
 
 ## Pitfalls

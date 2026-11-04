@@ -135,7 +135,7 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     4p: ~4.7M/h open, ~2.3M/h anchored with the default 750 reference deals (3,000 games per evaluation); with
     `--greedy-games 8 --reference-deals 250` ~5.7M/h open and ~4M/h anchored -> ~100M steps in 24 h (40M open ~7 h,
     30M anchored ~7.5 h).
-- [ ] train-model: open run, anchored run, acceptance -> finished model
+- [x] train-model: open run, anchored run, acceptance -> finished model (2p finished; 4p not finished, marked)
   - 2p (2026-11-03): **`models/p2-29m` finished.** Open run plateaued at 12M (win against 3M older 0.510, 0.527),
     best = 8M. Anchored run from it rebased at 7M (0.806) and stopped at 24M (3 evaluations without a 0.02 gain;
     `win_vs_3m` 0.55 at the stop); best = 21M = the model (29M steps, 105,808 games, 5.5 h on 16 game workers +
@@ -151,10 +151,77 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
   - 4p: open run 2026-11-03 06:58 (`--greedy-games 8`), ~4.3 min per 0.5M steps. Plateau at 10M/11M
     (`win_vs_3m` 0.273, 0.278; even play = 1/4, band ± 0.043) → open best = ppo_7000000. The run went on to 16.5M
     before it was stopped; 11M–16.5M never trained against. Bars kept as for 2p (decided 2026-11-03):
-    beats = 50 % + 2 SE, greedy >= 0.95, `--rebase-at 0.8`. Anchored run started 10:20 (`--reference-deals 250`).
-- [ ] run-experiment: mirror (+ versus) per player count, --verify passes
-- [ ] write-notes: notes.json (en + other languages)
+    beats = 50 % + 2 SE, greedy >= 0.95, `--rebase-at 0.8`. Anchored run 10:20–15:53 (`--reference-deals 250`):
+    never rebased, stopped at 13M, best 10M (0.694 vs open 7M; `win_vs_3m` 0.258 at the stop = even play).
+    Published as p4-17m (17M steps, 23,557 games, 5.4 h). Acceptance (750 deals): greedy 0.5995 ± 0.011 of 2,000
+    (bar 0.95: FAILED), open 16.5M (never trained against) 0.549 ± 0.009 of 3,000 (beats: passed), open 7M 0.680.
+    Greedy appears at one seat in ~2 % of training tables; acceptance seats 3 greedy players. Extra stage (decided
+    2026-11-03, outside the recipe, which calls it exhausted): runs/through_the_ages/stage2 from the 10M best,
+    lr 2.5e-5, `--frozen-share 0.4`, fixed = open 7M + greedy, `--rebase-at 0.56 --min-steps 4000000 --hours 6`.
+    17:15–21:27: never rebased, stopped at 10M, best 7M (0.403 vs the anchored 10M). p4-17m dropped (never
+    committed); published p4-24m (24M steps, 33,268 games, 8.1 h). Acceptance (750 deals): greedy 0.6435 ± 0.011
+    of 2,000 (FAILED), open 16.5M 0.666 ± 0.009 of 3,000 (beats: passed), open 7M 0.751 → **not finished**; the
+    dashboard marks 4p as not finished.
+  - 4p stages 3 and 4 (decided 2026-11-03: "greedy fills 3 seats", 8 more hours). New trainer option
+    `--frozen-seats 3` (4173fef): at frozen tables one older copy or greedy takes all 3 other seats, as in the
+    acceptance test. Stage 3 (22:20–00:55, from p4-24m, lr 2.5e-5, `--frozen-share 0.4`, fixed = open 7M,
+    stage-2 7M, greedy, reference = p4-24m): win against the reference 0.269 / 0.286 / 0.267 / 0.272 at 1M–4M
+    (even play 0.25 ± 0.027 on 250 deals), `win_vs_3m` 0.295 at 4M; stopped at min-steps 4M, no gain of 0.02.
+    Stage 4 (00:55–04:18, from stage 3's 4M, same settings, reference = stage 3's 4M): 0.242 at 1M, 0.257 at 2M,
+    budget (2.5 h) ended at 2M; greedy in the 8-game training check 0.375–0.875 (noise). Both stages stay at even
+    play against their start, so by the recipe's rule it is exhausted: **p4-24m stays the 4p model, not
+    finished** (64.4 % against 3 greedy players, bar 95 %). 4p training in total about 19 h of the 24 h budget
+    (open 3.4, anchored 5.6, stages 2–4: 4.2 + 2.6 + 3.4).
+- [x] run-experiment: mirror (+ versus) per player count, --verify passes (2026-11-04)
+  - `experiments/p2-29m-mirror` and `experiments/p4-24m-mirror`: 2,000 games each, seed 1000, `--verify 20`: first 20
+    games match for both. Featured: 2 → p2-29m-mirror, 4 → p4-24m-mirror (4p shown as early AI, tentative). No versus
+    experiment: there is no earlier finished model to compare with.
+- [x] write-notes: notes.json (en; the manifest has only en) (2026-11-04)
+  - 9 findings (government, culture leaders, wonders, science, colonies, Military Theory, theaters, where points come
+    from, length), 2 charts, 4 limits (4p not finished, little science and no wars, correlations, Louvre Museum
+    simplification). `python games/through_the_ages/check_notes.py`: 138 numbers and all claims match stats.json.
 - [ ] publish-game: check_repo passes, publisher notice drafted, PR opened
+  - 2026-11-04: `pytest -q` 1002 passed; `check_repo` 0 problems; `sync_skills --check` in sync; site built, every
+    tab opened for 2 and 4 players (no script errors, no empty values; phone width: no sideways scroll, only the tab
+    bar scrolls). The dashboard has no dark theme for any game (platform matter). Dashboard fix on the way:
+    `dashboard/app.js` drew every civilization with Wingspan's 5-slot mat rows; other boards now list every card
+    grouped by the tag that carries the group (Wingspan and Forest Shuffle unchanged). `i18n/en.json`: names with the
+    age for 50 repeated card names, labels for kinds, ages and sets.
+  - RIGHTS.md filled (CGE, Vlaada Chvátil). **Publisher notice: drafted, not sent** (a human sends it and records date
+    and reply here):
+    > Subject: Fan research project about Through the Ages
+    > Hello, we run boardgames.ai, an open-source, non-commercial research project in which AI agents learn board
+    > games and publish which cards and strategies win (https://…). We added Through the Ages: A New Story of
+    > Civilization with the New Leaders and Wonders expansion: the repository contains the rules in our own words,
+    > card data as numbers (no card text or art) and statistics. It does not let anyone play the game. If you would
+    > prefer we remove it or change anything, reply and we will do so within 7 days.
+  - **Pull request: not opened** (needs the maintainer's go-ahead; branch not pushed). Text ready:
+
+    ```
+    ## Through the Ages: A New Story of Civilization (+ New Leaders and Wonders)
+    Full game (Ages A–III), engine for 2–4 players; models and experiments for 2 and 4 players.
+    - Rules: games/through_the_ages/rules.md (103 rule IDs; sources A = CGE base + expansion rulebooks, B = Board Game
+      Arena implementation + Unofficial FAQ + walkthroughs; decisions D1–D33, maintainer choices P1–P5)
+    - Cards: data/SOURCES.md (292 cards; BGA data vs the printed cards field by field; expansion from texts vs printed
+      cards; tie-breaker ptarjan/tta-ai)
+    - Engine checks: checks/report.json (10,000 games per player count, 0 problems); review: checks/review.md
+      (independent review, every finding resolved)
+    - Models: models/p2-29m (finished: 97.1 % vs greedy, 91.7 % vs an open-run checkpoint it never trained against);
+      models/p4-24m (NOT finished: 64.4 % vs 3 greedy players, bar 95 %; two further stages with greedy at every
+      other seat stayed at even play; dashboard marks 4p as early/tentative)
+    - Experiments: experiments/p2-29m-mirror, experiments/p4-24m-mirror (2,000 games each; --verify 20 matches)
+    - Notes: notes.json (en, the manifest's only language); check_notes.py: 138 numbers match
+    - Platform: bgai/rl (--frozen-seats, frozen opponent at several seats), dashboard/app.js
+      (generic civilization board), train-model skill
+    - Rights: RIGHTS.md; publisher notice drafted, not sent (STATUS.md)
+
+    ## Review
+    python tools/review_pr.py --game through_the_ages: tests 509 passed; repository rules PASS; engine checks PASS
+    (0 problems, commit 8b6c859); both experiments replay; check_notes 138 numbers match. Suggested verdict:
+    APPROVE AS NOT FINISHED (p4-24m did not pass the strength test; its findings are marked tentative).
+
+    🤖 Generated with [Claude Code](https://claude.com/claude-code)
+    ```
 
 ## Scope decisions (maintainer, 2026-11-02, decision form)
 - Full pipeline (not only up to a verified engine).

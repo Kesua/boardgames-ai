@@ -1,5 +1,196 @@
 {
- "items": {},
- "tags": {},
+ "items": {
+  "cultural_heritage_a": {
+   "name": "Cultural Heritage (A)"
+  },
+  "engineering_genius_a": {
+   "name": "Engineering Genius (A)"
+  },
+  "frugality_a": {
+   "name": "Frugality (A)"
+  },
+  "patriotism_a": {
+   "name": "Patriotism (A)"
+  },
+  "rich_land_a": {
+   "name": "Rich Land (A)"
+  },
+  "urban_growth_a": {
+   "name": "Urban Growth (A)"
+  },
+  "breakthrough_i": {
+   "name": "Breakthrough (I)"
+  },
+  "cultural_heritage_i": {
+   "name": "Cultural Heritage (I)"
+  },
+  "engineering_genius_i": {
+   "name": "Engineering Genius (I)"
+  },
+  "frugality_i": {
+   "name": "Frugality (I)"
+  },
+  "patriotism_i": {
+   "name": "Patriotism (I)"
+  },
+  "reserves_i": {
+   "name": "Reserves (I)"
+  },
+  "rich_land_i": {
+   "name": "Rich Land (I)"
+  },
+  "urban_growth_i": {
+   "name": "Urban Growth (I)"
+  },
+  "breakthrough_ii": {
+   "name": "Breakthrough (II)"
+  },
+  "efficient_upgrade_ii": {
+   "name": "Efficient Upgrade (II)"
+  },
+  "engineering_genius_ii": {
+   "name": "Engineering Genius (II)"
+  },
+  "frugality_ii": {
+   "name": "Frugality (II)"
+  },
+  "patriotism_ii": {
+   "name": "Patriotism (II)"
+  },
+  "reserves_ii": {
+   "name": "Reserves (II)"
+  },
+  "revolutionary_idea_ii": {
+   "name": "Revolutionary Idea (II)"
+  },
+  "rich_land_ii": {
+   "name": "Rich Land (II)"
+  },
+  "urban_growth_ii": {
+   "name": "Urban Growth (II)"
+  },
+  "efficient_upgrade_iii": {
+   "name": "Efficient Upgrade (III)"
+  },
+  "engineering_genius_iii": {
+   "name": "Engineering Genius (III)"
+  },
+  "patriotism_iii": {
+   "name": "Patriotism (III)"
+  },
+  "reserves_iii": {
+   "name": "Reserves (III)"
+  },
+  "revolutionary_idea_iii": {
+   "name": "Revolutionary Idea (III)"
+  },
+  "urban_growth_iii": {
+   "name": "Urban Growth (III)"
+  },
+  "developed_territory_i": {
+   "name": "Developed Territory (I)"
+  },
+  "historic_territory_i": {
+   "name": "Historic Territory (I)"
+  },
+  "inhabited_territory_i": {
+   "name": "Inhabited Territory (I)"
+  },
+  "strategic_territory_i": {
+   "name": "Strategic Territory (I)"
+  },
+  "vast_territory_i": {
+   "name": "Vast Territory (I)"
+  },
+  "wealthy_territory_i": {
+   "name": "Wealthy Territory (I)"
+  },
+  "aggression_plunder_i": {
+   "name": "Aggression: Plunder (I)"
+  },
+  "aggression_raid_i": {
+   "name": "Aggression: Raid (I)"
+  },
+  "military_bonus_i": {
+   "name": "Military Bonus (I)"
+  },
+  "developed_territory_ii": {
+   "name": "Developed Territory (II)"
+  },
+  "historic_territory_ii": {
+   "name": "Historic Territory (II)"
+  },
+  "inhabited_territory_ii": {
+   "name": "Inhabited Territory (II)"
+  },
+  "strategic_territory_ii": {
+   "name": "Strategic Territory (II)"
+  },
+  "vast_territory_ii": {
+   "name": "Vast Territory (II)"
+  },
+  "wealthy_territory_ii": {
+   "name": "Wealthy Territory (II)"
+  },
+  "aggression_plunder_ii": {
+   "name": "Aggression: Plunder (II)"
+  },
+  "aggression_raid_ii": {
+   "name": "Aggression: Raid (II)"
+  },
+  "military_bonus_ii": {
+   "name": "Military Bonus (II)"
+  },
+  "aggression_plunder_iii": {
+   "name": "Aggression: Plunder (III)"
+  },
+  "aggression_raid_iii": {
+   "name": "Aggression: Raid (III)"
+  },
+  "military_bonus_iii": {
+   "name": "Military Bonus (III)"
+  }
+ },
+ "tags": {
+  "age": {
+   "A": "Age A (antiquity)",
+   "I": "Age I",
+   "II": "Age II",
+   "III": "Age III"
+  },
+  "set": {
+   "base": "Base game",
+   "new": "New Leaders and Wonders",
+   "rebalanced": "Rebalanced by New Leaders and Wonders"
+  },
+  "kind": {
+   "government": "Government",
+   "leader": "Leader",
+   "wonder": "Wonder",
+   "farm": "Farm",
+   "mine": "Mine",
+   "temple": "Temple",
+   "lab": "Lab",
+   "library": "Library",
+   "theater": "Theater",
+   "arena": "Arena",
+   "infantry": "Infantry",
+   "cavalry": "Cavalry",
+   "artillery": "Artillery",
+   "air_force": "Air force",
+   "special_civil": "Special technology: civil",
+   "special_military": "Special technology: military",
+   "special_colonization": "Special technology: colonization",
+   "special_construction": "Special technology: construction",
+   "territory": "Territory (colony)",
+   "action": "Action card",
+   "aggression": "Aggression",
+   "bonus": "Military bonus",
+   "event": "Event",
+   "pact": "Pact",
+   "tactic": "Tactic",
+   "war": "War"
+  }
+ },
  "archetypes": {}
 }
