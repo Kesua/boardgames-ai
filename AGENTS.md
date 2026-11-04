@@ -128,6 +128,7 @@ Use the project's virtual environment (`.venv`); dependencies are pinned in `req
 - `games/<slug>/checks/report.json` shows 0 problems over ≥ 10,000 random games for every supported player count,
   made on the current engine (check_repo fails when the engine changed after it).
 - `rules.md` cites two sources per rule and lists decisions; `data/SOURCES.md` shows the field-by-field comparison.
-- The model's strength card shows it is finished (train-model skill) — or the dashboard marks it as not finished,
+- The model's strength card shows it is finished (train-model skill) — or it is published as not finished (its failed
+  strength card is in the lab tab; the rest of the page does not flag it, maintainer's choice 2026-11-04),
   or the pull request is engine-only (no models or experiments yet; review-game-pr skill).
 - Every experiment replays (`--verify 20`); notes follow the write-notes rules (no causal claims, numbers from stats).

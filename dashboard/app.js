@@ -215,7 +215,7 @@
 
   // ------------------------------------------------------------------ how to read the numbers
   const GLOSSARY = ["g_lift", "g_pp", "g_err", "g_unclear", "g_edge", "g_presence", "g_points", "g_points_board", "g_type", "g_turns",
-                    "g_mirror", "g_strength", "g_early", "g_greedy", "g_paired", "g_steps", "g_million", "g_ref", "g_margin", "g_rank", "g_grey",
+                    "g_mirror", "g_strength", "g_greedy", "g_paired", "g_steps", "g_million", "g_ref", "g_margin", "g_rank", "g_grey",
                     "g_corr", "g_explains", "g_seed"];
   /* The worked example uses real numbers from the first game that has data, so it always matches the card pages. */
   async function howExample(index) {
@@ -285,7 +285,7 @@
     const status = hl.length ? hl.map(([p, h]) => {
       const pl = t("n_players", { n: p });
       if (h.kind === "baseline") return t("status_baseline", { players: pl });
-      return t(h.finished ? "status_finished" : "status_early", { players: pl });
+      return h.finished ? t("status_finished", { players: pl }) : pl;
     }).join(", ") : t(g.ai_status === "training" ? "model_training" : "model_none");
     const claim = L(g.claim) || L(g.intro);
     return `<article class="grow"><div><h2><a href="#/${g.slug}">${esc(g.name)}</a></h2><div class="by">${esc([g.publisher, g.year].filter(Boolean).join(", "))}</div></div>
@@ -314,11 +314,12 @@
   function srcLabel(g, s) {
     const pl = t("n_players", { n: s.players });
     const who = srcInfo(g, s);
-    if (who.role === "finished") return pl;
+    if (who.role === "finished" || who.role === "early") return pl;
     return `${pl} · ${who.label}`;
   }
-  /* A source is tentative when its games were not played by a finished AI. */
-  const tentative = (g, s) => !srcInfo(g, s).finished;
+  /* A source is tentative when its games come from the original AI of a comparison or a baseline agent. An AI that did
+     not pass its strength test is not flagged outside the lab (maintainer's choice, 2026-11-04). */
+  const tentative = (g, s) => { const w = srcInfo(g, s); return !w.finished && w.role !== "early"; };
   const srcHead = (g, s) => (tentative(g, s) ? esc(t("n_players", { n: s.players })) + tentPill(g, s) : esc(srcLabel(g, s)));
   function tentPill(g, s) { return tentative(g, s) ? ` <span class="pill warn">${esc(t(srcInfo(g, s).role === "original" ? "pill_original" : srcInfo(g, s).role === "baseline" ? "pill_baseline" : "pill_tentative"))}</span>` : ""; }
   /* Why a model is not finished, from its strength card: the first required test it failed. */
@@ -426,7 +427,7 @@
   function howMade(g, srcs, exps) {
     const seen = new Set();
     const rows = srcs.map((s, i) => [s, srcInfo(g, s), exps[i]]).filter(([s]) => !seen.has(s.players) && seen.add(s.players));
-    const plain = rows.every(([s, who]) => who.model && who.finished && (g.models[who.id] || {}).games
+    const plain = rows.every(([s, who]) => who.model && (who.finished || who.role === "early") && (g.models[who.id] || {}).games
       && ((g.experiments[s.exp] || {}).seats || []).every((x) => x === who.id));
     if (!plain) return [howLearn(g, srcs), howPlay(g, srcs, exps), t("how_count")].join(" ");
     const list = (xs) => xs.length > 1 ? xs.slice(0, -1).join(", ") + " " + t("and") + " " + xs[xs.length - 1] : xs[0];
@@ -477,7 +478,7 @@
       const vars = { games: int(exps[i].meta.games), players: t("n_players", { n: s.players }), who: who.label };
       if (seats.length && seats.some((x) => x !== seats[0])) return t("how_play_versus", Object.assign(vars, { list: [...new Set(seats)].map((x) => seatInfo(g, x).label).join(" + ") }));
       if (!who.model) return t("how_play_base", vars);
-      return t(who.finished ? "how_play" : "how_play_early", vars);
+      return t(who.finished || who.role === "early" ? "how_play" : "how_play_early", vars);
     }).join(" ");
   }
   function notesLink(g, f) {
@@ -950,9 +951,9 @@
     const models = labOrder(g);
     if (!models.length && !limits(g).length) return "";
     const lim = limits(g);
-    return `<div class="card section"><h3>${esc(t("lab_summary_h"))}</h3><ul class="clean">${models.map((m) => {
+    return `<div class="card section"><h3>${esc(t("lab_summary_h"))}</h3><ul class="clean">${models.filter((m) => modelRole(g, m.id) !== "early").map((m) => {
       const role = modelRole(g, m.id);
-      return `<li>${esc(t("lab_sum_" + role, { players: t("n_players", { n: m.players }), why: role === "early" ? whyEarly(g, m.id) : "" }))}</li>`;
+      return `<li>${esc(t("lab_sum_" + role, { players: t("n_players", { n: m.players }) }))}</li>`;
     }).join("")}</ul>${lim.length ? `<h3 id="limits" style="margin-top:14px">${esc(t("limits_h"))}</h3><ul class="clean">${lim.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}</div>`;
   }
   function vLab(view, { g, r }) {
@@ -961,7 +962,7 @@
     let html = `<h2>${esc(t("lab_h"))}</h2><p class="takeaway">${esc(t("lab_expl"))}</p>${labSummary(g)}`;
     models.forEach((m, i) => {
       const st = m.strength || {};
-      const status = st.finished ? `<span class="pill ok">${esc(t("model_finished"))}</span>` : `<span class="pill warn">${esc(t(st.legacy || m.legacy ? "model_legacy" : "model_unfinished"))}</span>`;
+      const status = st.finished ? `<span class="pill ok">${esc(t("model_finished"))}</span>` : st.legacy || m.legacy ? `<span class="pill warn">${esc(t("model_legacy"))}</span>` : "";
       const note = (mi[m.id] || {}).note || (S.lang === "en" ? st.note : "") || "";
       html += `<section class="section card"><div class="spread"><h2>${esc(modelLabel(g, m.id))}</h2><div class="row">${status}<code>${esc(m.id)}</code></div></div>
         <div class="kv" style="margin-top:10px"><div><b>${m.steps ? fmtSteps(m.steps) : "–"}</b><span>${esc(t("t_training"))} ${help("g_steps")}</span></div>

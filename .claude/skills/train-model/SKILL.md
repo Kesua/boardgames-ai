@@ -72,7 +72,7 @@ With 3+ players the acceptance test seats greedy at every other seat, while trai
 seat only; `--frozen-seats <players − 1>` lets it take every other seat at frozen tables. Through the Ages 4p
 (2026-11-04): two stages with `--frozen-seats 3` stayed at even play against their start (64.4 % against greedy
 before), so it is no cure for a recipe that is exhausted.
-Not finished within budget → do not publish experiments as "finished"; the dashboard marks unfinished models.
+Not finished within budget → do not call experiments "finished"; the lab tab shows the failed strength card (the rest of the page does not flag unfinished models).
 
 ## Pitfalls
 - Watch `clipped` in the training printout: above ~0.3 for long means updates are too large (lower lr / epochs).

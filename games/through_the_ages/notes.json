@@ -189,7 +189,6 @@
  ],
  "limits": {
   "en": [
-   "The 4-player AI is not finished: it wins 64.4 % of paired games against three greedy players, below the 95 % bar (the 2-player AI: 97.1 %). Its numbers describe a weaker player.",
    "This AI uses little science (average science rating at the end: 1.6 with 2 players, 4.1 with 4) and almost never attacks or goes to war; findings about science and military cards describe this style.",
    "All numbers are correlations from one AI playing against copies of itself: a win-rate difference shows what winners have, not what makes them win.",
    "The engine allows Louvre Museum's token exchange only as an action in its owner's own turn, a small simplification of the card."

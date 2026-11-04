@@ -43,6 +43,6 @@ through the CHECK lines below (about 30–60 minutes of your time for a large ga
 - **Approve as engine only:** items 1–4 and 8 pass and the pull request has no models or experiments yet. The game
   is listed as "engine ready, AI not trained yet"; training (which needs a strong machine for about a day per player
   count) can come in a later pull request from anyone.
-- **Approve as "not finished":** items 1–4, 6, 8 pass, the model is not finished — the dashboard marks it; ask for a
+- **Approve as "not finished":** items 1–4, 6, 8 pass, the model is not finished — its strength card in the lab tab shows it (the rest of the page does not flag it); ask for a
   follow-up training run.
 - **Changes requested:** anything in 1–4, 6 or 8 fails.

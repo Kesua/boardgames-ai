@@ -135,7 +135,7 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     4p: ~4.7M/h open, ~2.3M/h anchored with the default 750 reference deals (3,000 games per evaluation); with
     `--greedy-games 8 --reference-deals 250` ~5.7M/h open and ~4M/h anchored -> ~100M steps in 24 h (40M open ~7 h,
     30M anchored ~7.5 h).
-- [x] train-model: open run, anchored run, acceptance -> finished model (2p finished; 4p not finished, marked)
+- [x] train-model: open run, anchored run, acceptance -> finished model (2p finished; 4p not finished; since 2026-11-04 only its lab strength card shows it)
   - 2p (2026-11-03): **`models/p2-29m` finished.** Open run plateaued at 12M (win against 3M older 0.510, 0.527),
     best = 8M. Anchored run from it rebased at 7M (0.806) and stopped at 24M (3 evaluations without a 0.02 gain;
     `win_vs_3m` 0.55 at the stop); best = 21M = the model (29M steps, 105,808 games, 5.5 h on 16 game workers +
@@ -174,7 +174,7 @@ Facts marked (?) come from secondary sources and are confirmed in ingest-rules a
     (open 3.4, anchored 5.6, stages 2–4: 4.2 + 2.6 + 3.4).
 - [x] run-experiment: mirror (+ versus) per player count, --verify passes (2026-11-04)
   - `experiments/p2-29m-mirror` and `experiments/p4-24m-mirror`: 2,000 games each, seed 1000, `--verify 20`: first 20
-    games match for both. Featured: 2 → p2-29m-mirror, 4 → p4-24m-mirror (4p shown as early AI, tentative). No versus
+    games match for both. Featured: 2 → p2-29m-mirror, 4 → p4-24m-mirror (4p was shown as early AI, tentative; since 2026-11-04 the page no longer flags it outside the lab, maintainer's choice). No versus
     experiment: there is no earlier finished model to compare with.
 - [x] write-notes: notes.json (en; the manifest has only en) (2026-11-04)
   - 9 findings (government, culture leaders, wonders, science, colonies, Military Theory, theaters, where points come

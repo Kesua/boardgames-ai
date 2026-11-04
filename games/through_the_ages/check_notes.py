@@ -1,5 +1,4 @@
-"""Recompute every number cited in games/through_the_ages/notes.json from the current stats.json files (and the two
-models' strength cards), rounded the way the site rounds, and print a MISMATCH line for each one the notes do not
+"""Recompute every number cited in games/through_the_ages/notes.json from the current stats.json files, rounded the way the site rounds, and print a MISMATCH line for each one the notes do not
 contain, then check the claims in the text that depend on the data. Exit code 1 on any mismatch.
 Run from the repository root: python games/through_the_ages/check_notes.py"""
 import json, sys
@@ -11,7 +10,6 @@ R = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 G = R / "games" / "through_the_ages"
 E2, E4 = "p2-29m-mirror", "p4-24m-mirror"
 ST = {e: json.loads((G / "experiments" / e / "stats.json").read_text(encoding="utf-8")) for e in (E2, E4)}
-MODEL = {e: json.loads((G / "models" / e.rsplit("-", 1)[0] / "model.json").read_text(encoding="utf-8")) for e in (E2, E4)}
 sys.path.insert(0, str(R))
 from games.through_the_ages import SPEC  # noqa: E402
 KIND = {k: v["kind"] for k, v in SPEC.catalog()["items"].items()}
@@ -34,7 +32,6 @@ tag = lambda e, k: next(x for x in ST[e]["tags"]["kind"] if x["value"] == k)
 out = lambda e: ST[e]["style"]["outcome"][0]
 common = lambda e: [x for x in ST[e]["items"] if x["presence_rate"] >= 0.05]
 clear = lambda x: abs(x["win_lift"]) > 2 * x["win_lift_se"]
-greedy = lambda e: next(g["win"] for g in MODEL[e]["strength"]["games"] if g["opponent"] == "greedy")
 
 
 def values(e):
@@ -52,8 +49,7 @@ def values(e):
               "military": (o["b_military"], "n1"), "score": (m["mean_score"], "n1"),
               "s0": (so[0]["win_rate"], "p1"), "sl": (so[-1]["win_rate"], "p1"), "base": (m["baseline_win_rate"], "p1"),
               "rmin": (m["rounds_min"], "n0"), "rmax": (m["rounds_max"], "n0"),
-              "w0": (bins[0]["winner_score"], "n0"), "w4": (bins[-1]["winner_score"], "n0"),
-              "greedy": (greedy(e), "p1")})
+              "w0": (bins[0]["winner_score"], "n0"), "w4": (bins[-1]["winner_score"], "n0")})
     if e == E2:
         v.update({k: pp(k) for k in ("republic_ii", "communism_iii", "monarchy_i", "fundamentalism_iii",
                                      "isaac_newton_ii", "bill_gates_iii", "johannes_gutenberg_i", "pyramids_a",
